@@ -104,6 +104,11 @@
     {
       base.ServerOnDestroy(gameObject);
 
+      if(gameObject.Container is null)
+      {
+        return;
+      }
+
       ICharacter character = gameObject.Container.OwnerAsCharacter;
       if (character is null)
         return;

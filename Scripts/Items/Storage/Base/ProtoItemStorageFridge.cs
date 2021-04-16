@@ -213,12 +213,12 @@ namespace AtomicTorch.CBND.CoreMod.Items.Storage
 
     public static bool SharedCanAddItem(CanAddItemContext context)
     {
-      if (context.Item.ProtoItem is ProtoItemStorageFridge && context.ByCharacter is not null)
+      if (context.Item.ProtoItem is ProtoItemStorageFridge)
       {
-        List<IItem> listI = context.ByCharacter.SharedGetPlayerContainerInventory().GetItemsOfProto<ProtoItemStorageFridge>().ToList();
+        List<IItem> listI = context.Container.OwnerAsCharacter.SharedGetPlayerContainerInventory().GetItemsOfProto<ProtoItemStorageFridge>().ToList();
         listI.Remove(context.Item);
 
-        List<IItem> listH = context.ByCharacter.SharedGetPlayerContainerHotbar().GetItemsOfProto<ProtoItemStorageFridge>().ToList();
+        List<IItem> listH = context.Container.OwnerAsCharacter.SharedGetPlayerContainerHotbar().GetItemsOfProto<ProtoItemStorageFridge>().ToList();
         listH.Remove(context.Item);
 
         if (listI.Count + listH.Count >= 1)

@@ -49,7 +49,7 @@
     private void Refresh()
     {
       this.Brush = null;
-      if (this.publicState.IconOverlay is not null)
+      if (!string.IsNullOrEmpty(this.publicState.IconOverlay))
       {
         var icon = new TextureResource(publicState.IconOverlay);
         this.Brush = Api.Client.UI.GetTextureBrush(icon);
