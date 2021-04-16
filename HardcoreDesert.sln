@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HardcoreDesert", "HardcoreDesert.csproj", "{495E0459-E71B-4FC1-8027-B6E2DFCF2C2A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AtomicTorch.CBND.CoreMod", "..\Core.cpk\AtomicTorch.CBND.CoreMod.csproj", "{93E3D838-4839-4F1D-BC9E-A2E5F7CD9FA7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug_LibsAsProjects|Any CPU = Debug_LibsAsProjects|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{495E0459-E71B-4FC1-8027-B6E2DFCF2C2A}.Debug_LibsAsProjects|Any CPU.ActiveCfg = Debug_LibsAsProjects|Any CPU
+		{495E0459-E71B-4FC1-8027-B6E2DFCF2C2A}.Debug_LibsAsProjects|Any CPU.Build.0 = Debug_LibsAsProjects|Any CPU
+		{495E0459-E71B-4FC1-8027-B6E2DFCF2C2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{495E0459-E71B-4FC1-8027-B6E2DFCF2C2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93E3D838-4839-4F1D-BC9E-A2E5F7CD9FA7}.Debug_LibsAsProjects|Any CPU.ActiveCfg = Debug_LibsAsProjects|Any CPU
+		{93E3D838-4839-4F1D-BC9E-A2E5F7CD9FA7}.Debug_LibsAsProjects|Any CPU.Build.0 = Debug_LibsAsProjects|Any CPU
+		{93E3D838-4839-4F1D-BC9E-A2E5F7CD9FA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93E3D838-4839-4F1D-BC9E-A2E5F7CD9FA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0820E03B-8CBD-402A-B361-7F12EBDEA0B9}
+	EndGlobalSection
+EndGlobal

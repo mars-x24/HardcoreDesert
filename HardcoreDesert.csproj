@@ -1,0 +1,64 @@
+﻿<Project>
+  <PropertyGroup Label="Configuration">    
+    <!-- Please set your mod ID here -->
+    <AssemblyName>HardcoreDesert</AssemblyName>
+    <!-- Please define the C# root namespace for your mod here -->
+    <RootNamespace>HardcoreDesert</RootNamespace>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <TargetFramework>net471</TargetFramework>
+    <CryoFallSdk>$(ProjectDir)..\CryoFall.Mod.Sdk\</CryoFallSdk>
+    <CryoFallSdk Condition="!Exists('$(CryoFallSdk)')">$(ProjectDir)..\..\..\Core\CryoFall.Mod.Sdk\</CryoFallSdk>
+    <CryoFallSdk Condition="!Exists('$(CryoFallSdk)')">"CryoFall SDK cannot be located. Please ensure the mod csproj is located at CryoFall/Data/Mods"</CryoFallSdk>
+  </PropertyGroup>    
+  
+  <Import Project="$(CryoFallSdk)Sdk.props" />    
+  
+  <ItemGroup>
+    <Compile Remove="Localization\**" />
+    <None Remove="Localization\**" />
+    <Page Remove="Localization\**" />
+  </ItemGroup>    
+  
+  <ItemGroup>
+    <Content Include="ToDo.txt" />
+  </ItemGroup>    
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Core.cpk\AtomicTorch.CBND.CoreMod.csproj" />
+  </ItemGroup>    
+  
+  <ItemGroup>
+    <Page Update="UI\Controls\Game\Items\Controls\HotbarOverlays\HotbarItemVehicleRemoteOverlayControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Game\Items\Controls\SlotOverlays\ItemSlotStorageFridgeIconOverlayControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Game\Items\Controls\SlotOverlays\ItemSlotStorageIconOverlayControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Game\Items\Controls\VehicleRemoteControl\WindowVehicleRemoteControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Game\WorldObjects\Character\CharacterOverlayControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Game\WorldObjects\Storage\StorageIconControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Game\WorldObjects\Storage\WindowStorageFridgeContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Game\WorldObjects\Storage\WindowStorageContainer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>    
+  
+  <ItemGroup>
+    <Folder Include="Scripts\Technologies\Tier3\Construction\" />
+  </ItemGroup>  
+</Project>

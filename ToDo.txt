@@ -1,0 +1,12 @@
+﻿meteore event tyrant missile
+
+icon sur bag
+
+cooler
+
+prag keinite bag
+
+
+namespace storage, déplacer base storage
+
+mettre l'item directement dans le bag
