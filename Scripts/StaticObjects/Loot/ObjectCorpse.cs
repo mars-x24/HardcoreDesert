@@ -53,6 +53,7 @@
     //MOD
     public static void ServerSetupCorpse(
         IStaticWorldObject objectCorpse,
+        uint forDeadCharacterId,
         IProtoCharacterMob protoCharacterMob,
         Vector2F tileOffset,
         bool isFlippedHorizontally,
@@ -63,6 +64,7 @@
       publicState.TileOffset = tileOffset;
       publicState.IsFlippedHorizontally = isFlippedHorizontally;
       publicState.DeathTime = Server.Game.FrameTime;
+      publicState.DeadCharacterId = forDeadCharacterId;
       publicState.Level = level.HasValue ? level.Value : 1;
 
       // re-initialize the object physics
@@ -272,6 +274,9 @@
 
     public class PublicState : StaticObjectPublicState
     {
+      [TempOnly]
+      public uint DeadCharacterId { get; set; }
+
       [SyncToClient(isSendChanges: false)]
       public double DeathTime { get; set; }
 

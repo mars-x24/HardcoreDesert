@@ -95,10 +95,10 @@
                   .Add<ItemAmmo300ArmorPiercing>(count: 60, weight: 1, condition: T4Specialized)
                   .Add<ItemAmmo300Incendiary>(count: 60, weight: 1, condition: T4Specialized)
                   .Add<ItemAmmo50SH>(count: 80, weight: 1, condition: T4Specialized)
-                  .Add<ItemAmmoGrenadeHE>(count: 20, weight: 1 / 2.0, condition: T3Specialized)
-                  .Add<ItemAmmoGrenadeIncendiary>(count: 20, weight: 1 / 2.0, condition: T4Specialized)
-                  .Add<ItemAmmoGrenadeFragmentation>(count: 20, weight: 1 / 2.0, condition: T4Specialized)
-                  .Add<ItemAmmoGrenadeFreeze>(count: 20, weight: 1 / 3.0, condition: T5Specialized)
+                  .Add<ItemAmmoGrenadeHE>(count: 10, weight: 1 / 2.0, condition: T3Specialized)
+                  .Add<ItemAmmoGrenadeIncendiary>(count: 10, weight: 1 / 2.0, condition: T4Specialized)
+                  .Add<ItemAmmoGrenadeFragmentation>(count: 10, weight: 1 / 2.0, condition: T4Specialized)
+                  .Add<ItemAmmoGrenadeFreeze>(count: 10, weight: 1 / 3.0, condition: T5Specialized)
           );
 
       // components and high value items
@@ -152,7 +152,7 @@
           );
 
       // weapons
-      droplist.Add(
+      /*droplist.Add(
               weight: 1 / 2.0,
               // require reaching particular tier before the weapon could be acquired there
               condition: T3Specialized,
@@ -169,10 +169,10 @@
           //.Add<ItemMachinegun300>(count: 1, weight: 1 / 2.0, condition: T4Specialized)
           //.Add<ItemRifle300>(count: 1, weight: 1 / 2.0, condition: T5Specialized)
           //.Add<ItemGrenadeLauncherMulti>(count: 1, weight: 1 / 4.0, condition: T5Specialized)
-          );
+          );*/
 
       // equipment
-      droplist.Add(
+      /*droplist.Add(
               weight: 1 / 2.0,
               nestedList:
               new DropItemsList(outputs: 1)
@@ -187,7 +187,7 @@
           //.Add<ItemAssaultArmor>(count: 1, weight: 1 / 2.0, condition: T4Specialized)
           //.Add<ItemApartSuit>(count: 1, weight: 1 / 3.0, condition: T4Specialized)
           //.Add<ItemSuperHeavySuit>(count: 1, weight: 1 / 3.0, condition: T5Specialized)
-          );
+          );*/
 
       // devices & drones
       //droplist.Add(

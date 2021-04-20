@@ -34,7 +34,7 @@
 
     public const string NotificationCannotMoveEquip = "You have to remove items from the inventory before changing";
 
-    public const string NotificationCannotMoveWithBags = "You have to remove all bags from the inventory before changing";
+    //public const string NotificationCannotMoveWithBags = "You have to remove all bags from the inventory before changing";
 
     public override string Description => "Increase your inventory size to store your belongings.";
 
@@ -84,9 +84,9 @@
       {
         var privateState = PlayerCharacter.GetPrivateState(character);
 
-        bool containsBag = privateState.ContainerInventory.GetItemsOfProto<ProtoItemStorage>().ToList().Count > 0;
+        //bool containsBag = privateState.ContainerInventory.GetItemsOfProto<ProtoItemStorage>().ToList().Count > 0;
 
-        bool canRemove = !containsBag;
+        bool canRemove = true;// !containsBag;
 
         if (canRemove)
         {
@@ -106,7 +106,8 @@
           {
             NotificationSystem.ClientShowNotification(
                   NotificationCannotMoveEquipTitle,
-                  containsBag ? NotificationCannotMoveWithBags : NotificationCannotMoveEquip,
+                  NotificationCannotMoveEquip,
+                  //containsBag ? NotificationCannotMoveWithBags : NotificationCannotMoveEquip,
                   NotificationColor.Bad,
                   this.Icon);
           }

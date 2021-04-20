@@ -1,9 +1,11 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Storage
 {
-  using AtomicTorch.CBND.CoreMod.Items.Storage;
+  using AtomicTorch.CBND.CoreMod.Characters.Player;
   using AtomicTorch.CBND.CoreMod.StaticObjects;
   using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
+  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Data;
   using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Storage.Data;
+  using AtomicTorch.CBND.CoreMod.UI.Services;
   using AtomicTorch.CBND.GameApi.Data.Items;
   using AtomicTorch.CBND.GameApi.Scripting;
   using AtomicTorch.GameEngine.Common.Client.MonoGame.UI;
@@ -38,9 +40,34 @@
           instance.RefreshViewModel();
         }
 
-        ClientCurrentInteractionMenu.RegisterMenuWindow(instance);
-        ClientCurrentInteractionMenu.Open();
+        if (CloseCurrentWindow(itemStorage))
+        {
+          ClientCurrentInteractionMenu.RegisterMenuWindow(instance);
+          ClientCurrentInteractionMenu.Open();
+        }
       }
+    }
+
+    private static bool CloseCurrentWindow(IItem itemStorage)
+    {
+      var CurrentCharacter = Api.Client.Characters.CurrentPlayerCharacter;
+      var playerPrivateState = PlayerCharacter.GetPrivateState(CurrentCharacter);
+      if (itemStorage.Container == playerPrivateState.ContainerInventory ||
+         itemStorage.Container == playerPrivateState.ContainerHotbar)
+      {
+        return true;
+      }
+
+      if (WindowsManager.OpenedWindowsCount > 0)
+      {
+        foreach (GameWindow gameWindow in WindowsManager.OpenedWindows)
+        {
+          if (gameWindow.DataContext is ViewModelWindowCrateContainer viewModelCrate)
+            return false;
+        }
+      }
+
+      return true;
     }
 
     protected override void InitControlWithWindow()

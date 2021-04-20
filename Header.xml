@@ -6,11 +6,18 @@
   <title>HardcoreDesert</title>
   <author>Discord:Mars#8365</author>
   <description>Queen and Tyrant in the desert</description>
-  <version>0.1.12</version>
-  <updated>15.04.2021</updated>
+  <version>0.1.13</version>
+  <updated>19.04.2021</updated>
   <!-- Mod type: 1=server, 2=client+server, 3=client -->
   <!-- Please note: mods of type 1 are ignored on client (cannot see and activate them)
                     mods of type 2 are enabled automatically when you're connecting to the server using them
-                    mods of type 3 are ignored on server (cannot see and activate them) -->
+                    mods of type 3 are ignored on server (cannot see and activate them) 
+                    
+                    0.1.13
+                    Can't put storage item in fridge
+                    You can now remove the backpack when there is a bag in the character inventory
+                    Fixed the storage interface when it is inside another chest
+                    
+                    -->
   <modtype>2</modtype>
 </root>

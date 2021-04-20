@@ -12,7 +12,7 @@
           .Add(GetTrigger<TriggerWorldInit>())
           .Add(GetTrigger<TriggerTimeInterval>().ConfigureForSpawn(TimeSpan.FromMinutes(30)));
 
-      spawnList.CreatePreset(interval: 140, padding: 1.5, useSectorDensity: false)
+      spawnList.CreatePreset(interval: 140, padding: 2, useSectorDensity: false)
                .AddExact<MobLargePragmiumBear>()
                .SetCustomPaddingWithSelf(79);
     }

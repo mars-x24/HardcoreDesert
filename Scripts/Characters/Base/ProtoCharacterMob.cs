@@ -42,7 +42,7 @@
       where TPublicState : CharacterMobPublicState, new()
       where TClientState : BaseCharacterClientState, new()
   {
-    public const double AggroStateDuration = 5 * 60; // 5 minutes
+    public const double AggroStateDuration = 30; // 30 seconds
 
     // If the mob is too far away from the spawn position, it should be despawned after the delay.
     private const int DespawnTileDistanceThreshold = 10; // 10+ tiles away
@@ -165,6 +165,7 @@
 
       var objectCorpse = ServerWorld.CreateStaticWorldObject<ObjectCorpse>(tilePosition);
       ObjectCorpse.ServerSetupCorpse(objectCorpse,
+                                     character.Id,
                                      (IProtoCharacterMob)character.ProtoCharacter,
                                      (Vector2F)(position - tilePosition.ToVector2D()),
                                      isFlippedHorizontally: isFlippedHorizontally,

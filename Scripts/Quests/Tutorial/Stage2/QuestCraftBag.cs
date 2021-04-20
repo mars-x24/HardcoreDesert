@@ -13,7 +13,7 @@
         "You may need more inventory space when running around. Having a bag can be useful for storing any medicine or food. Research and craft a bag.";
 
     public override string Hints =>
-        @"[*] ALT Left Click the bag to open it.";
+        @"[*] Click on this item while holding the Alt key to open it.";
 
     public override string Name => "Craft a bag";
 
