@@ -6,12 +6,15 @@
   <title>HardcoreDesert</title>
   <author>Discord:Mars#8365</author>
   <description>Queen and Tyrant in the desert</description>
-  <version>0.1.13</version>
-  <updated>19.04.2021</updated>
+  <version>0.1.14</version>
+  <updated>04.05.2021</updated>
   <!-- Mod type: 1=server, 2=client+server, 3=client -->
   <!-- Please note: mods of type 1 are ignored on client (cannot see and activate them)
                     mods of type 2 are enabled automatically when you're connecting to the server using them
                     mods of type 3 are ignored on server (cannot see and activate them) 
+                    
+                    0.1.14
+                    Higher level mobs hit harder
                     
                     0.1.13
                     Can't put storage item in fridge

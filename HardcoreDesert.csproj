@@ -52,9 +52,6 @@
     <Page Update="UI\Controls\Game\WorldObjects\Storage\WindowStorageContainer.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Controls\Game\WorldObjects\RecyclingTable\WindowRecyclingTable.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>    
   
   <ItemGroup>

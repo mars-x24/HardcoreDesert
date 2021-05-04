@@ -28,17 +28,17 @@ namespace AtomicTorch.CBND.CoreMod.Characters
       return RandomLevels[RandomHelper.Next(0, RandomLevels.Count)];
     }
 
-    public static float GetLevelIncreasePourcent(int level)
+    public static float GetLevelIncreaseHealthPourcent(int level)
+    {
+      return GetHealthFactor(level) * 100.0f;
+    }
+
+    public static float GetHealthFactor(int level)
     {
       if (level <= 0)
         return 0;
 
-      return GetLevelFactor(level - 1) * 100.0f;
-    }
-
-    public static float GetLevelFactor(int level)
-    {
-      return level;
+      return level - 1;
     }
 
     private static List<int> RandomLevels = new List<int>() {
@@ -47,5 +47,18 @@ namespace AtomicTorch.CBND.CoreMod.Characters
       3, 3, 3, 3,
       4, 4,
       5};
+
+    public static float GetLevelIncreaseDamagePourcent(bool isBoss, int level)
+    {
+      return GetDamageFactor(isBoss, level) * 100.0f;
+    }
+
+    public static float GetDamageFactor(bool isBoss, int level)
+    {
+      if (isBoss || level <= 0)
+        return 0;
+
+      return (level - 1) * 0.125f;
+    }
   }
 }

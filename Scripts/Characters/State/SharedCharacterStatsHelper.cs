@@ -43,7 +43,13 @@
         //MOD
         if (privateState is CharacterMobPrivateState prMob && publicState is CharacterMobPublicState puMob)
         {
-          tempStatsCache.AddPercent(prMob.GameObject.ProtoGameObject, StatName.HealthMax, LevelHelper.GetLevelIncreasePourcent(puMob.Level));
+          double healthMaxAddpercent = LevelHelper.GetLevelIncreaseHealthPourcent(puMob.Level);
+          tempStatsCache.AddPercent(prMob.GameObject.ProtoGameObject, StatName.HealthMax, healthMaxAddpercent);
+
+          ProtoCharacterMob character = puMob.GameObject.ProtoGameObject as ProtoCharacterMob;
+          bool isBoss = character is null ? false : character.IsBoss;
+          double damageFactor = LevelHelper.GetDamageFactor(isBoss, puMob.Level);
+          tempStatsCache.AddValue(prMob.GameObject.ProtoGameObject, StatName.AttackFinalDamageMultiplier, damageFactor);
         }
 
 

@@ -267,6 +267,7 @@
         var mobPrivateState = GetPrivateState(characterMob);
         mobPrivateState.CurrentAggroCharacter = weaponCache.Character;
         mobPrivateState.CurrentAggroTimeRemains = AggroStateDuration;
+
         //Logger.Dev(
         //    $"Mob damaged by player, let's aggro: {targetObject} by {mobPrivateState.CurrentAggroCharacter} on {mobPrivateState.CurrentAggroTimeRemains:F2}s");
 
