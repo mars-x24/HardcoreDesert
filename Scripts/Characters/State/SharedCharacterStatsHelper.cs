@@ -48,8 +48,8 @@
 
           ProtoCharacterMob character = puMob.GameObject.ProtoGameObject as ProtoCharacterMob;
           bool isBoss = character is null ? false : character.IsBoss;
-          double damageFactor = LevelHelper.GetDamageFactor(isBoss, puMob.Level);
-          tempStatsCache.AddValue(prMob.GameObject.ProtoGameObject, StatName.AttackFinalDamageMultiplier, damageFactor);
+          double damageFactor = LevelHelper.GetLevelIncreaseDamagePourcent(isBoss, puMob.Level);
+          tempStatsCache.AddPercent(prMob.GameObject.ProtoGameObject, StatName.AttackFinalDamageMultiplier, damageFactor);
         }
 
 

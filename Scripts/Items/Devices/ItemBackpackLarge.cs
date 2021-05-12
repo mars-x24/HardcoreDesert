@@ -5,7 +5,7 @@
 
     public override byte SlotsCount => 20;
 
-    public override string Name => "Large backpack";
+    public override string Name => "Cloth backpack";
 
     public override uint DurabilityMax => 30000;
 

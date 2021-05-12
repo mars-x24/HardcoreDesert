@@ -12,7 +12,7 @@ namespace AtomicTorch.CBND.CoreMod.Characters
       if (publicState is null)
         return;
 
-      publicState.Level = GetLevel(character);
+      publicState.Level = GetLevel(character); 
 
       //psMob.CurrentStats.ServerSetHealthMax(psMob.CurrentStats.HealthMax * GetLevelIncreaseFactor(psMob.Level));
     }
@@ -58,7 +58,7 @@ namespace AtomicTorch.CBND.CoreMod.Characters
       if (isBoss || level <= 0)
         return 0;
 
-      return (level - 1) * 0.125f;
+      return (level - 1) * 0.25f;
     }
   }
 }
