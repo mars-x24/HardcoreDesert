@@ -6,7 +6,7 @@ namespace AtomicTorch.CBND.CoreMod.Items.Devices
   { 
     public override byte SlotsCount => 40;
 
-    public override string Name => "Pragmium heavy backpack";
+    public override string Name => "Pragmium backpack";
 
     public override uint DurabilityMax => 50000;
 

@@ -10,6 +10,7 @@ using AtomicTorch.CBND.GameApi.Data.Items;
 using AtomicTorch.CBND.GameApi.Data.State;
 using AtomicTorch.CBND.GameApi.Resources;
 using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.GameEngine.Common.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -184,8 +185,9 @@ namespace AtomicTorch.CBND.CoreMod.Items.Storage
         return;
       }
 
-      // reduce durability proportionally to the removed charge
-      ItemDurabilitySystem.ServerModifyDurability(item, -(int)Math.Ceiling(energyAmountUsed));
+      // reduce durability proportionally to the removed charge, durability as int is dropping to fast
+      if(RandomHelper.Next(20) == 1)
+        ItemDurabilitySystem.ServerModifyDurability(item, -energyAmountUsed, true);
     }
 
 

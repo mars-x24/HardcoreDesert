@@ -1,7 +1,6 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Storage.Data
 {
   using AtomicTorch.CBND.CoreMod.Items.Storage;
-  using AtomicTorch.CBND.CoreMod.StaticObjects;
   using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
   using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Data;
   using AtomicTorch.CBND.GameApi.Data.Items;
@@ -23,5 +22,6 @@
     public ViewModelItemsContainerExchange ViewModelItemsContainerExchange { get; }
 
     public IItem ItemStorage { get; }
+
   }
 }
