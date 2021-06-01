@@ -12,7 +12,7 @@
           .Add(GetTrigger<TriggerWorldInit>())
           .Add(GetTrigger<TriggerTimeInterval>().ConfigureForSpawn(TimeSpan.FromMinutes(30)));
 
-      spawnList.CreatePreset(interval: 140, padding: 8, useSectorDensity: false)
+      spawnList.CreatePreset(interval: 140, padding: 4, useSectorDensity: false)
                .AddExact<MobDesertPrincess>()
                .SetCustomPaddingWithSelf(70);
     }

@@ -107,13 +107,13 @@
           break;
 
         case VehicleStatus.InWorld:
-          if (!PveSystem.ServerIsPvE)
-          {
-            Logger.Warning("Cannot take a vehicle from world on a PvP server", character);
-            return TakeVehicleResult.Unknown;
-          }
+          //if (!PveSystem.ServerIsPvE)
+          //{
+          //  Logger.Warning("Cannot take a vehicle from world on a PvP server", character);
+          //  return TakeVehicleResult.Unknown;
+          //}
 
-          // allow to take a vehicle from world in PvE only
+          // allow to take
           break;
 
         case VehicleStatus.InUse:
