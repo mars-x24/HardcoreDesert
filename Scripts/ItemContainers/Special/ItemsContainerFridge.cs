@@ -3,6 +3,8 @@
   using AtomicTorch.CBND.CoreMod.Items.Devices;
   using AtomicTorch.CBND.CoreMod.Items.Storage;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Fridges;
+  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.TradingStations;
+  using AtomicTorch.CBND.GameApi.Data;
   using AtomicTorch.CBND.GameApi.Data.Items;
 
   public class ItemsContainerFridge : ItemsContainerDefault, IProtoItemsContainerFridge
@@ -15,10 +17,18 @@
       if (obj is IProtoItemStorage)
         return false;
 
-      if (obj is IProtoItemBackpack)
-        return false;
+      if (!this.IsTradingStation(context.Container.Owner.ProtoGameObject))
+      {
+        if (obj is IProtoItemBackpack)
+          return false;
+      }
 
       return true;
+    }
+
+    private bool IsTradingStation(IProtoGameObject worldObject)
+    {
+      return worldObject is ObjectTradingStationSmallFridge || worldObject is ObjectTradingStationLargeFridge;
     }
 
     public double SharedGetCurrentFoodFreshnessDecreaseCoefficient(IItemsContainer container)
