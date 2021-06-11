@@ -25,7 +25,7 @@
 
         public override double FireInterval => 1 / 2.5;
 
-        public override string Name => "Painted Energy cannon";
+        public override string Name => "Custom Energy cannon";
 
         public override double SpecialEffectProbability => 0.1;
 

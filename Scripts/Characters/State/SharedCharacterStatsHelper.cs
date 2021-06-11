@@ -45,9 +45,8 @@
         {
           double healthMaxAddpercent = LevelHelper.GetLevelIncreaseHealthPourcent(puMob.Level);
           tempStatsCache.AddPercent(prMob.GameObject.ProtoGameObject, StatName.HealthMax, healthMaxAddpercent);
-
-          ProtoCharacterMob character = puMob.GameObject.ProtoGameObject as ProtoCharacterMob;
-          bool isBoss = character is null ? false : character.IsBoss;
+        
+          bool isBoss = puMob.GameObject.ProtoGameObject is IProtoCharacterBoss;
           double damageFactor = LevelHelper.GetLevelIncreaseDamagePourcent(isBoss, puMob.Level);
           tempStatsCache.AddPercent(prMob.GameObject.ProtoGameObject, StatName.AttackFinalDamageMultiplier, damageFactor);
         }

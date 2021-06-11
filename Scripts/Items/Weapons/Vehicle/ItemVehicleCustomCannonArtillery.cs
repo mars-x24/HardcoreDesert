@@ -36,7 +36,7 @@
 
         public override double FireInterval => 1.5; // very slow
 
-        public override string Name => "Painted Artillery cannon";
+        public override string Name => "Custom Artillery cannon";
 
         // this way shells will have 12 tile radius + the shell itself has an explosion radius
         public override double RangeMultiplier => 1.2;
