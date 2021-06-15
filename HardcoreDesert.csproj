@@ -55,6 +55,7 @@
   </ItemGroup>    
   
   <ItemGroup>
+    <Folder Include="Scripts\Systems\NewFolder\" />
     <Folder Include="Scripts\Technologies\Tier3\Construction\" />
   </ItemGroup>  
 </Project>
