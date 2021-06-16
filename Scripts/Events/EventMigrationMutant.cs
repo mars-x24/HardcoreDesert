@@ -8,6 +8,7 @@
   using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
   using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
   using AtomicTorch.CBND.CoreMod.Systems.Notifications;
+  using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
   using AtomicTorch.CBND.CoreMod.Triggers;
   using AtomicTorch.CBND.CoreMod.Zones;
   using AtomicTorch.CBND.GameApi;
@@ -29,9 +30,7 @@
     public override ushort AreaRadius => 30;
 
     public override string Description =>
-        "Mutant lifeforms of this world seem to be enraged, protect your base.";
-
-    public override TimeSpan EventDuration => TimeSpan.FromMinutes(15);
+        "Mutant lifeforms of this world seem to be enraged, the estimated time for arrival is 5 minutes, protect your base!";
 
     public override double MinDistanceBetweenSpawnedObjects => 10;
 
@@ -40,12 +39,44 @@
 
     protected override double DelayHoursSinceWipe => 24 * EventConstants.ServerEventDelayMultiplier;
 
+    public override TimeSpan EventDuration
+    => this.EventDurationWithoutDelay + this.EventStartDelayDuration;
+
+    public TimeSpan EventDurationWithoutDelay => TimeSpan.FromMinutes(15);
+
+    public TimeSpan EventStartDelayDuration => TimeSpan.FromMinutes(5);
+
+    public double SharedGetTimeRemainsToEventStart(EventWithAreaPublicState publicState)
+    {
+      var time = IsServer
+                     ? Server.Game.FrameTime
+                     : Client.CurrentGame.ServerFrameTimeApproximated;
+      var eventCreatedTime = publicState.EventEndTime - this.EventDuration.TotalSeconds;
+      var timeSinceCreation = time - eventCreatedTime;
+      var result = this.EventStartDelayDuration.TotalSeconds - timeSinceCreation;
+      return Math.Max(result, 0);
+    }
+
+    protected override void ServerTryFinishEvent(ILogicObject activeEvent)
+    {
+      var timeRemainsToEventStart = this.SharedGetTimeRemainsToEventStart(activeEvent.GetPublicState<EventWithAreaPublicState>());
+      if(timeRemainsToEventStart + 20 <= 0)
+        base.ServerTryFinishEvent(activeEvent);
+    }
+
     protected override bool ServerIsValidSpawnPosition(Vector2Ushort spawnPosition)
     {
       return true;
     }
 
     protected override void ServerSpawnObjects(ILogicObject activeEvent, Vector2Ushort circlePosition, ushort circleRadius, List<IWorldObject> spawnedObjects)
+    {
+      ServerTimersSystem.AddAction(
+        delaySeconds: this.EventStartDelayDuration.TotalSeconds,
+        () => ServerSpawnObjectsDelay(activeEvent, circlePosition, circleRadius, spawnedObjects));
+    }
+
+    protected void ServerSpawnObjectsDelay(ILogicObject activeEvent, Vector2Ushort circlePosition, ushort circleRadius, List<IWorldObject> spawnedObjects)
     {
       var publicState = GetPublicState(activeEvent);
 

@@ -299,7 +299,7 @@
     {
       byte? tileHeight = null;
 
-      var list = ServerWorldService.GetStaticWorldObjectsOfProtoInBounds<IProtoObjectStructure>(
+      var list = ServerWorldService.GetStaticWorldObjectsOfProtoInBounds<IProtoStaticWorldObject>(
         new RectangleInt(characterNpc.TilePosition.X, characterNpc.TilePosition.Y, 1, 1).Inflate(25))
         .Where(S => S.PhysicsBody.HasAnyShapeCollidingWithGroup(CollisionGroups.HitboxMelee))
         .OrderBy(S => characterNpc.Position.DistanceTo(S.TilePosition.ToVector2D())).ToList();
@@ -312,7 +312,7 @@
       IStaticWorldObject structure = null;
       foreach (var worldObject in list)
       {
-        if (!(worldObject.ProtoGameObject is IProtoObjectStructure))
+        if (!(worldObject.ProtoGameObject is IDamageableProtoWorldObject))
           continue;
 
         var tile = worldObject.OccupiedTile;
@@ -364,7 +364,7 @@
       var weaponState = privateState.WeaponState;
 
       var lastTargetCharacter = privateState.CurrentTargetCharacter;
-      var lastTargetStructure = privateState.CurrentAggroStructure;
+      var lastTargetStructure = privateState.CurrentTargetStructure;
 
       var isRangedWeapon = weaponState.ProtoWeapon is IProtoItemWeaponRanged
                            || weaponState.ProtoWeapon is ProtoItemMobWeaponRangedNoAim;
@@ -382,7 +382,7 @@
                                            out var distanceToTarget,
                                            out var directionToEnemyPosition,
                                            out var directionToEnemyHitbox);
-      
+
       //if(distanceToTargetStructure < distanceToTarget || double.IsNaN(distanceToTarget))
       //{
       //  distanceToTarget = distanceToTargetStructure;
@@ -391,6 +391,7 @@
 
       //  targetCharacter = null;
       //}
+
       if(targetCharacter is null)
       {
         distanceToTarget = distanceToTargetStructure;
@@ -416,9 +417,8 @@
         targetStructure = null;
       }
 
-      privateState.IsRetreating = false;
       privateState.CurrentTargetCharacter = targetCharacter;
-      privateState.CurrentAggroStructure = targetStructure;
+      privateState.CurrentTargetStructure = targetStructure;
 
       rotationAngleRad = characterNpc.GetPublicState<CharacterMobPublicState>()
                                      .AppliedInput
@@ -472,10 +472,16 @@
                  || worldObject.ProtoGameObject is IProtoVehicle;
         }
 
-        var currentPosition = characterNpc.Position.ToVector2Ushort();
-        if (!isAttacking && privateState.LastPosition == currentPosition)
+        var currentPosition = characterNpc.Position;
+        if (!isAttacking 
+          && Math.Round(privateState.LastPosition.X, 1) == Math.Round(currentPosition.X, 1)
+          && Math.Round(privateState.LastPosition.Y, 1) == Math.Round(currentPosition.Y, 1))
         {
-          isAttacking = true;
+          //I am stuck, attack something
+          if (movementDirection != Vector2F.Zero && privateState.CurrentTargetCharacter != null)
+          {
+            isAttacking = true;
+          }
         }
 
         privateState.LastPosition = currentPosition;
@@ -489,7 +495,7 @@
       }
 
       // not retreating
-      if (lastTargetCharacter != targetCharacter || lastTargetStructure != targetStructure)
+      if (lastTargetCharacter != targetCharacter)
       {
         // changed an enemy
         if (characterNpc.ProtoCharacter is IProtoCharacterMob protoMob)

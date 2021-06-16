@@ -7,10 +7,11 @@
   public class CharacterMobEnragedPrivateState : CharacterMobPrivateState
   {
     [TempOnly]
-    public IStaticWorldObject CurrentAggroStructure { get; set; }
+    public IStaticWorldObject CurrentTargetStructure { get; set; }
 
 
     [TempOnly]
-    public Vector2Ushort LastPosition { get; set; }
+    public Vector2D LastPosition { get; set; }
+
   }
 }

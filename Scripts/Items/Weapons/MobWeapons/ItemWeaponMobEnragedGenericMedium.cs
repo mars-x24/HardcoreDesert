@@ -19,7 +19,7 @@
     public override void SharedOnHit(WeaponFinalCache weaponCache, IWorldObject damagedObject, double damage, WeaponHitData hitData, out bool isDamageStop)
     {
       weaponCache.AllowNpcToNpcDamage = true;
-
+      
       base.SharedOnHit(weaponCache, damagedObject, damage, hitData, out isDamageStop);
     }
 
