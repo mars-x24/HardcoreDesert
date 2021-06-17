@@ -44,7 +44,7 @@
 
     public TimeSpan EventDurationWithoutDelay => TimeSpan.FromMinutes(15);
 
-    public TimeSpan EventStartDelayDuration => TimeSpan.FromMinutes(5);
+    public TimeSpan EventStartDelayDuration => TimeSpan.FromMinutes(1);
 
     public double SharedGetTimeRemainsToEventStart(EventWithAreaPublicState publicState)
     {
@@ -89,21 +89,25 @@
 
       if (tile.StaticObjects.Count > 0)
       {
-        claimObject = tile.StaticObjects[0];
-        if(claimObject.ProtoGameObject is IProtoObjectLandClaim claim)
+        foreach (var o in tile.StaticObjects)
         {
-          claim = claimObject.ProtoGameObject as IProtoObjectLandClaim;
-          
-          if (claim is ObjectLandClaimT1)
-            mobCount = 1;
-          else if (claim is ObjectLandClaimT2)
-            mobCount = 4;
-          else if (claim is ObjectLandClaimT3)
-            mobCount = 8;
-          else if (claim is ObjectLandClaimT4)
-            mobCount = 13;
-          else if (claim is ObjectLandClaimT5)
-            mobCount = 20;
+          if (o.ProtoGameObject is IProtoObjectLandClaim claim)
+          {
+            claimObject = o;
+
+            claim = claimObject.ProtoGameObject as IProtoObjectLandClaim;
+
+            if (claim is ObjectLandClaimT1)
+              mobCount = 1;
+            else if (claim is ObjectLandClaimT2)
+              mobCount = 4;
+            else if (claim is ObjectLandClaimT3)
+              mobCount = 8;
+            else if (claim is ObjectLandClaimT4)
+              mobCount = 13;
+            else if (claim is ObjectLandClaimT5)
+              mobCount = 20;
+          }
         }
       }
 

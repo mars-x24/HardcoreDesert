@@ -34,7 +34,7 @@
           damageValue: 30,
           armorPiercingCoef: 0.5,
           finalDamageMultiplier: 1,
-          rangeMax: 1.5,
+          rangeMax: 2.0,
           damageDistribution: new DamageDistribution().Set(DamageType.Impact, 1.0));
     }
   }

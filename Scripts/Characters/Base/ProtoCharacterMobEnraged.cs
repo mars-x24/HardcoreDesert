@@ -1,6 +1,6 @@
 ﻿using AtomicTorch.CBND.GameApi.Data.Characters;
-using AtomicTorch.CBND.GameApi.Data.World;
 using AtomicTorch.GameEngine.Common.Primitives;
+using HardcoreDesert.Scripts.Characters.Base;
 
 namespace AtomicTorch.CBND.CoreMod.Characters
 {
@@ -12,7 +12,8 @@ namespace AtomicTorch.CBND.CoreMod.Characters
         <TPrivateState,
             TPublicState,
             TClientState>,
-        IProtoCharacterMob
+        IProtoCharacterMob,
+        IProtoDamageToNPC
       where TPrivateState : CharacterMobEnragedPrivateState, new()
       where TPublicState : CharacterMobPublicState, new()
       where TClientState : BaseCharacterClientState, new()

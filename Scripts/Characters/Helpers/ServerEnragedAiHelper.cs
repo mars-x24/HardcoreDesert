@@ -299,7 +299,7 @@
     {
       byte? tileHeight = null;
 
-      var list = ServerWorldService.GetStaticWorldObjectsOfProtoInBounds<IProtoStaticWorldObject>(
+      var list = ServerWorldService.GetStaticWorldObjectsOfProtoInBounds<IProtoObjectStructure>(
         new RectangleInt(characterNpc.TilePosition.X, characterNpc.TilePosition.Y, 1, 1).Inflate(25))
         .Where(S => S.PhysicsBody.HasAnyShapeCollidingWithGroup(CollisionGroups.HitboxMelee))
         .OrderBy(S => characterNpc.Position.DistanceTo(S.TilePosition.ToVector2D())).ToList();
