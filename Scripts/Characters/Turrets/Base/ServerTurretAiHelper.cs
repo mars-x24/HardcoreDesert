@@ -6,6 +6,7 @@
   using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
   using AtomicTorch.CBND.CoreMod.Systems.Faction;
   using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
+  using AtomicTorch.CBND.CoreMod.Systems.PvE;
   using AtomicTorch.CBND.CoreMod.Vehicles;
   using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.Data.Logic;
@@ -212,6 +213,12 @@
       if (targetCharacter.ProtoGameObject.GetType() != typeof(PlayerCharacter) && targetCharacter.ProtoGameObject is not IProtoCharacterMob)
       {
         // don't react on spectator and other special player character prototypes
+        return false;
+      }
+
+      //MOD
+      if (targetCharacter.ProtoGameObject.GetType() == typeof(PlayerCharacter) && PveSystem.ServerIsPvE)
+      {
         return false;
       }
 
