@@ -4,7 +4,6 @@
   using AtomicTorch.CBND.CoreMod.Characters.Mobs;
   using AtomicTorch.CBND.CoreMod.Characters.Player;
   using AtomicTorch.CBND.CoreMod.Helpers;
-  using AtomicTorch.CBND.CoreMod.Helpers.Server;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
   using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
   using AtomicTorch.CBND.CoreMod.Systems.Notifications;
@@ -12,6 +11,7 @@
   using AtomicTorch.CBND.CoreMod.Triggers;
   using AtomicTorch.CBND.CoreMod.Zones;
   using AtomicTorch.CBND.GameApi;
+  using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.Data.Logic;
   using AtomicTorch.CBND.GameApi.Data.World;
   using AtomicTorch.CBND.GameApi.Extensions;
@@ -21,7 +21,6 @@
   using AtomicTorch.GameEngine.Common.Primitives;
   using System;
   using System.Collections.Generic;
-  using System.Linq;
 
   public class EventMigrationMutant : ProtoEventDrop
   {
@@ -32,7 +31,7 @@
     public override string Description =>
         "Mutant lifeforms of this world seem to be enraged, the estimated time for arrival is 5 minutes, protect your base!";
 
-    public override double MinDistanceBetweenSpawnedObjects => 10;
+    public override double MinDistanceBetweenSpawnedObjects => 5;
 
     [NotLocalizable]
     public override string Name => "Migration (Mutant)";
@@ -42,9 +41,16 @@
     public override TimeSpan EventDuration
     => this.EventDurationWithoutDelay + this.EventStartDelayDuration;
 
-    public TimeSpan EventDurationWithoutDelay => TimeSpan.FromMinutes(15);
+    public TimeSpan EventDurationWithoutDelay => TimeSpan.FromMinutes(2);
 
     public TimeSpan EventStartDelayDuration => TimeSpan.FromMinutes(1);
+
+    // ReSharper disable once StaticMemberInGenericType
+    private static readonly List<ICharacter> TempListPlayersInView = new();
+
+    private static readonly IWorldServerService ServerWorld = IsServer
+                                                              ? Server.World
+                                                              : null;
 
     public double SharedGetTimeRemainsToEventStart(EventWithAreaPublicState publicState)
     {
@@ -60,8 +66,55 @@
     protected override void ServerTryFinishEvent(ILogicObject activeEvent)
     {
       var timeRemainsToEventStart = this.SharedGetTimeRemainsToEventStart(activeEvent.GetPublicState<EventWithAreaPublicState>());
-      if(timeRemainsToEventStart + 20 <= 0)
-        base.ServerTryFinishEvent(activeEvent);
+      if (timeRemainsToEventStart != 0)
+        return;
+
+      var canFinish = true;
+
+      foreach (var spawnedObject in GetPrivateState(activeEvent).SpawnedWorldObjects)
+      {
+        if (!canFinish)
+          break;
+
+        if (spawnedObject.IsDestroyed)
+          continue;
+
+        if (spawnedObject is not ICharacter)
+          continue;
+
+        // should despawn
+        // check that nobody is observing the mob
+        var playersInView = TempListPlayersInView;
+        playersInView.Clear();
+        ServerWorld.GetCharactersInView((ICharacter)spawnedObject,
+                                        playersInView,
+                                        onlyPlayerCharacters: true);
+
+        foreach (var playerCharacter in playersInView)
+        {
+          if (playerCharacter.ServerIsOnline && playerCharacter.ProtoCharacter is not PlayerCharacterSpectator)
+          {
+            // still has a spawned object which cannot be destroyed as it's observed by a player
+            canFinish = false;
+            break;
+          }
+        }
+      }
+
+      if (canFinish)
+      {
+        // destroy after a second delay
+        // to ensure the public state is synchronized with the clients
+        ServerTimersSystem.AddAction(
+            1,
+            () =>
+            {
+              if (!activeEvent.IsDestroyed)
+              {
+                Server.World.DestroyObject(activeEvent);
+              }
+            });
+      }
     }
 
     protected override bool ServerIsValidSpawnPosition(Vector2Ushort spawnPosition)
