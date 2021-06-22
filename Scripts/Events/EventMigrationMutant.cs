@@ -41,9 +41,9 @@
     public override TimeSpan EventDuration
     => this.EventDurationWithoutDelay + this.EventStartDelayDuration;
 
-    public TimeSpan EventDurationWithoutDelay => TimeSpan.FromMinutes(2);
+    public TimeSpan EventDurationWithoutDelay => TimeSpan.FromMinutes(15);
 
-    public TimeSpan EventStartDelayDuration => TimeSpan.FromMinutes(1);
+    public TimeSpan EventStartDelayDuration => TimeSpan.FromMinutes(5);
 
     // ReSharper disable once StaticMemberInGenericType
     private static readonly List<ICharacter> TempListPlayersInView = new();
