@@ -144,6 +144,7 @@
                   .Add<ItemNeuralEnhancer>(count: 1, weight: 1, condition: T4Specialized)
                   // misc
                   .Add<ItemCigarettes>(count: 5, weight: 5, condition: T3Specialized)
+                  .Add<ItemJellyBeans>(count: 5, weight: 5, condition: T3Specialized)
                   //mats
                   .Add<ItemGoldNugget>(count: 10, weight: 3)
                   .Add<ItemIngotCopper>(count: 20, weight: 2)

@@ -1,4 +1,4 @@
-﻿using AtomicTorch.CBND.CoreMod.Helpers.Server;
+﻿using AtomicTorch.CBND.CoreMod.Helpers;
 using AtomicTorch.CBND.GameApi.Scripting;
 using AtomicTorch.GameEngine.Common.Helpers;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace AtomicTorch.CBND.CoreMod.Characters
       if (publicState is null)
         return;
 
-      publicState.Level = GetLevel(character); 
+      publicState.Level = GetLevel(character);
 
       //psMob.CurrentStats.ServerSetHealthMax(psMob.CurrentStats.HealthMax * GetLevelIncreaseFactor(psMob.Level));
     }
@@ -22,7 +22,7 @@ namespace AtomicTorch.CBND.CoreMod.Characters
       if (character is null)
         return 1;
 
-      if (character.IsBoss && Api.IsServer && (ServerLocalModeHelper.IsLocalServer || Api.IsEditor))
+      if (character.IsBoss && Api.IsServer && (SharedLocalServerHelper.IsLocalServer || Api.IsEditor))
         return 1;
 
       return RandomLevels[RandomHelper.Next(0, RandomLevels.Count)];

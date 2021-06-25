@@ -1,7 +1,7 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Characters.Mobs
 {
   using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
-  using AtomicTorch.CBND.CoreMod.Helpers.Server;
+  using AtomicTorch.CBND.CoreMod.Helpers;
   using AtomicTorch.CBND.CoreMod.Items.Ammo;
   using AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons;
   using AtomicTorch.CBND.CoreMod.SoundPresets;
@@ -101,7 +101,7 @@
 
       var key = "BossDifficultyPragmiumKing";
       // by default the boss is balanced for 5 players
-      var defaultValue = Api.IsServer && (ServerLocalModeHelper.IsLocalServer || Api.IsEditor)
+      var defaultValue = Api.IsServer && (SharedLocalServerHelper.IsLocalServer || Api.IsEditor)
                              ? 1.0
                              : 5.0;
 
