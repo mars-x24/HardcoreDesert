@@ -24,7 +24,7 @@
         protected override void PrepareEffects(EffectActionsList effects)
         {
             effects
-                .WillAddEffect<StatusEffectHigh>(intensity: 0.07);
+                .WillAddEffect<StatusEffectHigh>(intensity: 0.10);
         }
     }
 }
