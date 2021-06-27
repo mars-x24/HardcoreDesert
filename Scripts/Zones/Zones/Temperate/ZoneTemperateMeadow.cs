@@ -15,7 +15,7 @@
                 .Add(GetScript<SpawnMushroomsTemperate>())
                 // default density for herbs compared to forest, we want them to spawn here a lot
                 .Add(GetScript<SpawnResourceHerbs>())
-				.Add(GetScript<SpawnBushJelly>().Configure(densityMultiplier: 0.2));
+				.Add(GetScript<SpawnBushJelly>().Configure(densityMultiplier: 0.15));
 
             // loot
             scripts

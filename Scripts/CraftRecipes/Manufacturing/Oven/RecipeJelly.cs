@@ -23,15 +23,16 @@
 
             inputItems.Add<ItemBerriesJelly>(count: 3);
             inputItems.Add<ItemSugar>(count: 3);
+			inputItems.Add<ItemBones>(count: 1);
 			inputItems.Add<ItemBottleWater>(count: 1);
 
             outputItems.Add<ItemJelly>();
 			outputItems.Add<ItemBottleEmpty>();
-
-            this.Icon = ClientItemIconHelper.CreateComposedIcon(
+		}
+            /*this.Icon = ClientItemIconHelper.CreateComposedIcon(
                 name: this.Id + "Icon",
                 primaryIcon: GetItem<ItemJelly>().Icon,
-                secondaryIcon: GetItem<ItemBerriesJelly>().Icon);
-        }
+                secondaryIcon: GetItem<ItemBerriesJelly>().Icon);*/
+        
     }
 }

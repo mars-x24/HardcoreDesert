@@ -12,7 +12,7 @@
     {
         public override string Description => "Sticky and tasty glowing fruit with a slight stimulant effect and high toxicity.";
 
-        public override TimeSpan FreshnessDuration => ExpirationDuration.Perishable;
+        public override TimeSpan FreshnessDuration => ExpirationDuration.Normal;
 
         public override string Name => "Jelly fruit";
 
@@ -22,7 +22,7 @@
 
         public override ushort OrganicValue => 8;
 
-        public override float StaminaRestore => 5;
+        public override float StaminaRestore => 10;
 
         protected override void PrepareEffects(EffectActionsList effects)
         {

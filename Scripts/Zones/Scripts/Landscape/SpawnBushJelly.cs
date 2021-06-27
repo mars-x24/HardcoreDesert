@@ -17,7 +17,7 @@
             // bushjelly
             spawnList.CreatePreset(interval: 30, padding: 2)
                      .Add<ObjectBushJelly>()
-                     .SetCustomPaddingWithSelf(50);
+                     .SetCustomPaddingWithSelf(60);
         }
     }
 }

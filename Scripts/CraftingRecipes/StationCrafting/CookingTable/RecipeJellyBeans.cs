@@ -2,12 +2,13 @@
 {
     using System;
     using AtomicTorch.CBND.CoreMod.Items.Food;
+	using AtomicTorch.CBND.CoreMod.Items.Medical;
     using AtomicTorch.CBND.CoreMod.Items.Generic;
     using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.CraftingStations;
     using AtomicTorch.CBND.CoreMod.Systems;
     using AtomicTorch.CBND.CoreMod.Systems.Crafting;
 
-    public class RecipeButter : Recipe.RecipeForStationCrafting
+    public class RecipeJellyBeans : Recipe.RecipeForStationCrafting
     {
         protected override void SetupRecipe(
             StationsList stations,
@@ -19,10 +20,16 @@
 
             craftDuration = CraftingDuration.Medium;
 
-            inputItems.Add<ItemMilk>(count:2);
-			inputItems.Add<ItemSalt>(count:1);
+            inputItems.Add<ItemBerriesJelly>(count:5);
+			inputItems.Add<ItemSugar>(count:20);
+			inputItems.Add<ItemButter>(count:1);
+			inputItems.Add<ItemCornFlour>(count:1);
+			inputItems.Add<ItemHerbPurple>(count:1);
+			inputItems.Add<ItemHerbRed>(count:1);
+			inputItems.Add<ItemHerbBlue>(count:1);
+			
 
-            outputItems.Add<ItemButter>(count: 1);
+            outputItems.Add<ItemJellyBeans>(count: 10);
         }
     }
 }

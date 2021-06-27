@@ -2,27 +2,27 @@
 {
     using System;
     using AtomicTorch.CBND.CoreMod.Items.Food;
-    using AtomicTorch.CBND.CoreMod.Items.Generic;
     using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.CraftingStations;
     using AtomicTorch.CBND.CoreMod.Systems;
     using AtomicTorch.CBND.CoreMod.Systems.Crafting;
 
-    public class RecipeButter : Recipe.RecipeForStationCrafting
+    public class RecipeCornBreadTaco : Recipe.RecipeForStationCrafting
     {
         protected override void SetupRecipe(
             StationsList stations,
-            out TimeSpan craftDuration,
+            out TimeSpan duration,
             InputItems inputItems,
             OutputItems outputItems)
         {
             stations.Add<ObjectCookingTable>();
 
-            craftDuration = CraftingDuration.Medium;
+            duration = CraftingDuration.Short;
 
-            inputItems.Add<ItemMilk>(count:2);
-			inputItems.Add<ItemSalt>(count:1);
+            inputItems.Add<ItemCornBread>(count: 1);
+            inputItems.Add<ItemMeatRoasted>(count: 1);
+            inputItems.Add<ItemSaladVegetable>(count: 1);
 
-            outputItems.Add<ItemButter>(count: 1);
+            outputItems.Add<ItemCornBreadTaco>(count: 4);
         }
     }
 }

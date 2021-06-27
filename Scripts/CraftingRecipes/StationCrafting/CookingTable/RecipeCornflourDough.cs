@@ -7,7 +7,7 @@
     using AtomicTorch.CBND.CoreMod.Systems;
     using AtomicTorch.CBND.CoreMod.Systems.Crafting;
 
-    public class RecipeButter : Recipe.RecipeForStationCrafting
+    public class RecipeCornflourDough : Recipe.RecipeForStationCrafting
     {
         protected override void SetupRecipe(
             StationsList stations,
@@ -17,12 +17,13 @@
         {
             stations.Add<ObjectCookingTable>();
 
-            craftDuration = CraftingDuration.Medium;
+            craftDuration = CraftingDuration.VeryShort;
 
-            inputItems.Add<ItemMilk>(count:2);
-			inputItems.Add<ItemSalt>(count:1);
+            inputItems.Add<ItemCornFlour>(count: 5);
+            inputItems.Add<ItemBottleWater>(count: 2);
 
-            outputItems.Add<ItemButter>(count: 1);
+            outputItems.Add<ItemCornflourDough>(count: 5);
+            outputItems.Add<ItemBottleEmpty>(count: 2);
         }
     }
 }

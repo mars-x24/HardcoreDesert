@@ -22,6 +22,23 @@
   </ItemGroup>    
   
   <ItemGroup>
+    <Content Include="Content\Animations\AngryPangolin\Back.json" />
+    <Content Include="Content\Animations\AngryPangolin\Front.json" />
+    <Content Include="Content\Animations\ColdBear\Back.json" />
+    <Content Include="Content\Animations\ColdBear\Front.json" />
+    <Content Include="Content\Animations\DesertPrincess\Back.json" />
+    <Content Include="Content\Animations\DesertPrincess\Front.json" />
+    <Content Include="Content\Animations\LargePragmiumBear\Back.json" />
+    <Content Include="Content\Animations\LargePragmiumBear\Front.json" />
+    <Content Include="Content\Animations\MechCrusher\Back.json" />
+    <Content Include="Content\Animations\MechCrusher\Front.json" />
+    <Content Include="Content\Animations\PragmiumBear\Back.json" />
+    <Content Include="Content\Animations\PragmiumBear\Front.json" />
+    <Content Include="Content\Animations\PragmiumKing\Back.json" />
+    <Content Include="Content\Animations\PragmiumKing\Front.json" />
+  </ItemGroup>    
+  
+  <ItemGroup>
     <ProjectReference Include="..\Core.cpk\AtomicTorch.CBND.CoreMod.csproj" />
   </ItemGroup>    
   
@@ -55,6 +72,9 @@
   </ItemGroup>    
   
   <ItemGroup>
+    <Folder Include="Content\Sounds\" />
+    <Folder Include="Content\Textures\StaticObjects\Structures\Misc\" />
+    <Folder Include="Scripts\StaticObjects\Structures\Misc\" />
     <Folder Include="Scripts\Systems\NewFolder\" />
   </ItemGroup>  
 </Project>
