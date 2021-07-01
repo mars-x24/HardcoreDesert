@@ -301,7 +301,7 @@
 
       var list = ServerWorldService.GetStaticWorldObjectsOfProtoInBounds<IProtoObjectStructure>(
         new RectangleInt(characterNpc.TilePosition.X, characterNpc.TilePosition.Y, 1, 1).Inflate(25))
-        .Where(S => S.PhysicsBody.HasAnyShapeCollidingWithGroup(CollisionGroups.HitboxMelee))
+        .Where(S => S.PhysicsBody.HasShapes)
         .OrderBy(S => characterNpc.Position.DistanceTo(S.TilePosition.ToVector2D())).ToList();
 
       if (list.Count == 0)
@@ -392,6 +392,8 @@
       //  targetCharacter = null;
       //}
 
+      bool hasTarget = targetCharacter is not null || targetStructure is not null;
+
       if(targetCharacter is null)
       {
         distanceToTarget = distanceToTargetStructure;
@@ -478,7 +480,7 @@
           && Math.Round(privateState.LastPosition.Y, 1) == Math.Round(currentPosition.Y, 1))
         {
           //I am stuck, attack something
-          if (movementDirection != Vector2F.Zero && privateState.CurrentTargetCharacter != null)
+          if (movementDirection != Vector2F.Zero || (hasTarget && isTargetTooFar))
           {
             isAttacking = true;
           }

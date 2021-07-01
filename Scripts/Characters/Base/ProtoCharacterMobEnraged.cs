@@ -1,4 +1,6 @@
-﻿using AtomicTorch.CBND.GameApi.Data.Characters;
+﻿using AtomicTorch.CBND.CoreMod.Systems.Weapons;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.World;
 using AtomicTorch.GameEngine.Common.Primitives;
 using HardcoreDesert.Scripts.Characters.Base;
 
@@ -30,6 +32,17 @@ namespace AtomicTorch.CBND.CoreMod.Characters
              + new Vector2D(0.5, 0)
                  .RotateRad(characterRotationAngleRad);
 
+    }
+
+    public override bool SharedOnDamage(WeaponFinalCache weaponCache, IWorldObject targetObject, double damagePreMultiplier, double damagePostMultiplier, out double obstacleBlockDamageCoef, out double damageApplied)
+    {
+      damageApplied = 0;
+      obstacleBlockDamageCoef = 0;
+
+      if (targetObject.ProtoGameObject is ProtoCharacterMobEnraged)
+        return false;
+
+      return base.SharedOnDamage(weaponCache, targetObject, damagePreMultiplier, damagePostMultiplier, out obstacleBlockDamageCoef, out damageApplied);
     }
   }
 

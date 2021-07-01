@@ -8,12 +8,20 @@
     Discord:Mars#8365, druffzilla#8949, Salvick#3333
   </author>
   <description>Queen and Tyrant in the desert</description>
-  <version>0.1.23</version>
-  <updated>27.06.2021</updated>
+  <version>0.1.25</version>
+  <updated>01.07.2021</updated>
   <!-- Mod type: 1=server, 2=client+server, 3=client -->
   <!-- Please note: mods of type 1 are ignored on client (cannot see and activate them)
                     mods of type 2 are enabled automatically when you're connecting to the server using them
                     mods of type 3 are ignored on server (cannot see and activate them) 
+              
+                    0.1.25
+                    Added land claim storage and SHIELD
+                    
+                    0.1.24
+                    Land claim and turret can be destroyed by enraged mob             
+                    New vehicle remote control image by druffzilla
+                    Enraged mobs won't attack themself
                     
                     0.1.23
                     Updated Jelly Bush mod

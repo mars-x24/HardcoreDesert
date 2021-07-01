@@ -42,7 +42,7 @@
                                         out var isPvPcase,
                                         out var isFriendlyFireCase);
 
-      if (weaponCache.Character.ProtoGameObject is not IProtoDamageToNPC)
+      if (weaponCache.Character?.ProtoGameObject is not IProtoDamageToNPC) //MOD
       {
         if (targetObject is IStaticWorldObject staticWorldObject
             && (!RaidingProtectionSystem.SharedCanRaid(staticWorldObject,
@@ -78,6 +78,17 @@
         }
 
         if (restrictedPvP)
+        {
+          return 0;
+        }
+      }
+
+
+      if (weaponCache.Character?.ProtoGameObject is ProtoCharacterMobEnraged) //MOD
+      {
+        if (targetObject is IStaticWorldObject staticWorldObject2
+            && !LandClaimShieldProtectionSystem.SharedCanRaid(staticWorldObject2,
+                                                                showClientNotification: false))
         {
           return 0;
         }

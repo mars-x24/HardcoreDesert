@@ -45,11 +45,11 @@
           .Add<ItemAnimalFat>(count: 1, probability: 1 / 3.0);
 
       // extra loot
-      lootDroplist.Add(condition: SkillHunting.ServerRollExtraLoot,
-                       nestedList: new DropItemsList(outputs: 2)
-                                   .Add<ItemFur>(count: 1)
-                                   .Add<ItemBones>(count: 1)
-                                   .Add<ItemAnimalFat>(count: 1, weight: 1 / 2.0));
+      //lootDroplist.Add(condition: SkillHunting.ServerRollExtraLoot,
+      //                 nestedList: new DropItemsList(outputs: 2)
+      //                             .Add<ItemFur>(count: 1)
+      //                             .Add<ItemBones>(count: 1)
+      //                             .Add<ItemAnimalFat>(count: 1, weight: 1 / 2.0));
     }
 
     protected override void ServerInitializeCharacterMob(ServerInitializeData data)

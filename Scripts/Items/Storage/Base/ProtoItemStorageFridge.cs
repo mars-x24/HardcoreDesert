@@ -88,7 +88,10 @@ namespace AtomicTorch.CBND.CoreMod.Items.Storage
     }
 
     private void UpdatePower(IItem item, ItemStorageFridgePublicState publicState, ItemStorageFridgePrivateState privateState, bool isOn)
-    { 
+    {
+      if (item.Container is null)
+        return;
+
       var character = item.Container.OwnerAsCharacter;
 
       if (isOn)

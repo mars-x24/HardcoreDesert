@@ -31,15 +31,15 @@
           .Add<ItemFur>(count: 1)
           .Add<ItemBones>(count: 1, countRandom: 1)
           // requires device
-          .Add<ItemKeiniteRaw>(count: 1, condition: ItemKeiniteCollector.ConditionHasDeviceEquipped);
+          .Add<ItemKeiniteRaw>(count: 1, probability: 0.1, condition: ItemKeiniteCollector.ConditionHasDeviceEquipped);
 
       // extra loot
-      lootDroplist.Add(condition: SkillHunting.ServerRollExtraLoot,
-                             nestedList: new DropItemsList(outputs: 1)
-                                         .Add<ItemMeatRaw>(count: 1)
-                                         .Add<ItemFur>(count: 1)
-                                         .Add<ItemBones>(count: 1)
-                                         .Add<ItemAnimalFat>(count: 1));
+      //lootDroplist.Add(condition: SkillHunting.ServerRollExtraLoot,
+      //                       nestedList: new DropItemsList(outputs: 1)
+      //                                   .Add<ItemMeatRaw>(count: 1)
+      //                                   .Add<ItemFur>(count: 1)
+      //                                   .Add<ItemBones>(count: 1)
+      //                                   .Add<ItemAnimalFat>(count: 1));
     }
 
     protected override void ServerInitializeCharacterMob(ServerInitializeData data)
