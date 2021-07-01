@@ -39,7 +39,7 @@ namespace AtomicTorch.CBND.CoreMod.Characters
       damageApplied = 0;
       obstacleBlockDamageCoef = 0;
 
-      if (targetObject.ProtoGameObject is ProtoCharacterMobEnraged)
+      if (weaponCache.Character?.ProtoGameObject is ProtoCharacterMobEnraged && targetObject.ProtoGameObject is ProtoCharacterMobEnraged)
         return false;
 
       return base.SharedOnDamage(weaponCache, targetObject, damagePreMultiplier, damagePostMultiplier, out obstacleBlockDamageCoef, out damageApplied);
