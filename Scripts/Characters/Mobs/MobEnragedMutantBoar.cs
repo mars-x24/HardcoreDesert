@@ -27,17 +27,10 @@
 
       // primary loot
       lootDroplist
-          .Add<ItemInsectMeatRaw>(count: 2, countRandom: 2)
-          .Add<ItemLeather>(count: 1, countRandom: 1)
-          .Add<ItemBones>(count: 1, countRandom: 1)
+          .Add<ItemLeather>(count: 1, probability: 1 / 2.0)
+          .Add<ItemBones>(count: 1)
           // requires device
           .Add<ItemKeiniteRaw>(count: 1, probability:0.1, condition: ItemKeiniteCollector.ConditionHasDeviceEquipped);
-
-      // extra loot
-      //lootDroplist.Add(condition: SkillHunting.ServerRollExtraLoot,
-      //                       nestedList: new DropItemsList(outputs: 1)
-      //                                   .Add<ItemLeather>(count: 1)
-      //                                   .Add<ItemBones>(count: 1));
     }
 
     protected override void ServerInitializeCharacterMob(ServerInitializeData data)
@@ -55,9 +48,12 @@
 
       ServerEnragedAiHelper.ProcessAggressiveAi(
           character,
+          true,
+          data.DeltaTime,
           targetStructure: ServerEnragedAiHelper.GetClosestTargetStructure(character),
           targetCharacter: ServerEnragedAiHelper.GetClosestTargetPlayer(character),
           distanceEnemyTooClose: 1,
+          distanceAttackEnemyTooClose: 3,
           distanceEnemyTooFar: 25,
           movementDirection: out var movementDirection,
           rotationAngleRad: out var rotationAngleRad);

@@ -15,6 +15,16 @@
                     mods of type 2 are enabled automatically when you're connecting to the server using them
                     mods of type 3 are ignored on server (cannot see and activate them) 
               
+                    0.1.26
+                    
+                    Mutant migration : 
+                    First attempt for waves
+                    One attack location on local server
+                    Event set to each 1.0-1.5 hour
+                    Added large pragmium bear on last wave
+                    Added your land claim as a goal target for the mobs
+                    Fixed heavy turret damage on enraged mob
+                    
                     0.1.25
                     Added land claim storage and SHIELD
                     

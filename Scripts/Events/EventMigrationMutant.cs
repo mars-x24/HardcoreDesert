@@ -26,7 +26,9 @@
   {
     public static string NotificationUnderAttack = "Your base is under attack!";
 
-    public override ushort AreaRadius => 30;
+    private const byte MaxWaveCount = 5;
+
+    public override ushort AreaRadius => 25;
 
     public override string Description =>
         "Mutant lifeforms of this world seem to be enraged, the estimated time for arrival is 5 minutes, protect your base!";
@@ -43,7 +45,7 @@
 
     public TimeSpan EventDurationWithoutDelay => TimeSpan.FromMinutes(15);
 
-    public TimeSpan EventStartDelayDuration => TimeSpan.FromMinutes(5);
+    public TimeSpan EventStartDelayDuration => TimeSpan.FromMinutes(0);
 
     // ReSharper disable once StaticMemberInGenericType
     private static readonly List<ICharacter> TempListPlayersInView = new();
@@ -65,13 +67,17 @@
 
     protected override void ServerTryFinishEvent(ILogicObject activeEvent)
     {
-      var timeRemainsToEventStart = this.SharedGetTimeRemainsToEventStart(activeEvent.GetPublicState<EventWithAreaPublicState>());
+      var publicState = activeEvent.GetPublicState<EventDropPublicState>();
+
+      var timeRemainsToEventStart = this.SharedGetTimeRemainsToEventStart(publicState);
       if (timeRemainsToEventStart != 0)
         return;
 
       var canFinish = true;
 
-      foreach (var spawnedObject in GetPrivateState(activeEvent).SpawnedWorldObjects)
+      var privateState = GetPrivateState(activeEvent);
+
+      foreach (var spawnedObject in privateState.SpawnedWorldObjects)
       {
         if (!canFinish)
           break;
@@ -103,9 +109,11 @@
 
       if (canFinish)
       {
-        // destroy after a second delay
-        // to ensure the public state is synchronized with the clients
-        ServerTimersSystem.AddAction(
+        if (publicState.NextWave > MaxWaveCount)
+        {
+          // destroy after a second delay
+          // to ensure the public state is synchronized with the clients
+          ServerTimersSystem.AddAction(
             1,
             () =>
             {
@@ -114,6 +122,18 @@
                 Server.World.DestroyObject(activeEvent);
               }
             });
+        }
+        else
+        {
+          if (publicState.CurrentWave != publicState.NextWave)
+          {
+            publicState.CurrentWave = publicState.NextWave;
+
+            ServerTimersSystem.AddAction(
+              delaySeconds: 10,
+              () => this.ServerSpawnObjectsDelay(activeEvent, publicState.AreaCirclePosition, publicState.AreaCircleRadius, privateState.SpawnedWorldObjects));
+          }
+        }
       }
     }
 
@@ -124,14 +144,17 @@
 
     protected override void ServerSpawnObjects(ILogicObject activeEvent, Vector2Ushort circlePosition, ushort circleRadius, List<IWorldObject> spawnedObjects)
     {
+      var publicState = activeEvent.GetPublicState<EventDropPublicState>();
+      publicState.CurrentWave = publicState.NextWave = 1;
+
       ServerTimersSystem.AddAction(
         delaySeconds: this.EventStartDelayDuration.TotalSeconds,
-        () => ServerSpawnObjectsDelay(activeEvent, circlePosition, circleRadius, spawnedObjects));
+        () => this.ServerSpawnObjectsDelay(activeEvent, circlePosition, circleRadius, spawnedObjects));
     }
 
     protected void ServerSpawnObjectsDelay(ILogicObject activeEvent, Vector2Ushort circlePosition, ushort circleRadius, List<IWorldObject> spawnedObjects)
     {
-      var publicState = GetPublicState(activeEvent);
+      var publicState = activeEvent.GetPublicState<EventDropPublicState>();
 
       int mobCount = 1;
 
@@ -164,11 +187,19 @@
         }
       }
 
+      if(publicState.CurrentWave > 1)
+        mobCount += Convert.ToByte(Math.Ceiling(mobCount * publicState.CurrentWave * 0.1));
+
       List<IProtoWorldObject> list = new List<IProtoWorldObject>();
       
       for(int i = 0; i < mobCount; i++)
       {
         list.Add(this.SpawnPreset[RandomHelper.Next(0, this.SpawnPreset.Count)]);
+      }
+
+      if(publicState.CurrentWave == MaxWaveCount)
+      {
+        list.Add(this.GetLastWaveMob());
       }
 
       var sqrMinDistanceBetweenSpawnedObjects =
@@ -225,7 +256,13 @@
 
             var spawnedObject = ServerTrySpawn(protoObjectToSpawn, spawnPosition);
             spawnedObjects.Add(spawnedObject);
+
             Logger.Important($"Spawned world object: {spawnedObject} for active event {activeEvent}");
+
+            var mobPrivateState = spawnedObject.GetPrivateState<CharacterMobEnragedPrivateState>();
+            if(mobPrivateState is not null)
+              mobPrivateState.GoalTargetStructure = claimObject;
+                       
             break;
           }
           while (--attempts > 0);
@@ -259,6 +296,8 @@
           }
         }
       }
+
+      publicState.NextWave++;
     }
 
     private static bool ServerCheckCanSpawn(IProtoWorldObject protoObjectToSpawn, Vector2Ushort spawnPosition, byte height)
@@ -311,6 +350,10 @@
       if (Api.Server.Characters.OnlinePlayersCount >= 100)
         locationsCount = 20;
 
+
+      if (SharedLocalServerHelper.IsLocalServer)
+        locationsCount = 1;
+
       for (var index = 0; index < locationsCount; index++)
       {
         if (!this.ServerCreateAndStartEventInstance())
@@ -360,8 +403,8 @@
           .Add(GetTrigger<TriggerTimeInterval>()
                    .Configure(
                            this.ServerGetIntervalForThisEvent(defaultInterval:
-                                                              (from: TimeSpan.FromHours(0.5),
-                                                               to: TimeSpan.FromHours(2.0)))
+                                                              (from: TimeSpan.FromHours(1.0),
+                                                               to: TimeSpan.FromHours(1.5)))
                        ));
 
       spawnPreset.Add(Api.GetProtoEntity<MobEnragedMutantBoar>());
@@ -371,6 +414,11 @@
       spawnPreset.Add(Api.GetProtoEntity<MobEnragedWildBoar>());
       spawnPreset.Add(Api.GetProtoEntity<MobEnragedHyena>());
       spawnPreset.Add(Api.GetProtoEntity<MobEnragedWolf>());
+    }
+
+    private IProtoWorldObject GetLastWaveMob()
+    {
+      return Api.GetProtoEntity<MobEnragedLargePragmiumBear>();
     }
 
     protected override bool ServerCreateEventSearchArea(

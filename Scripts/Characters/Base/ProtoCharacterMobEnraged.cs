@@ -20,6 +20,8 @@ namespace AtomicTorch.CBND.CoreMod.Characters
       where TPublicState : CharacterMobPublicState, new()
       where TClientState : BaseCharacterClientState, new()
   {
+    public virtual float CharacterWorldWeaponOffsetMeleeX => 0.0f;//0.5f;
+
     public override bool AiIsRunAwayFromHeavyVehicles => false;
 
     //the npc is attacking himself with the test line
@@ -29,7 +31,7 @@ namespace AtomicTorch.CBND.CoreMod.Characters
         .SharedGetRotationAngleRad(character);
 
       return character.Position + (0, CharacterWorldWeaponOffsetMelee)
-             + new Vector2D(0.5, 0)
+             + new Vector2D(CharacterWorldWeaponOffsetMeleeX, 0)
                  .RotateRad(characterRotationAngleRad);
 
     }

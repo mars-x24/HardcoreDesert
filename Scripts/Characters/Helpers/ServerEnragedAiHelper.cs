@@ -140,9 +140,17 @@
       var npcWeaponOffset = isRangedWeapon
                                 ? characterNpc.ProtoCharacter.CharacterWorldWeaponOffsetRanged
                                 : characterNpc.ProtoCharacter.CharacterWorldWeaponOffsetMelee;
+      Vector2D? offsetHit = isRangedWeapon
+                            ? enemyStructure.PhysicsBody.CalculateCenterOffsetForCollisionGroup(CollisionGroups.HitboxRanged)
+                            : enemyStructure.PhysicsBody.CalculateCenterOffsetForCollisionGroup(CollisionGroups.HitboxMelee);
 
-      var deltaPos = enemyStructure.TilePosition.ToVector2D() + enemyStructure.PhysicsBody.CenterOffset - characterNpc.Position;
-     
+      Vector2D offset = enemyStructure.PhysicsBody.CenterOffset;
+      if (offsetHit.HasValue)
+        offset = offsetHit.Value;
+
+      //var deltaPos = enemyStructure.TilePosition.ToVector2D() + enemyStructure.PhysicsBody.CenterOffset - characterNpc.Position;
+      var deltaPos = enemyStructure.TilePosition.ToVector2D() + offset - characterNpc.Position;
+
       directionToEnemyPosition = (Vector2F)deltaPos;
 
       deltaPos = (deltaPos.X, deltaPos.Y - npcWeaponOffset);
@@ -302,7 +310,9 @@
       var list = ServerWorldService.GetStaticWorldObjectsOfProtoInBounds<IProtoObjectStructure>(
         new RectangleInt(characterNpc.TilePosition.X, characterNpc.TilePosition.Y, 1, 1).Inflate(25))
         .Where(S => S.PhysicsBody.HasShapes)
-        .OrderBy(S => characterNpc.Position.DistanceTo(S.TilePosition.ToVector2D())).ToList();
+        .Where(S => S.ProtoStaticWorldObject.Kind != StaticObjectKind.Floor && S.ProtoStaticWorldObject.Kind != StaticObjectKind.FloorDecal)
+        .Where(S => S.PhysicsBody.CalculateCenterOffsetForCollisionGroup(CollisionGroups.HitboxMelee).HasValue)
+        .OrderBy(S => characterNpc.Position.DistanceTo(S.TilePosition.ToVector2D() + S.PhysicsBody.CalculateCenterOffsetForCollisionGroup(CollisionGroups.HitboxMelee).Value)).ToList();
 
       if (list.Count == 0)
       {
@@ -348,11 +358,18 @@
       }
     }
 
+
+    private const double SecondsBeforeTryingGoalTarget = 60;
+    private const double SecondsToAttackGoalTarget = 5;
+
     public static void ProcessAggressiveAi(
         ICharacter characterNpc,
+        bool focusOnPlayer,
+        double deltaTime,
         IStaticWorldObject targetStructure,
         ICharacter targetCharacter,
         double distanceEnemyTooClose,
+        double distanceAttackEnemyTooClose,
         double distanceEnemyTooFar,
         out Vector2F movementDirection,
         out double rotationAngleRad,
@@ -369,6 +386,17 @@
       var isRangedWeapon = weaponState.ProtoWeapon is IProtoItemWeaponRanged
                            || weaponState.ProtoWeapon is ProtoItemMobWeaponRangedNoAim;
 
+      //Goal target 5 seconds each 60 seconds
+      if (privateState.GoalTargetTimer <= 0)
+        privateState.GoalTargetTimer = SecondsBeforeTryingGoalTarget;
+
+      bool attackGoal = (privateState.GoalTargetTimer > SecondsBeforeTryingGoalTarget - SecondsToAttackGoalTarget)
+                        && privateState.GoalTargetStructure is not null;
+      if (attackGoal)
+        targetStructure = privateState.GoalTargetStructure;
+
+      privateState.GoalTargetTimer -= deltaTime;
+
       CalculateDistanceAndDirectionToStructure(characterNpc,
                                      targetStructure,
                                      isRangedWeapon: isRangedWeapon,
@@ -383,40 +411,53 @@
                                            out var directionToEnemyPosition,
                                            out var directionToEnemyHitbox);
 
-      //if(distanceToTargetStructure < distanceToTarget || double.IsNaN(distanceToTarget))
-      //{
-      //  distanceToTarget = distanceToTargetStructure;
-      //  directionToEnemyPosition = directionToEnemyPositionStructure;
-      //  directionToEnemyHitbox = directionToEnemyHitboxStructure;
-
-      //  targetCharacter = null;
-      //}
-
-      bool hasTarget = targetCharacter is not null || targetStructure is not null;
-
-      if(targetCharacter is null)
+      if (distanceToTarget > distanceAttackEnemyTooClose && !focusOnPlayer && (distanceToTargetStructure < distanceToTarget || double.IsNaN(distanceToTarget)))
       {
         distanceToTarget = distanceToTargetStructure;
         directionToEnemyPosition = directionToEnemyPositionStructure;
         directionToEnemyHitbox = directionToEnemyHitboxStructure;
+
+        targetCharacter = null;
       }
 
-      if (targetCharacter is not null && ReferenceEquals(targetCharacter, privateState.CurrentAggroCharacter))
-      {
-        // increase distances if aggro on this character
-        distanceEnemyTooFar *= 3;
-      }
-    
-      var isTargetTooFar = distanceToTarget > distanceEnemyTooFar;
-      movementDirection = distanceToTarget < distanceEnemyTooClose
-                          || isTargetTooFar
-                              ? Vector2F.Zero // too close or too far
-                              : directionToEnemyPosition;
+      bool hasTarget = targetCharacter is not null || targetStructure is not null;
 
-      if (isTargetTooFar)
+      var isTargetTooFar = false;
+
+      if (attackGoal)
       {
         targetCharacter = null;
-        targetStructure = null;
+        distanceToTarget = distanceToTargetStructure;
+        directionToEnemyPosition = directionToEnemyPositionStructure;
+        directionToEnemyHitbox = directionToEnemyHitboxStructure;
+        movementDirection = directionToEnemyPosition;  
+      }
+      else
+      {
+        if (targetCharacter is null)
+        {
+          distanceToTarget = distanceToTargetStructure;
+          directionToEnemyPosition = directionToEnemyPositionStructure;
+          directionToEnemyHitbox = directionToEnemyHitboxStructure;
+        }
+
+        if (targetCharacter is not null && ReferenceEquals(targetCharacter, privateState.CurrentAggroCharacter))
+        {
+          // increase distances if aggro on this character
+          distanceEnemyTooFar *= 3;
+        }
+
+        isTargetTooFar = distanceToTarget > distanceEnemyTooFar;
+        movementDirection = distanceToTarget < distanceEnemyTooClose
+                            || isTargetTooFar
+                                ? Vector2F.Zero // too close or too far
+                                : directionToEnemyPosition;
+
+        if (isTargetTooFar)
+        {
+          targetCharacter = null;
+          targetStructure = null;
+        }
       }
 
       privateState.CurrentTargetCharacter = targetCharacter;

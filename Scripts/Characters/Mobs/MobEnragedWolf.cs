@@ -40,16 +40,9 @@
 
       // primary loot
       lootDroplist
-          .Add<ItemFur>(count: 1, countRandom: 1)
-          .Add<ItemBones>(count: 1, countRandom: 2)
+          .Add<ItemFur>(count: 1, probability: 1 / 2.0)
+          .Add<ItemBones>(count: 1)
           .Add<ItemAnimalFat>(count: 1, probability: 1 / 3.0);
-
-      // extra loot
-      //lootDroplist.Add(condition: SkillHunting.ServerRollExtraLoot,
-      //                 nestedList: new DropItemsList(outputs: 2)
-      //                             .Add<ItemFur>(count: 1)
-      //                             .Add<ItemBones>(count: 1)
-      //                             .Add<ItemAnimalFat>(count: 1, weight: 1 / 2.0));
     }
 
     protected override void ServerInitializeCharacterMob(ServerInitializeData data)
@@ -67,9 +60,12 @@
 
       ServerEnragedAiHelper.ProcessAggressiveAi(
           character,
+          true,
+          data.DeltaTime,
           targetStructure: ServerEnragedAiHelper.GetClosestTargetStructure(character),
           targetCharacter: ServerEnragedAiHelper.GetClosestTargetPlayer(character),
           distanceEnemyTooClose: 1,
+          distanceAttackEnemyTooClose: 3,
           distanceEnemyTooFar: 25,
           movementDirection: out var movementDirection,
           rotationAngleRad: out var rotationAngleRad);

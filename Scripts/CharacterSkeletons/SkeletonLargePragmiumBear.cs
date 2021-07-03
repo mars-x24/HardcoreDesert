@@ -35,14 +35,18 @@
     public override void CreatePhysics(IPhysicsBody physicsBody)
     {
       physicsBody
-          .AddShapeCircle(radius: 0.5,
-                          center: (0, 0))
-          .AddShapeCircle(radius: 0.65,
+          .AddShapeCircle(radius: 0.6,
+                          center: (0, 0.1))
+          .AddShapeCircle(radius: 0.8,
                           center: (0, 0.35),
                           group: CollisionGroups.HitboxMelee)
-          .AddShapeCircle(radius: 0.65,
+          .AddShapeCircle(radius: 0.8,
                           center: (0, 0.35),
+                          group: CollisionGroups.HitboxRanged)
+          .AddShapeCircle(radius: 0.7,
+                          center: (0, 1.2),
                           group: CollisionGroups.HitboxRanged);
+
     }
   }
 }

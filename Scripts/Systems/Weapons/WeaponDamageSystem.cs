@@ -254,8 +254,8 @@
 
       if (damagingCharacter is not null
           && !weaponCache.AllowNpcToNpcDamage
-          && damagingCharacter.IsNpc
-          && targetCharacter.IsNpc)
+          && damagingCharacter.IsNpc 
+          && (targetCharacter.IsNpc && targetCharacter.ProtoGameObject is not ProtoCharacterMobEnraged))
       {
         // no NPC-to-NPC damage
         return false;
