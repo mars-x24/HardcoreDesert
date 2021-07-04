@@ -359,9 +359,6 @@
     }
 
 
-    private const double SecondsBeforeTryingGoalTarget = 60;
-    private const double SecondsToAttackGoalTarget = 5;
-
     public static void ProcessAggressiveAi(
         ICharacter characterNpc,
         bool focusOnPlayer,
@@ -371,6 +368,8 @@
         double distanceEnemyTooClose,
         double distanceAttackEnemyTooClose,
         double distanceEnemyTooFar,
+        double secondsToAttackGoalTarget, 
+        double secondsBeforeTryingGoalTarget,
         out Vector2F movementDirection,
         out double rotationAngleRad,
         IReadOnlyList<AiWeaponPreset> weaponList = null,
@@ -388,9 +387,9 @@
 
       //Goal target 5 seconds each 60 seconds
       if (privateState.GoalTargetTimer <= 0)
-        privateState.GoalTargetTimer = SecondsBeforeTryingGoalTarget;
+        privateState.GoalTargetTimer = secondsBeforeTryingGoalTarget;
 
-      bool attackGoal = (privateState.GoalTargetTimer > SecondsBeforeTryingGoalTarget - SecondsToAttackGoalTarget)
+      bool attackGoal = (privateState.GoalTargetTimer > secondsBeforeTryingGoalTarget - secondsToAttackGoalTarget)
                         && privateState.GoalTargetStructure is not null;
       if (attackGoal)
         targetStructure = privateState.GoalTargetStructure;

@@ -409,7 +409,7 @@
 
     protected virtual void ServerInitializeCharacterMob(ServerInitializeData data)
     {
-      LevelHelper.SetLevel(this, data.PublicState); //MOD
+      LevelHelper.SetLevel(this, data.GameObject, data.PublicState, data.PrivateState); //MOD
     }
 
     protected virtual void ServerOnAggro(ICharacter characterMob, ICharacter characterToAggro)

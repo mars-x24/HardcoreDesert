@@ -25,7 +25,8 @@
   public class MobDesertPrincess : ProtoCharacterMob
               <MobDesertPrincess.PrivateState,
               CharacterMobPublicState,
-              CharacterMobClientState>
+              CharacterMobClientState>,
+              IProtoCharacterSmallBoss
   {
     private const int DeathSpawnLootObjectsDefaultCount = 2;
 

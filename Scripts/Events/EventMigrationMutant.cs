@@ -45,7 +45,7 @@
 
     public TimeSpan EventDurationWithoutDelay => TimeSpan.FromMinutes(15);
 
-    public TimeSpan EventStartDelayDuration => TimeSpan.FromMinutes(0);
+    public TimeSpan EventStartDelayDuration => TimeSpan.FromMinutes(5);
 
     // ReSharper disable once StaticMemberInGenericType
     private static readonly List<ICharacter> TempListPlayersInView = new();
@@ -68,6 +68,9 @@
     protected override void ServerTryFinishEvent(ILogicObject activeEvent)
     {
       var publicState = activeEvent.GetPublicState<EventDropPublicState>();
+
+      var serverTime = Server.Game.FrameTime;
+      bool ended = (publicState.EventEndTime - serverTime) <= 0;
 
       var timeRemainsToEventStart = this.SharedGetTimeRemainsToEventStart(publicState);
       if (timeRemainsToEventStart != 0)
@@ -109,7 +112,7 @@
 
       if (canFinish)
       {
-        if (publicState.NextWave > MaxWaveCount)
+        if (ended || publicState.NextWave > MaxWaveCount)
         {
           // destroy after a second delay
           // to ensure the public state is synchronized with the clients
@@ -186,8 +189,9 @@
           }
         }
       }
+      bool spawnBoss = mobCount > 4;
 
-      if(publicState.CurrentWave > 1)
+      if (publicState.CurrentWave > 1)
         mobCount += Convert.ToByte(Math.Ceiling(mobCount * publicState.CurrentWave * 0.1));
 
       List<IProtoWorldObject> list = new List<IProtoWorldObject>();
@@ -197,7 +201,7 @@
         list.Add(this.SpawnPreset[RandomHelper.Next(0, this.SpawnPreset.Count)]);
       }
 
-      if(publicState.CurrentWave == MaxWaveCount)
+      if(spawnBoss && publicState.CurrentWave == MaxWaveCount)
       {
         list.Add(this.GetLastWaveMob());
       }

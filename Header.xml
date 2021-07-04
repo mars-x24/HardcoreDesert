@@ -9,19 +9,22 @@
   </author>
   <description>Queen and Tyrant in the desert</description>
   <version>0.1.25</version>
-  <updated>01.07.2021</updated>
+  <updated>04.07.2021</updated>
   <!-- Mod type: 1=server, 2=client+server, 3=client -->
   <!-- Please note: mods of type 1 are ignored on client (cannot see and activate them)
                     mods of type 2 are enabled automatically when you're connecting to the server using them
                     mods of type 3 are ignored on server (cannot see and activate them) 
               
                     0.1.26
+                    Medical cool down to 3 seconds in pve
+                    Added max level of minion based on the parent mob (Boss or Princess)
+                    Added zone for mob level restrictions (if you want to make a map ZoneMobLevel1 to 5)
                     
                     Mutant migration : 
                     First attempt for waves
                     One attack location on local server
                     Event set to each 1.0-1.5 hour
-                    Added large pragmium bear on last wave
+                    Added large pragmium bear on last wave if claim T3+
                     Added your land claim as a goal target for the mobs
                     Fixed heavy turret damage on enraged mob
                     

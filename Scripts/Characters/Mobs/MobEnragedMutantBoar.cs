@@ -30,7 +30,7 @@
           .Add<ItemLeather>(count: 1, probability: 1 / 2.0)
           .Add<ItemBones>(count: 1)
           // requires device
-          .Add<ItemKeiniteRaw>(count: 1, probability:0.1, condition: ItemKeiniteCollector.ConditionHasDeviceEquipped);
+          .Add<ItemKeiniteRaw>(count: 1, probability: 0.1, condition: ItemKeiniteCollector.ConditionHasDeviceEquipped);
     }
 
     protected override void ServerInitializeCharacterMob(ServerInitializeData data)
@@ -55,6 +55,8 @@
           distanceEnemyTooClose: 1,
           distanceAttackEnemyTooClose: 3,
           distanceEnemyTooFar: 25,
+          secondsBeforeTryingGoalTarget: 15,
+          secondsToAttackGoalTarget: 5,
           movementDirection: out var movementDirection,
           rotationAngleRad: out var rotationAngleRad);
 
