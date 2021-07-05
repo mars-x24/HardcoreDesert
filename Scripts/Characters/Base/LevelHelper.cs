@@ -30,6 +30,7 @@ namespace AtomicTorch.CBND.CoreMod.Characters
       {
         //check if there is a parent mob
         var list = character.PhysicsBody.PhysicsSpace.TestCircle(character.TilePosition.ToVector2D(), 10.0, CollisionGroups.Default).AsList()
+        .Where(t => t.PhysicsBody.AssociatedWorldObject is not null)
         .Where(t => t.PhysicsBody.AssociatedWorldObject.ProtoWorldObject is IProtoCharacterBoss
                  || t.PhysicsBody.AssociatedWorldObject.ProtoWorldObject is IProtoCharacterSmallBoss).ToList();
 

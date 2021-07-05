@@ -67,8 +67,8 @@
           distanceEnemyTooClose: 1,
           distanceAttackEnemyTooClose: 3,
           distanceEnemyTooFar: 25,
-          secondsBeforeTryingGoalTarget: 15,
-          secondsToAttackGoalTarget: 5,
+          secondsBeforeTryingGoalTarget: 60,
+          secondsToAttackGoalTarget: 8,
           movementDirection: out var movementDirection,
           rotationAngleRad: out var rotationAngleRad);
 

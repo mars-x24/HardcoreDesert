@@ -28,7 +28,7 @@
 
     private const byte MaxWaveCount = 5;
 
-    public override ushort AreaRadius => 25;
+    public override ushort AreaRadius => 35;
 
     public override string Description =>
         "Mutant lifeforms of this world seem to be enraged, the estimated time for arrival is 5 minutes, protect your base!";
@@ -165,6 +165,7 @@
       var tile = world.GetTile(publicState.AreaEventOriginalPosition);
 
       IStaticWorldObject claimObject = null;
+      int tLevel = 1;
 
       if (tile.StaticObjects.Count > 0)
       {
@@ -177,33 +178,55 @@
             claim = claimObject.ProtoGameObject as IProtoObjectLandClaim;
 
             if (claim is ObjectLandClaimT1)
+            {
               mobCount = 1;
+            }
             else if (claim is ObjectLandClaimT2)
+            {
               mobCount = 4;
+              tLevel = 2;
+            }
             else if (claim is ObjectLandClaimT3)
+            {
               mobCount = 8;
+              tLevel = 3;
+            }
             else if (claim is ObjectLandClaimT4)
+            {
               mobCount = 13;
+              tLevel = 4;
+            }
             else if (claim is ObjectLandClaimT5)
+            {
               mobCount = 20;
+              tLevel = 5;
+            }
           }
         }
       }
-      bool spawnBoss = mobCount > 4;
-
-      if (publicState.CurrentWave > 1)
-        mobCount += Convert.ToByte(Math.Ceiling(mobCount * publicState.CurrentWave * 0.1));
 
       List<IProtoWorldObject> list = new List<IProtoWorldObject>();
       
+      if (publicState.CurrentWave == MaxWaveCount)
+      {
+        var mob = this.GetLastWaveBossMob(tLevel);
+        if(mob is not null)
+          list.Add(mob);
+      }
+
+      if (publicState.CurrentWave >= 3)
+      {
+        var mob = this.GetWaveBossMob(tLevel);
+        if(mob is not null)
+          list.Add(mob);
+      }
+
+      if (publicState.CurrentWave > 1)
+        mobCount += Convert.ToByte(Math.Ceiling(mobCount * publicState.CurrentWave * 0.1));
+        
       for(int i = 0; i < mobCount; i++)
       {
         list.Add(this.SpawnPreset[RandomHelper.Next(0, this.SpawnPreset.Count)]);
-      }
-
-      if(spawnBoss && publicState.CurrentWave == MaxWaveCount)
-      {
-        list.Add(this.GetLastWaveMob());
       }
 
       var sqrMinDistanceBetweenSpawnedObjects =
@@ -420,9 +443,20 @@
       spawnPreset.Add(Api.GetProtoEntity<MobEnragedWolf>());
     }
 
-    private IProtoWorldObject GetLastWaveMob()
+    private IProtoWorldObject GetLastWaveBossMob(int tLevel)
     {
-      return Api.GetProtoEntity<MobEnragedLargePragmiumBear>();
+      if(tLevel > 3)
+        return Api.GetProtoEntity<MobEnragedLargePragmiumBear>();
+      else
+        return Api.GetProtoEntity<MobEnragedPragmiumBear>();
+    }
+
+    private IProtoWorldObject GetWaveBossMob(int tLevel)
+    {
+      if (tLevel > 3)
+        return Api.GetProtoEntity<MobEnragedPragmiumBear>();
+      else
+        return null;
     }
 
     protected override bool ServerCreateEventSearchArea(

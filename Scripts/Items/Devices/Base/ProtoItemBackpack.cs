@@ -90,7 +90,7 @@
 
         if (canRemove)
         {
-          for (byte i = PlayerConstants.InventorySlotsCount; i < privateState.ContainerInventory.SlotsCount; i++)
+          for (byte i = PlayerConstants.InventorySlotsCount - 1; i < privateState.ContainerInventory.SlotsCount; i++)
           {
             if (privateState.ContainerInventory.GetItemAtSlot(i) != null)
             {

@@ -8,77 +8,85 @@
     Discord:Mars#8365, druffzilla#8949, Salvick#3333
   </author>
   <description>Queen and Tyrant in the desert</description>
-  <version>0.1.26</version>
-  <updated>04.07.2021</updated>
+  <version>0.1.27</version>
+  <updated>05.07.2021</updated>
   <!-- Mod type: 1=server, 2=client+server, 3=client -->
   <!-- Please note: mods of type 1 are ignored on client (cannot see and activate them)
                     mods of type 2 are enabled automatically when you're connecting to the server using them
                     mods of type 3 are ignored on server (cannot see and activate them) 
               
-                    0.1.26
-                    Medical cool down to 3 seconds in pve
-                    Added max level of minion based on the parent mob (Boss or Princess)
-                    Added zone for mob level restrictions (if you want to make a map ZoneMobLevel1 to 5)
+0.1.27
+You need a free slot to remove the backpack (problem with shift-click if inventory is full)
+
+Mutant migration : 
+Increased size circle for the event, mobs are not all spawning
+Spawn the boss first on last waves
+Added pragmium bear in last waves
+
+0.1.26
+Medical cool down to 3 seconds in pve
+Added max level of minion based on the parent mob (Boss or Princess)
+Added zone for mob level restrictions (if you want to make a map ZoneMobLevel1 to 5)
                     
-                    Mutant migration : 
-                    First attempt for waves
-                    One attack location on local server
-                    Event set to each 1.0-1.5 hour
-                    Added large pragmium bear on last wave if claim T3+
-                    Added your land claim as a goal target for the mobs
-                    Fixed heavy turret damage on enraged mob
+Mutant migration : 
+First attempt for waves
+One attack location on local server
+Event set to each 1.0-1.5 hour
+Added large pragmium bear on last wave if claim T3+
+Added your land claim as a goal target for the mobs
+Fixed heavy turret damage on enraged mob
                     
-                    0.1.25
-                    Added land claim storage and SHIELD
+0.1.25
+Added land claim storage and SHIELD
                     
-                    0.1.24
-                    Land claim and turret can be destroyed by enraged mob             
-                    New vehicle remote control image by druffzilla
-                    Enraged mobs won't attack themself
+0.1.24
+Land claim and turret can be destroyed by enraged mob             
+New vehicle remote control image by druffzilla
+Enraged mobs won't attack themself
                     
-                    0.1.23
-                    Updated Jelly Bush mod
+0.1.23
+Updated Jelly Bush mod
                     
-                    0.1.22
-                    v1.30.7.3 compatibility
-                    druffzilla#8949, Salvick#3333 Jelly beans mod (corn recipes, butter, jelly fruit recipes)                   
+0.1.22
+v1.30.7.3 compatibility
+druffzilla#8949, Salvick#3333 Jelly beans mod (corn recipes, butter, jelly fruit recipes)                   
                     
-                    0.1.21
-                    Fixed Mutant Migration mobs despawn when there is an offline player
+0.1.21
+Fixed Mutant Migration mobs despawn when there is an offline player
                     
-                    0.1.20
-                    Turrets in pve
-                    Event Mutant Migration
-                    PsiGrove always drops prag
+0.1.20
+Turrets in pve
+Event Mutant Migration
+PsiGrove always drops prag
                     
-                    0.1.19
-                    Fixed Boss damage to always x1 for all levels
+0.1.19
+Fixed Boss damage to always x1 for all levels
                     
-                    0.1.18                  
-                    Mech Crusher
-                    Sell backpack in fridge trading station
+0.1.18                  
+Mech Crusher
+Sell backpack in fridge trading station
                     
-                    0.1.17
-                    Enabled vehicle remote on pvp server
-                    More Princess
-                    Giant prag in desert
+0.1.17
+Enabled vehicle remote on pvp server
+More Princess
+Giant prag in desert
                     
-                    0.1.16
-                    Powerbank durability dropping to fast in portable fridge
-                    Keinite and pragmium backpack rename
+0.1.16
+Powerbank durability dropping to fast in portable fridge
+Keinite and pragmium backpack rename
                     
-                    0.1.15
-                    Cloth backpack rename
-                    Less ammo in spacebris
-                    Mob level hit 0.25 instead of 0.125
+0.1.15
+Cloth backpack rename
+Less ammo in spacebris
+Mob level hit 0.25 instead of 0.125
                     
-                    0.1.14
-                    Higher level mobs hit harder
+0.1.14
+Higher level mobs hit harder
                     
-                    0.1.13
-                    Can't put storage item in fridge
-                    You can now remove the backpack when there is a bag in the character inventory
-                    Fixed the storage interface when it is inside another chest
+0.1.13
+Can't put storage item in fridge
+You can now remove the backpack when there is a bag in the character inventory
+Fixed the storage interface when it is inside another chest
                     
                     -->
   <modtype>2</modtype>
