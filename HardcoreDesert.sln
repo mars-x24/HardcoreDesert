@@ -6,6 +6,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HardcoreDesert", "HardcoreD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AtomicTorch.CBND.CoreMod", "..\Core.cpk\AtomicTorch.CBND.CoreMod.csproj", "{93E3D838-4839-4F1D-BC9E-A2E5F7CD9FA7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VendingMachines", "..\VendingMachines\VendingMachines.csproj", "{ED1D69F9-ED8D-404C-8C5D-6408FE213876}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug_LibsAsProjects|Any CPU = Debug_LibsAsProjects|Any CPU
@@ -20,6 +22,10 @@ Global
 		{93E3D838-4839-4F1D-BC9E-A2E5F7CD9FA7}.Debug_LibsAsProjects|Any CPU.Build.0 = Debug_LibsAsProjects|Any CPU
 		{93E3D838-4839-4F1D-BC9E-A2E5F7CD9FA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{93E3D838-4839-4F1D-BC9E-A2E5F7CD9FA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED1D69F9-ED8D-404C-8C5D-6408FE213876}.Debug_LibsAsProjects|Any CPU.ActiveCfg = Debug_LibsAsProjects|Any CPU
+		{ED1D69F9-ED8D-404C-8C5D-6408FE213876}.Debug_LibsAsProjects|Any CPU.Build.0 = Debug_LibsAsProjects|Any CPU
+		{ED1D69F9-ED8D-404C-8C5D-6408FE213876}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED1D69F9-ED8D-404C-8C5D-6408FE213876}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
