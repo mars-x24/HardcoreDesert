@@ -1,13 +1,9 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Characters
 {
-  using System;
-  using System.Collections.Generic;
-  using System.Linq;
   using AtomicTorch.CBND.CoreMod.Characters.Player;
   using AtomicTorch.CBND.CoreMod.Items.Weapons;
   using AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons;
   using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures;
   using AtomicTorch.CBND.CoreMod.Systems.Physics;
   using AtomicTorch.CBND.CoreMod.Systems.Weapons;
   using AtomicTorch.CBND.CoreMod.Vehicles;
@@ -18,9 +14,13 @@
   using AtomicTorch.CBND.GameApi.ServicesServer;
   using AtomicTorch.GameEngine.Common.Helpers;
   using AtomicTorch.GameEngine.Common.Primitives;
+  using System;
+  using System.Collections.Generic;
 
-  public static class ServerEnragedAiHelper
+  public static class ServerCharacterAiHelper
   {
+    private const double FleeSoundRepeatInterval = 3;
+
     private static readonly IWorldServerService ServerWorldService
         = Api.IsServer
               ? Api.Server.World
@@ -59,72 +59,45 @@
 
       return false;
     }
-    public static bool AnyTileObstaclesBetween(ICharacter npc, IStaticWorldObject worldObject)
-    {
-      var physicsSpace = npc.PhysicsBody.PhysicsSpace;
-      var npcCharacterCenter = npc.Position + npc.PhysicsBody.CenterOffset;
-      var playerCharacterCenter = worldObject.TilePosition.ToVector2D() + worldObject.PhysicsBody.CenterOffset;
 
-      using var obstaclesInTheWay = physicsSpace.TestLine(
-          npcCharacterCenter,
-          playerCharacterCenter,
-          CollisionGroup.Default,
-          sendDebugEvent: false);
-
-      foreach (var test in obstaclesInTheWay.AsList())
-      {
-        var testPhysicsBody = test.PhysicsBody;
-        if (testPhysicsBody.AssociatedProtoTile is null)
-        {
-          continue;
-        }
-
-        var tile = ServerWorldService.GetTile(testPhysicsBody.Position.ToVector2Ushort());
-        if (!tile.IsSlope)
-        {
-          // cliff tile on the way
-          return true;
-        }
-      }
-
-      return false;
-    }
-
-
-    public static void CalculateDistanceAndDirectionToStructure(
+    public static void CalculateDistanceAndDirectionToEnemy(
         ICharacter characterNpc,
-        IStaticWorldObject enemyStructure,
+        ICharacter enemyCharacter,
         bool isRangedWeapon,
         out double distanceToEnemy,
         out Vector2F directionToEnemyPosition,
-        out Vector2F directionToEnemyHitbox)
+        out Vector2F directionToEnemyHitbox,
+        out bool hasObstacles,
+        out bool destinationIsEnemy,
+        bool tryOtherPath = false)
     {
-      if (enemyStructure is null)
+      if (enemyCharacter is null)
       {
         distanceToEnemy = double.NaN;
         directionToEnemyPosition = directionToEnemyHitbox = Vector2F.Zero;
+        hasObstacles = false;
+        destinationIsEnemy = true;
         return;
       }
+
+      var enemyWeaponOffset = isRangedWeapon
+                          ? enemyCharacter.ProtoCharacter.CharacterWorldWeaponOffsetRanged
+                          : enemyCharacter.ProtoCharacter.CharacterWorldWeaponOffsetMelee;
 
       var npcWeaponOffset = isRangedWeapon
                                 ? characterNpc.ProtoCharacter.CharacterWorldWeaponOffsetRanged
                                 : characterNpc.ProtoCharacter.CharacterWorldWeaponOffsetMelee;
-      Vector2D? offsetHit = isRangedWeapon
-                            ? enemyStructure.PhysicsBody.CalculateCenterOffsetForCollisionGroup(CollisionGroups.HitboxRanged)
-                            : enemyStructure.PhysicsBody.CalculateCenterOffsetForCollisionGroup(CollisionGroups.HitboxMelee);
 
-      Vector2D offset = enemyStructure.PhysicsBody.CenterOffset;
-      if (offsetHit.HasValue)
-        offset = offsetHit.Value;
-
-      //var deltaPos = enemyStructure.TilePosition.ToVector2D() + enemyStructure.PhysicsBody.CenterOffset - characterNpc.Position;
-      var deltaPos = enemyStructure.TilePosition.ToVector2D() + offset - characterNpc.Position;
-
-      directionToEnemyPosition = (Vector2F)deltaPos;
-
-      deltaPos = (deltaPos.X, deltaPos.Y - npcWeaponOffset);
-      distanceToEnemy = deltaPos.Length;
-      directionToEnemyHitbox = (Vector2F)deltaPos;
+      using (FindPathHelper findPathHelper = new FindPathHelper(characterNpc, characterNpc.Position, enemyCharacter, npcWeaponOffset, enemyWeaponOffset, 1))
+      {
+        findPathHelper.FindPathToEnemy(
+          out distanceToEnemy,
+          out directionToEnemyPosition,
+          out directionToEnemyHitbox,
+          out hasObstacles,
+          out destinationIsEnemy,
+          tryOtherPath);
+      }
     }
 
     public static bool CanHitAnyTargetWithRangedWeapon(
@@ -272,52 +245,6 @@
       }
     }
 
-    public static IStaticWorldObject GetClosestTargetStructure(ICharacter characterNpc)
-    {
-      byte? tileHeight = null;
-
-      var list = ServerWorldService.GetStaticWorldObjectsOfProtoInBounds<IProtoObjectStructure>(
-        new RectangleInt(characterNpc.TilePosition.X, characterNpc.TilePosition.Y, 1, 1).Inflate(25))
-        .Where(S => S.PhysicsBody.HasShapes)
-        .Where(S => S.ProtoStaticWorldObject.Kind != StaticObjectKind.Floor && S.ProtoStaticWorldObject.Kind != StaticObjectKind.FloorDecal)
-        .Where(S => S.PhysicsBody.CalculateCenterOffsetForCollisionGroup(CollisionGroups.HitboxMelee).HasValue)
-        .OrderBy(S => characterNpc.Position.DistanceTo(S.TilePosition.ToVector2D() + S.PhysicsBody.CalculateCenterOffsetForCollisionGroup(CollisionGroups.HitboxMelee).Value)).ToList();
-
-      if (list.Count == 0)
-      {
-        return null;
-      }
-
-      IStaticWorldObject structure = null;
-      foreach (var worldObject in list)
-      {
-        if (!(worldObject.ProtoGameObject is IDamageableProtoWorldObject))
-          continue;
-
-        var tile = worldObject.OccupiedTile;
-        if (!tileHeight.HasValue)
-        {
-          var npcTile = characterNpc.Tile;
-          tileHeight = npcTile.Height;
-        }
-
-        if (tile.Height != tileHeight.Value)
-        {
-          // attack only on the same height
-          // unless there is a direct line of sight between the NPC and the target
-          if (AnyTileObstaclesBetween(characterNpc, worldObject))
-          {
-            continue;
-          }
-        }
-
-        structure = worldObject;
-        break;
-      }
-
-      return structure;
-    }
-
     public static void LookOnEnemy(Vector2F directionToEnemyHitbox, ref double rotationAngleRad)
     {
       if (directionToEnemyHitbox != Vector2F.Zero)
@@ -327,52 +254,31 @@
       }
     }
 
-
     public static void ProcessAggressiveAi(
         ICharacter characterNpc,
-        bool focusOnPlayer,
-        double deltaTime,
-        IStaticWorldObject targetStructure,
         ICharacter targetCharacter,
+        bool isRetreating,
+        bool isRetreatingForHeavyVehicles,
+        double distanceRetreat,
         double distanceEnemyTooClose,
-        double distanceAttackEnemyTooClose,
         double distanceEnemyTooFar,
-        double secondsToAttackGoalTarget, 
-        double secondsBeforeTryingGoalTarget,
         out Vector2F movementDirection,
         out double rotationAngleRad,
         IReadOnlyList<AiWeaponPreset> weaponList = null,
         bool attackFarOnlyIfAggro = false,
         Func<IWorldObject, bool> customIsValidTargetCallback = null)
     {
-      var privateState = characterNpc.GetPrivateState<CharacterMobEnragedPrivateState>();
+      var privateState = characterNpc.GetPrivateState<CharacterMobPrivateState>();
       var weaponState = privateState.WeaponState;
 
       var lastTargetCharacter = privateState.CurrentTargetCharacter;
-      var lastTargetStructure = privateState.CurrentTargetStructure;
+      var wasRetreating = privateState.IsRetreating;
 
       var isRangedWeapon = weaponState.ProtoWeapon is IProtoItemWeaponRanged
                            || weaponState.ProtoWeapon is ProtoItemMobWeaponRangedNoAim;
 
-      //Goal target 5 seconds each 60 seconds
-      if (privateState.GoalTargetTimer <= 0)
-        privateState.GoalTargetTimer = secondsBeforeTryingGoalTarget;
 
-      bool attackGoal = (privateState.GoalTargetTimer > secondsBeforeTryingGoalTarget - secondsToAttackGoalTarget)
-                        && privateState.GoalTargetStructure is not null;
-      if (attackGoal)
-        targetStructure = privateState.GoalTargetStructure;
-
-      privateState.GoalTargetTimer -= deltaTime;
-
-      CalculateDistanceAndDirectionToStructure(characterNpc,
-                                     targetStructure,
-                                     isRangedWeapon: isRangedWeapon,
-                                     out var distanceToTargetStructure,
-                                     out var directionToEnemyPositionStructure,
-                                     out var directionToEnemyHitboxStructure);
-
-      ServerCharacterAiHelper.CalculateDistanceAndDirectionToEnemy(characterNpc,
+      CalculateDistanceAndDirectionToEnemy(characterNpc,
                                            targetCharacter,
                                            isRangedWeapon: isRangedWeapon,
                                            out var distanceToTarget,
@@ -380,48 +286,60 @@
                                            out var directionToEnemyHitbox,
                                            out var hasObstacles,
                                            out var destinationIsEnemy);
-
-      if (distanceToTarget > distanceAttackEnemyTooClose && !focusOnPlayer && (distanceToTargetStructure < distanceToTarget || double.IsNaN(distanceToTarget)))
+      if (isRetreatingForHeavyVehicles
+          && targetCharacter is not null
+          && !targetCharacter.IsNpc)
       {
-        distanceToTarget = distanceToTargetStructure;
-        directionToEnemyPosition = directionToEnemyPositionStructure;
-        directionToEnemyHitbox = directionToEnemyHitboxStructure;
-
-        targetCharacter = null;
+        // determine if the enemy player riding a heavy vehicle
+        var protoVehicle = PlayerCharacter.GetPublicState(targetCharacter).CurrentVehicle?.ProtoGameObject
+                               as IProtoVehicle;
+        if (protoVehicle?.IsHeavyVehicle ?? false)
+        {
+          // retreat from heavy vehicle
+          distanceRetreat = Math.Max(7, distanceRetreat);
+          isRetreating = true;
+        }
       }
 
-      bool hasTarget = targetCharacter is not null || targetStructure is not null;
-
-      var isTargetTooFar = false;
-
-      if (attackGoal)
+      if (ReferenceEquals(targetCharacter, privateState.CurrentAggroCharacter))
       {
-        targetCharacter = null;
-        distanceToTarget = distanceToTargetStructure;
-        directionToEnemyPosition = directionToEnemyPositionStructure;
-        directionToEnemyHitbox = directionToEnemyHitboxStructure;
-        movementDirection = directionToEnemyPosition;  
+        // increase distances if aggro on this character
+        distanceRetreat *= 3;
+        distanceEnemyTooFar *= 3;
       }
-      else
+
+      if (isRetreating)
       {
-        if (targetCharacter is null)
+        if ((double.IsNaN(distanceToTarget)
+             || distanceToTarget > privateState.AttackRange)
+            && weaponState.CooldownSecondsRemains <= 0)
         {
-          distanceToTarget = distanceToTargetStructure;
-          directionToEnemyPosition = directionToEnemyPositionStructure;
-          directionToEnemyHitbox = directionToEnemyHitboxStructure;
+          // look away when retreating
+          // and the enemy is not within the attack range
+          // and not attacked recently (so the attack cooldown (and so the animation) is finished)
+          directionToEnemyHitbox *= -1;
         }
 
-        if (targetCharacter is not null && ReferenceEquals(targetCharacter, privateState.CurrentAggroCharacter))
+        if (distanceToTarget <= distanceRetreat)
         {
-          // increase distances if aggro on this character
-          distanceEnemyTooFar *= 3;
+          // retreat
+          movementDirection = directionToEnemyPosition * -1;
         }
-
-        isTargetTooFar = distanceToTarget > distanceEnemyTooFar;
-
-        if (!isTargetTooFar && hasObstacles)
+        else
         {
-          ServerCharacterAiHelper.CalculateDistanceAndDirectionToEnemy(characterNpc,
+          // retreat completed
+          movementDirection = Vector2F.Zero;
+          targetCharacter = null;
+          isRetreating = false;
+        }
+      }
+      else // not retreating
+      {
+        var isTargetTooFar = distanceToTarget > distanceEnemyTooFar;
+
+        if(!isTargetTooFar && hasObstacles)
+        {
+          CalculateDistanceAndDirectionToEnemy(characterNpc,
                                        targetCharacter,
                                        isRangedWeapon: isRangedWeapon,
                                        out distanceToTarget,
@@ -440,17 +358,15 @@
         if (isTargetTooFar)
         {
           targetCharacter = null;
-          targetStructure = null;
         }
       }
 
+      privateState.IsRetreating = isRetreating;
       privateState.CurrentTargetCharacter = targetCharacter;
-      privateState.CurrentTargetStructure = targetStructure;
 
       rotationAngleRad = characterNpc.GetPublicState<CharacterMobPublicState>()
                                      .AppliedInput
                                      .RotationAngleRad;
-
       LookOnEnemy(directionToEnemyHitbox, ref rotationAngleRad);
 
       var isAttacking = false;
@@ -473,6 +389,9 @@
                         && ReferenceEquals(desiredProtoWeapon,
                                            weaponState.ProtoWeapon);
         }
+
+        if (isAttacking && !destinationIsEnemy)
+          isAttacking = false;
 
         if (isAttacking
             && attackFarOnlyIfAggro
@@ -498,37 +417,183 @@
               => worldObject is ICharacter { IsNpc: false }
                  || worldObject.ProtoGameObject is IProtoVehicle;
         }
+      }
 
-        var currentPosition = characterNpc.Position;
-        if (!isAttacking 
-          && Math.Round(privateState.LastPosition.X, 1) == Math.Round(currentPosition.X, 1)
-          && Math.Round(privateState.LastPosition.Y, 1) == Math.Round(currentPosition.Y, 1))
+      if (isRetreating && isAttacking)
+      {
+        if (weaponState.ProtoWeapon is ProtoItemMobWeaponMelee)
         {
-          //I am stuck, attack something
-          if (movementDirection != Vector2F.Zero || (hasTarget && isTargetTooFar))
-          {
-            isAttacking = true;
-          }
+          // don't attack every time when retreating
+          isAttacking = RandomHelper.Next(0, 6) == 0;
         }
-
-        privateState.LastPosition = currentPosition;
+        else
+        {
+          // don't attack with ranged weapon when retreating
+          isAttacking = false;
+        }
       }
 
       weaponState.SharedSetInputIsFiring(isAttacking);
 
-      if (targetCharacter is null && targetStructure is null)
+      if (targetCharacter is null)
       {
         return;
       }
 
+      if (isRetreating)
+      {
+        TryPlayFleeSound(characterNpc, privateState);
+        return;
+      }
+
       // not retreating
-      if (lastTargetCharacter != targetCharacter)
+      if (wasRetreating
+          || lastTargetCharacter != targetCharacter)
       {
         // changed an enemy
         if (characterNpc.ProtoCharacter is IProtoCharacterMob protoMob)
         {
           protoMob.ServerPlaySound(characterNpc, CharacterSound.Aggression);
         }
+      }
+    }
+
+    public static void ProcessBossAi(
+        ICharacter characterNpc,
+        IReadOnlyList<AiWeaponPreset> weaponList,
+        double distanceEnemyTooClose,
+        double distanceEnemyTooFar,
+        out Vector2F movementDirection,
+        out double rotationAngleRad)
+    {
+      var privateState = characterNpc.GetPrivateState<CharacterMobPrivateState>();
+      var publicState = characterNpc.GetPublicState<CharacterMobPublicState>();
+      var weaponState = privateState.WeaponState;
+
+      var lastTargetCharacter = privateState.CurrentTargetCharacter;
+
+      var targetCharacter = GetClosestTargetPlayer(characterNpc);
+      CalculateDistanceAndDirectionToEnemy(characterNpc,
+                                           targetCharacter,
+                                           isRangedWeapon: weaponState.ProtoWeapon is IProtoItemWeaponRanged,
+                                           out var distanceToTarget,
+                                           out var directionToEnemyPosition,
+                                           out var directionToEnemyHitbox,
+                                           out _,
+                                           out _);
+
+      var isTargetTooFar = distanceToTarget > distanceEnemyTooFar;
+      movementDirection = distanceToTarget < distanceEnemyTooClose
+                          || isTargetTooFar
+                              ? Vector2F.Zero // too close or too far
+                              : directionToEnemyPosition;
+
+      if (isTargetTooFar)
+      {
+        targetCharacter = null;
+      }
+
+      privateState.CurrentTargetCharacter = targetCharacter;
+
+      rotationAngleRad = publicState.AppliedInput.RotationAngleRad;
+      if (weaponState.CooldownSecondsRemains <= 0)
+      {
+        // can aim
+        LookOnEnemy(directionToEnemyHitbox, ref rotationAngleRad);
+      }
+      else
+      {
+        // attacked recently, don't change character's rotation while attack animation is in progress
+      }
+
+      bool isAttacking;
+
+      if (double.IsNaN(distanceToTarget))
+      {
+        isAttacking = false;
+      }
+      else
+      {
+        SelectAiWeapon(characterNpc,
+                       distanceToTarget,
+                       weaponList,
+                       out var desiredProtoWeapon,
+                       out var isWithinRange);
+
+        isAttacking = isWithinRange
+                      && ReferenceEquals(desiredProtoWeapon, weaponState.ProtoWeapon);
+      }
+
+      weaponState.SharedSetInputIsFiring(isAttacking);
+
+      if (weaponState.ProtoWeapon is ProtoItemMobWeaponNova)
+      {
+        // don't move while using a Nova attack
+        movementDirection = default;
+      }
+
+      if (targetCharacter is null)
+      {
+        return;
+      }
+
+      if (lastTargetCharacter != targetCharacter
+          && lastTargetCharacter is null)
+      {
+        // focus on an enemy
+        var protoMob = (IProtoCharacterMob)characterNpc.ProtoCharacter;
+        protoMob.ServerPlaySound(characterNpc, CharacterSound.Aggression);
+      }
+    }
+
+    public static void ProcessRetreatingAi(
+        ICharacter characterNpc,
+        double distanceRetreat,
+        out Vector2F movementDirection,
+        out double rotationAngleRad)
+    {
+      var characterNpcPrivateState = characterNpc.GetPrivateState<CharacterMobPrivateState>();
+      var targetCharacter = GetClosestTargetPlayer(characterNpc);
+
+      if (targetCharacter == characterNpcPrivateState.CurrentAggroCharacter)
+      {
+        // increase distances if aggro on this character
+        distanceRetreat *= 3;
+      }
+
+      CalculateDistanceAndDirectionToEnemy(characterNpc,
+                                           targetCharacter,
+                                           isRangedWeapon: false,
+                                           out var distanceToEnemy,
+                                           out var directionToEnemyPosition,
+                                           directionToEnemyHitbox: out _,
+                                           out _,
+                                           out _);
+      directionToEnemyPosition *= -1;
+
+      var isRetreating = distanceToEnemy <= distanceRetreat;
+      if (isRetreating)
+      {
+        // retreat
+        movementDirection = directionToEnemyPosition;
+      }
+      else
+      {
+        // retreat completed
+        movementDirection = Vector2F.Zero;
+      }
+
+      characterNpcPrivateState.IsRetreating = isRetreating;
+
+      rotationAngleRad = characterNpc.GetPublicState<CharacterMobPublicState>()
+                                     .AppliedInput
+                                     .RotationAngleRad;
+      // look away from the enemy
+      LookOnEnemy(directionToEnemyPosition, ref rotationAngleRad);
+
+      if (isRetreating)
+      {
+        TryPlayFleeSound(characterNpc, characterNpcPrivateState);
       }
     }
 
@@ -578,6 +643,36 @@
                                            rebuildWeaponsCacheNow: true);
         break;
       }
+    }
+
+    private static void TryPlayFleeSound(ICharacter characterNpc, CharacterMobPrivateState characterNpcPrivateState)
+    {
+      if (characterNpc.ProtoCharacter is not IProtoCharacterMob protoMob)
+      {
+        return;
+      }
+
+      var serverTime = Api.Server.Game.FrameTime;
+      var timeSinceLastFleeSound = serverTime - characterNpcPrivateState.LastFleeSoundTime;
+      if (timeSinceLastFleeSound < FleeSoundRepeatInterval)
+      {
+        // already played the flee sound recently
+        return;
+      }
+
+      if (timeSinceLastFleeSound < 2 * FleeSoundRepeatInterval)
+      {
+        // played the flee sound quite recently
+        // we don't want to play it like it's a cuckoo clock (exactly every X seconds)
+        // so let's apply some randomization here
+        if (RandomHelper.Next(0, 5) != 0)
+        {
+          return;
+        }
+      }
+
+      characterNpcPrivateState.LastFleeSoundTime = serverTime;
+      protoMob.ServerPlaySound(characterNpc, CharacterSound.Flee);
     }
   }
 }

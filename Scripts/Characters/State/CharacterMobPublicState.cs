@@ -6,6 +6,7 @@
   using AtomicTorch.CBND.GameApi.Data.Items;
   using AtomicTorch.CBND.GameApi.Data.State;
   using AtomicTorch.CBND.GameApi.Data.State.NetSync;
+  using AtomicTorch.GameEngine.Common.Primitives;
 
   public class CharacterMobPublicState : BasePublicState, ICharacterPublicState
   {
@@ -28,6 +29,19 @@
     [SyncToClient]
     [TempOnly]
     public bool IsDead { get; set; }
+
+    [SyncToClient]
+    [TempOnly]
+    public Vector2D Destination { get; set; }
+
+    [SyncToClient]
+    [TempOnly]
+    public Vector2F DirectionToEnemyPosition { get; set; }
+
+    [SyncToClient]
+    [TempOnly]
+    public Vector2F DirectionToEnemyHitbox { get; set; }
+
 
     [SyncToClient]
     [TempOnly]

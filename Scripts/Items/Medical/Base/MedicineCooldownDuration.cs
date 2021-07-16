@@ -4,20 +4,21 @@ namespace AtomicTorch.CBND.CoreMod.Items.Medical
 {
   public static class MedicineCooldownDuration
   {
+    public const double None = 0;
+
+    public static double Short => PveSystem.SharedIsPve(false) ? 2 : 3;
+
+    public static double Medium => PveSystem.SharedIsPve(false) ? 2 : 5;
+    public static double Long => PveSystem.SharedIsPve(false) ? 2 : 7;
+
+    public static double VeryLong => PveSystem.SharedIsPve(false) ? 2 : 10;
+
     /// <summary>
     /// This is just a synonym for the most long value.
     /// Used as max value for the status effect.
+    /// Please note: cooldown duration for any medicine cannot exceed this duration.
     /// </summary>
-    public const double Maximum = VeryLong;
+    public static double Maximum => VeryLong;
 
-    public const double None = 0;
-
-    public const double Short = 2; //PveSystem.SharedIsPve(false) ? 2 : 3;
-
-    public const double Medium = 2; // PveSystem.SharedIsPve(false) ? 2 : 5;
-
-    public const double Long = 2; //PveSystem.SharedIsPve(false) ? 2 : 7;
-
-    public const double VeryLong = 2; //PveSystem.SharedIsPve(false) ? 2 : 10;
   }
 }

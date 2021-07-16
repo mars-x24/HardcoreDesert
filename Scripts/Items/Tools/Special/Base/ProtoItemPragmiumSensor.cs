@@ -42,6 +42,9 @@
     private static readonly Lazy<ObjectMineralPragmiumSource> LazyPragmiumSource
         = new(Api.GetProtoEntity<ObjectMineralPragmiumSource>);
 
+    private static readonly Lazy<ObjectMineralGiantPragmiumSource> LazyGiantPragmiumSource
+    = new(Api.GetProtoEntity<ObjectMineralGiantPragmiumSource>);
+
     public static event Action<IItem, PragmiumSensorSignalKind> ServerSignalReceived;
 
     public override bool CanBeSelectedInVehicle => true;
@@ -220,6 +223,7 @@
       var isObjectClaimSystemEnabled = WorldObjectClaimSystem.SharedIsEnabled;
       using var tempList = Api.Shared.GetTempList<IStaticWorldObject>();
       LazyPragmiumSource.Value.GetAllGameObjects(tempList.AsList());
+      LazyGiantPragmiumSource.Value.GetAllGameObjects(tempList.AsList());
 
       foreach (var staticWorldObject in tempList.AsList())
       {

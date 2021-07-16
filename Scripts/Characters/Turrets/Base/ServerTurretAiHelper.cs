@@ -130,7 +130,9 @@
                                                                    isRangedWeapon: true,
                                                                    out _,
                                                                    out _,
-                                                                   out var directionToEnemyHitbox);
+                                                                   out var directionToEnemyHitbox,
+                                                                   out _,
+                                                                   out _);
 
       ServerCharacterAiHelper.LookOnEnemy(directionToEnemyHitbox, ref rotationAngleRad);
 
