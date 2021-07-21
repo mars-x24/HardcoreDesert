@@ -17,6 +17,10 @@
      
 0.1.30
 Added ServerRates settings to define a multiplikator for Mob rounds and Mob count
+
+0.1.29
+Pragmium sensor should now works with Giant Pragmium Source
+Added some mob AI
 	 
 0.1.28
 Fixed a problem when loading inventory with extra slots
