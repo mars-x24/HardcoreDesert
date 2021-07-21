@@ -80,6 +80,8 @@
 
       var privateState = GetPrivateState(activeEvent);
 
+      var maxWaveCount = MaxWaveCount * MigrantMutantConstants.MigrantMutantWaveMultiplier;
+
       foreach (var spawnedObject in privateState.SpawnedWorldObjects)
       {
         if (!canFinish)
@@ -112,7 +114,7 @@
 
       if (canFinish)
       {
-        if (ended || publicState.NextWave > MaxWaveCount)
+        if (ended || publicState.NextWave > maxWaveCount)
         {
           // destroy after a second delay
           // to ensure the public state is synchronized with the clients
@@ -159,7 +161,7 @@
     {
       var publicState = activeEvent.GetPublicState<EventDropPublicState>();
 
-      int mobCount = 1;
+      double mobCount = 1;
 
       var world = Server.World;
       var tile = world.GetTile(publicState.AreaEventOriginalPosition);
@@ -179,26 +181,26 @@
 
             if (claim is ObjectLandClaimT1)
             {
-              mobCount = 1;
+              mobCount = 1 * MigrantMutantConstants.MigrantMutantMobsMultiplier;
             }
             else if (claim is ObjectLandClaimT2)
             {
-              mobCount = 4;
+              mobCount = 4 * MigrantMutantConstants.MigrantMutantMobsMultiplier;
               tLevel = 2;
             }
             else if (claim is ObjectLandClaimT3)
             {
-              mobCount = 8;
+              mobCount = 8 * MigrantMutantConstants.MigrantMutantMobsMultiplier;
               tLevel = 3;
             }
             else if (claim is ObjectLandClaimT4)
             {
-              mobCount = 13;
+              mobCount = 13 * MigrantMutantConstants.MigrantMutantMobsMultiplier;
               tLevel = 4;
             }
             else if (claim is ObjectLandClaimT5)
             {
-              mobCount = 20;
+              mobCount = 20 * MigrantMutantConstants.MigrantMutantMobsMultiplier;
               tLevel = 5;
             }
           }
