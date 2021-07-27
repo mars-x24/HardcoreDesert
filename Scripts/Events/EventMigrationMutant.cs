@@ -11,8 +11,10 @@
   using AtomicTorch.CBND.CoreMod.Triggers;
   using AtomicTorch.CBND.CoreMod.Zones;
   using AtomicTorch.CBND.GameApi;
+  using AtomicTorch.CBND.GameApi.Data;
   using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.Data.Logic;
+  using AtomicTorch.CBND.GameApi.Data.State;
   using AtomicTorch.CBND.GameApi.Data.World;
   using AtomicTorch.CBND.GameApi.Extensions;
   using AtomicTorch.CBND.GameApi.Scripting;
@@ -25,8 +27,6 @@
   public class EventMigrationMutant : ProtoEventDrop
   {
     public static string NotificationUnderAttack = "Your base is under attack!";
-
-    private const byte MaxWaveCount = 5;
 
     public override ushort AreaRadius => 35;
 
@@ -43,7 +43,7 @@
     public override TimeSpan EventDuration
     => this.EventDurationWithoutDelay + this.EventStartDelayDuration;
 
-    public TimeSpan EventDurationWithoutDelay => TimeSpan.FromMinutes(15);
+    public TimeSpan EventDurationWithoutDelay = TimeSpan.FromMinutes(15);
 
     public TimeSpan EventStartDelayDuration => TimeSpan.FromMinutes(5);
 
@@ -53,6 +53,7 @@
     private static readonly IWorldServerService ServerWorld = IsServer
                                                               ? Server.World
                                                               : null;
+
 
     public double SharedGetTimeRemainsToEventStart(EventWithAreaPublicState publicState)
     {
@@ -112,7 +113,7 @@
 
       if (canFinish)
       {
-        if (ended || publicState.NextWave > MaxWaveCount)
+        if (ended || publicState.NextWave > MigrantMutantConstants.MigrationMutantWaveCount)
         {
           // destroy after a second delay
           // to ensure the public state is synchronized with the clients
@@ -129,13 +130,11 @@
         else
         {
           if (publicState.CurrentWave != publicState.NextWave)
-          {
             publicState.CurrentWave = publicState.NextWave;
 
             ServerTimersSystem.AddAction(
-              delaySeconds: 10,
-              () => this.ServerSpawnObjectsDelay(activeEvent, publicState.AreaCirclePosition, publicState.AreaCircleRadius, privateState.SpawnedWorldObjects));
-          }
+              delaySeconds: 10,          
+              () => this.ServerSpawnObjectsDelay(activeEvent, publicState.AreaCirclePosition, publicState.AreaCircleRadius, privateState.SpawnedWorldObjects));          
         }
       }
     }
@@ -179,26 +178,26 @@
 
             if (claim is ObjectLandClaimT1)
             {
-              mobCount = 1;
+              mobCount = MigrantMutantConstants.MigrationMutantMobCount[0];
             }
             else if (claim is ObjectLandClaimT2)
             {
-              mobCount = 4;
+              mobCount = MigrantMutantConstants.MigrationMutantMobCount[1];
               tLevel = 2;
             }
             else if (claim is ObjectLandClaimT3)
             {
-              mobCount = 8;
+              mobCount = MigrantMutantConstants.MigrationMutantMobCount[2];
               tLevel = 3;
             }
             else if (claim is ObjectLandClaimT4)
             {
-              mobCount = 13;
+              mobCount = MigrantMutantConstants.MigrationMutantMobCount[3];
               tLevel = 4;
             }
             else if (claim is ObjectLandClaimT5)
             {
-              mobCount = 20;
+              mobCount = MigrantMutantConstants.MigrationMutantMobCount[4];
               tLevel = 5;
             }
           }
@@ -207,14 +206,14 @@
 
       List<IProtoWorldObject> list = new List<IProtoWorldObject>();
       
-      if (publicState.CurrentWave == MaxWaveCount)
+      if (publicState.CurrentWave == MigrantMutantConstants.MigrationMutantWaveCount)
       {
         var mob = this.GetLastWaveBossMob(tLevel);
         if(mob is not null)
           list.Add(mob);
       }
 
-      if (publicState.CurrentWave >= 3)
+      if (publicState.CurrentWave >= MigrantMutantConstants.MigrationMutantWaveCount - 2)
       {
         var mob = this.GetWaveBossMob(tLevel);
         if(mob is not null)
@@ -369,6 +368,8 @@
 
     protected override void ServerOnEventStartRequested(BaseTriggerConfig triggerConfig)
     {
+      EventDurationWithoutDelay = TimeSpan.FromMinutes(MigrantMutantConstants.MigrationMutantDurationWithoutDelay);
+
       int locationsCount = 5;
 
       if (Api.Server.Characters.OnlinePlayersCount >= 20)

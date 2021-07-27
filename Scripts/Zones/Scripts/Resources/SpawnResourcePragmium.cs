@@ -32,7 +32,7 @@
 
             var presetPragmiumSource = spawnList.CreatePreset(interval: 183, padding: 2, useSectorDensity: false)
                                                 .Add<ObjectMineralPragmiumSource>(20.0)
-                                                .Add<ObjectMineralGiantPragmiumSource>(1.0)
+                                                //.Add<ObjectMineralGiantPragmiumSource>(1.0)
                                                 .SetCustomPaddingWithSelf(79);
 
             // don't spawn close to oil seeps
