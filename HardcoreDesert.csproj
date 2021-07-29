@@ -75,6 +75,5 @@
     <Folder Include="Content\Sounds\" />
     <Folder Include="Content\Textures\StaticObjects\Structures\Misc\" />
     <Folder Include="Scripts\StaticObjects\Structures\Misc\" />
-    <Folder Include="Scripts\Systems\NewFolder\" />
   </ItemGroup>  
 </Project>

@@ -130,11 +130,13 @@
         else
         {
           if (publicState.CurrentWave != publicState.NextWave)
+          {
             publicState.CurrentWave = publicState.NextWave;
 
             ServerTimersSystem.AddAction(
-              delaySeconds: 10,          
-              () => this.ServerSpawnObjectsDelay(activeEvent, publicState.AreaCirclePosition, publicState.AreaCircleRadius, privateState.SpawnedWorldObjects));          
+              delaySeconds: 10,
+              () => this.ServerSpawnObjectsDelay(activeEvent, publicState.AreaCirclePosition, publicState.AreaCircleRadius, privateState.SpawnedWorldObjects));
+          }
         }
       }
     }

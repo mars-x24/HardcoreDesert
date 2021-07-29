@@ -8,13 +8,19 @@
     Discord:Mars#8365, druffzilla#8949, Salvick#3333
   </author>
   <description>Queen and Tyrant in the desert</description>
-  <version>0.1.29</version>
-  <updated>27.07.2021</updated>
+  <version>0.1.30</version>
+  <updated>28.07.2021</updated>
   <!-- Mod type: 1=server, 2=client+server, 3=client -->
   <!-- Please note: mods of type 1 are ignored on client (cannot see and activate them)
                     mods of type 2 are enabled automatically when you're connecting to the server using them
                     mods of type 3 are ignored on server (cannot see and activate them) 
      
+0.1.30
+Mutant migration:
+Fixed a bug with mutant migration waves after clearing first wave
+Added destruction timeout on land claim
+Added raid block 
+
 0.1.29
 Pragmium sensor should now works with Giant Pragmium Source
 Added some mob AI
