@@ -134,7 +134,7 @@
             publicState.CurrentWave = publicState.NextWave;
 
             ServerTimersSystem.AddAction(
-              delaySeconds: 10,
+              delaySeconds: 10 + RandomHelper.Next(0, 5),
               () => this.ServerSpawnObjectsDelay(activeEvent, publicState.AreaCirclePosition, publicState.AreaCircleRadius, privateState.SpawnedWorldObjects));
           }
         }
@@ -152,7 +152,7 @@
       publicState.CurrentWave = publicState.NextWave = 1;
 
       ServerTimersSystem.AddAction(
-        delaySeconds: this.EventStartDelayDuration.TotalSeconds,
+        delaySeconds: this.EventStartDelayDuration.TotalSeconds + RandomHelper.Next(-60, 60),
         () => this.ServerSpawnObjectsDelay(activeEvent, circlePosition, circleRadius, spawnedObjects));
     }
 

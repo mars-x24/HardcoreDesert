@@ -20,6 +20,7 @@ Don't consider mobs in path finding
 Fixed moving mobs when they are too far away
 PvE soil/distance requirement for oil and lithium extraction like in PvP
 Princess will spawn only remains on death, no prag spire
+Added some time for mobs spawn in Mutant migration
 
 0.1.30
 Mutant migration:
