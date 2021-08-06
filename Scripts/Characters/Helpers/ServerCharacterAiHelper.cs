@@ -64,7 +64,8 @@
         ICharacter characterNpc,
         ICharacter enemyCharacter,
         bool isRangedWeapon,
-        out double distanceToEnemy,
+        out double distanceToOriginalTarget,
+        out double distanceToTarget,
         out Vector2F directionToEnemyPosition,
         out Vector2F directionToEnemyHitbox,
         out bool hasObstacles,
@@ -73,7 +74,8 @@
     {
       if (enemyCharacter is null)
       {
-        distanceToEnemy = double.NaN;
+        distanceToOriginalTarget = double.NaN;
+        distanceToTarget = double.NaN;
         directionToEnemyPosition = directionToEnemyHitbox = Vector2F.Zero;
         hasObstacles = false;
         destinationIsEnemy = true;
@@ -91,7 +93,8 @@
       using (FindPathHelper findPathHelper = new FindPathHelper(characterNpc, characterNpc.Position, enemyCharacter, npcWeaponOffset, enemyWeaponOffset, 1))
       {
         findPathHelper.FindPathToEnemy(
-          out distanceToEnemy,
+          out distanceToOriginalTarget,
+          out distanceToTarget,
           out directionToEnemyPosition,
           out directionToEnemyHitbox,
           out hasObstacles,
@@ -281,6 +284,7 @@
       CalculateDistanceAndDirectionToEnemy(characterNpc,
                                            targetCharacter,
                                            isRangedWeapon: isRangedWeapon,
+                                           out var distanceToOriginalTarget,
                                            out var distanceToTarget,
                                            out var directionToEnemyPosition,
                                            out var directionToEnemyHitbox,
@@ -310,7 +314,7 @@
 
       if (isRetreating)
       {
-        if ((double.IsNaN(distanceToTarget)
+        if ((double.IsNaN(distanceToOriginalTarget)
              || distanceToTarget > privateState.AttackRange)
             && weaponState.CooldownSecondsRemains <= 0)
         {
@@ -335,13 +339,14 @@
       }
       else // not retreating
       {
-        var isTargetTooFar = distanceToTarget > distanceEnemyTooFar;
+        var isTargetTooFar = distanceToOriginalTarget > distanceEnemyTooFar;
 
         if(!isTargetTooFar && hasObstacles)
         {
           CalculateDistanceAndDirectionToEnemy(characterNpc,
                                        targetCharacter,
                                        isRangedWeapon: isRangedWeapon,
+                                       out distanceToOriginalTarget,
                                        out distanceToTarget,
                                        out directionToEnemyPosition,
                                        out directionToEnemyHitbox,
@@ -476,13 +481,14 @@
       CalculateDistanceAndDirectionToEnemy(characterNpc,
                                            targetCharacter,
                                            isRangedWeapon: weaponState.ProtoWeapon is IProtoItemWeaponRanged,
+                                           out var distanceToOriginalTarget,
                                            out var distanceToTarget,
                                            out var directionToEnemyPosition,
                                            out var directionToEnemyHitbox,
                                            out _,
                                            out _);
 
-      var isTargetTooFar = distanceToTarget > distanceEnemyTooFar;
+      var isTargetTooFar = distanceToOriginalTarget > distanceEnemyTooFar;
       movementDirection = distanceToTarget < distanceEnemyTooClose
                           || isTargetTooFar
                               ? Vector2F.Zero // too close or too far
@@ -564,6 +570,7 @@
       CalculateDistanceAndDirectionToEnemy(characterNpc,
                                            targetCharacter,
                                            isRangedWeapon: false,
+                                           out var distanceToOriginalTarget,
                                            out var distanceToEnemy,
                                            out var directionToEnemyPosition,
                                            directionToEnemyHitbox: out _,

@@ -225,6 +225,7 @@
                 targetCharacter,
                 isRangedWeapon:
                 weaponState.ProtoWeapon is IProtoItemWeaponRanged,
+                out var distanceToOriginalTarget,
                 out var distanceToTarget,
                 out var directionToEnemyPosition,
                 out var directionToEnemyHitbox,
@@ -241,7 +242,7 @@
             }
 
             // not retreating
-            var isTargetTooFar = distanceToTarget > distanceEnemyTooFar;
+            var isTargetTooFar = distanceToOriginalTarget > distanceEnemyTooFar;
             var movementDirection = distanceToTarget < MinDistanceToTarget
                                     || isTargetTooFar
                                         ? Vector2F.Zero // too close or too far

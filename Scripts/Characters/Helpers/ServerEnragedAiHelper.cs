@@ -375,6 +375,7 @@
       ServerCharacterAiHelper.CalculateDistanceAndDirectionToEnemy(characterNpc,
                                            targetCharacter,
                                            isRangedWeapon: isRangedWeapon,
+                                           out var distanceToOriginalTarget,
                                            out var distanceToTarget,
                                            out var directionToEnemyPosition,
                                            out var directionToEnemyHitbox,
@@ -417,13 +418,14 @@
           distanceEnemyTooFar *= 3;
         }
 
-        isTargetTooFar = distanceToTarget > distanceEnemyTooFar;
+        isTargetTooFar = distanceToOriginalTarget > distanceEnemyTooFar;
 
         if (!isTargetTooFar && hasObstacles)
         {
           ServerCharacterAiHelper.CalculateDistanceAndDirectionToEnemy(characterNpc,
                                        targetCharacter,
                                        isRangedWeapon: isRangedWeapon,
+                                       out distanceToOriginalTarget,
                                        out distanceToTarget,
                                        out directionToEnemyPosition,
                                        out directionToEnemyHitbox,

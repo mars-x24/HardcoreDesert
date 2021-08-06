@@ -63,6 +63,7 @@
                                                                          isRangedWeapon: true,
                                                                          out _,
                                                                          out _,
+                                                                         out _,
                                                                          out var directionToEnemyHitbox,
                                                                          out _,
                                                                          out _);

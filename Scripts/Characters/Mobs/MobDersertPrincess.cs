@@ -105,7 +105,8 @@
                         character: character,
                         damageTracker: damageTracker,
                         bossDifficultyCoef: 1.0,
-                        lootObjectProto: RandomHelper.Next(2) == 1 ? ProtoLootObjectLazy.Value : ProtoLootObjectLazy2.Value,
+                        lootObjectProto: ProtoLootObjectLazy.Value,
+                        //lootObjectProto: RandomHelper.Next(2) == 1 ? ProtoLootObjectLazy.Value : ProtoLootObjectLazy2.Value,
                         lootObjectsDefaultCount: DeathSpawnLootObjectsDefaultCount,
                         lootObjectsRadius: DeathSpawnLootObjectsRadius,
                         learningPointsBonusPerLootObject: 5,
@@ -195,6 +196,7 @@
         {
           mobs = Api.FindProtoEntities<ProtoCharacterMob>();
           mobs.RemoveAll(m => m.StatDefaultHealthMax < 80);
+          mobs.RemoveAll(m => m.GetType().ToString().Contains("NPC"));
         }
 
         int r = RandomHelper.Next(mobs.Count);

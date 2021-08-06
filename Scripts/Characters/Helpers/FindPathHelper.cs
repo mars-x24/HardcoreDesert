@@ -2,7 +2,6 @@
 using AtomicTorch.CBND.GameApi.Data.Characters;
 using AtomicTorch.GameEngine.Common.Primitives;
 using System;
-using System.Collections.Generic;
 
 namespace AtomicTorch.CBND.CoreMod.Characters
 {
@@ -34,42 +33,45 @@ namespace AtomicTorch.CBND.CoreMod.Characters
     }
 
     public void FindPathToEnemy(
-        out double distanceToEnemy,
-        out Vector2F directionToEnemyPosition,
-        out Vector2F directionToEnemyHitbox,
+        out double distanceToOriginalTarget,
+        out double distanceToTarget,
+        out Vector2F directionToTargetPosition,
+        out Vector2F directionToTargetHitbox,
         out bool hasObstacles,
         out bool destinationIsEnemy,
         bool tryOtherPath = false
       )
     {
-      SetDistanceTo(characterNpcPosition, npcWeaponOffset, enemyCharacter.Position, enemyWeaponOffset, out distanceToEnemy, out directionToEnemyPosition, out directionToEnemyHitbox);
+      SetDistanceTo(characterNpcPosition, npcWeaponOffset, enemyCharacter.Position, enemyWeaponOffset, out distanceToTarget, out directionToTargetPosition, out directionToTargetHitbox);
 
-      var originalDistanceToEnemy = distanceToEnemy;
-      var originalDirectionToEnemyPosition = directionToEnemyPosition;
-      var originalDirectionToEnemyHitbox = directionToEnemyHitbox;
+      distanceToOriginalTarget = distanceToTarget;
 
-      hasObstacles = !FindPathToEnemy(0.0f, originalDirectionToEnemyHitbox, ref originalDistanceToEnemy, ref directionToEnemyPosition, ref directionToEnemyHitbox);
+      var tempOriginalDistanceToTarget = distanceToTarget;
+      var tempOriginalDirectionToTargetPosition = directionToTargetPosition;
+      var tempOriginalDirectionToTargetHitbox = directionToTargetHitbox;
 
-      distanceToEnemy = originalDistanceToEnemy;
-      directionToEnemyPosition = originalDirectionToEnemyPosition;
-      directionToEnemyHitbox = originalDirectionToEnemyHitbox;
+      hasObstacles = !FindPathToEnemy(0.0f, tempOriginalDirectionToTargetHitbox, ref tempOriginalDistanceToTarget, ref directionToTargetPosition, ref directionToTargetHitbox);
+
+      distanceToTarget = tempOriginalDistanceToTarget;
+      directionToTargetPosition = tempOriginalDirectionToTargetPosition;
+      directionToTargetHitbox = tempOriginalDirectionToTargetHitbox;
 
       if (tryOtherPath && hasObstacles)
       {
         for (int angle = 30; angle <= 359; angle += 30)
         {
-          pathFound = FindPathToEnemy(angle, originalDirectionToEnemyHitbox, ref distanceToEnemy, ref directionToEnemyPosition, ref directionToEnemyHitbox);
+          pathFound = FindPathToEnemy(angle, tempOriginalDirectionToTargetHitbox, ref distanceToTarget, ref directionToTargetPosition, ref directionToTargetHitbox);
 
           if (pathFound)
             break;
 
-          distanceToEnemy = originalDistanceToEnemy;
-          directionToEnemyPosition = originalDirectionToEnemyPosition;
-          directionToEnemyHitbox = originalDirectionToEnemyHitbox;
+          distanceToTarget = tempOriginalDistanceToTarget;
+          directionToTargetPosition = tempOriginalDirectionToTargetPosition;
+          directionToTargetHitbox = tempOriginalDirectionToTargetHitbox;
         }
       }
 
-      destinationIsEnemy = directionToEnemyHitbox == originalDirectionToEnemyHitbox;
+      destinationIsEnemy = directionToTargetHitbox == tempOriginalDirectionToTargetHitbox;
     }
 
     private bool FindPathToEnemy(float deg, Vector2F originalDirectionToEnemyHitbox, ref double distanceToEnemy, ref Vector2F directionToEnemyPosition, ref Vector2F directionToEnemyHitbox)
@@ -99,6 +101,7 @@ namespace AtomicTorch.CBND.CoreMod.Characters
             using (FindPathHelper findPathHelper = new FindPathHelper(characterNpc, alongWayPosition, enemyCharacter, npcWeaponOffset, enemyWeaponOffset, this.maxIterations, this.iteration + 1))
             {
               findPathHelper.FindPathToEnemy(
+                out _,
                 out _,
                 out _,
                 out _,
@@ -142,6 +145,8 @@ namespace AtomicTorch.CBND.CoreMod.Characters
         if (ReferenceEquals(worldObject, characterNpc))
           continue;
         if (ReferenceEquals(worldObject, enemyCharacter))
+          continue;
+        if (worldObject.ProtoGameObject is IProtoCharacter)
           continue;
         if (worldObject is not null)
           return true;
