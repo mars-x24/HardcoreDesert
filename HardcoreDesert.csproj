@@ -32,6 +32,8 @@
     <Content Include="Content\Animations\LargePragmiumBear\Front.json" />
     <Content Include="Content\Animations\MechCrusher\Back.json" />
     <Content Include="Content\Animations\MechCrusher\Front.json" />
+    <Content Include="Content\Animations\MutantCrawler\Back.json" />
+    <Content Include="Content\Animations\MutantCrawler\Front.json" />
     <Content Include="Content\Animations\PragmiumBear\Back.json" />
     <Content Include="Content\Animations\PragmiumBear\Front.json" />
     <Content Include="Content\Animations\PragmiumKing\Back.json" />

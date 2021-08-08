@@ -11,10 +11,8 @@
   using AtomicTorch.CBND.CoreMod.Triggers;
   using AtomicTorch.CBND.CoreMod.Zones;
   using AtomicTorch.CBND.GameApi;
-  using AtomicTorch.CBND.GameApi.Data;
   using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.Data.Logic;
-  using AtomicTorch.CBND.GameApi.Data.State;
   using AtomicTorch.CBND.GameApi.Data.World;
   using AtomicTorch.CBND.GameApi.Extensions;
   using AtomicTorch.CBND.GameApi.Scripting;
@@ -207,25 +205,25 @@
       }
 
       List<IProtoWorldObject> list = new List<IProtoWorldObject>();
-      
+
       if (publicState.CurrentWave == MigrantMutantConstants.MigrationMutantWaveCount)
       {
         var mob = this.GetLastWaveBossMob(tLevel);
-        if(mob is not null)
+        if (mob is not null)
           list.Add(mob);
       }
 
       if (publicState.CurrentWave >= MigrantMutantConstants.MigrationMutantWaveCount - 2)
       {
         var mob = this.GetWaveBossMob(tLevel);
-        if(mob is not null)
+        if (mob is not null)
           list.Add(mob);
       }
 
       if (publicState.CurrentWave > 1)
         mobCount += Convert.ToByte(Math.Ceiling(mobCount * publicState.CurrentWave * 0.1));
-        
-      for(int i = 0; i < mobCount; i++)
+
+      for (int i = 0; i < mobCount; i++)
       {
         list.Add(this.SpawnPreset[RandomHelper.Next(0, this.SpawnPreset.Count)]);
       }
@@ -288,9 +286,9 @@
             Logger.Important($"Spawned world object: {spawnedObject} for active event {activeEvent}");
 
             var mobPrivateState = spawnedObject.GetPrivateState<CharacterMobEnragedPrivateState>();
-            if(mobPrivateState is not null)
+            if (mobPrivateState is not null)
               mobPrivateState.GoalTargetStructure = claimObject;
-                       
+
             break;
           }
           while (--attempts > 0);
@@ -448,7 +446,7 @@
 
     private IProtoWorldObject GetLastWaveBossMob(int tLevel)
     {
-      if(tLevel > 3)
+      if (tLevel > 3)
         return Api.GetProtoEntity<MobEnragedLargePragmiumBear>();
       else
         return Api.GetProtoEntity<MobEnragedPragmiumBear>();

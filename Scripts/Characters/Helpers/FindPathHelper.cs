@@ -146,7 +146,7 @@ namespace AtomicTorch.CBND.CoreMod.Characters
           continue;
         if (ReferenceEquals(worldObject, enemyCharacter))
           continue;
-        if (worldObject.ProtoGameObject is IProtoCharacter)
+        if (worldObject is not null && worldObject.ProtoGameObject is IProtoCharacter)
           continue;
         if (worldObject is not null)
           return true;
