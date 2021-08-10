@@ -9,6 +9,8 @@
   using AtomicTorch.CBND.CoreMod.SoundPresets;
   using AtomicTorch.CBND.CoreMod.Stats;
   using AtomicTorch.CBND.CoreMod.Systems.Droplists;
+  using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
+  using AtomicTorch.CBND.GameApi.Data.World;
 
   public class MobMutantCrawler : ProtoCharacterMob
   {
@@ -77,6 +79,27 @@
       var weaponProto = GetProtoEntity<ItemWeaponMobMutantCrawlerPoison>();
       data.PrivateState.WeaponState.SharedSetWeaponProtoOnly(weaponProto);
       data.PublicState.SharedSetCurrentWeaponProtoOnly(weaponProto);
+
+      // schedule destruction by timer
+      var gameObject = data.GameObject;
+      ServerTimersSystem.AddAction(
+          delaySeconds: 60 * 60, // 60 minutes
+          () => ServerDespawnTimerCallback(gameObject));
+    }
+
+    private static void ServerDespawnTimerCallback(IWorldObject gameObject)
+    {
+      if (!Server.World.IsObservedByAnyPlayer(gameObject))
+      {
+        // can destroy now
+        Server.World.DestroyObject(gameObject);
+        return;
+      }
+
+      // postpone destruction
+      ServerTimersSystem.AddAction(
+          delaySeconds: 60,
+          () => ServerDespawnTimerCallback(gameObject));
     }
 
     protected override void ServerUpdateMob(ServerUpdateData data)
@@ -86,7 +109,7 @@
 
       ServerCharacterAiHelper.ProcessAggressiveAi(
           character,
-  targetCharacter: ServerCharacterAiHelper.GetClosestTargetPlayer(character),
+          targetCharacter: ServerCharacterAiHelper.GetClosestTargetPlayer(character),
           isRetreating: false,
           isRetreatingForHeavyVehicles: this.AiIsRunAwayFromHeavyVehicles,
           distanceRetreat: 0,

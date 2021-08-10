@@ -14,7 +14,7 @@
 
       spawnList.CreatePreset(interval: 12, padding: 0.5, useSectorDensity: false)
                .AddExact<MobMutantCrawler>()
-               .SetCustomPaddingWithSelf(3);
+               .SetCustomPaddingWithSelf(8);
     }
   }
 }

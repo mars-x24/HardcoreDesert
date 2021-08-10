@@ -15,12 +15,21 @@
 
     public static readonly int MigrationMutantDurationWithoutDelay;
 
+    public static readonly int MigrationMutantAttackNumber;
+
+
     static MigrantMutantConstants()
     {
       if (Api.IsClient)
       {
         return;
       }
+
+      MigrationMutantAttackNumber = ServerRates.Get(
+       "MigrationMutantAttackNumber",
+       defaultValue: 5,
+       @"Number of base under attack for mutant migration event.");
+
 
       MigrationMutantDurationWithoutDelay = ServerRates.Get(
          "MigrationMutantDurationWithoutDelay",

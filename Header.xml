@@ -8,13 +8,19 @@
     Discord:Mars#8365, druffzilla#8949, Salvick#3333
   </author>
   <description>Queen and Tyrant in the desert</description>
-  <version>0.1.32</version>
-  <updated>07.08.2021</updated>
+  <version>0.1.33</version>
+  <updated>09.08.2021</updated>
   <!-- Mod type: 1=server, 2=client+server, 3=client -->
   <!-- Please note: mods of type 1 are ignored on client (cannot see and activate them)
                     mods of type 2 are enabled automatically when you're connecting to the server using them
                     mods of type 3 are ignored on server (cannot see and activate them) 
      
+0.1.33
+Reduced number of mutant crawlers
+Changes to reduce lag with Mutant migration.
+Added a setting to change the number of base under attack "MigrationMutantAttackNumber".
+Despawn mutant crawlers after 1 hour if not despawned correctly.
+
 0.1.32
 Fixed a bug in path finding, thanks J422
 Added Mutant Crawlers Infestation by Salvick

@@ -9,7 +9,7 @@
       // no triggers, only manual triggering through the event when it starts
       spawnList.CreatePreset(interval: 10, padding: 0.5, useSectorDensity: false)
                .AddExact<MobMutantCrawler>()
-               .SetCustomPaddingWithSelf(2);
+               .SetCustomPaddingWithSelf(8);
     }
   }
 }

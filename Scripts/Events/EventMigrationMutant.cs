@@ -31,7 +31,7 @@
     public override string Description =>
         "Mutant lifeforms of this world seem to be enraged, the estimated time for arrival is 5 minutes, protect your base!";
 
-    public override double MinDistanceBetweenSpawnedObjects => 5;
+    public override double MinDistanceBetweenSpawnedObjects => 2;
 
     [NotLocalizable]
     public override string Name => "Migration (Mutant)";
@@ -237,16 +237,24 @@
 
         void TrySpawn()
         {
-          var attempts = 2_000;
+          var attempts = 500;
+
           do
           {
             var spawnPosition =
-                SharedCircleLocationHelper.SharedSelectRandomPositionInsideTheCircle(
+                SharedSelectRandomOuterPositionInsideTheCircle(
                     circlePosition,
                     circleRadius);
+
             if (!this.ServerIsValidSpawnPosition(spawnPosition))
             {
               // doesn't match any specific checks determined by the inheritor (such as a zone test)
+              continue;
+            }
+
+            if (!ServerCheckCanSpawn(protoObjectToSpawn, spawnPosition, tile.Height))
+            {
+              // doesn't match the tile requirements or inside a claimed land area
               continue;
             }
 
@@ -268,19 +276,13 @@
               continue;
             }
 
-            if (!ServerCheckCanSpawn(protoObjectToSpawn, spawnPosition, tile.Height))
-            {
-              // doesn't match the tile requirements or inside a claimed land area
-              continue;
-            }
-
             if (attempts < 100 && Server.World.IsObservedByAnyPlayer(spawnPosition))
             {
               // observed by players
               continue;
             }
 
-            var spawnedObject = ServerTrySpawn(protoObjectToSpawn, spawnPosition);
+            var spawnedObject = ServerTrySpawn(protoObjectToSpawn as IProtoCharacterMob, spawnPosition);
             spawnedObjects.Add(spawnedObject);
 
             Logger.Important($"Spawned world object: {spawnedObject} for active event {activeEvent}");
@@ -326,57 +328,51 @@
       publicState.NextWave++;
     }
 
-    private static bool ServerCheckCanSpawn(IProtoWorldObject protoObjectToSpawn, Vector2Ushort spawnPosition, byte height)
+    private Vector2Ushort SharedSelectRandomOuterPositionInsideTheCircle(
+    Vector2Ushort circlePosition,
+    ushort circleRadius)
     {
-      return protoObjectToSpawn switch
-      {
-        IProtoCharacterMob
-            => ServerCharacterSpawnHelper.IsPositionValidForCharacterSpawn(
-                   spawnPosition.ToVector2D(),
-                   isPlayer: false)
-               && !LandClaimSystem.SharedIsLandClaimedByAnyone(spawnPosition)
-               && Api.Server.World.GetTile(spawnPosition).Height == height,
-
-        IProtoStaticWorldObject protoStaticWorldObject
-            // Please note: land claim check must be integrated in the object tile requirements
-            => protoStaticWorldObject.CheckTileRequirements(
-                spawnPosition,
-                character: null,
-                logErrors: false),
-
-        _ => throw new ArgumentOutOfRangeException("Unknown object type to spawn: " + protoObjectToSpawn)
-      };
+      return SharedSelectRandomOuterPositionInsideTheCircle(
+              circlePosition.ToVector2D(),
+              circleRadius)
+          .ToVector2Ushort();
     }
 
-
-    private static IWorldObject ServerTrySpawn(IProtoWorldObject protoObjectToSpawn, Vector2Ushort spawnPosition)
+    private Vector2D SharedSelectRandomOuterPositionInsideTheCircle(
+    Vector2D circlePosition,
+    double circleRadius)
     {
-      return protoObjectToSpawn switch
-      {
-        IProtoCharacterMob protoCharacterMob
-            => Server.Characters.SpawnCharacter(protoCharacterMob,
-                                                spawnPosition.ToVector2D()),
+      var offset = circleRadius / 2.0 * RandomHelper.NextDouble() + circleRadius / 2.0;
+      var angle = RandomHelper.NextDouble() * MathConstants.DoublePI;
+      return new Vector2D(circlePosition.X + offset * Math.Cos(angle),
+                          circlePosition.Y + offset * Math.Sin(angle));
+    }
 
-        IProtoStaticWorldObject protoStaticWorldObject
-            => Server.World.CreateStaticWorldObject(
-                protoStaticWorldObject,
-                spawnPosition),
+    private static bool ServerCheckCanSpawn(IProtoWorldObject protoObjectToSpawn, Vector2Ushort spawnPosition, byte height)
+    {
+      return !LandClaimSystem.SharedIsLandClaimedByAnyone(spawnPosition)
+             && Api.Server.World.GetTile(spawnPosition).Height == height
+             && ServerCharacterSpawnHelper.IsPositionValidForCharacterSpawn(
+                   spawnPosition.ToVector2D(),
+                   isPlayer: false);      
+    }
 
-        _ => throw new Exception("Unknown object type to spawn: " + protoObjectToSpawn)
-      };
+    private static IWorldObject ServerTrySpawn(IProtoCharacterMob protoCharacterMob, Vector2Ushort spawnPosition)
+    {
+      return Server.Characters.SpawnCharacter(protoCharacterMob, spawnPosition.ToVector2D());
     }
 
     protected override void ServerOnEventStartRequested(BaseTriggerConfig triggerConfig)
     {
       EventDurationWithoutDelay = TimeSpan.FromMinutes(MigrantMutantConstants.MigrationMutantDurationWithoutDelay);
 
-      int locationsCount = 5;
+      int locationsCount = MigrantMutantConstants.MigrationMutantAttackNumber;
 
       if (Api.Server.Characters.OnlinePlayersCount >= 20)
-        locationsCount = 10;
+        locationsCount *= 2;
 
       if (Api.Server.Characters.OnlinePlayersCount >= 100)
-        locationsCount = 20;
+        locationsCount *= 4;
 
 
       if (SharedLocalServerHelper.IsLocalServer)

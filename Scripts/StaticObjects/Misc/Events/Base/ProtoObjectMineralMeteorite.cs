@@ -46,15 +46,15 @@
     private static readonly Lazy<IProtoCharacter> LazyProtoMob
         = new(GetProtoEntity<MobMutantCrawler>);
 
-    private const int MobDespawnDistance = 12;
+    private const int MobDespawnDistance = 20;
 
     // How many guardian mobs each meteorite can have simultaneously.
-    private const int MobsCountLimit = 9;
+    private const int MobsCountLimit = 3;
 
     private const int MobSpawnDistance = 8;
 
     // How many guardian mobs a meteorite will respawn at every spawn interval (ServerSpawnAndDecayIntervalSeconds).
-    private const int ServerSpawnMobsMaxCountPerIteration = 6; // spawn at max 6 mobs per iteration
+    private const int ServerSpawnMobsMaxCountPerIteration = 3; // spawn at max 6 mobs per iteration
 
     // end //
 
@@ -219,7 +219,7 @@
                                                     countToSpawn,
                                                     excludeBounds: worldObject.Bounds.Inflate(4),
                                                     maxSpawnDistanceFromExcludeBounds: MobSpawnDistance,
-                                                    noObstaclesCheckRadius: 0.5,
+                                                    noObstaclesCheckRadius: 1.0,
                                                     maxAttempts: 200);
     }
 
