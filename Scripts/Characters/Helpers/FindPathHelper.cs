@@ -1,5 +1,6 @@
 ﻿using AtomicTorch.CBND.CoreMod.Systems.Physics;
 using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.World;
 using AtomicTorch.GameEngine.Common.Primitives;
 using System;
 
@@ -121,7 +122,7 @@ namespace AtomicTorch.CBND.CoreMod.Characters
       return false;
     }
 
-    private void SetDistanceTo(Vector2D positionFrom, double positionFromOffset, Vector2D positionTo, double positionToOffset, out double distanceToEnemy, out Vector2F directionToEnemyPosition, out Vector2F directionToEnemyHitbox)
+    public static void SetDistanceTo(Vector2D positionFrom, double positionFromOffset, Vector2D positionTo, double positionToOffset, out double distanceToEnemy, out Vector2F directionToEnemyPosition, out Vector2F directionToEnemyHitbox)
     {
       var deltaPos = positionTo - positionFrom;
       directionToEnemyPosition = (Vector2F)deltaPos;
@@ -142,6 +143,12 @@ namespace AtomicTorch.CBND.CoreMod.Characters
       foreach (var testResult in tempLineTestResults.AsList())
       {
         var worldObject = testResult.PhysicsBody.AssociatedWorldObject;
+        if (testResult.PhysicsBody.AssociatedProtoTile != null)
+        {
+          if (testResult.PhysicsBody.AssociatedProtoTile.Kind != TileKind.Solid)
+            continue;
+          return true;
+        }
         if (ReferenceEquals(worldObject, characterNpc))
           continue;
         if (ReferenceEquals(worldObject, enemyCharacter))
@@ -155,9 +162,35 @@ namespace AtomicTorch.CBND.CoreMod.Characters
       return false;
     }
 
+    public static bool HasObstaclesInTheWay(ICharacter character, Vector2D toPosition)
+    {
+      var tempLineTestResults = character.PhysicsBody.PhysicsSpace.TestLine(character.Position, toPosition, CollisionGroups.Default, false);
+
+      foreach (var testResult in tempLineTestResults.AsList())
+      {
+        var worldObject = testResult.PhysicsBody.AssociatedWorldObject;
+        if (testResult.PhysicsBody.AssociatedProtoTile != null)
+        {
+          if (testResult.PhysicsBody.AssociatedProtoTile.Kind != TileKind.Solid)
+            continue;
+          return true;
+        }
+        if (ReferenceEquals(worldObject, character))
+          continue;
+        if (worldObject is not null && worldObject.ProtoGameObject is IProtoCharacter)
+          continue;
+        if (worldObject is not null)
+          return true; 
+      }
+
+      return false;
+    }
+
+
     public void Dispose()
     {
 
     }
+
   }
 }

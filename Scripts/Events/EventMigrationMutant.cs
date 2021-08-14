@@ -7,6 +7,7 @@
   using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
   using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
   using AtomicTorch.CBND.CoreMod.Systems.Notifications;
+  using AtomicTorch.CBND.CoreMod.Systems.Physics;
   using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
   using AtomicTorch.CBND.CoreMod.Triggers;
   using AtomicTorch.CBND.CoreMod.Zones;
@@ -154,7 +155,7 @@
         () => this.ServerSpawnObjectsDelay(activeEvent, circlePosition, circleRadius, spawnedObjects));
     }
 
-    protected void ServerSpawnObjectsDelay(ILogicObject activeEvent, Vector2Ushort circlePosition, ushort circleRadius, List<IWorldObject> spawnedObjects)
+    protected async void ServerSpawnObjectsDelay(ILogicObject activeEvent, Vector2Ushort circlePosition, ushort circleRadius, List<IWorldObject> spawnedObjects)
     {
       var publicState = activeEvent.GetPublicState<EventDropPublicState>();
 
@@ -206,18 +207,18 @@
 
       List<IProtoWorldObject> list = new List<IProtoWorldObject>();
 
+      IProtoWorldObject bigBoss = this.GetLastWaveBossMob(tLevel);
       if (publicState.CurrentWave == MigrantMutantConstants.MigrationMutantWaveCount)
       {
-        var mob = this.GetLastWaveBossMob(tLevel);
-        if (mob is not null)
-          list.Add(mob);
+        if (bigBoss is not null)
+          list.Add(bigBoss);
       }
 
+      IProtoWorldObject boss = this.GetWaveBossMob(tLevel);
       if (publicState.CurrentWave >= MigrantMutantConstants.MigrationMutantWaveCount - 2)
       {
-        var mob = this.GetWaveBossMob(tLevel);
-        if (mob is not null)
-          list.Add(mob);
+        if (boss is not null)
+          list.Add(boss);
       }
 
       if (publicState.CurrentWave > 1)
@@ -231,74 +232,100 @@
       var sqrMinDistanceBetweenSpawnedObjects =
           this.MinDistanceBetweenSpawnedObjects * this.MinDistanceBetweenSpawnedObjects;
 
+      var physicsSpace = Api.Server.World.GetPhysicsSpace();
+
       foreach (var protoObjectToSpawn in list)
       {
-        TrySpawn();
+        await Api.Server.Core.YieldIfOutOfTime();
 
-        void TrySpawn()
+        var attempts = 500;
+
+        do
         {
-          var attempts = 500;
+          var spawnPosition =
+              SharedSelectRandomOuterPositionInsideTheCircle(
+                  circlePosition,
+                  circleRadius);
 
-          do
+          if (!this.ServerIsValidSpawnPosition(spawnPosition))
           {
-            var spawnPosition =
-                SharedSelectRandomOuterPositionInsideTheCircle(
-                    circlePosition,
-                    circleRadius);
+            // doesn't match any specific checks determined by the inheritor (such as a zone test)
+            continue;
+          }
 
-            if (!this.ServerIsValidSpawnPosition(spawnPosition))
-            {
-              // doesn't match any specific checks determined by the inheritor (such as a zone test)
-              continue;
-            }
+          if (!ServerCheckCanSpawn(protoObjectToSpawn, spawnPosition, tile.Height))
+          {
+            // doesn't match the tile requirements or inside a claimed land area
+            continue;
+          }
 
-            if (!ServerCheckCanSpawn(protoObjectToSpawn, spawnPosition, tile.Height))
-            {
-              // doesn't match the tile requirements or inside a claimed land area
-              continue;
-            }
-
-            var isTooClose = false;
-            foreach (var obj in spawnedObjects)
-            {
-              if (spawnPosition.TileSqrDistanceTo(obj.TilePosition)
-                  > sqrMinDistanceBetweenSpawnedObjects)
-              {
-                continue;
-              }
-
-              isTooClose = true;
-              break;
-            }
-
-            if (isTooClose)
+          var isTooClose = false;
+          foreach (var obj in spawnedObjects)
+          {
+            if (spawnPosition.TileSqrDistanceTo(obj.TilePosition)
+                > sqrMinDistanceBetweenSpawnedObjects)
             {
               continue;
             }
 
-            if (attempts < 100 && Server.World.IsObservedByAnyPlayer(spawnPosition))
-            {
-              // observed by players
-              continue;
-            }
-
-            var spawnedObject = ServerTrySpawn(protoObjectToSpawn as IProtoCharacterMob, spawnPosition);
-            spawnedObjects.Add(spawnedObject);
-
-            Logger.Important($"Spawned world object: {spawnedObject} for active event {activeEvent}");
-
-            var mobPrivateState = spawnedObject.GetPrivateState<CharacterMobEnragedPrivateState>();
-            if (mobPrivateState is not null)
-              mobPrivateState.GoalTargetStructure = claimObject;
-
+            isTooClose = true;
             break;
           }
-          while (--attempts > 0);
 
-          if (attempts == 0)
+          if (isTooClose)
           {
-            Logger.Error($"Cannot spawn world object: {protoObjectToSpawn} for active event {activeEvent}");
+            continue;
           }
+
+          if (attempts < 100 && Server.World.IsObservedByAnyPlayer(spawnPosition))
+          {
+            // observed by players
+            continue;
+          }
+
+
+          //check for cliff
+          bool hasCliff = false;
+          var tempLineTestResults = physicsSpace.TestLine(spawnPosition.ToVector2D(), tile.Position.ToVector2D(), CollisionGroups.Default, false);
+          foreach (var testResult in tempLineTestResults.AsList())
+          {
+            var worldObject = testResult.PhysicsBody.AssociatedWorldObject;
+            if (testResult.PhysicsBody.AssociatedProtoTile != null)
+            {
+              if (testResult.PhysicsBody.AssociatedProtoTile.Kind != TileKind.Solid)
+                continue;
+              hasCliff = true;
+              break;
+            }
+          }
+          if (hasCliff)
+            continue;
+
+          var spawnedObject = ServerTrySpawn(protoObjectToSpawn as IProtoCharacterMob, spawnPosition);
+          spawnedObjects.Add(spawnedObject);
+
+          Logger.Important($"Spawned world object: {spawnedObject} for active event {activeEvent}");
+
+          var mobPrivateState = spawnedObject.GetPrivateState<CharacterMobEnragedPrivateState>();
+          if (mobPrivateState is not null)
+            mobPrivateState.GoalTargetStructure = claimObject;
+
+          var mobPublicState = spawnedObject.GetPublicState<CharacterMobPublicState>();
+
+          int maxLevel = MigrantMutantConstants.MigrationMutantMobMaxLevelPerWave[publicState.CurrentWave - 1];
+          int level = -1; //random
+          if ((boss is not null && spawnedObject.ProtoGameObject.GetType() == boss.GetType()) || 
+              (bigBoss is not null && spawnedObject.ProtoGameObject.GetType() == bigBoss.GetType()))
+            level = publicState.CurrentWave;
+          LevelHelper.RebuildLevel(level, maxLevel, (ICharacter)spawnedObject, mobPublicState, mobPrivateState);
+
+          break;
+        }
+        while (--attempts > 0);
+
+        if (attempts == 0)
+        {
+          Logger.Error($"Cannot spawn world object: {protoObjectToSpawn} for active event {activeEvent}");
         }
       }
 
@@ -406,18 +433,32 @@
 
           var claim = tempAllClaims.AsList()[RandomHelper.Next(0, tempAllClaims.Count)];
 
-          var position = claim.TilePosition;
-
-          if (this.ServerCheckNoEventsNearby(position, AreaRadius, tempExistingEventsSameType.AsList()))
+          if (!IsLandClaimToBeDestroyed(claim))
           {
-            return position;
-          }
+            var position = claim.TilePosition;
 
+            if (this.ServerCheckNoEventsNearby(position, AreaRadius, tempExistingEventsSameType.AsList()))
+            {
+              return position;
+            }
+          }
         }
         while (--attempts > 0);
       }
 
       throw new Exception("Unable to pick an event position");
+    }
+
+    private static bool IsLandClaimToBeDestroyed(IStaticWorldObject worldObject)
+    {
+      if (worldObject.ProtoStaticWorldObject is ProtoObjectLandClaim)
+      {
+        var publicState = worldObject.GetPublicState<ObjectLandClaimPublicState>();
+        if (publicState.ServerTimeForDestruction.HasValue)
+          return true;
+      }
+
+      return false;
     }
 
     protected override void ServerPrepareDropEvent(Triggers triggers, List<IProtoWorldObject> spawnPreset)

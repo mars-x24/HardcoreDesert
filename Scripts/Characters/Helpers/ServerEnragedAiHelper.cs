@@ -8,6 +8,7 @@
   using AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons;
   using AtomicTorch.CBND.CoreMod.SoundPresets;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Structures;
+  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
   using AtomicTorch.CBND.CoreMod.Systems.Physics;
   using AtomicTorch.CBND.CoreMod.Systems.Weapons;
   using AtomicTorch.CBND.CoreMod.Vehicles;
@@ -273,15 +274,25 @@
     }
 
     public static IStaticWorldObject GetClosestTargetStructure(ICharacter characterNpc)
-    {
+    {      
+      //Try a small area first, mobs are hitting walls most of the time
+      var obj = GetClosestTargetStructure(characterNpc, 1);
+      if (obj is null)
+        obj = GetClosestTargetStructure(characterNpc, 25);
+
+      return obj;
+    }
+
+    private static IStaticWorldObject GetClosestTargetStructure(ICharacter characterNpc, int inflateValue)
+    { 
       byte? tileHeight = null;
 
       var list = ServerWorldService.GetStaticWorldObjectsOfProtoInBounds<IProtoObjectStructure>(
-        new RectangleInt(characterNpc.TilePosition.X, characterNpc.TilePosition.Y, 1, 1).Inflate(25))
-        .Where(S => S.PhysicsBody.HasShapes)
-        .Where(S => S.ProtoStaticWorldObject.Kind != StaticObjectKind.Floor && S.ProtoStaticWorldObject.Kind != StaticObjectKind.FloorDecal)
-        .Where(S => S.PhysicsBody.CalculateCenterOffsetForCollisionGroup(CollisionGroups.HitboxMelee).HasValue)
-        .OrderBy(S => characterNpc.Position.DistanceTo(S.TilePosition.ToVector2D() + S.PhysicsBody.CalculateCenterOffsetForCollisionGroup(CollisionGroups.HitboxMelee).Value)).ToList();
+         new RectangleInt(characterNpc.TilePosition.X, characterNpc.TilePosition.Y, 1, 1).Inflate(inflateValue))
+         .Where(S => S.PhysicsBody.HasShapes)
+         .Where(S => S.ProtoStaticWorldObject.Kind != StaticObjectKind.Floor && S.ProtoStaticWorldObject.Kind != StaticObjectKind.FloorDecal)
+         .Where(S => S.PhysicsBody.CalculateCenterOffsetForCollisionGroup(CollisionGroups.HitboxMelee).HasValue)
+         .OrderBy(S => characterNpc.Position.DistanceTo(S.TilePosition.ToVector2D() + S.PhysicsBody.CalculateCenterOffsetForCollisionGroup(CollisionGroups.HitboxMelee).Value)).ToList();
 
       if (list.Count == 0)
       {
@@ -311,6 +322,9 @@
           }
         }
 
+        if(IsLandClaimToBeDestroyed(worldObject))
+            continue;
+
         structure = worldObject;
         break;
       }
@@ -327,6 +341,17 @@
       }
     }
 
+    private static bool IsLandClaimToBeDestroyed(IStaticWorldObject worldObject)
+    {
+      if (worldObject.ProtoStaticWorldObject is ProtoObjectLandClaim)
+      {
+        var publicState = worldObject.GetPublicState<ObjectLandClaimPublicState>();
+        if (publicState.ServerTimeForDestruction.HasValue)
+          return true;
+      }
+
+      return false;
+    }
 
     public static void ProcessAggressiveAi(
         ICharacter characterNpc,
@@ -356,10 +381,11 @@
 
       //Goal target 5 seconds each 60 seconds
       if (privateState.GoalTargetTimer <= 0)
-        privateState.GoalTargetTimer = secondsBeforeTryingGoalTarget;
+        privateState.GoalTargetTimer = secondsBeforeTryingGoalTarget + RandomHelper.Next(10);
 
       bool attackGoal = (privateState.GoalTargetTimer > secondsBeforeTryingGoalTarget - secondsToAttackGoalTarget)
-                        && privateState.GoalTargetStructure is not null;
+                        && privateState.GoalTargetStructure is not null &&
+                        (privateState.GoalTargetStructure.ProtoStaticWorldObject is not ProtoObjectLandClaim || !IsLandClaimToBeDestroyed(privateState.GoalTargetStructure));
       if (attackGoal)
         targetStructure = privateState.GoalTargetStructure;
 
@@ -410,6 +436,7 @@
           distanceToTarget = distanceToTargetStructure;
           directionToEnemyPosition = directionToEnemyPositionStructure;
           directionToEnemyHitbox = directionToEnemyHitboxStructure;
+          hasObstacles = false;
         }
 
         if (targetCharacter is not null && ReferenceEquals(targetCharacter, privateState.CurrentAggroCharacter))
@@ -439,6 +466,27 @@
                                 ? Vector2F.Zero // too close or too far
                                 : directionToEnemyPosition;
 
+        //follow a path if we have a target but we are not moving
+        if(movementDirection == Vector2F.Zero && privateState.CurrentTargetCharacter is not null && !(distanceToTarget < distanceEnemyTooClose))
+        {
+          if(privateState.CurrentTargetPosition.Count > 0)
+          {
+            for (int i = privateState.CurrentTargetPosition.Count - 1; i >= 0; i--)
+            {
+              Vector2D toPosition = privateState.CurrentTargetPosition[i];
+              if (!FindPathHelper.HasObstaclesInTheWay(characterNpc, toPosition))
+              {
+                FindPathHelper.SetDistanceTo(characterNpc.Position, 0.0, toPosition, 0.0, out distanceToTarget, out directionToEnemyPosition, out directionToEnemyHitbox);
+
+                isTargetTooFar = false;
+                targetCharacter = privateState.CurrentTargetCharacter;
+                movementDirection = directionToEnemyPosition;
+                break;
+              }
+            }
+          }
+        }
+
         if (isTargetTooFar)
         {
           targetCharacter = null;
@@ -446,7 +494,9 @@
         }
       }
 
-      privateState.CurrentTargetCharacter = targetCharacter;
+      //privateState.CurrentTargetCharacter = targetCharacter;
+      privateState.SetCurrentTargetWithPosition(targetCharacter);
+
       privateState.CurrentTargetStructure = targetStructure;
 
       rotationAngleRad = characterNpc.GetPublicState<CharacterMobPublicState>()

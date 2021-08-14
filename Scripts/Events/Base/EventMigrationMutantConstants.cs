@@ -13,6 +13,8 @@
 
     public static readonly int[] MigrationMutantMobCount;
 
+    public static readonly int[] MigrationMutantMobMaxLevelPerWave;
+
     public static readonly int MigrationMutantDurationWithoutDelay;
 
     public static readonly int MigrationMutantAttackNumber;
@@ -27,7 +29,7 @@
 
       MigrationMutantAttackNumber = ServerRates.Get(
        "MigrationMutantAttackNumber",
-       defaultValue: 5,
+       defaultValue: 3,
        @"Number of base under attack for mutant migration event.");
 
 
@@ -60,6 +62,21 @@
 
       for (int i = 0; i < MigrationMutantMobCount.Length; i++)
         MigrationMutantMobCount[i] = MathHelper.Clamp(MigrationMutantMobCount[i], 0, 50);
+
+
+     string mobMaxLevelString = ServerRates.Get(
+     "MigrationMutantMobMaxLevelPerWave",
+     defaultValue: "1,2,3,4,5",
+     @"Max level of mobs for each wave.");
+
+      string[] mobMaxLevelSplit = mobMaxLevelString.Replace(" ", "").Split(',');
+      if (mobMaxLevelSplit.Length != MigrationMutantWaveCount)
+        MigrationMutantMobMaxLevelPerWave = new int[] { 1, 2, 3, 4, 5 };
+      else
+        MigrationMutantMobMaxLevelPerWave = Array.ConvertAll(mobMaxLevelSplit, s => int.Parse(s));
+
+      for (int i = 0; i < MigrationMutantMobMaxLevelPerWave.Length; i++)
+        MigrationMutantMobMaxLevelPerWave[i] = MathHelper.Clamp(MigrationMutantMobMaxLevelPerWave[i], 1, 5);
     }
 
     [MethodImpl(MethodImplOptions.NoInlining)]

@@ -1,5 +1,6 @@
 ﻿using AtomicTorch.CBND.CoreMod.Helpers;
 using AtomicTorch.CBND.CoreMod.Systems.Physics;
+using AtomicTorch.CBND.CoreMod.Systems.Weapons;
 using AtomicTorch.CBND.CoreMod.Zones;
 using AtomicTorch.CBND.GameApi.Data.Characters;
 using AtomicTorch.CBND.GameApi.Data.Zones;
@@ -13,6 +14,35 @@ namespace AtomicTorch.CBND.CoreMod.Characters
 {
   public class LevelHelper
   {
+    /// <summary>
+    /// Set the level after mob initialization
+    /// </summary>
+    /// <param name="level">mob level, -1 for random</param>
+    public static void RebuildLevel(int level, int maxLevel, ICharacter mob, CharacterMobPublicState mobPublicState, CharacterMobPrivateState mobPrivateState)
+    {
+      IProtoCharacterMob proto = mob.ProtoGameObject as IProtoCharacterMob;
+      if (proto is null)
+        return;
+
+      if (level == -1)
+        level = GetLevel(proto);
+
+      if (level > maxLevel)
+        level = maxLevel;
+
+      mobPublicState.Level = level;
+
+      SharedCharacterStatsHelper.RefreshCharacterFinalStatsCache(
+      proto.ProtoCharacterDefaultEffects,
+      mobPublicState,
+      mobPrivateState,
+      isFirstTime: true);
+
+      var weaponState = mobPrivateState.WeaponState;
+      WeaponSystem.SharedRebuildWeaponCache(mob, weaponState);
+      mobPrivateState.AttackRange = weaponState.WeaponCache?.RangeMax ?? 0;
+    }
+
     public static void SetLevel(IProtoCharacterMob protoCharacter, ICharacter character, CharacterMobPublicState publicState, CharacterMobPrivateState privateState)
     {
       if (publicState is null)
@@ -47,7 +77,7 @@ namespace AtomicTorch.CBND.CoreMod.Characters
       publicState.Level = level;
     }
 
-    private static int GetLevel(IProtoCharacterMob character)
+    public static int GetLevel(IProtoCharacterMob character)
     {
       if (character is null)
         return 1;
