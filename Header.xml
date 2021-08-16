@@ -19,7 +19,7 @@ MigrationMutantMobCount, Number of mobs for each claims, default 1,4,8,13,20
 MigrationMutantMobMaxLevelPerWave, Max level of mobs for each wave, default 1,2,3,4,5
 
 0.1.35
-Don't recall drones for based on height
+Don't recall drones based on height
 Follow target distance limit on path finding.
 Mob won't target a spectator 
 
