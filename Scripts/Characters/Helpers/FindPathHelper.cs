@@ -186,6 +186,33 @@ namespace AtomicTorch.CBND.CoreMod.Characters
       return false;
     }
 
+    public static void FollowTarget(ref Vector2F movementDirection, ref bool isTargetTooFar, ref ICharacter targetCharacter, 
+      ref Vector2F directionToEnemyPosition, ref Vector2F directionToEnemyHitbox,
+      CharacterMobPrivateState privateState, ICharacter characterNpc,
+      double distanceToTarget, double distanceToOriginalTarget, double distanceEnemyTooClose, double distanceEnemyTooFar)
+    {
+      if (movementDirection == Vector2F.Zero && privateState.CurrentTargetCharacter is not null && !(distanceToTarget < distanceEnemyTooClose))
+      {
+        if (privateState.CurrentTargetPosition.Count > 0)
+        {
+          for (int i = privateState.CurrentTargetPosition.Count - 1; i >= 0; i--)
+          {
+            Vector2D toPosition = privateState.CurrentTargetPosition[i];
+            if (!FindPathHelper.HasObstaclesInTheWay(characterNpc, toPosition))
+            {
+              FindPathHelper.SetDistanceTo(characterNpc.Position, 0.0, toPosition, 0.0, out distanceToTarget, out directionToEnemyPosition, out directionToEnemyHitbox);
+
+              isTargetTooFar = distanceToOriginalTarget > distanceEnemyTooFar * 2;
+              targetCharacter = privateState.CurrentTargetCharacter;
+              movementDirection = directionToEnemyPosition;
+              break;
+            }
+          }
+        }
+      }
+
+
+    }
 
     public void Dispose()
     {

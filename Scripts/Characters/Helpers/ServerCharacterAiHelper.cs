@@ -360,26 +360,9 @@
                                 ? Vector2F.Zero // too close or too far
                                 : directionToEnemyPosition;
 
-        //follow a path if we have a target but we are not moving
-        if (movementDirection == Vector2F.Zero && privateState.CurrentTargetCharacter is not null && !(distanceToTarget < distanceEnemyTooClose))
-        {
-          if (privateState.CurrentTargetPosition.Count > 0)
-          {
-            for (int i = privateState.CurrentTargetPosition.Count - 1; i >= 0; i--)
-            {
-              Vector2D toPosition = privateState.CurrentTargetPosition[i];
-              if (!FindPathHelper.HasObstaclesInTheWay(characterNpc, toPosition))
-              {
-                FindPathHelper.SetDistanceTo(characterNpc.Position, 0.0, toPosition, 0.0, out distanceToTarget, out directionToEnemyPosition, out directionToEnemyHitbox);
-
-                isTargetTooFar = false;
-                targetCharacter = privateState.CurrentTargetCharacter;
-                movementDirection = directionToEnemyPosition;
-                break;
-              }
-            }
-          }
-        }
+        //follow a path if we have a target but we are not moving,
+        FindPathHelper.FollowTarget(ref movementDirection, ref isTargetTooFar, ref targetCharacter, ref directionToEnemyPosition, ref directionToEnemyHitbox,
+          privateState, characterNpc, distanceToTarget, distanceToOriginalTarget, distanceEnemyTooClose, distanceEnemyTooFar);
 
         if (isTargetTooFar)
         {

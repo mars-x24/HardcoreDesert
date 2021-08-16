@@ -1,7 +1,9 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Characters
 {
+  using AtomicTorch.CBND.CoreMod.Characters.Player;
   using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.Data.State;
+  using AtomicTorch.CBND.GameApi.Scripting;
   using AtomicTorch.GameEngine.Common.Primitives;
   using System.Collections.Generic;
 
@@ -41,7 +43,7 @@
 
     public void SetCurrentTargetWithPosition(ICharacter target)
     {
-      if(target is null)
+      if(target is null || target.ProtoCharacter == Api.GetProtoEntity<PlayerCharacterSpectator>())
       {
         CurrentTargetCharacter = null;
         CurrentTargetPosition = null;
