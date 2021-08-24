@@ -22,6 +22,10 @@
 
     public static void Open(IItem itemStorage)
     {
+      var currentPlayer = Api.Client.Characters.CurrentPlayerCharacter;
+      if (itemStorage.Container != currentPlayer.SharedGetPlayerContainerHotbar())
+        return;
+
       if (instance?.IsOpened == true && instance.itemStorage == itemStorage)
       {
         instance.CloseWindow();
@@ -48,7 +52,15 @@
       }
     }
 
-    private static bool CloseCurrentWindow(IItem itemStorage)
+    public static void Close(IItem itemStorage)
+    {
+      if (instance?.IsOpened == true && instance.itemStorage == itemStorage)
+      {
+        instance.CloseWindow();
+      }
+    }
+
+    public static bool CloseCurrentWindow(IItem itemStorage)
     {
       var CurrentCharacter = Api.Client.Characters.CurrentPlayerCharacter;
       var playerPrivateState = PlayerCharacter.GetPrivateState(CurrentCharacter);
@@ -86,7 +98,7 @@
 
     public void RefreshViewModel()
     {
-      if(DataContext is not null)
+      if (DataContext is not null)
       {
         this.DataContext = null;
         this.viewModel.Dispose();
@@ -95,7 +107,7 @@
 
       this.DataContext = this.viewModel = new ViewModelWindowStorageContainer(this.itemStorage);
 
-      this.iconControl.RefreshViewModel();
+      this.iconControl.RefreshViewModel(); 
     }
 
     protected override void OnUnloaded()
@@ -107,7 +119,5 @@
       this.viewModel = null;
       instance = null;
     }
-
-
   }
 }

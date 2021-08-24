@@ -8,6 +8,10 @@
   {
     byte SlotsCount { get; }
 
+    int MaxItemCount { get; }
+
+    int MaxItemCountPerType { get; }
+
     void ClientSetIconSource(IItem itemStorage, IProtoEntity iconSource);
   }
 }

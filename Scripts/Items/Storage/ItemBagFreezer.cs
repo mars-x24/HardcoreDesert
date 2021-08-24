@@ -7,6 +7,10 @@ namespace AtomicTorch.CBND.CoreMod.Items.Storage
 
   public class ItemBagFreezer : ProtoItemStorageFridge
   {
+    public override int MaxItemCount => 200;
+
+    public override int MaxItemCountPerType => 20;
+
     public override byte SlotsCount => 16;
 
     public override byte SlotsEnergyCount => 1;

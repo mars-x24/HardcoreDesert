@@ -7,8 +7,9 @@
   <author>
     Discord:Mars#8365, druffzilla#8949, Salvick#3333
   </author>
-  <description>Queen and Tyrant in the desert</description>
-  <version>0.1.36</version>
+  <description>Pincess and King in the desert</description>
+  <version>0.1.37</version>
+  <updated>24.08.2021</updated>
   
 <!-- 
 Available settings
@@ -17,6 +18,14 @@ MigrationMutantDurationWithoutDelay, Mutant migration duration in minutes withou
 MigrationMutantWaveCount, Number of waves for mutant migration event, default 5
 MigrationMutantMobCount, Number of mobs for each claims, default 1,4,8,13,20
 MigrationMutantMobMaxLevelPerWave, Max level of mobs for each wave, default 1,2,3,4,5
+
+
+0.1.37
+Bag must be equipped in hotbar
+Added max number of items in bags
+Fixed crawler won't spawn in land claims
+Meteorites can drop on beach, moutains, meadows etc.
+Added Vanguard weapons
 
 0.1.36
 Don't recall drones when switching to a weapon
@@ -143,7 +152,7 @@ You can now remove the backpack when there is a bag in the character inventory
 Fixed the storage interface when it is inside another chest
 -->
   
-  <updated>16.08.2021</updated>
+  
   <!-- Mod type: 1=server, 2=client+server, 3=client -->
   <!-- Please note: mods of type 1 are ignored on client (cannot see and activate them)
                     mods of type 2 are enabled automatically when you're connecting to the server using them

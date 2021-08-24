@@ -35,13 +35,22 @@
 
     public abstract byte SlotsCount { get; }
 
+    public abstract int MaxItemCount { get; }
+
+    public abstract int MaxItemCountPerType { get; }
+
     public string ItemUseCaption => "";
 
     public override double GroundIconScale => 1.5;
 
     public override ushort MaxItemsPerStack => 1;
 
+    public const string HintMaxItems = "You can store a maximum of {0} items."; //, {1} of each. ";
+
+    public const string HintEquippedInHotBar = "Must be equipped in hotbar.";
+
     public override string Description => "Useful for storing food, medicines or coins.";
+
 
     public virtual void ClientCreateItemSlotOverlayControls(IItem item, List<Control> controls)
     {
@@ -170,6 +179,8 @@
     {
       base.PrepareHints(hints);
       hints.Add(ItemHints.AltClickToUseItem);
+      hints.Add(HintEquippedInHotBar);
+      hints.Add(string.Format(HintMaxItems, MaxItemCount)); //, MaxItemCountPerType
     }
   }
 

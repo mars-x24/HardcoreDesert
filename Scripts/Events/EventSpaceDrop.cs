@@ -15,26 +15,26 @@
   using AtomicTorch.GameEngine.Common.Helpers;
   using AtomicTorch.GameEngine.Common.Primitives;
 
-  public class EventMeteoriteDrop : ProtoEventDrop
+  public class EventSpaceDrop : ProtoEventDrop
   {
     private static Lazy<IReadOnlyList<(IServerZone Zone, uint Weight)>> serverSpawnZones;
 
     public override ushort AreaRadius => PveSystem.ServerIsPvE
-                                             ? (ushort)72
-                                             : (ushort)100;
+                                             ? (ushort)64
+                                             : (ushort)90;
 
     public override string Description =>
-        @"Meteorites have fallen in the highlighted map area and attracted mutated liveforms.
-              [br]Clear the area from hostiles and rush in to mine some rare minerals!";
+        @"Space debris has fallen in the highlighted map area.
+              [br]Rush in to collect some valuable junk!";
 
-    public override TimeSpan EventDuration => TimeSpan.FromMinutes(40);
+    public override TimeSpan EventDuration => TimeSpan.FromMinutes(30);
 
-    public override double MinDistanceBetweenSpawnedObjects => 30;
+    public override double MinDistanceBetweenSpawnedObjects => 32;
 
     [NotLocalizable]
-    public override string Name => "Meteorite";
+    public override string Name => "Space debris";
 
-    protected override double DelayHoursSinceWipe => 1 * EventConstants.ServerEventDelayMultiplier;
+    protected override double DelayHoursSinceWipe => 2 * EventConstants.ServerEventDelayMultiplier;
 
     public override bool ServerIsTriggerAllowed(ProtoTrigger trigger)
     {
@@ -170,10 +170,10 @@
                                 to: TimeSpan.FromHours(intervalHours.to)))
                        ));
 
-      var meteoritesToSpawn = isPvE ? 5 : 7;
-      for (var index = 0; index < meteoritesToSpawn; index++)
+      var debrisToSpawn = isPvE ? 2 : 3;
+      for (var index = 0; index < debrisToSpawn; index++)
       {
-        spawnPreset.Add(Api.GetProtoEntity<ObjectMeteorite>());
+        spawnPreset.Add(Api.GetProtoEntity<ObjectSpaceDebris>());
       }
     }
 
@@ -185,7 +185,7 @@
     private static IReadOnlyList<(IServerZone, uint)> ServerSetupSpawnZones()
     {
       var result = new List<(IServerZone, uint)>();
-           
+
       AddZone(Api.GetProtoEntity<ZoneBorealForest>());
       AddZone(Api.GetProtoEntity<ZoneBorealCoastLake>());
       AddZone(Api.GetProtoEntity<ZoneBorealCoastOcean>());

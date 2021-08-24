@@ -20,6 +20,7 @@
   using AtomicTorch.CBND.GameApi.ServicesServer;
   using AtomicTorch.GameEngine.Common.Helpers;
   using AtomicTorch.GameEngine.Common.Primitives;
+  using AtomicTorch.CBND.GameApi.Data.State.NetSync;
   using System;
   using System.Collections.Generic;
 
@@ -439,6 +440,19 @@
 
             if (this.ServerCheckNoEventsNearby(position, AreaRadius, tempExistingEventsSameType.AsList()))
             {
+              var claimPublicState = claim.GetPublicState<ObjectLandClaimPublicState>();
+              var area = claimPublicState.LandClaimAreaObject;
+              var areaPrivateState = LandClaimArea.GetPrivateState(area);
+              var publicState = activeEvent.GetPublicState<EventDropPublicState>();
+              var owners = areaPrivateState.ServerGetLandOwners();
+
+              publicState.BoundToPlayer = new NetworkSyncList<string>();
+
+              foreach (string owner in owners)
+              {
+                publicState.BoundToPlayer.Add(owner);
+              }
+
               return position;
             }
           }

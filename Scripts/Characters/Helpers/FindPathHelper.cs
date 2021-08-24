@@ -202,7 +202,7 @@ namespace AtomicTorch.CBND.CoreMod.Characters
             {
               FindPathHelper.SetDistanceTo(characterNpc.Position, 0.0, toPosition, 0.0, out distanceToTarget, out directionToEnemyPosition, out directionToEnemyHitbox);
 
-              isTargetTooFar = distanceToOriginalTarget > distanceEnemyTooFar * 2;
+              isTargetTooFar = distanceToOriginalTarget > distanceEnemyTooFar;// * 2;
               targetCharacter = privateState.CurrentTargetCharacter;
               movementDirection = directionToEnemyPosition;
               break;
