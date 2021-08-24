@@ -26,6 +26,7 @@ Added max number of items in bags
 Fixed crawler won't spawn in land claims
 Meteorites can drop on beach, moutains, meadows etc.
 Added Vanguard weapons
+Mutant migration event circle bound to player
 
 0.1.36
 Don't recall drones when switching to a weapon
