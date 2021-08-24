@@ -21,6 +21,7 @@
       if (obj is IProtoItemStorage)
       {
         WindowStorageContainer.Close(context.Item);
+        WindowStorageFridgeContainer.Close(context.Item);
         return false;
       }
 

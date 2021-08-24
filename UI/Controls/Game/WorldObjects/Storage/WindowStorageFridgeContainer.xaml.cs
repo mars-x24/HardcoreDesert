@@ -22,6 +22,10 @@
 
     public static void Open(IItem itemStorage)
     {
+      var currentPlayer = Api.Client.Characters.CurrentPlayerCharacter;
+      if (itemStorage.Container != currentPlayer.SharedGetPlayerContainerHotbar())
+        return;
+
       if (instance?.IsOpened == true && instance.itemStorage == itemStorage)
       {
         instance.CloseWindow();
@@ -45,6 +49,14 @@
           ClientCurrentInteractionMenu.RegisterMenuWindow(instance);
           ClientCurrentInteractionMenu.Open();
         }
+      }
+    }
+
+    public static void Close(IItem itemStorage)
+    {
+      if (instance?.IsOpened == true && instance.itemStorage == itemStorage)
+      {
+        instance.CloseWindow();
       }
     }
 
