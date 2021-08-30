@@ -28,7 +28,7 @@
       if (obj is IProtoItemBackpack)
         return false;
 
-      if (context.Container.Owner is null || context.Container.Owner.ProtoGameObject is not ProtoItemStorage)
+      if (context.Container.Owner is null || (context.Container.Owner.ProtoGameObject is not ProtoItemStorage && context.Container.Owner.ProtoGameObject is not ProtoItemStorageFridge))
         return false;
 
       //Waiting a better Context when the user ctrl right click an item, ai_enabled will maybe add more attributes to detect this
@@ -51,7 +51,7 @@
 
     private bool CheckMaxItemCountPerTypeAllowed(IItemsContainer container, IItem itemToAdd)
     {
-      int maxItemCount = ((ProtoItemStorage)container.Owner.ProtoGameObject).MaxItemCountPerType;
+      int maxItemCount = this.GetMaxItemCountPerType(container);
       int count = itemToAdd.Count;
 
       if (count > maxItemCount)
@@ -73,7 +73,7 @@
 
     private bool CheckMaxItemCountAllowed(IItemsContainer container, IItem itemToAdd)
     {
-      int maxItemCount = ((ProtoItemStorage)container.Owner.ProtoGameObject).MaxItemCount;
+      int maxItemCount = this.GetMaxItemCount(container);
       int count = itemToAdd.Count;
 
       if (count > maxItemCount)
@@ -87,6 +87,32 @@
       }
 
       return true;
+    }
+
+    private int GetMaxItemCount(IItemsContainer container)
+    {
+      var storage = container.Owner.ProtoGameObject as ProtoItemStorage;
+      if(storage is not null)
+        return storage.MaxItemCount;
+
+      var storageF = container.Owner.ProtoGameObject as ProtoItemStorageFridge;
+      if (storageF is not null)
+        return storageF.MaxItemCount;
+
+      return 0;
+    }
+
+    private int GetMaxItemCountPerType(IItemsContainer container)
+    {
+      var storage = container.Owner.ProtoGameObject as ProtoItemStorage;
+      if (storage is not null)
+        return storage.MaxItemCountPerType;
+
+      var storageF = container.Owner.ProtoGameObject as ProtoItemStorageFridge;
+      if (storageF is not null)
+        return storageF.MaxItemCountPerType;
+
+      return 0;
     }
   }
 }

@@ -1,8 +1,5 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.ItemContainers
 {
-  using System;
-  using System.Collections.Generic;
-  using System.Threading.Tasks;
   using AtomicTorch.CBND.CoreMod.Items.Ammo;
   using AtomicTorch.CBND.CoreMod.Items.Drones;
   using AtomicTorch.CBND.CoreMod.Items.Equipment;
@@ -12,7 +9,6 @@
   using AtomicTorch.CBND.CoreMod.Items.Seeds;
   using AtomicTorch.CBND.CoreMod.Items.Tools;
   using AtomicTorch.CBND.CoreMod.Items.Weapons;
-  using AtomicTorch.CBND.CoreMod.Systems.PvE;
   using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
   using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.Data.Items;
@@ -20,6 +16,9 @@
   using AtomicTorch.CBND.GameApi.Scripting;
   using AtomicTorch.CBND.GameApi.Scripting.Network;
   using AtomicTorch.GameEngine.Common.Helpers;
+  using System;
+  using System.Collections.Generic;
+  using System.Threading.Tasks;
 
   public class ItemsContainerLandClaimSafeStorage : ProtoItemsContainer
   {
@@ -55,8 +54,7 @@
               "SafeStorageCapacity",
               defaultValue: 24,
               @"How many safe storage slots are allowed per base.
-                          The value should be within 0-128 range.
-                          Doesn't apply to PvE mode (there is no safe storage in PvE)."),
+                          The value should be within 0-128 range."),
           min: 0,
           max: 128);
 
