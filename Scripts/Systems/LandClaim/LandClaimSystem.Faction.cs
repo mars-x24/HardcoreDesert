@@ -245,7 +245,7 @@
                                                                 ? ServerRemoteContext.Character
                                                                 : null);
 
-          //LandClaimGroup.ServerAreaGroupChanged(null, areasGroupTo);
+          LandClaimGroup.ServerAreasGroupChanged(null, areasGroupTo);
         }
         else if (areasGroupFrom is not null)
         {

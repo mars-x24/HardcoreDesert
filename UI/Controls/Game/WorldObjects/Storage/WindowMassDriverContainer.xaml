@@ -1,0 +1,93 @@
+﻿<core:BaseUserControlWithWindow
+    x:Class="AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.WindowMassDriverContainer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:core="clr-namespace:AtomicTorch.CBND.CoreMod.UI.Controls.Core;assembly=Core"
+    xmlns:controls="clr-namespace:AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Controls;assembly=Core"
+    xmlns:worldObjects="clr-namespace:AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects;assembly=Core"
+    xmlns:data="clr-namespace:AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Data"
+    xmlns:crates="clr-namespace:AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Crates;assembly=Core"
+    xmlns:loc="clr-namespace:AtomicTorch.CBND.CoreMod.UI"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="300"
+    d:DataContext="{d:DesignInstance data:ViewModelWindowMassDriverContainer, IsDesignTimeCreatable=True}"
+    FontFamily="{StaticResource CondensedFontFamily}"
+    FontWeight="Bold">
+
+    <core:WindowMenuWithInventory x:Name="WindowMenuWithInventory"
+                                  SoundOpening="{StaticResource SoundWindowContainerOpen}"
+                                  SoundClosing="{StaticResource SoundWindowContainerClose}">
+        <Grid>
+            <!-- Simple items list in case the owners list is not editable (no tabs necessary) -->
+            <ContentControl
+                Visibility="{Binding HasOwnersList, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Reverse}">
+                <Grid>
+                    <controls:ItemsContainerExchangeControl DataContext="{Binding ViewModelItemsContainerExchange}" />
+                    <!--<crates:CrateIconControl WorldObjectCrate="{Binding WorldObjectCrate}"
+                                             HorizontalAlignment="Right"
+                                             VerticalAlignment="Bottom"
+                                             Margin="0,0,5,5"
+                                             />-->
+                </Grid>
+            </ContentControl>
+
+            <!-- Tab control in case the owners list is editable (so there are two tabs - Items and Owners) -->
+            <TabControl
+                Visibility="{Binding HasOwnersList, Converter={StaticResource BoolToVisibilityConverter}}"
+                Style="{StaticResource TabControlCompactStyle}"
+                Margin="10,5,10,0">
+                <!-- Text: Items -->
+                <TabItem Header="{x:Static loc:CoreStrings.ItemsContainer_Title}"
+                         IsSelected="True">
+                    <Grid Margin="0,-7,0,0">
+                        <controls:ItemsContainerExchangeControl DataContext="{Binding ViewModelItemsContainerExchange}" />
+                        <!--<crates:CrateIconControl WorldObjectCrate="{Binding WorldObjectCrate}"
+                                                 HorizontalAlignment="Right"
+                                                 VerticalAlignment="Bottom"
+                                                 Margin="0,0,-5,5" />-->
+                    </Grid>
+                </TabItem>
+
+                <!-- Text: Owners -->
+                <TabItem Header="{x:Static loc:CoreStrings.ObjectOwnersList_Title}"
+                         Visibility="{Binding ViewModelOwnersEditor, Converter={StaticResource NullToVisibilityConverter}}">
+                    <Grid HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Margin="0,20,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="36" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <worldObjects:WorldObjectOwnersEditorControl
+                                DataContext="{Binding ViewModelOwnersEditor}"
+                                Margin="2,0,0,5" />
+
+                            <Control Grid.Column="1"
+                                     Style="{StaticResource ControlVerticalSeparator}" />
+
+                            <StackPanel Orientation="Vertical"
+                                        Grid.Column="2"
+                                        VerticalAlignment="Center"
+                                        DataContext="{Binding ViewModelDirectAccessEditor}">
+                                <worldObjects:WorldObjectDirectAccessEditorControl />
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+
+                <TabItem Header="{x:Static loc:CoreStrings.ObjectAccessModeEditor_TitleAccessModeSelection}"
+                         Visibility="{Binding ViewModelFactionAccessEditor, Converter={StaticResource NullToVisibilityConverter}}">
+                    <worldObjects:WorldObjectFactionAccessEditorControl
+                        DataContext="{Binding ViewModelFactionAccessEditor}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center" />
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </core:WindowMenuWithInventory>
+</core:BaseUserControlWithWindow>

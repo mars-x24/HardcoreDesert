@@ -27,7 +27,7 @@
 
         public override float StructurePointsMax => 1800;
 
-        protected override Vector2D ItemIconOffset => (1, base.ItemIconOffset.Y + 0.15);
+        protected override Vector2D ItemIconOffset => (1, base.ItemIconOffset.Y + 0.275);
 
         protected override void ClientSetupRenderer(IComponentSpriteRenderer renderer)
         {
@@ -67,7 +67,7 @@
         protected override void SharedCreatePhysics(CreatePhysicsData data)
         {
             data.PhysicsBody
-                .AddShapeRectangle(size: (1.8, 0.6), offset: (0.1, 0.4))
+                .AddShapeRectangle(size: (2.4, 0.75), offset: (-0.2, 0.4))
                 .AddShapeRectangle(size: (1.8, 0.75),  offset: (0.1, 0.4), group: CollisionGroups.HitboxMelee)
                 .AddShapeRectangle(size: (1.8, 0.75),  offset: (0.1, 0.4), group: CollisionGroups.ClickArea);
         }
