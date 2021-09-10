@@ -3,6 +3,7 @@ using AtomicTorch.CBND.GameApi.Data.Characters;
 using AtomicTorch.CBND.GameApi.Data.World;
 using AtomicTorch.GameEngine.Common.Primitives;
 using System;
+using System.Collections.Generic;
 
 namespace AtomicTorch.CBND.CoreMod.Characters
 {
@@ -118,7 +119,7 @@ namespace AtomicTorch.CBND.CoreMod.Characters
           }
         }
       }
-       
+
       return false;
     }
 
@@ -145,9 +146,8 @@ namespace AtomicTorch.CBND.CoreMod.Characters
         var worldObject = testResult.PhysicsBody.AssociatedWorldObject;
         if (testResult.PhysicsBody.AssociatedProtoTile != null)
         {
-          if (testResult.PhysicsBody.AssociatedProtoTile.Kind != TileKind.Solid)
-            continue;
-          return true;
+          if (testResult.PhysicsBody.AssociatedProtoTile.Kind != TileKind.Placeholder)
+            return true;
         }
         if (ReferenceEquals(worldObject, characterNpc))
           continue;
@@ -171,22 +171,21 @@ namespace AtomicTorch.CBND.CoreMod.Characters
         var worldObject = testResult.PhysicsBody.AssociatedWorldObject;
         if (testResult.PhysicsBody.AssociatedProtoTile != null)
         {
-          if (testResult.PhysicsBody.AssociatedProtoTile.Kind != TileKind.Solid)
-            continue;
-          return true;
+          if (testResult.PhysicsBody.AssociatedProtoTile.Kind != TileKind.Placeholder)
+            return true;
         }
         if (ReferenceEquals(worldObject, character))
           continue;
         if (worldObject is not null && worldObject.ProtoGameObject is IProtoCharacter)
           continue;
         if (worldObject is not null)
-          return true; 
+          return true;
       }
 
       return false;
     }
 
-    public static void FollowTarget(ref Vector2F movementDirection, ref bool isTargetTooFar, ref ICharacter targetCharacter, 
+    public static void FollowTarget(ref Vector2F movementDirection, ref bool isTargetTooFar, ref ICharacter targetCharacter,
       ref Vector2F directionToEnemyPosition, ref Vector2F directionToEnemyHitbox,
       CharacterMobPrivateState privateState, ICharacter characterNpc,
       double distanceToTarget, double distanceToOriginalTarget, double distanceEnemyTooClose, double distanceEnemyTooFar)
@@ -210,8 +209,36 @@ namespace AtomicTorch.CBND.CoreMod.Characters
           }
         }
       }
+    }
 
+    private static List<float> RetreatAngles = new List<float> { 
+      0.0f, 15.0f, -15.0f, 30.0f, -30.0f, 45.0f, -45.0f, 60.0f, -60.0f, 75.0f, -75.0f, 90.0f, -90.0f,
+      105.0f, -105.0f };
 
+    private static List<float> RetreatDistances = new List<float> { 5.0f, 3.0f };
+
+    public static float RetreatFromEnemy(ICharacter character, Vector2F directionToEnemyPosition)
+    {
+      //default retreat
+      //directionToEnemyPosition * -1;
+      float rotateAngle = 180;
+
+      foreach(float distance in RetreatDistances)
+      {
+        foreach (float angle in RetreatAngles)
+        {
+          float newAngle = rotateAngle + angle;
+          Vector2F directionTest = directionToEnemyPosition.RotateDeg(newAngle);
+          Vector2D toPosition = character.Position + directionTest.Normalized * distance;
+          if (!HasObstaclesInTheWay(character, toPosition))
+          {
+            rotateAngle = newAngle;
+            break;
+          }
+        }
+      }
+
+      return rotateAngle;
     }
 
     public void Dispose()

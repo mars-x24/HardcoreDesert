@@ -21,7 +21,7 @@ namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Crates
 
     public override byte ItemsSlotsCount => 64;
 
-    public override string Name => "Mass driver";
+    public override string Name => "Ender crate";
 
     public override ObjectMaterial ObjectMaterial => ObjectMaterial.Metal;
 
@@ -44,7 +44,7 @@ namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Crates
       var publicState = worldObject.GetPublicState<ObjectGlobalChestPublicState>();
       if(publicState.LandClaimGroup is null || privateState.ItemsContainer is null)
       {
-        NotificationSystem.ClientShowNotification("Mass Driver", "Connection lost.", NotificationColor.Bad);
+        NotificationSystem.ClientShowNotification("Ender crate", "Land claim needed to update locations.", NotificationColor.Bad);
         return null;
       }
 
@@ -72,12 +72,14 @@ namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Crates
       build.AddStageRequiredItem<ItemCement>(count: 5);
       build.AddStageRequiredItem<ItemComponentsMechanical>(count: 2);
       build.AddStageRequiredItem<ItemComponentsElectronic>(count: 1);
+      build.AddStageRequiredItem<ItemOrePragmium>(count: 10);
 
       repair.StagesCount = 5;
       repair.StageDurationSeconds = BuildDuration.Long;
       repair.AddStageRequiredItem<ItemIngotSteel>(count: 5);
       repair.AddStageRequiredItem<ItemComponentsMechanical>(count: 1);
       repair.AddStageRequiredItem<ItemComponentsElectronic>(count: 1);
+      repair.AddStageRequiredItem<ItemOrePragmium>(count: 2);
     }
 
     protected override void PrepareDefense(DefenseDescription defense)

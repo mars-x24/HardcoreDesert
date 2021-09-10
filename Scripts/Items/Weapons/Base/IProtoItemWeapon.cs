@@ -1,154 +1,154 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Items.Weapons
 {
-    using System.Collections.Generic;
-    using AtomicTorch.CBND.CoreMod.Damage;
-    using AtomicTorch.CBND.CoreMod.Items.Ammo;
-    using AtomicTorch.CBND.CoreMod.Skills;
-    using AtomicTorch.CBND.CoreMod.SoundPresets;
-    using AtomicTorch.CBND.CoreMod.Systems.Weapons;
-    using AtomicTorch.CBND.GameApi.Data.Characters;
-    using AtomicTorch.CBND.GameApi.Data.Items;
-    using AtomicTorch.CBND.GameApi.Data.Physics;
-    using AtomicTorch.CBND.GameApi.Data.Weapons;
-    using AtomicTorch.CBND.GameApi.Data.World;
-    using AtomicTorch.CBND.GameApi.Resources;
-    using AtomicTorch.GameEngine.Common.Primitives;
-    using JetBrains.Annotations;
+  using System.Collections.Generic;
+  using AtomicTorch.CBND.CoreMod.Damage;
+  using AtomicTorch.CBND.CoreMod.Items.Ammo;
+  using AtomicTorch.CBND.CoreMod.Skills;
+  using AtomicTorch.CBND.CoreMod.SoundPresets;
+  using AtomicTorch.CBND.CoreMod.Systems.Weapons;
+  using AtomicTorch.CBND.GameApi.Data.Characters;
+  using AtomicTorch.CBND.GameApi.Data.Items;
+  using AtomicTorch.CBND.GameApi.Data.Physics;
+  using AtomicTorch.CBND.GameApi.Data.Weapons;
+  using AtomicTorch.CBND.GameApi.Data.World;
+  using AtomicTorch.CBND.GameApi.Resources;
+  using AtomicTorch.GameEngine.Common.Primitives;
+  using JetBrains.Annotations;
 
-    public interface IProtoItemWeapon
-        : IProtoItemWithCharacterAppearance,
-          IProtoItemWithDurability,
-          IProtoItemWithHotbarOverlay
-    {
-        ushort AmmoCapacity { get; }
+  public interface IProtoItemWeapon
+      : IProtoItemWithCharacterAppearance,
+        IProtoItemWithDurability,
+        IProtoItemWithHotbarOverlay
+  {
+    ushort AmmoCapacity { get; }
 
-        ushort AmmoConsumptionPerShot { get; }
+    ushort AmmoConsumptionPerShot { get; }
 
-        /// <summary>
-        /// Reload duration in seconds.
-        /// </summary>
-        double AmmoReloadDuration { get; }
+    /// <summary>
+    /// Reload duration in seconds.
+    /// </summary>
+    double AmmoReloadDuration { get; }
 
-        bool CanDamageStructures { get; }
+    bool CanDamageStructures { get; }
 
-        bool IsSemiAutomatic { get; }
+    bool IsSemiAutomatic { get; }
 
-        string CharacterAnimationAimingName { get; }
+    string CharacterAnimationAimingName { get; }
 
-        CollisionGroup CollisionGroup { get; }
+    CollisionGroup CollisionGroup { get; }
 
-        IReadOnlyList<IProtoItemAmmo> CompatibleAmmoProtos { get; }
+    IReadOnlyList<IProtoItemAmmo> CompatibleAmmoProtos { get; }
 
-        /// <summary>
-        /// Damage apply delay in seconds.
-        /// Damage will be raycasted and calculated after this delay when player starting the attack.
-        /// Can be 0.
-        /// </summary>
-        double DamageApplyDelay { get; }
+    /// <summary>
+    /// Damage apply delay in seconds.
+    /// Damage will be raycasted and calculated after this delay when player starting the attack.
+    /// Can be 0.
+    /// </summary>
+    double DamageApplyDelay { get; }
 
-        double DamageMultiplier { get; }
+    double DamageMultiplier { get; }
 
-        DamageStatsComparisonPreset DamageStatsComparisonPreset { get; }
+    DamageStatsComparisonPreset DamageStatsComparisonPreset { get; }
 
-        /// <summary>
-        /// Duration of firing animation in seconds.
-        /// Must be equal or smaller than <see cref="FireInterval" />.
-        /// </summary>
-        double FireAnimationDuration { get; }
+    /// <summary>
+    /// Duration of firing animation in seconds.
+    /// Must be equal or smaller than <see cref="FireInterval" />.
+    /// </summary>
+    double FireAnimationDuration { get; }
 
-        /// <summary>
-        /// Fire interval in seconds.
-        /// </summary>
-        double FireInterval { get; }
+    /// <summary>
+    /// Fire interval in seconds.
+    /// </summary>
+    double FireInterval { get; }
 
-        /// <summary>
-        /// Time until current fire sequence/pattern is reset.
-        /// </summary>
-        double FirePatternCooldownDuration { get; }
+    /// <summary>
+    /// Time until current fire sequence/pattern is reset.
+    /// </summary>
+    double FirePatternCooldownDuration { get; }
 
-        WeaponFirePatternPreset FirePatternPreset { get; }
+    WeaponFirePatternPreset FirePatternPreset { get; }
 
-        WeaponFireScatterPreset FireScatterPreset { get; }
+    WeaponFireScatterPreset FireScatterPreset { get; }
 
-        WeaponFireTracePreset FireTracePreset { get; }
+    WeaponFireTracePreset FireTracePreset { get; }
 
-        bool IsLoopedAttackAnimation { get; }
+    bool IsLoopedAttackAnimation { get; }
 
-        DamageDescription OverrideDamageDescription { get; }
+    DamageDescription OverrideDamageDescription { get; }
 
-        double RangeMultiplier { get; }
+    double RangeMultiplier { get; }
 
-        /// <summary>
-        /// Delay (in seconds) when selecting this weapon in hotbar.
-        /// </summary>
-        double ReadyDelayDuration { get; }
+    /// <summary>
+    /// Delay (in seconds) when selecting this weapon in hotbar.
+    /// </summary>
+    double ReadyDelayDuration { get; }
 
-        IProtoItemAmmo ReferenceAmmoProto { get; }
+    IProtoItemAmmo ReferenceAmmoProto { get; }
 
-        float ShotVolumeMultiplier { get; }
+    float ShotVolumeMultiplier { get; }
 
-        /// <summary>
-        /// Sound preset defining hit sounds upon various materials.
-        /// </summary>
-        ReadOnlySoundPreset<ObjectMaterial> SoundPresetHit { get; }
+    /// <summary>
+    /// Sound preset defining hit sounds upon various materials.
+    /// </summary>
+    ReadOnlySoundPreset<ObjectMaterial> SoundPresetHit { get; }
 
-        ReadOnlySoundPreset<WeaponSound> SoundPresetWeapon { get; }
+    ReadOnlySoundPreset<WeaponSound> SoundPresetWeapon { get; }
 
-        (float min, float max) SoundPresetWeaponDistance { get; }
+    (float min, float max) SoundPresetWeaponDistance { get; }
 
-        (float min, float max) SoundPresetWeaponDistance3DSpread { get; }
+    (float min, float max) SoundPresetWeaponDistance3DSpread { get; }
 
-        double SpecialEffectProbability { get; }
+    double SpecialEffectProbability { get; }
 
-        ProtoSkillWeapons WeaponSkillProto { get; }
+    ProtoSkillWeapons WeaponSkillProto { get; }
 
-        ITextureResource WeaponTextureResource { get; }
+    ITextureResource WeaponTextureResource { get; }
 
-        void ClientOnFireModChanged(bool isFiring, uint shotsDone);
+    void ClientOnFireModChanged(bool isFiring, uint shotsDone);
 
-        void ClientOnWeaponHitOrTrace(
-            ICharacter firingCharacter,
-            Vector2D worldPositionSource,
-            IProtoItemWeapon protoWeapon,
-            IProtoItemAmmo protoAmmo,
-            IProtoCharacter protoCharacter,
-            in Vector2Ushort fallbackCharacterPosition,
-            IReadOnlyList<WeaponHitData> hitObjects,
-            in Vector2D endPosition,
-            bool endsWithHit);
+    void ClientOnWeaponHitOrTrace(
+        ICharacter firingCharacter,
+        Vector2D worldPositionSource,
+        IProtoItemWeapon protoWeapon,
+        IProtoItemAmmo protoAmmo,
+        IProtoCharacter protoCharacter,
+        in Vector2Ushort fallbackCharacterPosition,
+        IReadOnlyList<WeaponHitData> hitObjects,
+        in Vector2D endPosition,
+        bool endsWithHit);
 
-        void ClientOnWeaponShot(ICharacter character);
+    void ClientOnWeaponShot(ICharacter character);
 
-        void ClientPlayWeaponHitSound(
-            [CanBeNull] IWorldObject hitWorldObject,
-            IProtoWorldObject protoWorldObject,
-            WeaponFireScatterPreset fireScatterPreset,
-            ObjectMaterial objectMaterial,
-            Vector2D worldObjectPosition);
+    void ClientPlayWeaponHitSound(
+        [CanBeNull] IWorldObject hitWorldObject,
+        IProtoWorldObject protoWorldObject,
+        WeaponFireScatterPreset fireScatterPreset,
+        ObjectMaterial objectMaterial,
+        Vector2D worldObjectPosition);
 
-        string GetCharacterAnimationNameFire(ICharacter character);
+    string GetCharacterAnimationNameFire(ICharacter character);
 
-        void ServerOnShot(
-            ICharacter character,
-            IItem weaponItem,
-            IProtoItemWeapon protoWeapon,
-            IReadOnlyList<IWorldObject> hitObjects);
+    void ServerOnShot(
+        ICharacter character,
+        IItem weaponItem,
+        IProtoItemWeapon protoWeapon,
+        IReadOnlyList<IWorldObject> hitObjects);
 
-        bool SharedCanFire(ICharacter character, WeaponState weaponState);
+    bool SharedCanFire(ICharacter character, WeaponState weaponState);
 
-        bool SharedOnFire(ICharacter character, WeaponState weaponState);
+    bool SharedOnFire(ICharacter character, WeaponState weaponState);
 
-        void SharedOnHit(
-            WeaponFinalCache weaponCache,
-            IWorldObject damagedObject,
-            double damage,
-            WeaponHitData hitData,
-            out bool isDamageStop);
+    void SharedOnHit(
+        WeaponFinalCache weaponCache,
+        IWorldObject damagedObject,
+        double damage,
+        WeaponHitData hitData,
+        out bool isDamageStop);
 
-        void SharedOnMiss(WeaponFinalCache weaponCache, Vector2D endPosition);
+    void SharedOnMiss(WeaponFinalCache weaponCache, Vector2D endPosition);
 
-        void SharedOnWeaponAmmoChanged(IItem item, ushort ammoCount);
+    void SharedOnWeaponAmmoChanged(IItem item, ushort ammoCount);
 
-        double SharedUpdateAndGetFirePatternCurrentSpreadAngleDeg(WeaponState weaponState);
-    }
+    double SharedUpdateAndGetFirePatternCurrentSpreadAngleDeg(WeaponState weaponState);
+  }
 }

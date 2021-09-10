@@ -8,8 +8,8 @@
     Discord:Mars#8365, druffzilla#8949, Salvick#3333
   </author>
   <description>Pincess and King in the desert</description>
-  <version>0.1.39</version>
-  <updated>02.09.2021</updated>
+  <version>0.1.40</version>
+  <updated>xx.09.2021</updated>
   
 <!-- 
 Available settings
@@ -19,6 +19,11 @@ MigrationMutantWaveCount, Number of waves for mutant migration event, default 5
 MigrationMutantMobCount, Number of mobs for each claims, default 1,4,8,13,20
 MigrationMutantMobMaxLevelPerWave, Max level of mobs for each wave, default 1,2,3,4,5
 ServerGlobalStorageItemsSlotsCapacity, How many global storage slots are allowed per base. The value should be within 0-128 range, default 64
+
+0.1.40
+Increased Vanguard weapon damage a bit
+Renamed Mass Driver to Ender Crate until I work on the UI and images
+SMG NPC
 
 0.1.39
 Added Mass Driver (Shared crate between bases)

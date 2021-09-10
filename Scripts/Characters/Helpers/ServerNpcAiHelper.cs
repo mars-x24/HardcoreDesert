@@ -1,5 +1,7 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Characters
 {
+  using System;
+  using System.Collections.Generic;
   using AtomicTorch.CBND.CoreMod.Characters.Player;
   using AtomicTorch.CBND.CoreMod.Items.Weapons;
   using AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons;
@@ -14,10 +16,8 @@
   using AtomicTorch.CBND.GameApi.ServicesServer;
   using AtomicTorch.GameEngine.Common.Helpers;
   using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
-  using System.Collections.Generic;
 
-  public static class ServerCharacterAiHelper
+  public static class ServerNpcAiHelper
   {
     private const double FleeSoundRepeatInterval = 3;
 
@@ -64,43 +64,31 @@
         ICharacter characterNpc,
         ICharacter enemyCharacter,
         bool isRangedWeapon,
-        out double distanceToOriginalTarget,
-        out double distanceToTarget,
+        out double distanceToEnemy,
         out Vector2F directionToEnemyPosition,
-        out Vector2F directionToEnemyHitbox,
-        out bool hasObstacles,
-        out bool destinationIsEnemy,
-        bool tryOtherPath = false)
+        out Vector2F directionToEnemyHitbox)
     {
       if (enemyCharacter is null)
       {
-        distanceToOriginalTarget = double.NaN;
-        distanceToTarget = double.NaN;
+        distanceToEnemy = double.NaN;
         directionToEnemyPosition = directionToEnemyHitbox = Vector2F.Zero;
-        hasObstacles = false;
-        destinationIsEnemy = true;
         return;
       }
 
       var enemyWeaponOffset = isRangedWeapon
-                          ? enemyCharacter.ProtoCharacter.CharacterWorldWeaponOffsetRanged
-                          : enemyCharacter.ProtoCharacter.CharacterWorldWeaponOffsetMelee;
+                                  ? enemyCharacter.ProtoCharacter.CharacterWorldWeaponOffsetRanged
+                                  : enemyCharacter.ProtoCharacter.CharacterWorldWeaponOffsetMelee;
 
       var npcWeaponOffset = isRangedWeapon
                                 ? characterNpc.ProtoCharacter.CharacterWorldWeaponOffsetRanged
                                 : characterNpc.ProtoCharacter.CharacterWorldWeaponOffsetMelee;
 
-      using (FindPathHelper findPathHelper = new FindPathHelper(characterNpc, characterNpc.Position, enemyCharacter, npcWeaponOffset, enemyWeaponOffset, 1))
-      {
-        findPathHelper.FindPathToEnemy(
-          out distanceToOriginalTarget,
-          out distanceToTarget,
-          out directionToEnemyPosition,
-          out directionToEnemyHitbox,
-          out hasObstacles,
-          out destinationIsEnemy,
-          tryOtherPath);
-      }
+      var deltaPos = enemyCharacter.Position - characterNpc.Position;
+      directionToEnemyPosition = (Vector2F)deltaPos;
+
+      deltaPos = (deltaPos.X, deltaPos.Y + enemyWeaponOffset - npcWeaponOffset);
+      distanceToEnemy = deltaPos.Length;
+      directionToEnemyHitbox = (Vector2F)deltaPos;
     }
 
     public static bool CanHitAnyTargetWithRangedWeapon(
@@ -269,7 +257,8 @@
         out double rotationAngleRad,
         IReadOnlyList<AiWeaponPreset> weaponList = null,
         bool attackFarOnlyIfAggro = false,
-        Func<IWorldObject, bool> customIsValidTargetCallback = null)
+        Func<IWorldObject, bool> customIsValidTargetCallback = null,
+        bool isReloading = false)
     {
       var privateState = characterNpc.GetPrivateState<CharacterMobPrivateState>();
       var weaponState = privateState.WeaponState;
@@ -279,17 +268,12 @@
 
       var isRangedWeapon = weaponState.ProtoWeapon is IProtoItemWeaponRanged
                            || weaponState.ProtoWeapon is ProtoItemMobWeaponRangedNoAim;
-
-
       CalculateDistanceAndDirectionToEnemy(characterNpc,
                                            targetCharacter,
                                            isRangedWeapon: isRangedWeapon,
-                                           out var distanceToOriginalTarget,
                                            out var distanceToTarget,
                                            out var directionToEnemyPosition,
-                                           out var directionToEnemyHitbox,
-                                           out var hasObstacles,
-                                           out var destinationIsEnemy);
+                                           out var directionToEnemyHitbox);
       if (isRetreatingForHeavyVehicles
           && targetCharacter is not null
           && !targetCharacter.IsNpc)
@@ -316,9 +300,9 @@
       {
         float angle = FindPathHelper.RetreatFromEnemy(characterNpc, directionToEnemyPosition);
 
-        if ((double.IsNaN(distanceToOriginalTarget)
-             || distanceToTarget > privateState.AttackRange)
-            && weaponState.CooldownSecondsRemains <= 0)
+        if ((double.IsNaN(distanceToTarget)
+                     || distanceToTarget > privateState.AttackRange)
+                    && weaponState.CooldownSecondsRemains <= 0)
         {
           // look away when retreating
           // and the enemy is not within the attack range
@@ -341,30 +325,11 @@
       }
       else // not retreating
       {
-        var isTargetTooFar = distanceToOriginalTarget > distanceEnemyTooFar;
-
-        if(!isTargetTooFar && hasObstacles)
-        {
-          CalculateDistanceAndDirectionToEnemy(characterNpc,
-                                       targetCharacter,
-                                       isRangedWeapon: isRangedWeapon,
-                                       out distanceToOriginalTarget,
-                                       out distanceToTarget,
-                                       out directionToEnemyPosition,
-                                       out directionToEnemyHitbox,
-                                       out hasObstacles,
-                                       out destinationIsEnemy,
-                                       tryOtherPath: true);
-        }
-
-
-        movementDirection = (distanceToTarget < distanceEnemyTooClose || isTargetTooFar) && destinationIsEnemy
+        var isTargetTooFar = distanceToTarget > distanceEnemyTooFar;
+        movementDirection = distanceToTarget < distanceEnemyTooClose
+                            || isTargetTooFar
                                 ? Vector2F.Zero // too close or too far
                                 : directionToEnemyPosition;
-
-        //follow a path if we have a target but we are not moving,
-        FindPathHelper.FollowTarget(ref movementDirection, ref isTargetTooFar, ref targetCharacter, ref directionToEnemyPosition, ref directionToEnemyHitbox,
-          privateState, characterNpc, distanceToTarget, distanceToOriginalTarget, distanceEnemyTooClose, distanceEnemyTooFar);
 
         if (isTargetTooFar)
         {
@@ -373,9 +338,7 @@
       }
 
       privateState.IsRetreating = isRetreating;
-
-      //privateState.CurrentTargetCharacter = targetCharacter;
-      privateState.SetCurrentTargetWithPosition(targetCharacter);
+      privateState.CurrentTargetCharacter = targetCharacter;
 
       rotationAngleRad = characterNpc.GetPublicState<CharacterMobPublicState>()
                                      .AppliedInput
@@ -403,9 +366,6 @@
                                            weaponState.ProtoWeapon);
         }
 
-        if (isAttacking && !destinationIsEnemy)
-          isAttacking = false;
-
         if (isAttacking
             && attackFarOnlyIfAggro
             && distanceToTarget > distanceEnemyTooFar
@@ -432,6 +392,11 @@
         }
       }
 
+      if (isReloading)
+      {
+        isAttacking = false;
+      }
+
       if (isRetreating && isAttacking)
       {
         if (weaponState.ProtoWeapon is ProtoItemMobWeaponMelee)
@@ -442,7 +407,7 @@
         else
         {
           // don't attack with ranged weapon when retreating
-          isAttacking = false;
+          isAttacking = true;
         }
       }
 
@@ -489,14 +454,11 @@
       CalculateDistanceAndDirectionToEnemy(characterNpc,
                                            targetCharacter,
                                            isRangedWeapon: weaponState.ProtoWeapon is IProtoItemWeaponRanged,
-                                           out var distanceToOriginalTarget,
                                            out var distanceToTarget,
                                            out var directionToEnemyPosition,
-                                           out var directionToEnemyHitbox,
-                                           out _,
-                                           out _);
+                                           out var directionToEnemyHitbox);
 
-      var isTargetTooFar = distanceToOriginalTarget > distanceEnemyTooFar;
+      var isTargetTooFar = distanceToTarget > distanceEnemyTooFar;
       movementDirection = distanceToTarget < distanceEnemyTooClose
                           || isTargetTooFar
                               ? Vector2F.Zero // too close or too far
@@ -578,27 +540,19 @@
       CalculateDistanceAndDirectionToEnemy(characterNpc,
                                            targetCharacter,
                                            isRangedWeapon: false,
-                                           out var distanceToOriginalTarget,
                                            out var distanceToEnemy,
                                            out var directionToEnemyPosition,
-                                           directionToEnemyHitbox: out _,
-                                           out _,
-                                           out _);
+                                           directionToEnemyHitbox: out _);
+      directionToEnemyPosition *= -1;
 
       var isRetreating = distanceToEnemy <= distanceRetreat;
       if (isRetreating)
       {
-        float angle = FindPathHelper.RetreatFromEnemy(characterNpc, directionToEnemyPosition);
-
-        directionToEnemyPosition = directionToEnemyPosition.RotateDeg(angle);
-
         // retreat
         movementDirection = directionToEnemyPosition;
       }
       else
       {
-        directionToEnemyPosition *= -1;
-
         // retreat completed
         movementDirection = Vector2F.Zero;
       }
