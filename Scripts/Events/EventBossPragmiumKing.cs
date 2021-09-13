@@ -3,12 +3,12 @@
   using AtomicTorch.CBND.CoreMod.Characters;
   using AtomicTorch.CBND.CoreMod.Characters.Mobs;
   using AtomicTorch.CBND.CoreMod.Helpers;
+  using AtomicTorch.CBND.CoreMod.Rates;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Minerals;
   using AtomicTorch.CBND.CoreMod.Systems.PvE;
   using AtomicTorch.CBND.CoreMod.Technologies;
   using AtomicTorch.CBND.CoreMod.Triggers;
   using AtomicTorch.CBND.CoreMod.Zones;
-  using AtomicTorch.CBND.GameApi;
   using AtomicTorch.CBND.GameApi.Data;
   using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.Data.Logic;
@@ -25,38 +25,27 @@
 
   public class EventBossPragmiumKing : ProtoEventBoss
   {
-    static EventBossPragmiumKing()
-    {
-      ServerEventDelayHours = ServerRates.Get(
-          "EventDelay.BossPragmiumKing",
-          defaultValue: 96.0,
-          @"This hours value determines when the Pragmium King boss will start spawning for the first time.                  
-                  Please note: for PvP server this value will be substituted by time-gating setting
-                  for T4 specialized tech if it's larger than this value (as there is no viable way
-                  for players to defeat the boss until T4 weapons becomes available).");
-    }
+    public override string Description =>
+           @"Pragmium King has appeared on the surface.
+              [br]Valuable loot awaits the bravest survivors!";
 
     public override TimeSpan EventDurationWithoutDelay { get; }
         = TimeSpan.FromHours(1.5);
 
-    public override TimeSpan EventStartDelayDuration { get; }
-        = TimeSpan.FromMinutes(30);
+    public override TimeSpan EventStartDelayDuration
+        => PveSystem.SharedIsPve(true)
+           && !SharedLocalServerHelper.IsLocalServer
+               ? TimeSpan.FromMinutes(30)
+               : TimeSpan.Zero;
 
-
-    [NotLocalizable]
     public override string Name => "Pragmium King";
-
-    private static double ServerEventDelayHours { get; }
-
-    public override string Description => @"Pragmium King has appeared on the surface.
-              [br]Valuable loot awaits the bravest survivors!";
 
     protected override double DelayHoursSinceWipe
     {
       get
       {
-        var delayHours = 96.0; // 96 hours by default
-        delayHours *= EventConstants.ServerEventDelayMultiplier;
+        var delayHours = 96.0;
+        delayHours *= RateWorldEventInitialDelayMultiplier.SharedValue;
 
         if (PveSystem.ServerIsPvE)
         {
@@ -64,11 +53,12 @@
         }
 
         // in PvP spawn boss not earlier than
-        // T4 specialized tech (containing the necessary weapons) becomes available
+        // T5 specialized tech (containing the necessary weapons) becomes available
         delayHours = Math.Max(
             delayHours,
-            // convert seconds to hours
-            TechConstants.PvpTechTimeGameTier4Specialized / 3600);
+            TechConstants.PvPTimeGates
+                         .Get(TechTier.Tier5, isSpecialized: true)
+            / 3600);
 
         return delayHours;
       }
@@ -82,26 +72,6 @@
             || ServerHasAnyEventOfTypeRunRecently<ProtoEventBoss>(TimeSpan.FromHours(3)))
         {
           // another boss event is running now or run recently 
-          return false;
-        }
-      }
-
-      if (trigger is TriggerTimeInterval)
-      {
-        var delayHoursSinceWipe = ServerEventDelayHours;
-        if (!PveSystem.ServerIsPvE)
-        {
-          // in PvP spawn Pragmium King not earlier than
-          // T4 specialized tech (containing the necessary weapons) becomes available
-          delayHoursSinceWipe = Math.Max(
-              delayHoursSinceWipe,
-              // convert seconds to hours
-              TechConstants.PvpTechTimeGameTier4Specialized / 3600);
-        }
-
-        if (Server.Game.HoursSinceWorldCreation < delayHoursSinceWipe)
-        {
-          // too early
           return false;
         }
       }
@@ -134,14 +104,8 @@
         Triggers triggers,
         List<IProtoSpawnableObject> spawnPreset)
     {
-      triggers
-          // trigger on time interval
-          .Add(GetTrigger<TriggerTimeInterval>()
-                   .Configure(
-                           this.ServerGetIntervalForThisEvent(defaultInterval:
-                                                              (from: TimeSpan.FromHours(12),
-                                                               to: TimeSpan.FromHours(24)))
-                       ));
+      triggers.Add(GetTrigger<TriggerTimeInterval>()
+                       .Configure(RateWorldEventIntervalBossPragmiumQueen.SharedValueIntervalHours));
 
       spawnPreset.Add(Api.GetProtoEntity<MobBossPragmiumKing>());
     }

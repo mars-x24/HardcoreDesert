@@ -7,6 +7,7 @@
   using AtomicTorch.CBND.CoreMod.Skills;
   using AtomicTorch.CBND.CoreMod.SoundPresets;
   using AtomicTorch.CBND.CoreMod.Stats;
+  using AtomicTorch.CBND.CoreMod.Rates;
   using AtomicTorch.CBND.CoreMod.Systems.Droplists;
   using AtomicTorch.CBND.CoreMod.Systems.Notifications;
   using AtomicTorch.CBND.CoreMod.Systems.Physics;
@@ -98,10 +99,12 @@
         var attemptRemains = 200;
         do
         {
-          dropItemResult = lootDroplist.TryDropToCharacterOrGround(character,
-                                                                   character.TilePosition,
-                                                                   dropItemContext,
-                                                                   out _);
+          dropItemResult = lootDroplist.TryDropToCharacterOrGround(
+                                          character,
+                                          character.TilePosition,
+                                          dropItemContext,
+                                          out _,
+                                          probabilityMultiplier: RateResourcesGatherCreaturesLoot.SharedValue);
 
           dropItemResultFinal.MergeWith(dropItemResult);
         }

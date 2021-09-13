@@ -1,13 +1,11 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events
 {
   using AtomicTorch.CBND.CoreMod.Items.Ammo;
-  using AtomicTorch.CBND.CoreMod.Items.Equipment;
   using AtomicTorch.CBND.CoreMod.Items.Explosives.Bombs;
   using AtomicTorch.CBND.CoreMod.Items.Food;
   using AtomicTorch.CBND.CoreMod.Items.Generic;
   using AtomicTorch.CBND.CoreMod.Items.Medical;
-  using AtomicTorch.CBND.CoreMod.Items.Weapons.Melee;
-  using AtomicTorch.CBND.CoreMod.Items.Weapons.Ranged;
+  using AtomicTorch.CBND.CoreMod.Rates;
   using AtomicTorch.CBND.CoreMod.SoundPresets;
   using AtomicTorch.CBND.CoreMod.Systems.Droplists;
   using AtomicTorch.CBND.CoreMod.Systems.Physics;
@@ -22,6 +20,8 @@
 
   public class ObjectSpaceDebris : ProtoObjectHackableContainer
   {
+    private const int WorldOffsetY = 2;
+
     public override double HackingStageDuration
         => PveSystem.SharedIsPve(false)
                ? 2  // 2 seconds per stage in PvE
@@ -44,19 +44,22 @@
 
     public override Vector2D SharedGetObjectCenterWorldOffset(IWorldObject worldObject)
     {
-      return (this.Layout.Center.X, 0.8);
+      return (this.Layout.Center.X, WorldOffsetY + 0.8);
     }
 
     protected override void ClientSetupRenderer(IComponentSpriteRenderer renderer)
     {
       base.ClientSetupRenderer(renderer);
-      renderer.PositionOffset = (211 / 256.0, 130 / 256.0);
-      renderer.DrawOrderOffsetY = 0.5;
+      renderer.PositionOffset = (211 / 256.0, WorldOffsetY + 130 / 256.0);
+      renderer.DrawOrderOffsetY = 0.5 + WorldOffsetY;
     }
 
     protected override void CreateLayout(StaticObjectLayout layout)
     {
+      // extra space below is used to ensure that the object will be not obscured by trees
       layout.Setup("###",
+                   "###",
+                   "###",
                    "###");
     }
 
@@ -223,6 +226,11 @@
       //    );
     }
 
+    protected override double ServerGetDropListProbabilityMultiplier(IStaticWorldObject staticWorldObject)
+    {
+      return RateResourcesGatherSpaceDebris.SharedValue;
+    }
+
     protected override void ServerInitialize(ServerInitializeData data)
     {
       base.ServerInitialize(data);
@@ -231,17 +239,19 @@
           && !data.GameObject.OccupiedTile.StaticObjects
                   .Any(o => o.ProtoGameObject is ObjectCrater))
       {
-        Server.World.CreateStaticWorldObject<ObjectCrater>(data.GameObject.TilePosition);
+        Server.World.CreateStaticWorldObject<ObjectCrater>(
+          (data.GameObject.TilePosition + (0, WorldOffsetY)).ToVector2Ushort());
       }
     }
 
     protected override void SharedCreatePhysics(CreatePhysicsData data)
     {
+      var y = WorldOffsetY;
       data.PhysicsBody
-          .AddShapeRectangle(size: (0.8, 0.35), offset: (1 + 0.1, 0.65))
-          .AddShapeRectangle(size: (0.8, 0.4), offset: (1 + 0.1, 0.65), group: CollisionGroups.HitboxMelee)
-          .AddShapeRectangle(size: (0.6, 0.15), offset: (1 + 0.2, 1.3), group: CollisionGroups.HitboxRanged)
-          .AddShapeRectangle(size: (0.8, 0.9), offset: (1 + 0.1, 0.6), group: CollisionGroups.ClickArea);
+              .AddShapeRectangle(size: (0.8, 0.35), offset: (1 + 0.1, y + 0.65))
+              .AddShapeRectangle(size: (0.8, 0.4), offset: (1 + 0.1, y + 0.65), group: CollisionGroups.HitboxMelee)
+              .AddShapeRectangle(size: (0.6, 0.15), offset: (1 + 0.2, y + 1.3), group: CollisionGroups.HitboxRanged)
+              .AddShapeRectangle(size: (0.8, 0.9), offset: (1 + 0.1, y + 0.6), group: CollisionGroups.ClickArea);
     }
   }
 }

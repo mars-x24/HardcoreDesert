@@ -1,9 +1,9 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Characters.Mobs
 {
   using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
-  using AtomicTorch.CBND.CoreMod.Helpers;
   using AtomicTorch.CBND.CoreMod.Items.Ammo;
   using AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons;
+  using AtomicTorch.CBND.CoreMod.Rates;
   using AtomicTorch.CBND.CoreMod.SoundPresets;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Minerals;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events;
@@ -99,34 +99,7 @@
         return;
       }
 
-      var key = "BossDifficultyPragmiumKing";
-      // by default the boss is balanced for 5 players
-      var defaultValue = Api.IsServer && (SharedLocalServerHelper.IsLocalServer || Api.IsEditor)
-                             ? 1.0
-                             : 5.0;
-
-      var description =
-          @"Difficulty of the Pragmium King (and the amount of loot/reward).
-                  The number corresponds to the number of players necessary to kill the boss
-                  with a reasonable challenge
-                  (with mechs or without mechs but in T4 armor, machineguns, with Stimpacks).                  
-                  You can change this rate to make it possible to kill the boss
-                  by a single player (set it to 1, or 1.5 for extra challenge and reward)
-                  or any other number of players up to 10.
-                  It also affects the number of loot piles you get when the boss is defeated.
-                  The value range is from 1 to 10 (inclusive).";
-
-      var requiredPlayersNumber = ServerRates.Get(key, defaultValue: defaultValue, description);
-      {
-        var clampedValue = MathHelper.Clamp(requiredPlayersNumber, 1, 10);
-        if (clampedValue != requiredPlayersNumber)
-        {
-          clampedValue = defaultValue;
-          ServerRates.Reset(key, defaultValue, description);
-        }
-
-        requiredPlayersNumber = clampedValue;
-      }
+      var requiredPlayersNumber = RateBossDifficultyPragmiumKing.SharedValue;
 
       // coef range from 0.2 to 2.0
       ServerBossDifficultyCoef = requiredPlayersNumber / 5.0;

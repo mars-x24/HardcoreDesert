@@ -1,7 +1,7 @@
 ﻿using AtomicTorch.CBND.CoreMod.Systems.PvE;
 
 namespace AtomicTorch.CBND.CoreMod.Items.Medical
-{
+{ 
   public static class MedicineCooldownDuration
   {
     public const double None = 0;

@@ -1,12 +1,12 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.ItemContainers
 {
+  using AtomicTorch.CBND.CoreMod.Rates;
   using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
   using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.Data.Items;
   using AtomicTorch.CBND.GameApi.Data.State;
   using AtomicTorch.CBND.GameApi.Scripting;
   using AtomicTorch.CBND.GameApi.Scripting.Network;
-  using AtomicTorch.GameEngine.Common.Helpers;
   using System;
   using System.Threading.Tasks;
 
@@ -23,14 +23,7 @@
         return;
       }
 
-      ServerGlobalStorageItemsSlotsCapacity = (byte)MathHelper.Clamp(
-          ServerRates.Get(
-              "ServerGlobalStorageItemsSlotsCapacity",
-              defaultValue: 64,
-              @"How many global storage slots are allowed per base.
-                          The value should be within 0-128 range."),
-          min: 0,
-          max: 128);
+      ServerGlobalStorageItemsSlotsCapacity = RateGlobalStorageCapacity.SharedValue;
     }
 
     public ItemsContainerGlobalStorage()

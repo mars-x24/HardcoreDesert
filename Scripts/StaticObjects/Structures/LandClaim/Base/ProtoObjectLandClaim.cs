@@ -1,7 +1,5 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim
 {
-  using System;
-  using System.Windows;
   using AtomicTorch.CBND.CoreMod.Characters;
   using AtomicTorch.CBND.CoreMod.Characters.Player;
   using AtomicTorch.CBND.CoreMod.ClientComponents.Rendering.Lighting;
@@ -15,7 +13,6 @@
   using AtomicTorch.CBND.CoreMod.Systems.LandClaimShield;
   using AtomicTorch.CBND.CoreMod.Systems.Notifications;
   using AtomicTorch.CBND.CoreMod.Systems.Physics;
-  using AtomicTorch.CBND.CoreMod.Systems.PvE;
   using AtomicTorch.CBND.CoreMod.Systems.Weapons;
   using AtomicTorch.CBND.CoreMod.UI;
   using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
@@ -30,6 +27,8 @@
   using AtomicTorch.CBND.GameApi.Scripting.Network;
   using AtomicTorch.CBND.GameApi.ServicesClient.Components;
   using AtomicTorch.GameEngine.Common.Extensions;
+  using System;
+  using System.Windows;
 
   public abstract class ProtoObjectLandClaim
       <TPrivateState,
@@ -111,11 +110,13 @@
       }
     }
 
-    public async void ClientUpgrade(IStaticWorldObject worldObjectLandClaim, IProtoObjectLandClaim upgradeStructure)
+    public async void ClientUpgrade(
+        IStaticWorldObject worldObjectLandClaim,
+        IProtoObjectLandClaim protoStructureUpgrade)
     {
       var checkResult = this.SharedCanUpgrade(
           worldObjectLandClaim,
-          upgradeStructure,
+          protoStructureUpgrade,
           Client.Characters.CurrentPlayerCharacter,
           out _);
 
@@ -123,7 +124,7 @@
       {
         // client check successful - send the upgrade request to server
         checkResult = await this.CallServer(
-                          _ => _.ServerRemote_UpgradeStructure(worldObjectLandClaim, upgradeStructure));
+                          _ => _.ServerRemote_UpgradeStructure(worldObjectLandClaim, protoStructureUpgrade));
         // process the upgrade result from server
         if (checkResult == ObjectLandClaimCanUpgradeCheckResult.Success)
         {
@@ -212,36 +213,6 @@
       areaPrivateState.IsDestroyedByPlayers = false;
     }
 
-    public ObjectLandClaimCanUpgradeCheckResult ServerRemote_UpgradeStructure(
-        IStaticWorldObject oldWorldObjectLandClaim,
-        IProtoObjectLandClaim upgradeStructure)
-    {
-      this.VerifyGameObject(oldWorldObjectLandClaim);
-      var character = ServerRemoteContext.Character;
-      var result = this.SharedCanUpgrade(oldWorldObjectLandClaim,
-                                         upgradeStructure,
-                                         character,
-                                         out var upgradeEntry);
-      if (result != ObjectLandClaimCanUpgradeCheckResult.Success)
-      {
-        return result;
-      }
-
-      // consume items
-      upgradeEntry.ServerDestroyRequiredItems(character);
-
-      // upgrade (it will destroy an existing structure and place new in its place)
-      var upgradedWorldObjectLandClaim = LandClaimSystem.ServerUpgrade(oldWorldObjectLandClaim,
-                                                                       upgradeStructure,
-                                                                       character);
-
-      // notify client (to play a sound)
-      ConstructionPlacementSystem.Instance.ServerNotifyOnStructurePlacedOrRelocated(
-          upgradedWorldObjectLandClaim,
-          character);
-      return result;
-    }
-
     public bool SharedCanEditOwners(IStaticWorldObject worldObject, ICharacter byOwner)
     {
       var area = GetPublicState(worldObject).LandClaimAreaObject;
@@ -311,7 +282,7 @@
 
     public ObjectLandClaimCanUpgradeCheckResult SharedCanUpgrade(
         IStaticWorldObject worldObjectLandClaim,
-        IProtoObjectLandClaim protoUpgradedLandClaim,
+        IProtoObjectLandClaim protoStructureUpgrade,
         ICharacter character,
         out IConstructionUpgradeEntryReadOnly upgradeEntry,
         bool writeErrors = true)
@@ -327,7 +298,7 @@
       upgradeEntry = null;
       foreach (var entry in this.ConfigUpgrade.Entries)
       {
-        if (entry.ProtoStructure == protoUpgradedLandClaim)
+        if (entry.ProtoStructure == protoStructureUpgrade)
         {
           upgradeEntry = entry;
           break;
@@ -363,7 +334,7 @@
 
       if (result == ObjectLandClaimCanUpgradeCheckResult.Success)
       {
-        // validate player know the tech, have enough items, etc
+        // validate that the player researched the tech, has enough items, etc
         if (!upgradeEntry.CheckRequirementsSatisfied(character))
         {
           upgradeEntry = null;
@@ -385,7 +356,7 @@
             LandClaimSystem.SharedCalculateLandClaimObjectCenterTilePosition(worldObjectLandClaim);
 
         if (!LandClaimSystem.SharedCheckCanPlaceOrUpgradeLandClaimThereConsideringShieldProtection(
-                protoUpgradedLandClaim,
+                protoStructureUpgrade,
                 landClaimCenterTilePosition,
                 character))
         {
@@ -393,7 +364,7 @@
         }
 
         if (!LandClaimSystem.SharedCheckCanPlaceOrUpgradeLandClaimThere(
-                protoUpgradedLandClaim,
+                protoStructureUpgrade,
                 landClaimCenterTilePosition,
                 character,
                 out bool hasNoFactionPermission))
@@ -404,7 +375,7 @@
         }
 
         if (!LandClaimSystem.SharedCheckNoLandClaimByDemoPlayers(
-                protoUpgradedLandClaim,
+                protoStructureUpgrade,
                 landClaimCenterTilePosition,
                 character,
                 exceptAreasGroup: LandClaimSystem.SharedGetLandClaimAreasGroup(currentLandClaimArea)))
@@ -414,7 +385,7 @@
 
         if (IsServer
             && !LandClaimSystem.ServerCheckFutureBaseWillNotExceedSafeStorageCapacity(
-                protoUpgradedLandClaim,
+                protoStructureUpgrade,
                 landClaimCenterTilePosition,
                 character))
         {
@@ -422,7 +393,7 @@
         }
 
         if (!LandClaimSystem.SharedCheckFutureBaseWillNotExceedFactionLandClaimLimit(
-                protoUpgradedLandClaim,
+                protoStructureUpgrade,
                 landClaimCenterTilePosition,
                 character,
                 isForNewLandClaim: false))
@@ -456,7 +427,7 @@
           && result != ObjectLandClaimCanUpgradeCheckResult.Success)
       {
         Logger.Warning(
-            $"Can't upgrade: {worldObjectLandClaim} to {protoUpgradedLandClaim}: error code - {result}",
+            $"Can't upgrade: {worldObjectLandClaim} to {protoStructureUpgrade}: error code - {result}",
             character);
       }
 
@@ -651,7 +622,7 @@
           .Add(LandClaimSystem.ValidatorNewLandClaimNoLandClaimIntersectionsWithDemoPlayers)
           .Add(LandClaimSystem.ValidatorNewLandClaimNoLandClaimsTooClose)
           .Add(LandClaimSystem.ValidatorCheckLandClaimDepositRequireXenogeology)
-          .Add(LandClaimSystem.ValidatorCheckLandClaimDepositCooldown)
+          .Add(LandClaimSystem.ValidatorCheckLandClaimDepositClaimDelay)
           .Add(LandClaimSystem.ValidatorCheckLandClaimBaseSizeLimitNotExceeded)
           .Add(LandClaimSystem.ValidatorNewLandClaimSafeStorageCapacityNotExceeded)
           .Add(LandClaimSystem.ValidatorNewLandClaimFactionLandClaimLimitNotExceeded)
@@ -795,6 +766,36 @@
       Logger.Important("Destroying object after timeout: " + gameObject);
       this.ServerSendObjectDestroyedEvent(gameObject);
       Server.World.DestroyObject(gameObject);
+    }
+
+    private ObjectLandClaimCanUpgradeCheckResult ServerRemote_UpgradeStructure(
+            IStaticWorldObject oldWorldObjectLandClaim,
+            IProtoObjectLandClaim protoStructureUpgrade)
+    {
+      this.VerifyGameObject(oldWorldObjectLandClaim);
+      var character = ServerRemoteContext.Character;
+      var result = this.SharedCanUpgrade(oldWorldObjectLandClaim,
+                                         protoStructureUpgrade,
+                                         character,
+                                         out var upgradeEntry);
+      if (result != ObjectLandClaimCanUpgradeCheckResult.Success)
+      {
+        return result;
+      }
+
+      // consume items
+      upgradeEntry.ServerDestroyRequiredItems(character);
+
+      // upgrade (it will destroy an existing structure and place new in its place)
+      var upgradedWorldObjectLandClaim = LandClaimSystem.ServerUpgrade(oldWorldObjectLandClaim,
+                                                                       protoStructureUpgrade,
+                                                                       character);
+
+      // notify client (to play a sound)
+      ConstructionPlacementSystem.Instance.ServerNotifyOnStructurePlacedOrRelocated(
+          upgradedWorldObjectLandClaim,
+          character);
+      return result;
     }
   }
 

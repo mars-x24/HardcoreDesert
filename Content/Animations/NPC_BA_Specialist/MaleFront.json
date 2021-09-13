@@ -89,424 +89,236 @@
 ],
 "skins": {
 	"default": {
-		"CalfLeft": {
-			"CalfLeft": {
-				"path": "Front/Male/CalfLeft",
-				"x": 57.23,
-				"y": 1.02,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 76.9,
-				"width": 42,
-				"height": 67
-			}
-		},
-		"CalfLeftEquipment": {
-			"CalfLeftEquipment": {
-				"path": "Front/Male/CalfLeft",
-				"x": 57.23,
-				"y": 1.02,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 76.9,
-				"width": 42,
-				"height": 67
-			}
-		},
-		"CalfRight": {
-			"CalfRight": {
-				"path": "Front/Male/CalfRight",
-				"x": 77.76,
-				"y": 11.16,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 75.04,
-				"width": 42,
-				"height": 66
-			}
-		},
-		"CalfRightEquipment": {
-			"CalfRightEquipment": {
-				"path": "Front/Male/CalfRight",
-				"x": 77.76,
-				"y": 11.16,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 75.04,
-				"width": 42,
-				"height": 66
-			}
-		},
-		"FootLeft": {
-			"FootLeft": {
-				"path": "Front/Male/FootLeft",
-				"x": 29.71,
-				"y": -9.38,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 147.13,
-				"width": 53,
-				"height": 49
-			}
-		},
-		"FootLeftEquipment": {
-			"FootLeftEquipment": {
-				"path": "Front/Male/FootLeft",
-				"x": 29.71,
-				"y": -9.38,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 147.13,
-				"width": 53,
-				"height": 49
-			}
-		},
-		"FootRight": {
-			"FootRight": {
-				"path": "Front/Male/FootRight",
-				"x": 15.57,
-				"y": 10.37,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 151.86,
-				"width": 55,
-				"height": 43
-			}
-		},
-		"FootRightEquipment": {
-			"FootRightEquipment": {
-				"path": "Front/Male/FootRight",
-				"x": 15.57,
-				"y": 10.37,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 151.86,
-				"width": 55,
-				"height": 43
-			}
-		},
-		"HandLeft": {
-			"HandLeft": {
-				"path": "Front/Male/HandLeft",
-				"x": 48.87,
-				"y": -18.98,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 128.29,
-				"width": 61,
-				"height": 59
-			},
-			"HandLeft2": {
-				"path": "Front/Male/HandLeft2",
-				"x": 62.58,
-				"y": -7.74,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 119.79,
-				"width": 50,
-				"height": 53
-			}
-		},
-		"HandLeftEquipment": {
-			"HandLeft2Equipment": {
-				"path": "Front/Male/HandLeft2",
-				"x": 62.59,
-				"y": -7.72,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 119.79,
-				"width": 50,
-				"height": 53
-			},
-			"HandLeftEquipment": {
-				"path": "Front/Male/HandLeft",
-				"x": 48.87,
-				"y": -18.98,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 129.09,
-				"width": 61,
-				"height": 59
-			}
-		},
-		"HandRight": {
-			"HandRight": {
-				"path": "Front/Male/HandRight",
-				"x": 68.7,
-				"y": -3.02,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 70.65,
-				"width": 48,
-				"height": 62
-			},
-			"HandRight2": {
-				"path": "Front/Male/HandRight2",
-				"x": 36.91,
-				"y": -9.22,
-				"scaleX": 2.96,
-				"scaleY": 2.96,
-				"rotation": 152.86,
-				"width": 53,
-				"height": 49
-			}
-		},
-		"HandRightEquipment": {
-			"HandRight2Equipment": {
-				"path": "Front/Male/HandRight2",
-				"x": 36.91,
-				"y": -9.22,
-				"scaleX": 2.96,
-				"scaleY": 2.96,
-				"rotation": 152.86,
-				"width": 53,
-				"height": 49
-			},
-			"HandRightEquipment": {
-				"path": "Front/Male/HandRight",
-				"x": 68.7,
-				"y": -3.02,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 70.65,
-				"width": 48,
-				"height": 62
-			}
-		},
-		"Head": {
 			"Head": {
-				"path": "Front/Male/Head",
-				"x": 84.41,
-				"y": 1.41,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": -91.14,
-				"width": 139,
-				"height": 171
-			}
-		},
-		"HipLeft": {
-			"HipLeft": {
-				"path": "Front/Male/HipLeft",
-				"x": 90.43,
-				"y": -6.64,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 82.76,
-				"width": 48,
-				"height": 66
-			}
-		},
-		"HipLeftEquipment": {
-			"HipLeftEquipment": {
-				"path": "Front/Male/HipLeft",
-				"x": 90.43,
-				"y": -6.64,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 82.76,
-				"width": 48,
-				"height": 66
-			}
-		},
-		"HipRight": {
-			"HipRight": {
-				"path": "Front/Male/HipRight",
-				"x": 78.26,
-				"y": 4.25,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 71.37,
-				"width": 52,
-				"height": 77
-			}
-		},
-		"HipRightEquipment": {
-			"HipRightEquipment": {
-				"path": "Front/Male/HipRight",
-				"x": 78.26,
-				"y": 4.25,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 71.37,
-				"width": 52,
-				"height": 77
-			}
-		},
-		"LowerArmLeft": {
-			"LowerArmLeft": {
-				"path": "Front/Male/LowerArmLeft",
-				"x": 60.18,
-				"y": 5.55,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 102.88,
-				"width": 44,
-				"height": 66
-			}
-		},
-		"LowerArmLeftEquipment": {
-			"LowerArmLeftEquipment": {
-				"path": "Front/Male/LowerArmLeft",
-				"x": 60.18,
-				"y": 5.55,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 102.88,
-				"width": 44,
-				"height": 66
-			}
-		},
-		"LowerArmRight": {
-			"LowerArmRight": {
-				"path": "Front/Male/LowerArmRight",
-				"x": 55.25,
-				"y": 6.33,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 104.8,
-				"width": 44,
-				"height": 59
-			}
-		},
-		"LowerArmRightEquipment": {
-			"LowerArmRightEquipment": {
-				"path": "Front/Male/LowerArmRight",
-				"x": 55.25,
-				"y": 6.33,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 104.8,
-				"width": 44,
-				"height": 59
-			}
-		},
-		"Pelvis": {
-			"Pelvis": {
-				"path": "Front/Male/Pelvis",
-				"x": 106.23,
-				"y": -10.13,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": -92.71,
-				"width": 93,
-				"height": 100
-			}
-		},
-		"PelvisEquipment": {
-			"PelvisEquipment": {
-				"path": "Front/Male/Pelvis",
-				"x": 106.23,
-				"y": -10.13,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": -92.71,
-				"width": 93,
-				"height": 100
-			}
-		},
-		"Torso": {
-			"Torso": {
-				"path": "Front/Male/Torso",
-				"x": 279.47,
-				"y": -15.37,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": -88.13,
-				"width": 144,
-				"height": 176
-			}
-		},
-		"TorsoEquipment": {
-			"TorsoEquipment": {
-				"path": "Front/Male/Torso",
-				"x": 279.47,
-				"y": -15.37,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": -88.13,
-				"width": 144,
-				"height": 176
-			}
-		},
-		"UpperArmLeft": {
-			"UpperArmLeft": {
-				"path": "Front/Male/UpperArmLeft",
-				"x": 121.3,
-				"y": -12.98,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 64.23,
-				"width": 59,
-				"height": 91
-			}
-		},
-		"UpperArmLeftEquipment": {
-			"UpperArmLeftEquipment": {
-				"path": "Front/Male/UpperArmLeft",
-				"x": 121.3,
-				"y": -12.98,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 64.23,
-				"width": 59,
-				"height": 91
-			}
-		},
-		"UpperArmRight": {
+				"Head": {
+					"path": "Front/Male/Head",
+					"x": 111.68,
+					"y": 11.69,
+					"scaleX": 2.957,
+					"scaleY": 2.957,
+					"rotation": -91.14,
+					"width": 125,
+					"height": 186
+				}
+			},
 			"UpperArmRight": {
-				"path": "Front/Male/UpperArmRight",
-				"x": 82.72,
-				"y": 6.87,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 107.17,
-				"width": 53,
-				"height": 76
-			}
-		},
-		"UpperArmRightEquipment": {
-			"UpperArmRightEquipment": {
-				"path": "Front/Male/UpperArmRight",
-				"x": 82.72,
-				"y": 6.87,
-				"scaleX": 2.957,
-				"scaleY": 2.957,
-				"rotation": 107.17,
-				"width": 53,
-				"height": 76
-			}
-		},
-		"Weapon": {
-			"WeaponGrenade": {
-				"x": 144.5,
-				"y": 17.09,
-				"scaleX": -2.96,
-				"scaleY": 2.957,
-				"rotation": -89.97,
-				"width": 58,
-				"height": 93
+				"UpperArmRight": {
+					"path": "Front/Male/UpperArmRight",
+					"x": 78.77,
+					"y": 15.73,
+					"scaleX": 2.957,
+					"scaleY": 2.957,
+					"rotation": 107.17,
+					"width": 54,
+					"height": 78
+				}
 			},
-			"WeaponMelee": {
-				"x": 166.54,
-				"y": 0.81,
-				"scaleX": -2.96,
-				"scaleY": 2.957,
-				"rotation": -89.97,
-				"width": 207,
-				"height": 222
+			"CalfRight": {
+				"CalfRight": {
+					"path": "Front/Male/CalfRight",
+					"x": 64.18,
+					"y": 6,
+					"scaleX": 2.957,
+					"scaleY": 2.957,
+					"rotation": 75.04,
+					"width": 55,
+					"height": 69
+				}
 			},
-			"WeaponRifle": {
-				"x": 328.76,
-				"y": 34.6,
-				"scaleX": -2.96,
-				"scaleY": 2.957,
-				"rotation": -179.42,
-				"width": 333,
-				"height": 112
+			"Pelvis": {
+				"Pelvis": {
+					"path": "Front/Male/Pelvis",
+					"x": 62.28,
+					"y": -2.8,
+					"scaleX": 2.957,
+					"scaleY": 2.957,
+					"rotation": -92.71,
+					"width": 95,
+					"height": 71
+				}
+			},
+			"HandRight": {
+				"HandRight": {
+					"path": "Front/Male/HandRight",
+					"x": 87.13,
+					"y": 24.22,
+					"scaleX": 2.957,
+					"scaleY": 2.957,
+					"rotation": 70.65,
+					"width": 64,
+					"height": 61
+				},
+				"HandRight2": {
+					"path": "Front/Male/HandRight2",
+					"x": 16.91,
+					"y": 10.22,
+					"scaleX": 2.76,
+					"scaleY": 2.76,
+					"rotation": 152.86,
+					"width": 66,
+					"height": 53
+				}
+			},
+			"Torso": {
+				"Torso": {
+					"path": "Front/Male/Torso",
+					"x": 279.3,
+					"y": -10.17,
+					"scaleX": 2.957,
+					"scaleY": 2.957,
+					"rotation": -88.13,
+					"width": 140,
+					"height": 173
+				}
+			},
+			"HipLeft": {
+				"HipLeft": {
+					"path": "Front/Male/HipLeft",
+					"x": 90.43,
+					"y": -6.64,
+					"scaleX": 2.957,
+					"scaleY": 2.957,
+					"rotation": 82.76,
+					"width": 58,
+					"height": 74
+				}
+			},
+			"CalfLeft": {
+				"CalfLeft": {
+					"path": "Front/Male/CalfLeft",
+					"x": 65.92,
+					"y": 4.57,
+					"scaleX": 2.957,
+					"scaleY": 2.957,
+					"rotation": 76.9,
+					"width": 52,
+					"height": 75
+				}
+			},
+			"LowerArmRight": {
+				"LowerArmRight": {
+					"path": "Front/Male/LowerArmRight",
+					"x": 44.43,
+					"y": -1.55,
+					"scaleX": 2.957,
+					"scaleY": 2.957,
+					"rotation": 104.8,
+					"width": 44,
+					"height": 66
+				}
+			},
+			"LowerArmLeft": {
+				"LowerArmLeft": {
+					"path": "Front/Male/LowerArmLeft",
+					"x": 65.6,
+					"y": 24.84,
+					"scaleX": 2.957,
+					"scaleY": 2.957,
+					"rotation": 102.88,
+					"width": 48,
+					"height": 73
+				}
+			},
+			"UpperArmLeft": {
+				"UpperArmLeft": {
+					"path": "Front/Male/UpperArmLeft",
+					"x": 122.1,
+					"y": -16.09,
+					"scaleX": 2.957,
+					"scaleY": 2.957,
+					"rotation": 64.23,
+					"width": 77,
+					"height": 93
+				}
+			},
+			"HipRight": {
+				"HipRight": {
+					"path": "Front/Male/HipRight",
+					"x": 87.71,
+					"y": 2.04,
+					"scaleX": 2.957,
+					"scaleY": 2.957,
+					"rotation": 71.37,
+					"width": 58,
+					"height": 80
+				}
+			},
+			"FootRight": {
+				"FootRight": {
+					"path": "Front/Male/FootRight",
+					"x": 13.98,
+					"y": 11.13,
+					"scaleX": 2.957,
+					"scaleY": 2.957,
+					"rotation": 151.86,
+					"width": 75,
+					"height": 43
+				}
+			},
+			"FootLeft": {
+				"FootLeft": {
+					"path": "Front/Male/FootLeft",
+					"x": 29.71,
+					"y": -9.38,
+					"scaleX": 2.957,
+					"scaleY": 2.957,
+					"rotation": 147.13,
+					"width": 55,
+					"height": 54
+				}
+			},
+			"HandLeft": {
+				"HandLeft": {
+					"path": "Front/Male/HandLeft",
+					"x": 105.46,
+					"y": -27.36,
+					"scaleX": 2.957,
+					"scaleY": 2.957,
+					"rotation": 128.29,
+					"width": 61,
+					"height": 58
+				},
+				"HandLeft2": {
+					"path": "Front/Male/HandLeft2",
+					"x": 74.06,
+					"y": 6.37,
+					"scaleX": 2.957,
+					"scaleY": 2.957,
+					"rotation": 119.79,
+					"width": 59,
+					"height": 57
+				}
+			},
+			"Weapon": {
+				"WeaponGrenade": {
+					"x": 144.5,
+					"y": 17.09,
+					"scaleX": -2.96,
+					"scaleY": 2.957,
+					"rotation": -89.97,
+					"width": 58,
+					"height": 93
+				},
+				"WeaponMelee": {
+					"x": 166.54,
+					"y": 0.81,
+					"scaleX": -2.96,
+					"scaleY": 2.957,
+					"rotation": -89.97,
+					"width": 207,
+					"height": 222
+				},
+				"WeaponRifle": {
+					"x": 210.87,
+					"y": 50.45,
+					"scaleX": -2.96,
+					"scaleY": 2.957,
+					"rotation": -179.42,
+					"width": 225,
+					"height": 112
+				}
 			}
 		}
-	}
 },
 "events": {
 	"Footstep": {}
@@ -1048,7 +860,7 @@
 					{ "time": 1.1667, "angle": -24.81 }
 				],
 				"translate": [
-					{ "time": 0, "x": 0, "y": 0 }
+					{ "time": 0, "x": 0, "y": 5 }
 				],
 				"scale": [
 					{ "time": 0, "x": 1, "y": 1 }
@@ -1100,7 +912,7 @@
 					{ "time": 0, "angle": 0 }
 				],
 				"translate": [
-					{ "time": 0, "x": 0.48, "y": -1.69 }
+					{ "time": 0, "x": -15.02, "y": 42.06 }
 				],
 				"scale": [
 					{ "time": 0, "x": 1, "y": 1 }

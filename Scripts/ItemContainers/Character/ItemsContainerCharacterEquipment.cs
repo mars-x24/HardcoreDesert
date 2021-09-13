@@ -1,17 +1,16 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.ItemContainers
 {
+  using System.Linq;
   using AtomicTorch.CBND.CoreMod.Characters.Player;
   using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Neutral;
   using AtomicTorch.CBND.CoreMod.Items.Devices;
   using AtomicTorch.CBND.CoreMod.Items.Equipment;
   using AtomicTorch.CBND.CoreMod.Items.Implants;
-  using AtomicTorch.CBND.CoreMod.Items.Storage;
   using AtomicTorch.CBND.CoreMod.Systems.Creative;
   using AtomicTorch.CBND.CoreMod.Systems.Notifications;
   using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.Data.Items;
   using AtomicTorch.CBND.GameApi.Scripting.Network;
-  using System.Linq;
 
   public class ItemsContainerCharacterEquipment : ProtoItemsContainer
   {
@@ -42,7 +41,8 @@
 
     public override bool CanAddItem(CanAddItemContext context)
     {
-      if (!(context.Item.ProtoItem is IProtoItemEquipment protoItemEquipment))
+      if (context.Item.ProtoItem
+              is not IProtoItemEquipment protoItemEquipment)
       {
         // not an equipment - cannot be placed here
         return false;
@@ -128,7 +128,7 @@
 
         if (IsClient
             && !context.IsExploratoryCheck
-            && !(protoItemEquipment is ItemImplantBroken))
+            && protoItemEquipment is not ItemImplantBroken)
         {
           NotificationSystem.ClientShowNotification(
               NotificationUseStationToInstallImplant_Title,
@@ -147,7 +147,7 @@
         // Please note: can equip regular armor (without the helmet) even if there is full body armor - will swap items.
         if (IsHasFullBodyArmor(context.Container))
         {
-          // has full body armor - cannot equip this item 
+          // has full body armor - cannot equip this item
           if (IsClient)
           {
             NotificationSystem.ClientShowNotification(
@@ -166,7 +166,7 @@
 
     public override bool CanRemoveItem(CanRemoveItemContext context)
     {
-      if (!(context.Item.ProtoItem is IProtoItemEquipment protoItem))
+      if (context.Item.ProtoItem is not IProtoItemEquipment protoItem)
         return true;
 
       var itemEquipmentType = protoItem.EquipmentType;
@@ -178,7 +178,8 @@
         return backpack.SharedCanRemoveItem(context.Item, context.ByCharacter, false);
       }
 
-      if (!(context.Item.ProtoItem is IProtoItemEquipmentImplant protoItemEquipment))
+      if (context.Item.ProtoItem
+        is not IProtoItemEquipmentImplant protoItemEquipment)
       {
         // impossible - how did it end up here?
         return true;
@@ -214,7 +215,7 @@
 
     public override byte? FindSlotForItem(IItemsContainer container, IProtoItem protoItem)
     {
-      if (!(protoItem is IProtoItemEquipment protoEquipment))
+      if (protoItem is not IProtoItemEquipment protoEquipment)
       {
         // not an equipment - cannot be placed here
         return null;

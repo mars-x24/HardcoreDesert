@@ -172,6 +172,7 @@
       this.Quests ??= new PlayerCharacterQuests();
       this.Achievements ??= new PlayerCharacterAchievements();
       this.CompletionistData ??= new PlayerCharacterCompletionistData();
+      this.CompletionistData.ServerInitState();
       this.DroneController ??= CharacterDroneControlSystem.ServerCreateCharacterDroneController();
 
       if (this.ServerLastActiveTime <= 0)
@@ -188,3 +189,4 @@
     }
   }
 }
+

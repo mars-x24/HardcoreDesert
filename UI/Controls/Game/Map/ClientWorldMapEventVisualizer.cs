@@ -25,7 +25,7 @@
 
     private static readonly IWorldClientService ClientWorld = Api.Client.World;
 
-    private readonly List<(ILogicObject activeEvent, FrameworkElement mapControl)> visualizedSearchAreas
+    private readonly List<(ILogicObject worldEvent, FrameworkElement mapControl)> visualizedSearchAreas
         = new();
 
     public ClientWorldMapEventVisualizer(WorldMapController worldMapController)
@@ -34,9 +34,9 @@
       ClientWorld.LogicObjectInitialized += this.LogicObjectInitializedHandler;
       ClientWorld.LogicObjectDeinitialized += this.LogicObjectDeinitializedHandler;
 
-      foreach (var activeEvent in ClientWorld.GetGameObjectsOfProto<ILogicObject, IProtoEvent>())
+      foreach (var worldEvent in ClientWorld.GetGameObjectsOfProto<ILogicObject, IProtoEvent>())
       {
-        this.OnActiveEventAdded(activeEvent);
+        this.OnWorldEventAdded(worldEvent);
       }
     }
 
@@ -45,16 +45,16 @@
       ClientWorld.LogicObjectInitialized -= this.LogicObjectInitializedHandler;
       ClientWorld.LogicObjectDeinitialized -= this.LogicObjectDeinitializedHandler;
 
-      foreach (var activeEvent in ClientWorld.GetGameObjectsOfProto<ILogicObject, IProtoEvent>())
+      foreach (var worldEvent in ClientWorld.GetGameObjectsOfProto<ILogicObject, IProtoEvent>())
       {
-        this.OnActiveEventRemoved(activeEvent);
+        this.OnWorldEventRemoved(worldEvent);
       }
     }
 
-    private static string GetTooltipText(ILogicObject activeEvent)
+    private static string GetTooltipText(ILogicObject worldEvent)
     {
-      var timeRemains = ClientWorldEventRegularNotificationManager.CalculateEventTimeRemains(activeEvent);
-      var text = ClientWorldEventRegularNotificationManager.GetUpdatedEventNotificationText(activeEvent,
+      var timeRemains = ClientWorldEventRegularNotificationManager.CalculateEventTimeRemains(worldEvent);
+      var text = ClientWorldEventRegularNotificationManager.GetUpdatedEventNotificationText(worldEvent,
           timeRemains,
           addDescription: true);
       return $"[b]{Notification_ActiveEvent_Title}[/b][br]{text}";
@@ -64,7 +64,7 @@
     {
       if (obj.ProtoGameObject is IProtoEvent)
       {
-        this.OnActiveEventRemoved(obj);
+        this.OnWorldEventRemoved(obj);
       }
     }
 
@@ -72,13 +72,13 @@
     {
       if (obj.ProtoGameObject is IProtoEvent)
       {
-        this.OnActiveEventAdded(obj);
+        this.OnWorldEventAdded(obj);
       }
     }
 
-    private bool IsClientAllowedToSeeCircle(ILogicObject activeEvent)
+    private bool IsClientAllowedToSeeCircle(ILogicObject worldEvent)
     {
-      var publicState = activeEvent.GetPublicState<EventWithAreaPublicState>();
+      var publicState = worldEvent.GetPublicState<EventWithAreaPublicState>();
 
       if (publicState.BoundToPlayer == null || publicState.BoundToPlayer.Count == 0)
       {
@@ -96,23 +96,23 @@
       return false;
     }
 
-    private void OnActiveEventAdded(ILogicObject activeEvent)
+    private void OnWorldEventAdded(ILogicObject worldEvent)
     {
-      var timeRemains = ClientWorldEventRegularNotificationManager.CalculateEventTimeRemains(activeEvent);
+      var timeRemains = ClientWorldEventRegularNotificationManager.CalculateEventTimeRemains(worldEvent);
       if (timeRemains < 10)
       {
         // less than 10 seconds remains - not worth to display it on the map
         return;
       }
 
-      if (activeEvent.ProtoGameObject is IProtoEventWithArea)
+      if (worldEvent.ProtoGameObject is IProtoEventWithArea)
       {
         // add a circle for the search area
 
 
-        if (IsClientAllowedToSeeCircle(activeEvent))
+        if (IsClientAllowedToSeeCircle(worldEvent))
         {
-          var publicState = activeEvent.GetPublicState<EventWithAreaPublicState>();
+          var publicState = worldEvent.GetPublicState<EventWithAreaPublicState>();
           var circleRadius = publicState.AreaCircleRadius;
           var circleCanvasPosition = this.WorldToCanvasPosition(publicState.AreaCirclePosition.ToVector2D());
 
@@ -129,31 +129,31 @@
           Canvas.SetTop(control, circleCanvasPosition.Y - control.Height / 2);
           Panel.SetZIndex(control, 1);
           this.AddControl(control, false);
-          this.visualizedSearchAreas.Add((activeEvent, control));
+          this.visualizedSearchAreas.Add((worldEvent, control));
           ToolTipServiceExtend.SetToolTip(
               control,
               new WorldMapMarkEventTooltip()
               {
-                Text = GetTooltipText(activeEvent),
+                Text = GetTooltipText(worldEvent),
                 Icon = Api.Client.UI.GetTextureBrush(
-                      ((IProtoEvent)activeEvent.ProtoGameObject).Icon)
+                      ((IProtoEvent)worldEvent.ProtoGameObject).Icon)
               });
         }
       }
 
-      this.RefreshActiveEventInfo(activeEvent);
+      this.RefreshWorldEventInfo(worldEvent);
 
       // ensure the map mark would be removed after the timeout
       ClientTimersSystem.AddAction(timeRemains + 1,
-                                   () => this.OnActiveEventRemoved(activeEvent));
+                                   () => this.OnWorldEventRemoved(worldEvent));
     }
 
-    private void OnActiveEventRemoved(ILogicObject activeEvent)
+    private void OnWorldEventRemoved(ILogicObject worldEvent)
     {
       for (var index = 0; index < this.visualizedSearchAreas.Count; index++)
       {
         var entry = this.visualizedSearchAreas[index];
-        if (!entry.activeEvent.Equals(activeEvent))
+        if (!entry.worldEvent.Equals(worldEvent))
         {
           continue;
         }
@@ -163,35 +163,35 @@
       }
     }
 
-    private void RefreshActiveEventInfo(ILogicObject activeEvent)
+    private void RefreshWorldEventInfo(ILogicObject worldEvent)
     {
-      if (activeEvent.IsDestroyed)
+      if (worldEvent.IsDestroyed)
       {
         // the notification will be automatically marked to hide after delay when active event is destroyed
         // (a finished event)
         return;
       }
 
-      this.UpdateEventTooltip(activeEvent);
+      this.UpdateEventTooltip(worldEvent);
 
       // schedule recursive update in a second
       ClientTimersSystem.AddAction(
           1,
-          () => this.RefreshActiveEventInfo(activeEvent));
+          () => this.RefreshWorldEventInfo(worldEvent));
     }
 
-    private void UpdateEventTooltip(ILogicObject activeEvent)
+    private void UpdateEventTooltip(ILogicObject worldEvent)
     {
       foreach (var entry in this.visualizedSearchAreas)
       {
-        if (!entry.activeEvent.Equals(activeEvent))
+        if (!entry.worldEvent.Equals(worldEvent))
         {
           continue;
         }
 
         var control = entry.mapControl;
         var formattedTextBlock = (WorldMapMarkEventTooltip)ToolTipServiceExtend.GetToolTip(control);
-        formattedTextBlock.Text = GetTooltipText(activeEvent);
+        formattedTextBlock.Text = GetTooltipText(worldEvent);
       }
     }
   }

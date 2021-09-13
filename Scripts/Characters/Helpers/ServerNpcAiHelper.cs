@@ -307,7 +307,7 @@
           // look away when retreating
           // and the enemy is not within the attack range
           // and not attacked recently (so the attack cooldown (and so the animation) is finished)
-          directionToEnemyHitbox = directionToEnemyHitbox.RotateDeg(angle);
+          //directionToEnemyHitbox = directionToEnemyHitbox;//.RotateDeg(angle);
         }
 
         if (distanceToTarget <= distanceRetreat)

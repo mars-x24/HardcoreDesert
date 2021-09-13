@@ -2,8 +2,11 @@
 {
   using AtomicTorch.CBND.GameApi.Data.State;
 
-  public class EventDropPublicState : EventWithAreaPublicState
+  public class EventWaveAttackPublicState : EventWithAreaPublicState
   {
+    [SyncToClient]
+    public bool IsSpawnCompleted { get; set; }
+
     [SyncToClient]
     public byte ObjectsRemains { get; set; }
 

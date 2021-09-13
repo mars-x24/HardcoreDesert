@@ -1,18 +1,17 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Manufacturers
 {
-  using System.Linq;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Deposits;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.ConstructionSite;
   using AtomicTorch.CBND.CoreMod.Systems.Construction;
   using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
   using AtomicTorch.CBND.CoreMod.Systems.PowerGridSystem;
-  using AtomicTorch.CBND.CoreMod.Systems.PvE;
   using AtomicTorch.CBND.CoreMod.Tiles;
   using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
   using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Manufacturers;
   using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Manufacturers.Data;
   using AtomicTorch.CBND.GameApi.Data.World;
   using AtomicTorch.CBND.GameApi.Scripting;
+  using System.Linq;
 
   public abstract class ProtoObjectOilPump : ProtoObjectExtractor
   {
@@ -46,8 +45,8 @@
               if (!(protoTile is TileBarren
                         || protoTile is TileSwamp))
               {
-                    // unsuitable ground type
-                    return false;
+                // unsuitable ground type
+                return false;
               }
 
               return true;
@@ -76,14 +75,14 @@
                 switch (obj.ProtoStaticWorldObject)
                 {
                   case ProtoObjectOilPump:
-                        // found another extractor nearby
-                        return false;
+                    // found another extractor nearby
+                    return false;
 
                   case ProtoObjectConstructionSite
                             when ProtoObjectConstructionSite.SharedGetConstructionProto(obj) is
                                      ProtoObjectOilPump:
-                        // found a blueprint for another extractor nearby
-                        return false;
+                    // found a blueprint for another extractor nearby
+                    return false;
                 }
               }
 
@@ -100,12 +99,12 @@
               {
                 if (startPosition == obj.TilePosition)
                 {
-                      // can build right over the source
-                      continue;
+                  // can build right over the source
+                  continue;
                 }
 
-                    // found a deposit nearby but not right under it - cannot build too close to a deposit
-                    return false;
+                // found a deposit nearby but not right under it - cannot build too close to a deposit
+                return false;
               }
 
               return true;
@@ -136,11 +135,11 @@
     }
 
     protected sealed override void PrepareConstructionConfig(
-        ConstructionTileRequirements tileRequirements,
-        ConstructionStageConfig build,
-        ConstructionStageConfig repair,
-        ConstructionUpgradeConfig upgrade,
-        out ProtoStructureCategory category)
+             ConstructionTileRequirements tileRequirements,
+             ConstructionStageConfig build,
+             ConstructionStageConfig repair,
+             ConstructionUpgradeConfig upgrade,
+             out ProtoStructureCategory category)
     {
       tileRequirements
           .Clear()
@@ -155,8 +154,8 @@
                c => !ConstructionTileRequirements.TileHasAnyPhysicsObjectsWhere(
                         c.Tile,
                         o => o.PhysicsBody.IsStatic
-                             && !(o.PhysicsBody.AssociatedWorldObject?.ProtoWorldObject
-                                      is ObjectDepositOilSeep)))
+                             && o.PhysicsBody.AssociatedWorldObject?.ProtoWorldObject
+                                 is not ObjectDepositOilSeep))
           .Add(ConstructionTileRequirements.ErrorNoFreeSpace,
                c => c.Tile.StaticObjects.All(
                    o => o.ProtoWorldObject is ObjectDepositOilSeep

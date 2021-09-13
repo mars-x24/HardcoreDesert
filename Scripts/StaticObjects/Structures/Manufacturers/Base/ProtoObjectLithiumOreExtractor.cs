@@ -75,14 +75,14 @@
                 switch (obj.ProtoStaticWorldObject)
                 {
                   case ProtoObjectLithiumOreExtractor:
-                        // found another extractor nearby
-                        return false;
+                    // found another extractor nearby
+                    return false;
 
                   case ProtoObjectConstructionSite
                             when ProtoObjectConstructionSite.SharedGetConstructionProto(obj) is
                                      ProtoObjectLithiumOreExtractor:
-                        // found a blueprint for another extractor nearby
-                        return false;
+                    // found a blueprint for another extractor nearby
+                    return false;
                 }
               }
 
@@ -99,12 +99,12 @@
               {
                 if (startPosition == obj.TilePosition)
                 {
-                      // can build right over the source
-                      continue;
+                  // can build right over the source
+                  continue;
                 }
 
-                    // found a deposit nearby but not right under it - cannot build too close to a deposit
-                    return false;
+                // found a deposit nearby but not right under it - cannot build too close to a deposit
+                return false;
               }
 
               return true;
@@ -159,8 +159,8 @@
                c => !ConstructionTileRequirements.TileHasAnyPhysicsObjectsWhere(
                         c.Tile,
                         t => t.PhysicsBody.IsStatic
-                             && !(t.PhysicsBody.AssociatedWorldObject?.ProtoWorldObject is
-                                      ObjectDepositGeothermalSpring)))
+                             && t.PhysicsBody.AssociatedWorldObject?.ProtoWorldObject
+                                 is not ObjectDepositGeothermalSpring))
           .Add(ConstructionTileRequirements.ErrorNoFreeSpace,
                c => c.Tile.StaticObjects.All(
                    o => o.ProtoWorldObject is ObjectDepositGeothermalSpring

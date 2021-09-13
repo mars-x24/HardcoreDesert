@@ -22,6 +22,10 @@
   </ItemGroup>    
   
   <ItemGroup>
+    <Compile Remove="Scripts\Characters\State\SkeletonAngryPangolin.cs" />
+  </ItemGroup>    
+  
+  <ItemGroup>
     <Content Include="Content\Animations\AngryPangolin\Back.json" />
     <Content Include="Content\Animations\AngryPangolin\Front.json" />
     <Content Include="Content\Animations\ColdBear\Back.json" />

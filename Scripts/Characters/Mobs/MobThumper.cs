@@ -414,7 +414,7 @@
                             continue;
                         }
 
-                        if (!(damagedObject.ProtoGameObject is IDamageableProtoWorldObject))
+                        if (damagedObject.ProtoGameObject is not IDamageableProtoWorldObject)
                         {
                             // obstacle
                             return false;

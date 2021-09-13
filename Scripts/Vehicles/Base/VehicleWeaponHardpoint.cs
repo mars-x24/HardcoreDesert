@@ -11,6 +11,9 @@
     Large,
 
     [Description("Tool")]
-    Tool
-  }
+    Tool,
+
+    [Description("Exotic")]
+    Exotic
+    }
 }
