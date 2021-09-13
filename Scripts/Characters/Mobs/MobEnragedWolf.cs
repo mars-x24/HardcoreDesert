@@ -62,8 +62,6 @@
           character,
           true,
           data.DeltaTime,
-          targetStructure: ServerEnragedAiHelper.GetClosestTargetStructure(character),
-          targetCharacter: ServerEnragedAiHelper.GetClosestTargetPlayer(character),
           distanceEnemyTooClose: 1,
           distanceAttackEnemyTooClose: 3,
           distanceEnemyTooFar: 25,

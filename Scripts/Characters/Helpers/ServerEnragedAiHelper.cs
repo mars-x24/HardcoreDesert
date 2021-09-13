@@ -100,7 +100,7 @@
         out Vector2F directionToEnemyPosition,
         out Vector2F directionToEnemyHitbox)
     {
-      if (enemyStructure is null)
+      if (enemyStructure is null || enemyStructure.PhysicsBody is null)
       {
         distanceToEnemy = double.NaN;
         directionToEnemyPosition = directionToEnemyHitbox = Vector2F.Zero;
@@ -274,7 +274,7 @@
     }
 
     public static IStaticWorldObject GetClosestTargetStructure(ICharacter characterNpc)
-    {      
+    {
       //Try a small area first, mobs are hitting walls most of the time
       var obj = GetClosestTargetStructure(characterNpc, 1);
       if (obj is null)
@@ -284,7 +284,7 @@
     }
 
     private static IStaticWorldObject GetClosestTargetStructure(ICharacter characterNpc, int inflateValue)
-    { 
+    {
       byte? tileHeight = null;
 
       var list = ServerWorldService.GetStaticWorldObjectsOfProtoInBounds<IProtoObjectStructure>(
@@ -322,8 +322,8 @@
           }
         }
 
-        if(IsLandClaimToBeDestroyed(worldObject))
-            continue;
+        if (IsLandClaimToBeDestroyed(worldObject))
+          continue;
 
         structure = worldObject;
         break;
@@ -357,12 +357,10 @@
         ICharacter characterNpc,
         bool focusOnPlayer,
         double deltaTime,
-        IStaticWorldObject targetStructure,
-        ICharacter targetCharacter,
         double distanceEnemyTooClose,
         double distanceAttackEnemyTooClose,
         double distanceEnemyTooFar,
-        double secondsToAttackGoalTarget, 
+        double secondsToAttackGoalTarget,
         double secondsBeforeTryingGoalTarget,
         out Vector2F movementDirection,
         out double rotationAngleRad,
@@ -373,8 +371,23 @@
       var privateState = characterNpc.GetPrivateState<CharacterMobEnragedPrivateState>();
       var weaponState = privateState.WeaponState;
 
+      IStaticWorldObject targetStructure = privateState.CurrentTargetStructure;
+
+      privateState.TargetStructureTimer -= deltaTime;
+      if (privateState.TargetStructureTimer <= 0.0)
+      {
+        privateState.TargetStructureTimer = 10.0 + RandomHelper.Next(1, 20) / 10.0;
+
+        //retarget only each 10.0 seconds
+        targetStructure = ServerEnragedAiHelper.GetClosestTargetStructure(characterNpc);
+      }
+
+      if(targetStructure is null || targetStructure.IsDestroyed)
+        targetStructure = ServerEnragedAiHelper.GetClosestTargetStructure(characterNpc);
+
+      ICharacter targetCharacter = ServerEnragedAiHelper.GetClosestTargetPlayer(characterNpc);
+
       var lastTargetCharacter = privateState.CurrentTargetCharacter;
-      var lastTargetStructure = privateState.CurrentTargetStructure;
 
       var isRangedWeapon = weaponState.ProtoWeapon is IProtoItemWeaponRanged
                            || weaponState.ProtoWeapon is ProtoItemMobWeaponRangedNoAim;
@@ -385,9 +398,12 @@
 
       bool attackGoal = (privateState.GoalTargetTimer > secondsBeforeTryingGoalTarget - secondsToAttackGoalTarget)
                         && privateState.GoalTargetStructure is not null &&
-                        (privateState.GoalTargetStructure.ProtoStaticWorldObject is not ProtoObjectLandClaim || !IsLandClaimToBeDestroyed(privateState.GoalTargetStructure));
+                        (!privateState.FirstRunOnGoalDone || privateState.GoalTargetStructure.ProtoStaticWorldObject is not ProtoObjectLandClaim || !IsLandClaimToBeDestroyed(privateState.GoalTargetStructure));
       if (attackGoal)
+      {
         targetStructure = privateState.GoalTargetStructure;
+        privateState.FirstRunOnGoalDone = true;
+      }
 
       privateState.GoalTargetTimer -= deltaTime;
 
@@ -427,7 +443,7 @@
         distanceToTarget = distanceToTargetStructure;
         directionToEnemyPosition = directionToEnemyPositionStructure;
         directionToEnemyHitbox = directionToEnemyHitboxStructure;
-        movementDirection = directionToEnemyPosition;  
+        movementDirection = directionToEnemyPosition;
       }
       else
       {
@@ -535,7 +551,7 @@
         }
 
         var currentPosition = characterNpc.Position;
-        if (!isAttacking 
+        if (!isAttacking
           && Math.Round(privateState.LastPosition.X, 1) == Math.Round(currentPosition.X, 1)
           && Math.Round(privateState.LastPosition.Y, 1) == Math.Round(currentPosition.Y, 1))
         {

@@ -39,7 +39,7 @@
 
     public TimeSpan EventDurationWithoutDelay = TimeSpan.FromMinutes(15);
 
-    public TimeSpan EventStartDelayDuration => TimeSpan.FromMinutes(0);
+    public TimeSpan EventStartDelayDuration => TimeSpan.FromMinutes(5);
 
     // ReSharper disable once StaticMemberInGenericType
     private static readonly List<ICharacter> TempListPlayersInView = new();
