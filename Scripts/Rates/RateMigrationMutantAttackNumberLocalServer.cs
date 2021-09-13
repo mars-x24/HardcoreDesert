@@ -6,7 +6,7 @@ namespace AtomicTorch.CBND.CoreMod.Rates
       : BaseRateByte<RateMigrationMutantAttackNumberLocalServer>
   {
     [NotLocalizable]
-    public override string Description => @"Number of base under attack for mutant migration event. (Local server)";
+    public override string Description => @"Number of base under attack for mutant migration event.";
 
     public override string Id => "MigrationMutant.AttackNumber.LocalServer";
 
@@ -14,9 +14,9 @@ namespace AtomicTorch.CBND.CoreMod.Rates
 
     public override byte ValueDefault => 1;
 
-    public override byte ValueMax => 20;
+    public override byte ValueMax => 10;
 
-    public override byte ValueMaxReasonable => 2;
+    public override byte ValueMaxReasonable => 3;
 
     public override byte ValueMin => 1;
 
