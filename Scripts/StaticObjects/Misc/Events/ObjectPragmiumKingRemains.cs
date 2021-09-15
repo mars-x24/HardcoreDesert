@@ -91,7 +91,7 @@
         .Add<ItemGemSapphire>(count: 1, countRandom: 1, probability: 1 / 40.0)
         .Add<ItemGemTopaz>(count: 1, countRandom: 1, probability: 1 / 40.0)
         .Add<ItemGemTourmaline>(count: 1, countRandom: 1, probability: 1 / 40.0)
-        .Add<ItemPragmiumHeart>(count: 1, countRandom: 1);
+        .Add<ItemEnragedPragmiumHeart>(count: 1);
     }
 
     protected override void SharedCreatePhysics(CreatePhysicsData data)

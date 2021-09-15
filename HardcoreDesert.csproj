@@ -67,6 +67,9 @@
     <Page Update="UI\Controls\Game\WorldObjects\Character\CharacterOverlayControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Update="UI\Controls\Game\WorldObjects\Launchpad\WindowLaunchpad.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Controls\Game\WorldObjects\Storage\StorageIconControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -85,6 +88,5 @@
   <ItemGroup>
     <Folder Include="Content\Sounds\" />
     <Folder Include="Content\Textures\StaticObjects\Structures\Misc\" />
-    <Folder Include="Scripts\StaticObjects\Structures\Misc\" />
   </ItemGroup>  
 </Project>
