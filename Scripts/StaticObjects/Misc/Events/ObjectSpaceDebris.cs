@@ -1,5 +1,7 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events
 {
+  using AtomicTorch.CBND.CoreMod.Characters.Player;
+  using AtomicTorch.CBND.CoreMod.Events;
   using AtomicTorch.CBND.CoreMod.Items.Ammo;
   using AtomicTorch.CBND.CoreMod.Items.Explosives.Bombs;
   using AtomicTorch.CBND.CoreMod.Items.Food;
@@ -10,8 +12,10 @@
   using AtomicTorch.CBND.CoreMod.Systems.Droplists;
   using AtomicTorch.CBND.CoreMod.Systems.Physics;
   using AtomicTorch.CBND.CoreMod.Systems.PvE;
+  using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.Data.World;
   using AtomicTorch.CBND.GameApi.Resources;
+  using AtomicTorch.CBND.GameApi.Scripting;
   using AtomicTorch.CBND.GameApi.ServicesClient.Components;
   using AtomicTorch.GameEngine.Common.Primitives;
   using System;
@@ -242,6 +246,13 @@
         Server.World.CreateStaticWorldObject<ObjectCrater>(
           (data.GameObject.TilePosition + (0, WorldOffsetY)).ToVector2Ushort());
       }
+    }
+
+    protected override void ServerOnHacked(ICharacter character, IStaticWorldObject worldObject)
+    {
+      PlayerCharacter.GetPrivateState(character)
+                     .CompletionistData
+                     .ServerOnParticipatedInEvent(Api.GetProtoEntity<EventSpaceDrop>());
     }
 
     protected override void SharedCreatePhysics(CreatePhysicsData data)

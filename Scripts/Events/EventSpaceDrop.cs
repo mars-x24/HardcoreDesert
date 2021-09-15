@@ -1,8 +1,5 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Events
 {
-  using System;
-  using System.Collections.Generic;
-  using System.Linq;
   using AtomicTorch.CBND.CoreMod.Rates;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events;
   using AtomicTorch.CBND.CoreMod.Systems.PvE;
@@ -14,12 +11,16 @@
   using AtomicTorch.CBND.GameApi.Scripting;
   using AtomicTorch.GameEngine.Common.Helpers;
   using AtomicTorch.GameEngine.Common.Primitives;
+  using System;
+  using System.Collections.Generic;
+  using System.Linq;
 
   public class EventSpaceDrop : ProtoEventDrop
   {
     private static Lazy<IReadOnlyList<(IServerZone Zone, uint Weight)>> serverSpawnZones;
 
     public override ushort AreaRadius => PveSystem.ServerIsPvE
+                                         && !Server.Core.IsLocalServer
                                              ? (ushort)64
                                              : (ushort)90;
 
@@ -79,7 +80,8 @@
     protected override void ServerOnEventStartRequested(BaseTriggerConfig triggerConfig)
     {
       int locationsCount;
-      if (PveSystem.ServerIsPvE)
+      if (PveSystem.ServerIsPvE
+          && !Server.Core.IsLocalServer)
       {
         locationsCount = 9;
       }
@@ -160,7 +162,10 @@
                        .Configure((intervalHours.From,
                                    intervalHours.To)));
 
-      var debrisToSpawn = PveSystem.ServerIsPvE ? 2 : 3;
+      var debrisToSpawn = PveSystem.ServerIsPvE
+                          && !Server.Core.IsLocalServer
+                              ? 2
+                              : 3;
       for (var index = 0; index < debrisToSpawn; index++)
       {
         spawnPreset.Add(Api.GetProtoEntity<ObjectSpaceDebris>());

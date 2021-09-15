@@ -109,6 +109,7 @@
       }
 
       ServerObjectUseObserver.NotifyObjectUsed(character, worldObject);
+      this.ServerOnHacked(character, worldObject);
       return true;
     }
 
@@ -225,6 +226,9 @@
 
     protected abstract double ServerGetDropListProbabilityMultiplier(IStaticWorldObject staticWorldObject);
 
+    protected virtual void ServerOnHacked(ICharacter character, IStaticWorldObject worldObject)
+    {
+    }
 
     //MOD
     private static void ServerTrySpawnMobs(IStaticWorldObject worldObject)

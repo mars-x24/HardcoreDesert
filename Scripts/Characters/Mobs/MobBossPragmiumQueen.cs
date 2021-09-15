@@ -1,8 +1,8 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Characters.Mobs
 {
-  using System;
-  using System.Collections.Generic;
+  using AtomicTorch.CBND.CoreMod.Characters.Player;
   using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
+  using AtomicTorch.CBND.CoreMod.Events;
   using AtomicTorch.CBND.CoreMod.Items.Ammo;
   using AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons;
   using AtomicTorch.CBND.CoreMod.Rates;
@@ -20,6 +20,8 @@
   using AtomicTorch.CBND.GameApi.Scripting;
   using AtomicTorch.GameEngine.Common.Helpers;
   using AtomicTorch.GameEngine.Common.Primitives;
+  using System;
+  using System.Collections.Generic;
 
   public class MobBossPragmiumQueen
       : ProtoCharacterMob
@@ -290,6 +292,31 @@
         DropItemsList lootDroplist)
     {
       skeleton = GetProtoEntity<SkeletonPragmiumQueen>();
+
+      if (!IsServer)
+      {
+        return;
+      }
+
+      ServerBossLootSystem.BossDefeated += ServerBossDefeatedHandler;
+
+      static void ServerBossDefeatedHandler(
+          IProtoCharacterMob protoCharacterBoss,
+          Vector2Ushort bossPosition,
+          List<ServerBossLootSystem.WinnerEntry> winnerEntries)
+      {
+        if (protoCharacterBoss.GetType() != typeof(MobBossPragmiumQueen))
+        {
+          return;
+        }
+
+        foreach (var entry in winnerEntries)
+        {
+          PlayerCharacter.GetPrivateState(entry.Character)
+                         .CompletionistData
+                         .ServerOnParticipatedInEvent(Api.GetProtoEntity<EventBossPragmiumQueen>());
+        }
+      }
     }
 
     protected override void ServerInitializeCharacterMob(ServerInitializeData data)

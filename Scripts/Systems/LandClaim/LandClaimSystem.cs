@@ -1,10 +1,5 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Systems.LandClaim
 {
-  using System;
-  using System.Collections.Generic;
-  using System.Diagnostics;
-  using System.Linq;
-  using System.Threading.Tasks;
   using AtomicTorch.CBND.CoreMod.Bootstrappers;
   using AtomicTorch.CBND.CoreMod.Characters;
   using AtomicTorch.CBND.CoreMod.Characters.Player;
@@ -50,6 +45,11 @@
   using AtomicTorch.GameEngine.Common.Helpers;
   using AtomicTorch.GameEngine.Common.Primitives;
   using JetBrains.Annotations;
+  using System;
+  using System.Collections.Generic;
+  using System.Diagnostics;
+  using System.Linq;
+  using System.Threading.Tasks;
 
   public partial class LandClaimSystem : ProtoSystem<LandClaimSystem>
   {
@@ -80,10 +80,10 @@
         "Intersecting with another land claim area that is under active shield protection. Disable the shield there first.";
 
     public const string ErrorCannotBuild_LandClaimAmountLimitCanIncrease_Format =
-        @"You can increase the limit by researching tecnologies for higher tier land claims (up to {0} total).";
+        "You can increase the limit by researching technologies for higher-tier land claims (up to {0} total).";
 
     public const string ErrorCannotBuild_LandClaimAmountLimitExceeded_Format =
-        @"You've used up your allotted number of personal land claims ({0}/{1}).";
+        "You've used up your allotted number of personal land claims ({0}/{1}).";
 
     public const string ErrorCannotBuild_NeedXenogeologyTech =
         "You need to research Xenogeology (Tier 3) to claim the Oil/Li deposits or to place a land claim close to it.";
@@ -209,8 +209,8 @@
 
           if (!PveSystem.SharedIsPve(false))
           {
-                // in PvP only check whether the land is not claimed by another player
-                return ValidatorIsOwnedOrFreeLand.CheckFunction.Invoke(context);
+            // in PvP only check whether the land is not claimed by another player
+            return ValidatorIsOwnedOrFreeLand.CheckFunction.Invoke(context);
           }
 
           return SharedIsOwnedLand(context.Tile.Position,
@@ -257,12 +257,12 @@
                     continue;
                   }
 
-                      // only server and client owning the area has the private state of the area
-                      // to check whether it's under raid or not
-                      if (SharedIsAreaUnderRaid(area))
+                  // only server and client owning the area has the private state of the area
+                  // to check whether it's under raid or not
+                  if (SharedIsAreaUnderRaid(area))
                   {
-                        // cannot build - there is an area under raid   
-                        return false;
+                    // cannot build - there is an area under raid   
+                    return false;
                   }
                 }
 
@@ -288,12 +288,12 @@
                     continue;
                   }
 
-                      // only server and client owning the area has the private state of the area
-                      // to check whether it's under raid or not
-                      if (LandClaimShieldProtectionSystem.SharedIsAreaUnderShieldProtection(area))
+                  // only server and client owning the area has the private state of the area
+                  // to check whether it's under raid or not
+                  if (LandClaimShieldProtectionSystem.SharedIsAreaUnderShieldProtection(area))
                   {
-                        // cannot build - there is an area under shield protection
-                        return false;
+                    // cannot build - there is an area under shield protection
+                    return false;
                   }
                 }
 
@@ -334,9 +334,9 @@
                                 Vector2Ushort.Zero,
                                 protoObjectLandClaim))
                     {
-                          // we don't check offset tiles
-                          // as the land claim area calculated from the center tile of the land claim object
-                          return true;
+                      // we don't check offset tiles
+                      // as the land claim area calculated from the center tile of the land claim object
+                      return true;
                     }
 
                     var centerTilePosition = context.Tile.Position;
@@ -353,8 +353,8 @@
                   {
                     if (IsClient)
                     {
-                          // client cannot perform this check
-                          return true;
+                      // client cannot perform this check
+                      return true;
                     }
 
                     var forCharacter = context.CharacterBuilder;
@@ -374,9 +374,9 @@
                                 Vector2Ushort.Zero,
                                 protoObjectLandClaim))
                     {
-                          // we don't check offset tiles
-                          // as the land claim area calculated from the center tile of the land claim object
-                          return true;
+                      // we don't check offset tiles
+                      // as the land claim area calculated from the center tile of the land claim object
+                      return true;
                     }
 
                     var centerTilePosition = context.Tile.Position;
@@ -409,9 +409,9 @@
                                 Vector2Ushort.Zero,
                                 protoObjectLandClaim))
                     {
-                          // we don't check offset tiles
-                          // as the land claim area calculated from the center tile of the land claim object
-                          return true;
+                      // we don't check offset tiles
+                      // as the land claim area calculated from the center tile of the land claim object
+                      return true;
                     }
 
                     var centerTilePosition = context.Tile.Position;
@@ -433,10 +433,10 @@
                   return true;
                 }
 
-                    // as players want to check this limit in Editor (to plan a base),
-                    // it's enabled even for creative mode players there
-                    if (!Api.IsEditor
-                        && CreativeModeSystem.SharedIsInCreativeMode(forCharacter))
+                // as players want to check this limit in Editor (to plan a base),
+                // it's enabled even for creative mode players there
+                if (!Api.IsEditor
+                    && CreativeModeSystem.SharedIsInCreativeMode(forCharacter))
                 {
                   return true;
                 }
@@ -445,9 +445,9 @@
                 if (context.TileOffset
                         != SharedCalculateLandClaimObjectCenterTilePosition(Vector2Ushort.Zero, protoObjectLandClaim))
                 {
-                      // we don't check offset tiles
-                      // as the land claim area calculated from the center tile of the land claim object
-                      return true;
+                  // we don't check offset tiles
+                  // as the land claim area calculated from the center tile of the land claim object
+                  return true;
                 }
 
                 var centerTilePosition = context.Tile.Position;
@@ -455,8 +455,8 @@
                         centerTilePosition,
                         protoObjectLandClaim.LandClaimWithGraceAreaSize);
 
-                    // deflate by 1 tile as bases have 1 tile buffer area around them that allows intersection
-                    newAreaBounds = newAreaBounds.Inflate(-1);
+                // deflate by 1 tile as bases have 1 tile buffer area around them that allows intersection
+                newAreaBounds = newAreaBounds.Inflate(-1);
 
                 using var tempListAreas = Api.Shared.GetTempList<ILogicObject>();
                 using var tempListGroups = Api.Shared.GetTempList<ILogicObject>();
@@ -467,21 +467,21 @@
 
                 if (tempListGroups.Count == 0)
                 {
-                      // a new base will be created
-                      return true;
+                  // a new base will be created
+                  return true;
                 }
 
-                    // a base will be expanded or grouped
-                    // calculate the future base size and determine whether it could be exceeding the allowed max size
-                    int startX = int.MaxValue,
-                        startY = int.MaxValue,
-                        endX = 0,
-                        endY = 0;
+                // a base will be expanded or grouped
+                // calculate the future base size and determine whether it could be exceeding the allowed max size
+                int startX = int.MaxValue,
+                    startY = int.MaxValue,
+                    endX = 0,
+                    endY = 0;
 
-                    // include max bounds of the future land claim
-                    UpdateBounds(
-                        SharedCalculateLandClaimAreaBounds(context.Tile.Position,
-                                                           MaxLandClaimSizeWithGraceArea.Value));
+                // include max bounds of the future land claim
+                UpdateBounds(
+                    SharedCalculateLandClaimAreaBounds(context.Tile.Position,
+                                                       MaxLandClaimSizeWithGraceArea.Value));
 
                 foreach (var area in tempListAreas.AsList())
                 {
@@ -540,9 +540,9 @@
                                 Vector2Ushort.Zero,
                                 protoObjectLandClaim))
                     {
-                          // we don't check offset tiles
-                          // as the land claim area calculated from the center tile of the land claim object
-                          return true;
+                      // we don't check offset tiles
+                      // as the land claim area calculated from the center tile of the land claim object
+                      return true;
                     }
 
                     var centerTilePosition = context.Tile.Position;
@@ -571,9 +571,9 @@
                 if (context.TileOffset
                         != SharedCalculateLandClaimObjectCenterTilePosition(Vector2Ushort.Zero, protoObjectLandClaim))
                 {
-                      // we don't check offset tiles
-                      // as the land claim area calculated from the center tile of the land claim object
-                      return true;
+                  // we don't check offset tiles
+                  // as the land claim area calculated from the center tile of the land claim object
+                  return true;
                 }
 
                 var centerTilePosition = context.Tile.Position;
@@ -588,8 +588,8 @@
                                                             .LandClaimCenterTilePosition;
                   if (testBounds.Contains(areaCenterLocation))
                   {
-                        // too close, check failed
-                        return false;
+                    // too close, check failed
+                    return false;
                   }
                 }
 
@@ -620,7 +620,7 @@
                                                      out var maxNumber);
 
           return maxNumber > currentNumber; // ok only in case when the limit is not exceeded
-            },
+        },
               getErrorMessage:
               _ =>
               {
@@ -637,11 +637,11 @@
                                               currentNumber,
                                               maxNumber);
 
-                    // find if player has any unresearched tech node than can raise the number of personal land claims
-                    var unresearchedTechNodes = TechGroup.AvailableTechGroups.SelectMany(t => t.Nodes)
-                                                         .Where(n => n.IsAvailable)
-                                                         .Except(ClientCurrentCharacterHelper.PrivateState
-                                                                     .Technologies.Nodes);
+                // find if player has any unresearched tech node than can raise the number of personal land claims
+                var unresearchedTechNodes = TechGroup.AvailableTechGroups.SelectMany(t => t.Nodes)
+                                                     .Where(n => n.IsAvailable)
+                                                     .Except(ClientCurrentCharacterHelper.PrivateState
+                                                                 .Technologies.Nodes);
 
                 var maxPossibleNumber = maxNumber;
                 var canRaiseLimitNumber = false;
@@ -700,27 +700,27 @@
                     if (PerkClaimDeposits.Instance
                                              .SharedIsPerkUnlocked(forCharacter))
                     {
-                          // has perk unlocked so no need to check whether player trying to claim a deposit
-                          return true;
+                      // has perk unlocked so no need to check whether player trying to claim a deposit
+                      return true;
                     }
 
-                        // doesn't have Xenogeology unlocked
-                        // check whether there are any deposits nearby
-                        var forbiddenArea = SharedCalculateLandClaimAreaBounds(
-                            centerTilePosition: (context.Tile.Position
-                                                 + context.ProtoStaticObjectToBuild.Layout.Center.ToVector2Int())
-                            .ToVector2Ushort(),
-                            // We use a carefully selected size here to ensure the deposit
-                            // cannot surrounded by land claims of players without Xenogeology.
-                            // Some extra padding is also useful here though not really necessary.
-                            size: (ushort)(6 + 2 * MaxLandClaimSizeWithGraceArea.Value));
+                    // doesn't have Xenogeology unlocked
+                    // check whether there are any deposits nearby
+                    var forbiddenArea = SharedCalculateLandClaimAreaBounds(
+                        centerTilePosition: (context.Tile.Position
+                                             + context.ProtoStaticObjectToBuild.Layout.Center.ToVector2Int())
+                        .ToVector2Ushort(),
+                        // We use a carefully selected size here to ensure the deposit
+                        // cannot surrounded by land claims of players without Xenogeology.
+                        // Some extra padding is also useful here though not really necessary.
+                        size: (ushort)(6 + 2 * MaxLandClaimSizeWithGraceArea.Value));
 
                     foreach (var mark in WorldMapResourceMarksSystem.SharedEnumerateMarks())
                     {
                       if (((IProtoObjectDeposit)mark.ProtoWorldObject).LifetimeTotalDurationSeconds <= 0)
                       {
-                            // infinite oil/Li sources are not considered
-                            continue;
+                        // infinite oil/Li sources are not considered
+                        continue;
                       }
 
                       var position = mark.Position;
@@ -735,8 +735,8 @@
                                               mark.Id);
                         if (obj is null)
                         {
-                              // no object exists (in case of client - could be out of scope)
-                              continue;
+                          // no object exists (in case of client - could be out of scope)
+                          continue;
                         }
 
                         position = WorldMapResourceMarksSystem.SharedGetObjectCenterPosition(obj);
@@ -749,8 +749,8 @@
 
                       if (forbiddenArea.Intersects(staticWorldObjectBounds))
                       {
-                            // found a deposit in bounds of the future land claim
-                            return false;
+                        // found a deposit in bounds of the future land claim
+                        return false;
                       }
                     }
 
@@ -789,8 +789,8 @@
                 {
                   if (((IProtoObjectDeposit)mark.ProtoWorldObject).LifetimeTotalDurationSeconds <= 0)
                   {
-                        // infinite oil/Li sources are not considered
-                        continue;
+                    // infinite oil/Li sources are not considered
+                    continue;
                   }
 
                   var timeRemainsToClaimCooldown =
@@ -813,8 +813,8 @@
                                           mark.Id);
                     if (obj is null)
                     {
-                          // no object exists (in case of client - could be out of scope)
-                          continue;
+                      // no object exists (in case of client - could be out of scope)
+                      continue;
                     }
 
                     position = WorldMapResourceMarksSystem.SharedGetObjectCenterPosition(obj);
@@ -826,8 +826,8 @@
 
                   if (bounds.Contains(context.Tile.Position))
                   {
-                        // cannot claim this deposit yet
-                        return false;
+                    // cannot claim this deposit yet
+                    return false;
                   }
                 }
 
