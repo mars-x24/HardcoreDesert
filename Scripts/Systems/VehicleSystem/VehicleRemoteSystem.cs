@@ -1,12 +1,10 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Systems.VehicleSystem
 {
   using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.Items.Tools;
   using AtomicTorch.CBND.CoreMod.Items.Tools.Special;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc;
   using AtomicTorch.CBND.CoreMod.Systems.CharacterEnergySystem;
   using AtomicTorch.CBND.CoreMod.Systems.ItemDurability;
-  using AtomicTorch.CBND.CoreMod.Systems.PvE;
   using AtomicTorch.CBND.CoreMod.Systems.TeleportsSystem;
   using AtomicTorch.CBND.CoreMod.Systems.VehicleGarageSystem;
   using AtomicTorch.CBND.CoreMod.Systems.WorldObjectOwners;
@@ -160,7 +158,7 @@
 
     private void ClientRemote_OnVehicleTakenFromGarageByOtherPlayer(IDynamicWorldObject vehicle, Vector2D position)
     {
-      ClientComponentTeleportationEffect.CreateEffect(vehicle, vehicle.TilePosition, 0.5, 0.0, false);
+      ClientComponentTeleportationEffect.CreateEffect(vehicle, 0.5, 0.0, false);
 
       Client.Audio.PlayOneShot(VehicleGarageSystem.SoundResourceTakeVehicle, position);
     }

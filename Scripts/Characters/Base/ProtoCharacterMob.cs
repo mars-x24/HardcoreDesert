@@ -90,7 +90,7 @@
       {
         this.SharedGetSkeletonProto(null, out var skeletonProto, out _);
 
-        if(skeletonProto is ProtoCharacterSkeletonAnimal)
+        if (skeletonProto is ProtoCharacterSkeletonAnimal)
           return ((ProtoCharacterSkeletonAnimal)skeletonProto).Icon;
 
         if (skeletonProto is ProtoCharacterSkeletonAnimalNPC)
@@ -346,7 +346,6 @@
       var isDespawning = state == MobSpawnState.Despawning;
       ClientComponentTeleportationEffect.CreateEffect(
           character,
-          character.TilePosition,
           isDespawning
               ? this.DespawnAnimationDuration
               : this.SpawnAnimationDuration,
@@ -514,6 +513,7 @@
       ServerUpdateAggroState(privateState, data.DeltaTime);
       this.ServerUpdateMob(data);
       this.ServerUpdateMobDespawn(character, privateState, data.DeltaTime);
+      this.ServerUpdateMobDespawnWithParent(character, privateState);
 
       // update weapon state (fires the weapon if needed)
       WeaponSystem.SharedUpdateCurrentWeapon(
@@ -666,6 +666,37 @@
       Logger.Important("Mob despawned as it went too far from the spawn position for too long: " + characterMob);
       ServerWorld.DestroyObject(characterMob);
     }
+
+    private void ServerUpdateMobDespawnWithParent(ICharacter characterMob, TPrivateState privateState)
+    {
+      if (!privateState.IsAutoDespawnWithParent)
+        return;
+
+      if (privateState.ParentObject is not null)
+        return;
+
+      // should despawn
+      // check that nobody is observing the mob
+      var playersInView = TempListPlayersInView;
+      playersInView.Clear();
+      ServerWorld.GetCharactersInView(characterMob,
+                                      playersInView,
+                                      onlyPlayerCharacters: true);
+
+      foreach (var playerCharacter in playersInView)
+      {
+        if (playerCharacter.ServerIsOnline)
+        {
+          // cannot despawn - scoped by a player
+          return;
+        }
+      }
+
+      // nobody is observing, can despawn
+      Logger.Important("Mob despawned as his parent is null: " + characterMob);
+      ServerWorld.DestroyObject(characterMob);
+    }
+
   }
 
   public abstract class ProtoCharacterMob

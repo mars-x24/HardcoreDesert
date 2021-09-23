@@ -1,5 +1,6 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events
 {
+  using AtomicTorch.CBND.CoreMod.Characters;
   using AtomicTorch.CBND.CoreMod.Characters.Mobs;
   using AtomicTorch.CBND.CoreMod.CharacterStatusEffects;
   using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Debuffs;
@@ -87,7 +88,9 @@
               return;
             }
 
-            ServerTrySpawnMobs(worldObject);
+
+            ServerMobSpawnHelper.ServerTrySpawnMobs(worldObject, GetPrivateState(worldObject).MobsList,
+              MobSpawnDistance, MobDespawnDistance, MobsCountLimit, ServerSpawnMobsMaxCountPerIteration, LazyProtoMob?.Value);
           });
       //
     }
@@ -137,66 +140,5 @@
                                                 out obstacleBlockDamageCoef);
     }
 
-
-    //MOD
-
-    private static void ServerTrySpawnMobs(IStaticWorldObject worldObject)
-    {
-      if (LandClaimSystem.SharedIsLandClaimedByAnyone(worldObject.Bounds))
-      {
-        // don't spawn mobs as the land is claimed
-        return;
-      }
-
-      // calculate how many creatures are still alive
-      var mobsList = GetPrivateState(worldObject).MobsList;
-
-      var mobsAlive = 0;
-      for (var index = 0; index < mobsList.Count; index++)
-      {
-        var character = mobsList[index];
-        if (character is null || character.IsDestroyed)
-        {
-          mobsList.RemoveAt(index--);
-          continue;
-        }
-
-        if (character.TilePosition.TileSqrDistanceTo(worldObject.TilePosition)
-            > MobDespawnDistance * MobDespawnDistance)
-        {
-          // the guardian mob is too far - probably lured away by a player
-          using var tempListObservers = Api.Shared.GetTempList<ICharacter>();
-          Server.World.GetScopedByPlayers(character, tempListObservers);
-          if (tempListObservers.Count == 0)
-          {
-            // despawn this mob as it's not observed by any player
-            Server.World.DestroyObject(character);
-            mobsList.RemoveAt(index--);
-          }
-
-          continue;
-        }
-
-        mobsAlive++;
-      }
-
-      var countToSpawn = MobsCountLimit - mobsAlive;
-      if (countToSpawn <= 0)
-      {
-        return;
-      }
-
-      // spawn mobs(s) nearby
-      countToSpawn = Math.Min(countToSpawn, ServerSpawnMobsMaxCountPerIteration);
-      ServerMobSpawnHelper.ServerTrySpawnMobsCustom(protoMob: LazyProtoMob.Value,
-                                                    spawnedCollection: mobsList,
-                                                    countToSpawn,
-                                                    excludeBounds: worldObject.Bounds.Inflate(4),
-                                                    maxSpawnDistanceFromExcludeBounds: MobSpawnDistance,
-                                                    noObstaclesCheckRadius: 1.0,
-                                                    maxAttempts: 200);
-    }
-
-    //
   }
 }

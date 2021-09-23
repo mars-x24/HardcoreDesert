@@ -2,7 +2,6 @@
 using AtomicTorch.CBND.GameApi.Data.Characters;
 using AtomicTorch.CBND.GameApi.Data.World;
 using AtomicTorch.GameEngine.Common.Primitives;
-using HardcoreDesert.Scripts.Characters.Base;
 
 namespace AtomicTorch.CBND.CoreMod.Characters
 {

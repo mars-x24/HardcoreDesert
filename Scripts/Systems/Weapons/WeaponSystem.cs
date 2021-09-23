@@ -10,6 +10,7 @@
   using AtomicTorch.CBND.CoreMod.Items.Ammo;
   using AtomicTorch.CBND.CoreMod.Items.Devices;
   using AtomicTorch.CBND.CoreMod.Items.Weapons;
+  using AtomicTorch.CBND.CoreMod.Items.Weapons.Base;
   using AtomicTorch.CBND.CoreMod.Skills;
   using AtomicTorch.CBND.CoreMod.Stats;
   using AtomicTorch.CBND.CoreMod.Systems.Faction;
@@ -1237,7 +1238,10 @@
 
             hitObjects.Add(hitData);
 
-            if (isMeleeWeapon)
+            //MOD
+            if (weaponCache.ProtoWeapon is IProtoPiercingWeapon && damagedObject.ProtoGameObject is IProtoCharacter)
+              obstacleBlockDamageCoef = 0;
+            else if (isMeleeWeapon)
             {
               // currently melee weapon could attack only one object on the ray
               isDamageRayStopped = true;

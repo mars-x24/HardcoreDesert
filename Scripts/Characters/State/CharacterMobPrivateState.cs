@@ -3,6 +3,7 @@
   using AtomicTorch.CBND.CoreMod.Characters.Player;
   using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.Data.State;
+  using AtomicTorch.CBND.GameApi.Data.World;
   using AtomicTorch.CBND.GameApi.Scripting;
   using AtomicTorch.GameEngine.Common.Primitives;
   using System.Collections.Generic;
@@ -30,7 +31,6 @@
     [TempOnly]
     public double LastFleeSoundTime { get; set; }
 
-    [TempOnly]
     public Vector2Ushort SpawnPosition { get; set; }
 
     /// <summary>
@@ -40,6 +40,9 @@
     [TempOnly]
     public double TimerDespawn { get; set; }
 
+    public bool IsAutoDespawnWithParent { get; set; }
+
+    public IStaticWorldObject ParentObject { get; set; }
 
     public void SetCurrentTargetWithPosition(ICharacter target)
     {

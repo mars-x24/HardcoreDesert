@@ -1,13 +1,16 @@
 namespace AtomicTorch.CBND.CoreMod.Helpers.Server
 {
-  using System.Collections.Generic;
   using AtomicTorch.CBND.CoreMod.Characters;
   using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
   using AtomicTorch.CBND.CoreMod.Systems.Physics;
   using AtomicTorch.CBND.GameApi.Data.Characters;
+  using AtomicTorch.CBND.GameApi.Data.World;
+  using AtomicTorch.CBND.GameApi.Extensions;
   using AtomicTorch.CBND.GameApi.Scripting;
   using AtomicTorch.GameEngine.Common.Helpers;
   using AtomicTorch.GameEngine.Common.Primitives;
+  using System;
+  using System.Collections.Generic;
 
   public static class ServerMobSpawnHelper
   {
@@ -107,5 +110,69 @@ namespace AtomicTorch.CBND.CoreMod.Helpers.Server
                                                     worldPosition);
       }
     }
+
+
+    public static void ServerTrySpawnMobs(IStaticWorldObject worldObject, List<ICharacter> mobsList, int mobSpawnDistance,
+      int mobDespawnDistance, int mobsCountLimit, int serverSpawnMobsMaxCountPerIteration, IProtoCharacter protoMobToSpawn)
+    {
+      if (LandClaimSystem.SharedIsLandClaimedByAnyone(worldObject.Bounds))
+      {
+        // don't spawn mobs as the land is claimed
+        return;
+      }
+
+      var mobsAlive = 0;
+      for (var index = 0; index < mobsList.Count; index++)
+      {
+        var character = mobsList[index];
+        if (character is null || character.IsDestroyed)
+        {
+          mobsList.RemoveAt(index--);
+          continue;
+        }
+
+        if (character.TilePosition.TileSqrDistanceTo(worldObject.TilePosition)
+            > mobDespawnDistance * mobDespawnDistance)
+        {
+          // the guardian mob is too far - probably lured away by a player
+          using var tempListObservers = Api.Shared.GetTempList<ICharacter>();
+          Api.Server.World.GetScopedByPlayers(character, tempListObservers);
+          if (tempListObservers.Count == 0)
+          {
+            // despawn this mob as it's not observed by any player
+            Api.Server.World.DestroyObject(character);
+            mobsList.RemoveAt(index--);
+          }
+
+          continue;
+        }
+
+        mobsAlive++;
+      }
+
+      var countToSpawn = mobsCountLimit - mobsAlive;
+      if (countToSpawn <= 0)
+      {
+        return;
+      }
+
+      // spawn mobs(s) nearby
+      countToSpawn = Math.Min(countToSpawn, serverSpawnMobsMaxCountPerIteration);
+
+      ServerMobSpawnHelper.ServerTrySpawnMobsCustom(protoMob: protoMobToSpawn,
+                                                    spawnedCollection: mobsList,
+                                                    countToSpawn,
+                                                    excludeBounds: worldObject.Bounds.Inflate(4),
+                                                    maxSpawnDistanceFromExcludeBounds: mobSpawnDistance,
+                                                    noObstaclesCheckRadius: 1.0,
+                                                    maxAttempts: 200);
+
+      foreach (ICharacter mob in mobsList)
+      {
+        var privateState = mob.GetPrivateState<CharacterMobPrivateState>();
+        privateState.ParentObject = worldObject;
+      }
+    }
+
   }
 }

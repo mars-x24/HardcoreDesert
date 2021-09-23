@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HardcoreDesert.Scripts.Characters.Base
+﻿namespace AtomicTorch.CBND.CoreMod.Characters
 {
   public interface IProtoDamageToNPC
   {

@@ -64,7 +64,7 @@
            ref double scale,
            DropItemsList lootDroplist)
     {
-      skeleton = GetProtoEntity<CharacterSkeletons.NPC_BA_Specialist>();
+      skeleton = GetProtoEntity<SkeletonNPC_BA_Specialist>();
 
       // primary loot
       lootDroplist.Add(

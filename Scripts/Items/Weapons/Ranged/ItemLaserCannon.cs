@@ -1,9 +1,9 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Items.Weapons.Ranged
 {
-  using System.Collections.Generic;
   using AtomicTorch.CBND.CoreMod.CharacterStatusEffects;
   using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Debuffs;
   using AtomicTorch.CBND.CoreMod.Items.Ammo;
+  using AtomicTorch.CBND.CoreMod.Items.Weapons.Base;
   using AtomicTorch.CBND.CoreMod.SoundPresets;
   using AtomicTorch.CBND.CoreMod.Systems.Weapons;
   using AtomicTorch.CBND.GameApi.Data.Characters;
@@ -13,8 +13,9 @@
   using AtomicTorch.CBND.GameApi.ServicesClient.Rendering;
   using AtomicTorch.GameEngine.Common.Helpers;
   using AtomicTorch.GameEngine.Common.Primitives;
+  using System.Collections.Generic;
 
-  public class ItemLaserCannon : ProtoItemWeaponRangedEnergy
+  public class ItemLaserCannon : ProtoItemWeaponRangedEnergy, IProtoPiercingWeapon
   {
     private static readonly TextureResource TextureResourceBeam
         = new("FX/WeaponTraces/TraceBeamLaser.png");

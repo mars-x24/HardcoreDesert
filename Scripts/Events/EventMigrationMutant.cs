@@ -142,11 +142,6 @@
 
           do
           {
-            if (RandomHelper.RollWithProbability(0.5))
-            {
-              Thread.Sleep(16);
-            }
-
             await yieldIfOutOfTime();
 
             var spawnPosition =

@@ -79,27 +79,6 @@
       var weaponProto = GetProtoEntity<ItemWeaponMobMutantCrawlerPoison>();
       data.PrivateState.WeaponState.SharedSetWeaponProtoOnly(weaponProto);
       data.PublicState.SharedSetCurrentWeaponProtoOnly(weaponProto);
-
-      // schedule destruction by timer
-      var gameObject = data.GameObject;
-      ServerTimersSystem.AddAction(
-          delaySeconds: 60 * 60, // 60 minutes
-          () => ServerDespawnTimerCallback(gameObject));
-    }
-
-    private static void ServerDespawnTimerCallback(IWorldObject gameObject)
-    {
-      if (!Server.World.IsObservedByAnyPlayer(gameObject))
-      {
-        // can destroy now
-        Server.World.DestroyObject(gameObject);
-        return;
-      }
-
-      // postpone destruction
-      ServerTimersSystem.AddAction(
-          delaySeconds: 60,
-          () => ServerDespawnTimerCallback(gameObject));
     }
 
     protected override void ServerUpdateMob(ServerUpdateData data)

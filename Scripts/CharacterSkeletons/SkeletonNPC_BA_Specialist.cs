@@ -5,7 +5,7 @@
   using AtomicTorch.CBND.GameApi.Resources;
   using AtomicTorch.CBND.GameApi.ServicesClient.Components;
 
-  public class NPC_BA_Specialist : ProtoCharacterSkeletonNPC
+  public class SkeletonNPC_BA_Specialist : ProtoCharacterSkeletonNPC
   {
     public override double DefaultMoveSpeed => 2.0;
 

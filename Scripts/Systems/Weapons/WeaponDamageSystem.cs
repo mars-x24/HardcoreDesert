@@ -1,8 +1,5 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Systems.Weapons
 {
-  using System;
-  using System.Collections.Generic;
-  using System.Linq;
   using AtomicTorch.CBND.CoreMod.Characters;
   using AtomicTorch.CBND.CoreMod.Characters.Player;
   using AtomicTorch.CBND.CoreMod.Items;
@@ -21,7 +18,9 @@
   using AtomicTorch.CBND.GameApi.Data.World;
   using AtomicTorch.CBND.GameApi.Scripting;
   using AtomicTorch.GameEngine.Common.Helpers;
-  using HardcoreDesert.Scripts.Characters.Base;
+  using System;
+  using System.Collections.Generic;
+  using System.Linq;
 
   public static class WeaponDamageSystem
   {
@@ -254,7 +253,7 @@
 
       if (damagingCharacter is not null
           && !weaponCache.AllowNpcToNpcDamage
-          && damagingCharacter.IsNpc 
+          && damagingCharacter.IsNpc
           && (targetCharacter.IsNpc && targetCharacter.ProtoGameObject is not ProtoCharacterMobEnraged))
       {
         // no NPC-to-NPC damage
