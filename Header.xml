@@ -8,8 +8,8 @@
     Discord:Mars#8365, druffzilla#8949, Salvick#3333
   </author>
   <description>Pincess and King in the desert</description>
-  <version>0.1.43</version>
-  <updated>22.09.2021</updated>
+  <version>0.1.44</version>
+  <updated>xx.10.2021</updated>
   
 <!-- 
 Available settings
@@ -21,8 +21,14 @@ MigrationMutantMobCount, Number of mobs for each claims, default 1,4,8,13,20
 MigrationMutantMobMaxLevelPerWave, Max level of mobs for each wave, default 1,2,3,4,5
 ServerGlobalStorageItemsSlotsCapacity, How many global storage slots are allowed per base. The value should be within 0-128 range, default 64
 
+timer for dispawning parent mob
+
+0.1.44
+Random Meteors in meteorite drop event
+
 0.1.43
 R31.3.3 support
+Piercing Energy Canon and Rapier
 
 0.1.42
 Added Enraged pragmium heart

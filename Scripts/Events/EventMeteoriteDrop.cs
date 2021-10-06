@@ -1,5 +1,6 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Events
 {
+  using AtomicTorch.CBND.CoreMod.Helpers.Server;
   using AtomicTorch.CBND.CoreMod.Rates;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events;
   using AtomicTorch.CBND.CoreMod.Systems.PvE;
@@ -75,6 +76,9 @@
           publicState.AreaCirclePosition,
           publicState.AreaCircleRadius * 1.2,
           duration: TimeSpan.FromHours(8));
+
+      var timeLeft = (int)Math.Ceiling(publicState.EventEndTime - Api.Server.Game.FrameTime);
+      ServerMeteorHelper.Start(publicState.AreaCirclePosition, publicState.AreaCircleRadius, timeLeft, 5);
     }
 
     protected override void ServerOnEventStartRequested(BaseTriggerConfig triggerConfig)
