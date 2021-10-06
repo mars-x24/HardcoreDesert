@@ -805,7 +805,7 @@
 
     private static void ServerPlayerOnlineStateChangedHandler(ICharacter character, bool isOnline)
     {
-      var weaponState = character.GetPrivateState<PlayerCharacterPrivateState>().WeaponState;
+      var weaponState = PlayerCharacter.GetPrivateState(character).WeaponState;
       weaponState?.ClearFiringStateData();
     }
 
@@ -1172,7 +1172,7 @@
             continue;
           }
 
-          // don't allow damage is there is no direct line of sight on physical colliders layer between the two objects
+          // don't allow damage if there is no direct line of sight on physical colliders layer between the two objects
           if (SharedHasTileObstacle(character.Position,
                                     characterTileHeight,
                                     damagedObject,

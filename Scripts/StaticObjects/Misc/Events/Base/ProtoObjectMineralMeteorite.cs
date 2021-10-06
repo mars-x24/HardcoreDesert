@@ -46,7 +46,7 @@
 
     public override bool IsAllowDroneMining => false;
 
-    public override bool IsAllowQuickMining => false;
+    public override bool IsAllowQuickMining => true;
 
     public abstract double ServerCooldownDuration { get; }
 

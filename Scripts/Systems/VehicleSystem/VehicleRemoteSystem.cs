@@ -158,9 +158,7 @@
 
     private void ClientRemote_OnVehicleTakenFromGarageByOtherPlayer(IDynamicWorldObject vehicle, Vector2D position)
     {
-      ClientComponentTeleportationEffect.CreateEffect(vehicle,
-            vehicle.TilePosition, //TODO
-                                    0.5, 0.0, false);
+      ClientComponentTeleportationEffect.CreateEffect(vehicle, 0.5, 0.0, false);
 
       Client.Audio.PlayOneShot(VehicleGarageSystem.SoundResourceTakeVehicle, position);
     }

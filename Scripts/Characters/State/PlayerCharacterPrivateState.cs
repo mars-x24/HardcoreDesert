@@ -185,6 +185,12 @@
     {
       this.CurrentActionState?.Cancel();
       this.CurrentActionState = actionState;
+
+      if (Api.IsClient)
+      {
+        Api.Logger.Info("Current action state changed: " + actionState);
+      }
+
       actionState?.OnStart();
     }
   }

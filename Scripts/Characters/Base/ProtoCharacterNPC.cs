@@ -1,9 +1,5 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Characters
 {
-  using System;
-  using System.Collections.Generic;
-  using System.Diagnostics.CodeAnalysis;
-  using System.Runtime.CompilerServices;
   using AtomicTorch.CBND.CoreMod.Characters.Input;
   using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
   using AtomicTorch.CBND.CoreMod.Helpers.Client;
@@ -28,6 +24,10 @@
   using AtomicTorch.CBND.GameApi.ServicesServer;
   using AtomicTorch.GameEngine.Common.Primitives;
   using JetBrains.Annotations;
+  using System;
+  using System.Collections.Generic;
+  using System.Diagnostics.CodeAnalysis;
+  using System.Runtime.CompilerServices;
 
   public abstract class ProtoCharacterNPC
       <TPrivateState,
@@ -342,7 +342,6 @@
       var isDespawning = state == MobSpawnState.Despawning;
       ClientComponentTeleportationEffect.CreateEffect(
           character,
-              character.TilePosition, //TODO
           isDespawning
               ? this.DespawnAnimationDuration
               : this.SpawnAnimationDuration,
