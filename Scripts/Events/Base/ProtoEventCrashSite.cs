@@ -512,7 +512,7 @@
             var spawnedObject = ServerTrySpawn(protoObjectToSpawn, spawnPosition);
             spawnedObjects.Add(spawnedObject);
             spawnedCount++;
-``            Logger.Important($"Spawned world object: {spawnedObject} for world event {worldEvent}");
+            Logger.Important($"Spawned world object: {spawnedObject} for world event {worldEvent}");
             break;
           }
           while (--attemptsRemains > 0);
