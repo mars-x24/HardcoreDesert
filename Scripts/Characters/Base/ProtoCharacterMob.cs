@@ -672,10 +672,19 @@
       if (!privateState.IsAutoDespawnWithParent)
         return;
 
-      if (privateState.ParentObject is not null)
+      if (privateState.ParentObject is not null && !privateState.ParentObject.IsDestroyed)
         return;
 
-      // should despawn
+      privateState.IsAutoDespawnWithParent = false;
+
+      //Despawn in 5 minutes
+      ServerTimersSystem.AddAction(
+        1 * 60,
+        () => this.MobDespawnWithParent(characterMob));
+    }
+
+    private void MobDespawnWithParent(ICharacter characterMob)
+    { 
       // check that nobody is observing the mob
       var playersInView = TempListPlayersInView;
       playersInView.Clear();
@@ -687,7 +696,10 @@
       {
         if (playerCharacter.ServerIsOnline)
         {
-          // cannot despawn - scoped by a player
+          // cannot despawn - scoped by a player - try again in 1 minute
+          ServerTimersSystem.AddAction(
+            1 * 60,
+            () => this.MobDespawnWithParent(characterMob));
           return;
         }
       }

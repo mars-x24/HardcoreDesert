@@ -10,9 +10,6 @@
             VehicleRemoteActionState,
             VehicleRemoteActionState.PublicState>
   {
-    public override bool IsBlocksMovement => true;
-
-
     public readonly IItem ItemVehicle;
     public VehicleRemoteActionState(
         ICharacter character,

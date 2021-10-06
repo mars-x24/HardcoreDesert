@@ -105,11 +105,31 @@
         return;
       }
 
+      bool eventAdded = false;
+
+      //MOD
+      if (worldEvent.ProtoGameObject is IProtoEventDelayed eventDelayed)
+      {
+        //var protoEvent = (ProtoEvent)worldEvent.ProtoGameObject;
+
+        var timeOn = eventDelayed.EventDurationSeconds - timeRemains;
+        var showAfter = eventDelayed.ShowEventAfter - timeOn;
+        if (showAfter > 0)
+        {
+          ClientTimersSystem.AddAction(showAfter, () => this.OnWorldEventAdded(worldEvent));
+          eventAdded = true;
+        }
+      }
+
+      if (!eventAdded)
+        this.OnWorldEventAddCricle(worldEvent, timeRemains);
+    }
+
+    private void OnWorldEventAddCricle(ILogicObject worldEvent, int timeRemains)
+    {
       if (worldEvent.ProtoGameObject is IProtoEventWithArea)
       {
         // add a circle for the search area
-
-
         if (IsClientAllowedToSeeCircle(worldEvent))
         {
           var publicState = worldEvent.GetPublicState<EventWithAreaPublicState>();

@@ -42,7 +42,7 @@
 
     public bool IsAutoDespawnWithParent { get; set; }
 
-    public IStaticWorldObject ParentObject { get; set; }
+    public IWorldObject ParentObject { get; set; }
 
     public void SetCurrentTargetWithPosition(ICharacter target)
     {

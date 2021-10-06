@@ -22,7 +22,7 @@
 
   public class ObjectMeteorExplosion : ProtoObjectExplosive
   {
-    public override bool AllowNpcToNpcDamage => true;
+    public override bool AllowNpcToNpcDamage => false;
 
     public override double DamageRadius => 2.333;
 
@@ -50,7 +50,7 @@
           physicsSpace: physicsSpace,
           damageDistanceMax: this.DamageRadius,
           weaponFinalCache: weaponFinalCache,
-          damageOnlyDynamicObjects: false,
+          damageOnlyDynamicObjects: true,
           isDamageThroughObstacles: this.IsDamageThroughObstacles,
           callbackCalculateDamageCoefByDistanceForStaticObjects:
           this.ServerCalculateDamageCoefByDistanceForStaticObjects,

@@ -9,7 +9,7 @@
   </author>
   <description>Pincess and King in the desert</description>
   <version>0.1.44</version>
-  <updated>xx.10.2021</updated>
+  <updated>0x.10.2021</updated>
   
 <!-- 
 Available settings
@@ -21,9 +21,9 @@ MigrationMutantMobCount, Number of mobs for each claims, default 1,4,8,13,20
 MigrationMutantMobMaxLevelPerWave, Max level of mobs for each wave, default 1,2,3,4,5
 ServerGlobalStorageItemsSlotsCapacity, How many global storage slots are allowed per base. The value should be within 0-128 range, default 64
 
-timer for dispawning parent mob
-
 0.1.44
+R31.4.1 support
+Spaceship crash event
 Random Meteors in meteorite drop event
 
 0.1.43

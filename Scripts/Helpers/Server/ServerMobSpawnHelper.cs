@@ -115,6 +115,9 @@ namespace AtomicTorch.CBND.CoreMod.Helpers.Server
     public static void ServerTrySpawnMobs(IStaticWorldObject worldObject, List<ICharacter> mobsList, int mobSpawnDistance,
       int mobDespawnDistance, int mobsCountLimit, int serverSpawnMobsMaxCountPerIteration, IProtoCharacter protoMobToSpawn)
     {
+      if (protoMobToSpawn is null)
+        return;
+
       if (LandClaimSystem.SharedIsLandClaimedByAnyone(worldObject.Bounds))
       {
         // don't spawn mobs as the land is claimed
@@ -170,6 +173,7 @@ namespace AtomicTorch.CBND.CoreMod.Helpers.Server
       foreach (ICharacter mob in mobsList)
       {
         var privateState = mob.GetPrivateState<CharacterMobPrivateState>();
+        privateState.IsAutoDespawnWithParent = true;
         privateState.ParentObject = worldObject;
       }
     }
