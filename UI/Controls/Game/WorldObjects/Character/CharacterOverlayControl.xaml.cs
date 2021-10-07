@@ -2,8 +2,9 @@
 {
   using System.Windows;
   using System.Windows.Controls;
+  using AtomicTorch.CBND.CoreMod.Characters.Player;
   using AtomicTorch.CBND.CoreMod.ClientOptions.General;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Bars;
+  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc;
   using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Character.Data;
   using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.GameEngine.Common.Client.MonoGame.UI;
@@ -81,6 +82,15 @@
       var currentVisibility = GeneralOptionDisplayHealthbarAboveCurrentCharacter.IsDisplay
                                   ? Visibility.Visible
                                   : Visibility.Collapsed;
+
+      if (this.character.ProtoGameObject.GetType() == typeof(PlayerCharacter))
+      {
+        currentVisibility = GeneralOptionDisplayHealthbarAboveCurrentCharacter.IsDisplay
+                                    && PlayerCharacter.GetPublicState(this.character).CurrentPublicActionState
+                                        is not CharacterLaunchpadEscapeAction.PublicState
+                                        ? Visibility.Visible
+                                        : Visibility.Collapsed;
+      }
 
       // we're using cached field here for optimization reasons
       if (this.visibilityOverCurrentCharacter == currentVisibility)

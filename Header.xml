@@ -22,7 +22,7 @@ MigrationMutantMobMaxLevelPerWave, Max level of mobs for each wave, default 1,2,
 ServerGlobalStorageItemsSlotsCapacity, How many global storage slots are allowed per base. The value should be within 0-128 range, default 64
 
 0.1.44
-R31.4.1 support
+R31.5.2 support
 Spaceship crash event
 Random Meteors in meteorite drop event
 
