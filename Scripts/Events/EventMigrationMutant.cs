@@ -407,7 +407,7 @@
     {
       if (tLevel >= 5)
         return Api.GetProtoEntity<MobEnragedLargePragmiumBear>();
-      else if (tLevel >= 4)
+      else if (tLevel >= 3)
         return Api.GetProtoEntity<MobEnragedPragmiumBear>();
       else
         return null;
@@ -415,7 +415,7 @@
 
     private IProtoWorldObject GetWaveBossMob(int tLevel)
     {
-      if (tLevel >= 3)
+      if (tLevel >= 5)
         return Api.GetProtoEntity<MobEnragedPragmiumBear>();
       else
         return null;
