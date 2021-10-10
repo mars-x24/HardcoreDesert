@@ -47,10 +47,10 @@
       // common loot
       droplist.Add(nestedList:
                    new DropItemsList(outputs: 2)
-                       .Add<ItemBallisticPlate>(count: 1, countRandom:2)
+                       .Add<ItemBallisticPlate>(count: 1, countRandom:1)
                        .Add<ItemStructuralPlating>(count: 1, countRandom: 2)
-                       .Add<ItemImpulseEngine>(count: 1, countRandom: 2)
-                       .Add<ItemUniversalActuator>(count: 1, countRandom: 2));
+                       .Add<ItemImpulseEngine>(count: 1)
+                       .Add<ItemUniversalActuator>(count: 1, countRandom: 1));
 
       // extra loot
       droplist.Add(condition: SkillSearching.ServerRollExtraLoot,

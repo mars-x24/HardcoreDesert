@@ -213,14 +213,13 @@
             if (mobPrivateState is not null)
               mobPrivateState.GoalTargetStructure = claimObject;
 
-            var mobPublicState = spawnedObject.GetPublicState<CharacterMobPublicState>();
-
-            ushort maxLevel = RateMigrationMutantMobMaxLevelPerWave.GetMaxLevelForWaveNumber((byte)(publicState.CurrentWave - 1));
-            int level = -1; //random
-            if ((boss is not null && spawnedObject.ProtoGameObject.GetType() == boss.GetType()) ||
-                (bigBoss is not null && spawnedObject.ProtoGameObject.GetType() == bigBoss.GetType()))
-              level = publicState.CurrentWave;
-            LevelHelper.RebuildLevel(level, maxLevel, (ICharacter)spawnedObject, mobPublicState, mobPrivateState);
+            //var mobPublicState = spawnedObject.GetPublicState<CharacterMobPublicState>();
+            //ushort maxLevel = RateMigrationMutantMobMaxLevelPerWave.GetMaxLevelForWaveNumber((byte)(publicState.CurrentWave - 1));
+            //int level = -1; //random
+            //if ((boss is not null && spawnedObject.ProtoGameObject.GetType() == boss.GetType()) ||
+            //    (bigBoss is not null && spawnedObject.ProtoGameObject.GetType() == bigBoss.GetType()))
+            //  level = publicState.CurrentWave;
+            //LevelHelper.RebuildLevel(level, maxLevel, (ICharacter)spawnedObject, mobPublicState, mobPrivateState);
 
             break;
           }
@@ -406,15 +405,17 @@
 
     private IProtoWorldObject GetLastWaveBossMob(int tLevel)
     {
-      if (tLevel > 3)
+      if (tLevel >= 5)
         return Api.GetProtoEntity<MobEnragedLargePragmiumBear>();
-      else
+      else if (tLevel >= 4)
         return Api.GetProtoEntity<MobEnragedPragmiumBear>();
+      else
+        return null;
     }
 
     private IProtoWorldObject GetWaveBossMob(int tLevel)
     {
-      if (tLevel > 3)
+      if (tLevel >= 3)
         return Api.GetProtoEntity<MobEnragedPragmiumBear>();
       else
         return null;

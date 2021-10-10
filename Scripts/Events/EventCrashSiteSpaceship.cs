@@ -174,7 +174,7 @@
                        .Configure((intervalHours.From,
                                    intervalHours.To)));
 
-      int countOfEachObject = 7;
+      int countOfEachObject = 5;
 
       for (int i = 0; i < countOfEachObject; i++)
       {

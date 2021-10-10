@@ -8,8 +8,8 @@
     Discord:Mars#8365, druffzilla#8949, Salvick#3333
   </author>
   <description>Pincess and King in the desert</description>
-  <version>0.1.45</version>
-  <updated>08.10.2021</updated>
+  <version>0.1.46</version>
+  <updated>10.10.2021</updated>
   
 <!-- 
 Available settings
@@ -20,6 +20,11 @@ MigrationMutantWaveCount, Number of waves for mutant migration event, default 5
 MigrationMutantMobCount, Number of mobs for each claims, default 1,4,8,13,20
 MigrationMutantMobMaxLevelPerWave, Max level of mobs for each wave, default 1,2,3,4,5
 ServerGlobalStorageItemsSlotsCapacity, How many global storage slots are allowed per base. The value should be within 0-128 range, default 64
+
+0.1.46
+A bit less loot in the crash event
+No boss in Mutant Migration event for T1-2 land claims
+Boss in Mutant Migration will have a random level, not always maxed
 
 0.1.45
 R31.6.1 support
