@@ -40,6 +40,8 @@
     <Content Include="Content\Animations\MutantCrawler\Front.json" />
     <Content Include="Content\Animations\NPC_BA_Specialist\MaleBack.json" />
     <Content Include="Content\Animations\NPC_BA_Specialist\MaleFront.json" />
+    <Content Include="Content\Animations\NPC_CE_SpecOps\MaleBack.json" />
+    <Content Include="Content\Animations\NPC_CE_SpecOps\MaleFront.json" />
     <Content Include="Content\Animations\PragmiumBear\Back.json" />
     <Content Include="Content\Animations\PragmiumBear\Front.json" />
     <Content Include="Content\Animations\PragmiumKing\Back.json" />

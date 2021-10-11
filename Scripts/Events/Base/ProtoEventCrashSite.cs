@@ -4,7 +4,6 @@
   using AtomicTorch.CBND.CoreMod.Characters.Player;
   using AtomicTorch.CBND.CoreMod.ClientComponents.FX;
   using AtomicTorch.CBND.CoreMod.Helpers;
-  using AtomicTorch.CBND.CoreMod.StaticObjects;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Minerals;
   using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
   using AtomicTorch.CBND.CoreMod.Systems.Resources;
@@ -438,15 +437,12 @@
         this.ClearCrashTiles(privateState.SpawnedCrashObjectPosition, worldEvent);
 
         var crashedObject1 = Server.World.CreateStaticWorldObject(this.SpawnCrashPreset, privateState.SpawnedCrashObjectPosition);
-        //if (crashedObject1 is not null)
-        //  spawnedObjects.Add(crashedObject1);
+        privateState.SpawnedCrashObject = crashedObject1;
 
         if (this.SpawnCrashPreset2 is not null)
         {
           var offset = privateState.SpawnedCrashObjectPosition; // + (this.SpawnCrashPreset.ViewBounds.MaxX, 0);
-          var crashedObject2 = Server.World.CreateStaticWorldObject(this.SpawnCrashPreset2, offset); //.ToVector2Ushort());
-          //if (crashedObject2 is not null)
-          //  spawnedObjects.Add(crashedObject2);
+          Server.World.CreateStaticWorldObject(this.SpawnCrashPreset2, offset); //.ToVector2Ushort());
         }
       }
 

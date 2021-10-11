@@ -5,7 +5,7 @@
   using AtomicTorch.CBND.GameApi.Resources;
   using AtomicTorch.CBND.GameApi.ServicesClient.Components;
 
-  public class SkeletonNPC_BA_Specialist : ProtoCharacterSkeletonNPC
+  public class SkeletonNPC_CE_SpecOps : ProtoCharacterSkeletonNPC
   {
     public override double DefaultMoveSpeed => 2.0;
 
@@ -28,10 +28,10 @@
     //End ProtoCharacterSkeletonHuman.
 
     public override SkeletonResource SkeletonResourceBack { get; }
-        = new SkeletonResource("NPC_BA_Specialist/MaleBack");
+        = new SkeletonResource("NPC_CE_SpecOps/MaleBack");
 
     public override SkeletonResource SkeletonResourceFront { get; }
-        = new SkeletonResource("NPC_BA_Specialist/MaleFront");
+        = new SkeletonResource("NPC_CE_SpecOps/MaleFront");
 
     public override string SlotNameItemInHand => "Weapon";
 

@@ -1,15 +1,21 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events
 {
+  using AtomicTorch.CBND.CoreMod.Characters.Mobs;
+  using AtomicTorch.CBND.CoreMod.Items.Generic;
+  using AtomicTorch.CBND.CoreMod.Rates;
+  using AtomicTorch.CBND.CoreMod.Skills;
   using AtomicTorch.CBND.CoreMod.SoundPresets;
+  using AtomicTorch.CBND.CoreMod.StaticObjects.Loot;
+  using AtomicTorch.CBND.CoreMod.Systems.Droplists;
   using AtomicTorch.CBND.CoreMod.Systems.Physics;
+  using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.Data.World;
   using AtomicTorch.CBND.GameApi.Resources;
   using AtomicTorch.CBND.GameApi.ServicesClient.Components;
   using AtomicTorch.GameEngine.Common.Primitives;
   using System;
-  using System.Linq;
 
-  public class ObjectCrashSiteSpaceship : ProtoStaticWorldObject
+  public class ObjectCrashSiteSpaceship : ProtoObjectLootContainer
   {
     public override string Name => "Crashed Spaceship";
 
@@ -19,7 +25,11 @@
 
     public override double ObstacleBlockDamageCoef => 1.0;
 
-    public override float StructurePointsMax => 10000;
+    public override float StructurePointsMax => 2000;
+
+    public override bool IsAutoDestroyWhenLooted => false;
+
+    public override IProtoCharacter ProtoMobToSpawn => GetProtoEntity<MobNPC_CE_SpecOps>();
 
     public override Vector2D SharedGetObjectCenterWorldOffset(IWorldObject worldObject)
     {
@@ -50,7 +60,27 @@
                                  isTransparent: true);
     }
 
+    protected override void PrepareLootDroplist(DropItemsList droplist)
+    {
+      // common loot
+      droplist.Add(nestedList:
+                   new DropItemsList(outputs: 2)
+                       .Add<ItemBallisticPlate>(count: 1, countRandom: 1)
+                       .Add<ItemStructuralPlating>(count: 1, countRandom: 2)
+                       .Add<ItemImpulseEngine>(count: 1)
+                       .Add<ItemUniversalActuator>(count: 1, countRandom: 1));
 
+      // extra loot
+      droplist.Add(condition: SkillSearching.ServerRollExtraLoot,
+                   nestedList:
+                   new DropItemsList()
+                       .Add<ItemComponentsHighTech>(count: 1, countRandom: 2));
+    }
+
+    protected override double ServerGetDropListRate()
+    {
+      return RateResourcesGatherCratesLoot.SharedValue;
+    }
 
     protected override void ServerInitialize(ServerInitializeData data)
     {

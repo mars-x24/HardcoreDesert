@@ -2,29 +2,26 @@
 {
   using AtomicTorch.CBND.CoreMod.Characters;
   using AtomicTorch.CBND.CoreMod.Characters.Mobs;
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
   using AtomicTorch.CBND.CoreMod.Helpers;
+  using AtomicTorch.CBND.CoreMod.Rates;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
   using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
   using AtomicTorch.CBND.CoreMod.Systems.Notifications;
   using AtomicTorch.CBND.CoreMod.Systems.Physics;
-  using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
   using AtomicTorch.CBND.CoreMod.Triggers;
   using AtomicTorch.CBND.CoreMod.Zones;
   using AtomicTorch.CBND.GameApi;
   using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.Data.Logic;
+  using AtomicTorch.CBND.GameApi.Data.State.NetSync;
   using AtomicTorch.CBND.GameApi.Data.World;
   using AtomicTorch.CBND.GameApi.Extensions;
   using AtomicTorch.CBND.GameApi.Scripting;
   using AtomicTorch.CBND.GameApi.ServicesServer;
   using AtomicTorch.GameEngine.Common.Helpers;
   using AtomicTorch.GameEngine.Common.Primitives;
-  using AtomicTorch.CBND.GameApi.Data.State.NetSync;
   using System;
   using System.Collections.Generic;
-  using AtomicTorch.CBND.CoreMod.Rates;
-  using System.Threading;
   using System.Threading.Tasks;
 
   public class EventMigrationMutant : ProtoEventWaveAttack
@@ -213,13 +210,13 @@
             if (mobPrivateState is not null)
               mobPrivateState.GoalTargetStructure = claimObject;
 
-            //var mobPublicState = spawnedObject.GetPublicState<CharacterMobPublicState>();
-            //ushort maxLevel = RateMigrationMutantMobMaxLevelPerWave.GetMaxLevelForWaveNumber((byte)(publicState.CurrentWave - 1));
-            //int level = -1; //random
+            var mobPublicState = spawnedObject.GetPublicState<CharacterMobPublicState>();
+            ushort maxLevel = RateMigrationMutantMobMaxLevelPerWave.GetMaxLevelForWaveNumber((byte)(publicState.CurrentWave - 1));
+            int level = -1; //random
             //if ((boss is not null && spawnedObject.ProtoGameObject.GetType() == boss.GetType()) ||
             //    (bigBoss is not null && spawnedObject.ProtoGameObject.GetType() == bigBoss.GetType()))
             //  level = publicState.CurrentWave;
-            //LevelHelper.RebuildLevel(level, maxLevel, (ICharacter)spawnedObject, mobPublicState, mobPrivateState);
+            LevelHelper.RebuildLevel(level, maxLevel, (ICharacter)spawnedObject, mobPublicState, mobPrivateState);
 
             break;
           }

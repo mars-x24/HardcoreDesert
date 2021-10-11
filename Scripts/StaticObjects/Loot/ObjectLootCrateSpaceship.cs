@@ -1,6 +1,5 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Loot
 {
-  using AtomicTorch.CBND.CoreMod.Characters.Mobs;
   using AtomicTorch.CBND.CoreMod.Items.Ammo;
   using AtomicTorch.CBND.CoreMod.Items.Equipment;
   using AtomicTorch.CBND.CoreMod.Items.Equipment.Assault;
@@ -16,7 +15,6 @@
   using AtomicTorch.CBND.CoreMod.Systems.Droplists;
   using AtomicTorch.CBND.CoreMod.Systems.Physics;
   using AtomicTorch.CBND.CoreMod.Technologies;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.ServicesClient.Components;
 
   public class ObjectLootCrateSpaceship : ProtoObjectLootContainer
@@ -28,8 +26,6 @@
     public override double ObstacleBlockDamageCoef => 0.5;
 
     public override float StructurePointsMax => 5000;
-
-    public override IProtoCharacter ProtoMobToSpawn => null; // GetProtoEntity<MobNPC_BA_Specialist>();
 
     protected override void ClientSetupRenderer(IComponentSpriteRenderer renderer)
     {
