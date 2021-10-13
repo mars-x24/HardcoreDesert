@@ -20,7 +20,7 @@ MigrationMutantWaveCount: Number of waves for mutant migration event, default 5
 MigrationMutantMobCount: Number of mobs for each claims, default 1,4,8,13,20
 MigrationMutantMobMaxLevelPerWave: Max level of mobs for each wave, default 1,2,3,4,5
 ServerGlobalStorageItemsSlotsCapacity: How many global storage slots are allowed per base. The value should be within 0-128 range, default 64
-WreckedHoverboardChance: A chance to get wrecked hoverboard in garbage pile (1 / RateValue ;  Set 0 for none)
+WreckedHoverboardChance: A chance to get wrecked hoverboard in garbage pile (1 / RateValue ;  Default 30 ; Set 0 for none)
 
 0.1.48
 Added a chance for wreckage hoverboard in garbage pile (Rate WreckedHoverboardChance)
