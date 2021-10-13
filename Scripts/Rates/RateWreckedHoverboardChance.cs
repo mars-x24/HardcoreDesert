@@ -7,7 +7,7 @@
   {
     [NotLocalizable]
     public override string Description =>
-     @"A chance to get wrecked hoverboard in garbage pile (1 / RateWreckedHoverboardChance ;  Set 0 for none)";
+     @"A chance to get wrecked hoverboard in garbage pile (1 / RateValue ;  Set 0 for none)";
 
     public override string Id => "WreckedHoverboardChance";
 
