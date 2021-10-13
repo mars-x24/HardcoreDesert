@@ -23,7 +23,7 @@ ServerGlobalStorageItemsSlotsCapacity: How many global storage slots are allowed
 WreckedHoverboardChance: A chance to get wrecked hoverboard in garbage pile (1 / RateValue ;  Default 30 ; Set 0 for none)
 
 0.1.48
-Added a chance for wreckage hoverboard in garbage pile (Rate WreckedHoverboardChance)
+Added a chance for wrecked hoverboard in garbage pile (Rate WreckedHoverboardChance)
 
 0.1.47
 Added Crimson Elite NPC to spaceship crash site
