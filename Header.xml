@@ -8,11 +8,12 @@
     Discord:Mars#8365, druffzilla#8949, Salvick#3333
   </author>
   <description>Pincess and King in the desert</description>
-  <version>0.1.50</version>
-  <updated>15.10.2021</updated>
+  <version>0.1.51</version>
+  <updated>17.10.2021</updated>
   
 <!-- 
 Available settings
+AchievementsModdedServerEnabled : Achievement enabled in a modded server. Default to disabled like vanilla game.
 ConstructionOverlayAlwaysVisible : Determines if you see the construction overlay when building or relocating structures, default to true like vanilla game
 MigrationMutantAttackNumber: Number of base under attack for mutant migration event, default 3
 MigrationMutantAttackNumberLocalServer: Number of base under attack for mutant migration event, default 1
@@ -22,6 +23,9 @@ MigrationMutantMobCount: Number of mobs for each claims, default 1,4,8,13,20
 MigrationMutantMobMaxLevelPerWave: Max level of mobs for each wave, default 1,2,3,4,5
 ServerGlobalStorageItemsSlotsCapacity: How many global storage slots are allowed per base. The value should be within 0-128 range, default 64
 WreckedHoverboardChance: A chance to get wrecked hoverboard in garbage pile (1 / RateValue ;  Default 30 ; Set 0 for none)
+
+0.1.51
+New setting AchievementsModdedServerEnabled
 
 0.1.50
 Added a way to disable the construction overlay with ConstructionOverlayAlwaysVisible set to 0. You can still see it when holding ALT
