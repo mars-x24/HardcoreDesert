@@ -357,7 +357,7 @@
         if (!canFinish)
           break;
 
-        if (spawnedObject.IsDestroyed)
+        if (spawnedObject is null || spawnedObject.IsDestroyed)
           continue;
 
         if (spawnedObject is not ICharacter)
@@ -404,6 +404,7 @@
           {
             publicState.CurrentWave = publicState.NextWave;
 
+            
             ServerTimersSystem.AddAction(
               delaySeconds: 10 + RandomHelper.Next(0, 5),
               () => this.ServerSpawnObjectsAsync(activeEvent, publicState.AreaCirclePosition, publicState.AreaCircleRadius));

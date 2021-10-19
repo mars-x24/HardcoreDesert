@@ -31,10 +31,10 @@
         }
 
         if (!game.ServerInfo.IsModded
-            || (game.ServerInfo.IsModded && Rates.RateAchievementsModdedServerEnabled.SharedValue) //MOD
+            || (game.ServerInfo.IsModded && Rates.RateAchievementsModdedServerEnabled.GetSharedValue(false) && !Api.IsEditor) //MOD
             || game.IsConnectedToOfficialServer
             || game.IsConnectedToFeaturedServer
-            || game.ServerInfo.ServerAddress.IsLocalServer
+            || (game.ServerInfo.ServerAddress.IsLocalServer && !Api.IsEditor)
             || (SharedLocalServerHelper.ClientTaskIsLocalServerPropertyReceived.IsCompleted
                 && SharedLocalServerHelper.IsLocalServer))
         {

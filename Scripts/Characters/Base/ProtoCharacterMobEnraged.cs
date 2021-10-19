@@ -19,6 +19,8 @@ namespace AtomicTorch.CBND.CoreMod.Characters
       where TPublicState : CharacterMobPublicState, new()
       where TClientState : BaseCharacterClientState, new()
   {
+    protected override bool IsAutoDespawn => false;
+
     public virtual float CharacterWorldWeaponOffsetMeleeX => 0.0f;//0.5f;
 
     public override bool AiIsRunAwayFromHeavyVehicles => false;

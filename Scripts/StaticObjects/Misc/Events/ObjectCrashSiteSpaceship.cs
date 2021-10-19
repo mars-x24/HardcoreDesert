@@ -8,6 +8,7 @@
   using AtomicTorch.CBND.CoreMod.StaticObjects.Loot;
   using AtomicTorch.CBND.CoreMod.Systems.Droplists;
   using AtomicTorch.CBND.CoreMod.Systems.Physics;
+  using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
   using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.Data.World;
   using AtomicTorch.CBND.GameApi.Resources;
@@ -92,6 +93,12 @@
       //{
       //  Server.World.CreateStaticWorldObject<ObjectCrashSiteSpaceshipGround>(data.GameObject.TilePosition);
       //}
+
+      // schedule destruction by timer (in case it didn't despawn)
+      var worldObject = data.GameObject;
+      ServerTimersSystem.AddAction(
+          delaySeconds: 60 * 60, // 60 minutes
+          () => ServerDespawnTimerCallback(worldObject));
     }
 
     protected override void SharedCreatePhysics(CreatePhysicsData data)
@@ -123,6 +130,21 @@
           .AddShapeRectangle(size: (1.0, 2.0), offset: (5.0, 3.0), group: CollisionGroups.HitboxMelee)
           .AddShapeRectangle(size: (1.4, 1.3), offset: (6.0, 3.2), group: CollisionGroups.HitboxMelee)
           .AddShapeRectangle(size: (0.8, 1.0), offset: (6.0, 4.5), group: CollisionGroups.HitboxMelee);
+    }
+
+    private static void ServerDespawnTimerCallback(IStaticWorldObject worldObject)
+    {
+      if (!Server.World.IsObservedByAnyPlayer(worldObject))
+      {
+        // can destroy now
+        Server.World.DestroyObject(worldObject);
+        return;
+      }
+
+      // postpone destruction
+      ServerTimersSystem.AddAction(
+          delaySeconds: 60,
+          () => ServerDespawnTimerCallback(worldObject));
     }
   }
 }

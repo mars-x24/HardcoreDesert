@@ -96,7 +96,7 @@
                   .Add<ItemStrengthBoostBig>(count: 3, countRandom: 2, weight: 1 / 5.0)
                   .Add<ItemMRE>(count: 1, countRandom: 2, weight: 1 / 5.0)
                   // misc
-                  .Add<ItemTeleportLocationData>(count: 1, weight: 1 / 4.0)
+                  .Add<ItemTeleportLocationData>(count: 1, weight: 1 / 5.0) //MOD
           );
 
       // extra loot from skill

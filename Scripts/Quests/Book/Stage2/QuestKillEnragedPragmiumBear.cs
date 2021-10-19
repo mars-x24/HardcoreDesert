@@ -2,6 +2,7 @@
 {
   using AtomicTorch.CBND.CoreMod.Characters.Mobs;
   using AtomicTorch.CBND.CoreMod.PlayerTasks;
+  using AtomicTorch.CBND.CoreMod.Quests.Tutorial;
   using HardcoreDesert.Scripts.Quests.Base;
 
   public class QuestKillEnragedPragmiumBear : ProtoQuest
@@ -20,7 +21,8 @@
            .Add(TaskKill.Require<MobEnragedPragmiumBear>(count: 1));
 
       prerequisites
-           .Add<QuestKillEnragedMobs>();
+           .Add<QuestKillEnragedMobs>()
+           .Add<QuestCompleteTier2Technologies>();
     }
   }
 }

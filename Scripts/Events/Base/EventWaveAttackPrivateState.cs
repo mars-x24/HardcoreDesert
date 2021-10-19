@@ -1,24 +1,24 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Events
 {
-    using System.Collections.Generic;
-    using AtomicTorch.CBND.GameApi.Data.State;
-    using AtomicTorch.CBND.GameApi.Data.World;
+  using AtomicTorch.CBND.GameApi.Data.State;
+  using AtomicTorch.CBND.GameApi.Data.World;
+  using System.Collections.Generic;
 
-    public class EventWaveAttackPrivateState : BasePrivateState
+  public class EventWaveAttackPrivateState : BasePrivateState
+  {
+    public List<IWorldObject> SpawnedWorldObjects { get; }
+        = new();
+
+    public void Init()
     {
-        public List<IWorldObject> SpawnedWorldObjects { get; }
-            = new();
-
-        public void Init()
+      for (var index = 0; index < this.SpawnedWorldObjects.Count; index++)
+      {
+        var worldObject = this.SpawnedWorldObjects[index];
+        if (worldObject is null)
         {
-            for (var index = 0; index < this.SpawnedWorldObjects.Count; index++)
-            {
-                var worldObject = this.SpawnedWorldObjects[index];
-                if (worldObject is null)
-                {
-                    this.SpawnedWorldObjects.RemoveAt(index--);
-                }
-            }
+          this.SpawnedWorldObjects.RemoveAt(index--);
         }
+      }
     }
+  }
 }
