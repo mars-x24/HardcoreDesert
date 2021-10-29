@@ -174,6 +174,12 @@
           }
 
           var damagedObject = testResultPhysicsBody.AssociatedWorldObject;
+          if (damagedObject is null)
+          {
+            // ignore collision with any barrier
+            continue;
+          }
+
           if (ReferenceEquals(damagedObject, characterNpc))
           {
             // ignore collision with self

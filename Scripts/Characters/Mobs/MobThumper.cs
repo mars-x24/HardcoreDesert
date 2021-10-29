@@ -433,6 +433,12 @@
             }
 
             var damagedObject = testResultPhysicsBody.AssociatedWorldObject;
+            if (damagedObject is null)
+            {
+              // obstacle (barrier?)
+              return false;
+            }
+
             if (ReferenceEquals(damagedObject, character))
             {
               // ignore collision with self

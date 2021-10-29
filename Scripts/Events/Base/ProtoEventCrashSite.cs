@@ -17,6 +17,7 @@
   using AtomicTorch.CBND.GameApi.Resources;
   using AtomicTorch.CBND.GameApi.Scripting;
   using AtomicTorch.CBND.GameApi.Scripting.Network;
+  using AtomicTorch.GameEngine.Common.Helpers;
   using AtomicTorch.GameEngine.Common.Primitives;
   using System;
   using System.Collections.Generic;
@@ -46,7 +47,7 @@
 
     public abstract double MinDistanceBetweenSpawnedObjects { get; }
 
-    public IProtoStaticWorldObject SpawnCrashPreset { get; private set; }
+    public List<IProtoStaticWorldObject> SpawnCrashPresets { get; private set; }
 
     public IProtoStaticWorldObject SpawnCrashPreset2 { get; private set; }
 
@@ -67,6 +68,8 @@
 
     protected override void ServerInitializeEvent(ServerInitializeData data)
     {
+      data.PublicState.SpawnCrashProto = (IProtoStaticWorldObject)this.SpawnCrashPresets[RandomHelper.Next(SpawnCrashPresets.Count)];
+
       var privateState = data.PrivateState;
       var publicState = data.PublicState;
 
@@ -98,7 +101,8 @@
         return false;
       }
 
-      if (!ServerCheckCanSpawn(this.SpawnCrashPreset, tilePosition))
+      
+      if (!ServerCheckCanSpawn(this.SpawnCrashPresets[0], tilePosition))
         return false;
 
       if (this.SpawnCrashPreset2 is not null && !ServerCheckCanSpawn(this.SpawnCrashPreset2, tilePosition))
@@ -117,16 +121,18 @@
 
     protected bool CanCrashInCircle(Vector2Ushort tilePosition, ILogicObject activeEvent)
     {
+      var publicState = GetPublicState(activeEvent);
+
       //Find a valid spot for main object
-      int sizeX = Math.Max(this.SpawnCrashPreset.ViewBounds.MaxX, (this.SpawnCrashPreset2 is null ? 0 : this.SpawnCrashPreset2.ViewBounds.MaxX));
-      int sizeY = Math.Max(this.SpawnCrashPreset.ViewBounds.MaxY, (this.SpawnCrashPreset2 is null ? 0 : this.SpawnCrashPreset2.ViewBounds.MaxY));
+      int sizeX = Math.Max(publicState.SpawnCrashProto.ViewBounds.MaxX, (this.SpawnCrashPreset2 is null ? 0 : this.SpawnCrashPreset2.ViewBounds.MaxX));
+      int sizeY = Math.Max(publicState.SpawnCrashProto.ViewBounds.MaxY, (this.SpawnCrashPreset2 is null ? 0 : this.SpawnCrashPreset2.ViewBounds.MaxY));
       int reduceRadius = Math.Max(sizeX, sizeY);
       int radius = this.AreaRadius - reduceRadius;
 
       bool isValidSpot;
       Vector2Ushort spawnPosition;
 
-      var attemps = 200;
+      var attemps = 300;
       do
       {
         isValidSpot = true;
@@ -157,10 +163,12 @@
 
     protected bool CanCrashOnTile(Vector2Ushort spawnPosition, ILogicObject activeEvent)
     {
+      var publicState = GetPublicState(activeEvent);
+
       //int sizeX = this.SpawnCrashPreset.ViewBounds.MaxX + (this.SpawnCrashPreset2 is null ? 0 : this.SpawnCrashPreset2.ViewBounds.MaxX);
       //int sizeY = this.SpawnCrashPreset.ViewBounds.MaxY + (this.SpawnCrashPreset2 is null ? 0 : this.SpawnCrashPreset2.ViewBounds.MaxY);
-      int sizeX = Math.Max(this.SpawnCrashPreset.ViewBounds.MaxX, (this.SpawnCrashPreset2 is null ? 0 : this.SpawnCrashPreset2.ViewBounds.MaxX));
-      int sizeY = Math.Max(this.SpawnCrashPreset.ViewBounds.MaxY, (this.SpawnCrashPreset2 is null ? 0 : this.SpawnCrashPreset2.ViewBounds.MaxY));
+      int sizeX = Math.Max(publicState.SpawnCrashProto.ViewBounds.MaxX, (this.SpawnCrashPreset2 is null ? 0 : this.SpawnCrashPreset2.ViewBounds.MaxX));
+      int sizeY = Math.Max(publicState.SpawnCrashProto.ViewBounds.MaxY, (this.SpawnCrashPreset2 is null ? 0 : this.SpawnCrashPreset2.ViewBounds.MaxY));
 
       int height = -1;
 
@@ -202,11 +210,13 @@
 
     protected void ClearCrashTiles(Vector2Ushort spawnPosition, ILogicObject activeEvent)
     {
+      var publicState = GetPublicState(activeEvent);
+
       //int sizeX = this.SpawnCrashPreset.ViewBounds.MaxX + (this.SpawnCrashPreset2 is null ? 0 : this.SpawnCrashPreset2.ViewBounds.MaxX);
       //int sizeY = this.SpawnCrashPreset.ViewBounds.MaxY + (this.SpawnCrashPreset2 is null ? 0 : this.SpawnCrashPreset2.ViewBounds.MaxY);
 
-      int sizeX = Math.Max(this.SpawnCrashPreset.ViewBounds.MaxX, (this.SpawnCrashPreset2 is null ? 0 : this.SpawnCrashPreset2.ViewBounds.MaxX));
-      int sizeY = Math.Max(this.SpawnCrashPreset.ViewBounds.MaxY, (this.SpawnCrashPreset2 is null ? 0 : this.SpawnCrashPreset2.ViewBounds.MaxY));
+      int sizeX = Math.Max(publicState.SpawnCrashProto.ViewBounds.MaxX, (this.SpawnCrashPreset2 is null ? 0 : this.SpawnCrashPreset2.ViewBounds.MaxX));
+      int sizeY = Math.Max(publicState.SpawnCrashProto.ViewBounds.MaxY, (this.SpawnCrashPreset2 is null ? 0 : this.SpawnCrashPreset2.ViewBounds.MaxY));
 
       for (int i = 0; i < sizeX; i++)
       {
@@ -269,23 +279,34 @@
     }
 
 
-    protected abstract void ServerPrepareCrashSiteEvent(Triggers triggers, List<IProtoWorldObject> listSpawnPreset, out IProtoWorldObject spawnCrashPreset, out IProtoWorldObject spawnCrashPreset2);
+    protected abstract void ServerPrepareCrashSiteEvent(Triggers triggers, List<IProtoWorldObject> listSpawnPreset, List<IProtoWorldObject> spawnCrashPreset, out IProtoWorldObject spawnCrashPreset2);
 
     protected sealed override void ServerPrepareEvent(Triggers triggers)
     {
       var listSpawnPreset = new List<IProtoWorldObject>();
+      var listSpawnCrashPreset = new List<IProtoWorldObject>();
 
-      this.ServerPrepareCrashSiteEvent(triggers, listSpawnPreset, out IProtoWorldObject spawnCrashPreset, out IProtoWorldObject spawnCrashPreset2);
+      this.ServerPrepareCrashSiteEvent(triggers, listSpawnPreset, listSpawnCrashPreset, out IProtoWorldObject spawnCrashPreset2);
 
-      Api.Assert(spawnCrashPreset is not null, "Spawn crash preset cannot be null");
+      Api.Assert(listSpawnCrashPreset.Count > 0, "Spawn crash preset cannot be empty");
 
       Api.Assert(listSpawnPreset.Count > 0, "Spawn preset cannot be empty");
 
-      if (spawnCrashPreset is not IProtoStaticWorldObject)
-        throw new Exception("Unknown object type for spawn crash object: " + spawnCrashPreset);
+      foreach (var protoWorldObject in listSpawnCrashPreset)
+      {
+        switch (protoWorldObject)
+        {
+          case IProtoStaticWorldObject:
+            // supported types
+            continue;
+
+          default:
+            throw new Exception("Unknown object type in the spawn crash list: " + protoWorldObject);
+        }
+      }
 
       if (spawnCrashPreset2 is not null && spawnCrashPreset2 is not IProtoStaticWorldObject)
-        throw new Exception("Unknown object type for spawn crash object2: " + spawnCrashPreset);
+        throw new Exception("Unknown object type for spawn crash object2: " + spawnCrashPreset2);
 
       foreach (var protoWorldObject in listSpawnPreset)
       {
@@ -301,7 +322,10 @@
         }
       }
 
-      this.SpawnCrashPreset = (IProtoStaticWorldObject)spawnCrashPreset;
+      this.SpawnCrashPresets = new List<IProtoStaticWorldObject>();
+      foreach (IProtoStaticWorldObject o in listSpawnCrashPreset)
+        this.SpawnCrashPresets.Add(o);
+
       this.SpawnCrashPreset2 = (IProtoStaticWorldObject)spawnCrashPreset2;
 
       this.SpawnPreset = listSpawnPreset;
@@ -424,6 +448,7 @@
           ushort circleRadius)
     {
       var publicState = GetPublicState(worldEvent);
+
       Api.Assert(!publicState.IsSpawnCompleted, "Spawn already completed");
 
       var privateState = GetPrivateState(worldEvent);
@@ -436,7 +461,7 @@
       {
         this.ClearCrashTiles(privateState.SpawnedCrashObjectPosition, worldEvent);
 
-        var crashedObject1 = Server.World.CreateStaticWorldObject(this.SpawnCrashPreset, privateState.SpawnedCrashObjectPosition);
+        var crashedObject1 = Server.World.CreateStaticWorldObject(publicState.SpawnCrashProto, privateState.SpawnedCrashObjectPosition);
         privateState.SpawnedCrashObject = crashedObject1;
 
         if (this.SpawnCrashPreset2 is not null)
@@ -546,10 +571,10 @@
 
     private void ClientRemote_CrashShake()
     {
-      this.ClientRemote_CrashShakeÌnterval(0.5, 5);
+      this.ClientRemote_CrashShakeInterval(0.5, 5);
     }
 
-    private void ClientRemote_CrashShakeÌnterval(double interval, int count)
+    private void ClientRemote_CrashShakeInterval(double interval, int count)
     {
       if (count <= 0)
         return;
@@ -560,7 +585,7 @@
           worldDistanceMin: 0.1f,
           worldDistanceMax: 0.5f);
 
-      ClientTimersSystem.AddAction(interval, () => this.ClientRemote_CrashShakeÌnterval(interval, --count));
+      ClientTimersSystem.AddAction(interval, () => this.ClientRemote_CrashShakeInterval(interval, --count));
     }
 
 

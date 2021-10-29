@@ -4,10 +4,10 @@
   using AtomicTorch.CBND.CoreMod.Characters.Player;
   using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
   using AtomicTorch.CBND.CoreMod.Helpers.Client;
+  using AtomicTorch.CBND.CoreMod.Rates;
   using AtomicTorch.CBND.CoreMod.Skills;
   using AtomicTorch.CBND.CoreMod.SoundPresets;
   using AtomicTorch.CBND.CoreMod.Stats;
-  using AtomicTorch.CBND.CoreMod.Rates;
   using AtomicTorch.CBND.CoreMod.Systems.Droplists;
   using AtomicTorch.CBND.CoreMod.Systems.Notifications;
   using AtomicTorch.CBND.CoreMod.Systems.Physics;
@@ -20,6 +20,7 @@
   using AtomicTorch.CBND.GameApi.ServicesClient.Components;
   using AtomicTorch.CBND.GameApi.ServicesServer;
   using AtomicTorch.GameEngine.Common.Primitives;
+  using System;
 
   public class ObjectCorpse
       : ProtoStaticWorldObject
@@ -201,10 +202,11 @@
       // play death animation
       skeletonRenderer.SetAnimation(AnimationTrackIndexes.Primary, "Death", isLooped: false);
 
-      if (Client.CurrentGame.ServerFrameTimeRounded - publicState.DeathTime > 5)
+      var timeSinceDeath = Math.Max(0, Client.CurrentGame.ServerFrameTimeRounded - publicState.DeathTime);
+      if (timeSinceDeath > 0.333 + Client.CurrentGame.PingGameSeconds / 2.0)
       {
-        // the corpse was spawned more than 5 seconds ago so let's skip the animation
-        skeletonRenderer.SetAnimationTime(AnimationTrackIndexes.Primary, 10000);
+        // seek the animation to match the actual timing
+        skeletonRenderer.SetAnimationTime(AnimationTrackIndexes.Primary, (float)timeSinceDeath);
       }
 
       skeletonRenderer.DrawMode = publicState.IsFlippedHorizontally

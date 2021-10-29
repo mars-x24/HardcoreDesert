@@ -6,12 +6,12 @@ namespace AtomicTorch.CBND.CoreMod.Items.Medical
   {
     public const double None = 0;
 
-    public static double Short => PveSystem.SharedIsPve(false) ? 2 : 3;
+    public static double Short => PveSystem.SharedIsPve(false) ? 2 : 4;
 
-    public static double Medium => PveSystem.SharedIsPve(false) ? 2 : 5;
-    public static double Long => PveSystem.SharedIsPve(false) ? 2 : 7;
+    public static double Medium => PveSystem.SharedIsPve(false) ? 2 : 6;
+    public static double Long => PveSystem.SharedIsPve(false) ? 2 : 8;
 
-    public static double VeryLong => PveSystem.SharedIsPve(false) ? 2 : 10;
+    public static double VeryLong => PveSystem.SharedIsPve(false) ? 2 : 11;
 
     /// <summary>
     /// This is just a synonym for the most long value.

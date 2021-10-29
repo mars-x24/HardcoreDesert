@@ -167,7 +167,7 @@
 
     protected override void ServerPrepareCrashSiteEvent(
         Triggers triggers,
-        List<IProtoWorldObject> spawnPreset, out IProtoWorldObject spawnPresetCrash, out IProtoWorldObject spawnPresetCrash2)
+        List<IProtoWorldObject> spawnPreset, List<IProtoWorldObject> spawnPresetCrash, out IProtoWorldObject spawnPresetCrash2)
     {
       var intervalHours = RateWorldEventIntervalCrashSite.SharedValueIntervalHours;
       triggers.Add(GetTrigger<TriggerTimeInterval>()
@@ -182,7 +182,11 @@
         spawnPreset.Add(Api.GetProtoEntity<ObjectLootCrateSpaceship>());
       }
 
-      spawnPresetCrash = Api.GetProtoEntity<ObjectCrashSiteSpaceship>();
+      spawnPresetCrash.Add(Api.GetProtoEntity<ObjectCrashSiteSpaceship4>());
+      spawnPresetCrash.Add(Api.GetProtoEntity<ObjectCrashSiteSpaceship3>());
+      spawnPresetCrash.Add(Api.GetProtoEntity<ObjectCrashSiteSpaceship2>());
+      spawnPresetCrash.Add(Api.GetProtoEntity<ObjectCrashSiteSpaceship>());
+
       spawnPresetCrash2 = Api.GetProtoEntity<ObjectCrashSiteSpaceshipGround>();
     }
 
