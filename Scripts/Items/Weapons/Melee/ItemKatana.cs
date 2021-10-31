@@ -7,19 +7,19 @@
   using AtomicTorch.CBND.GameApi.Data.Weapons;
   using System.Collections.Generic;
 
-  public class ItemSwordSteel : ProtoItemWeaponMelee, IProtoPiercingWeapon
+  public class ItemKatana : ProtoItemWeaponMelee, IProtoPiercingWeapon
   {
     public override double DamageApplyDelay => 0.075;
 
-    public override string Description => "Steel longsword, your choice in any confusing situation!";
+    public override string Description => "Single-edged sword that can slice through tough materials.";
 
-    public override uint DurabilityMax => 200;
+    public override uint DurabilityMax => 230;
 
-    public override double FireAnimationDuration => 0.8;
+    public override double FireAnimationDuration => 0.6;
 
-    public override string Name => "Steel sword";
+    public override string Name => "Katana";
 
-    public override double SpecialEffectProbability => 0.35; // 35%
+    public override double SpecialEffectProbability => 0.3; // 30%
 
     protected override ProtoSkillWeapons WeaponSkill => GetSkill<SkillWeaponsMelee>();
 
@@ -30,8 +30,8 @@
       compatibleAmmoProtos = null;
 
       overrideDamageDescription = new DamageDescription(
-          damageValue: 50,
-          armorPiercingCoef: 0.3,
+          damageValue: 40,
+          armorPiercingCoef: 0.5,
           finalDamageMultiplier: 1.2,
           rangeMax: 1.2,
           damageDistribution: new DamageDistribution(DamageType.Impact, 1));

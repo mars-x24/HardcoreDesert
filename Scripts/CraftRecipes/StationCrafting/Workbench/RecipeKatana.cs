@@ -7,7 +7,7 @@
   using AtomicTorch.CBND.CoreMod.Systems.Crafting;
   using System;
 
-  public class RecipeSwordSteel : Recipe.RecipeForStationCrafting
+  public class RecipeKatana : Recipe.RecipeForStationCrafting
   {
     protected override void SetupRecipe(
         StationsList stations,
@@ -17,13 +17,14 @@
     {
       stations.Add<ObjectWorkbench>();
 
-      duration = CraftingDuration.Medium;
+      duration = CraftingDuration.Long;
 
       inputItems.Add<ItemLeather>(count: 1);
       inputItems.Add<ItemThread>(count: 5);
-      inputItems.Add<ItemIngotSteel>(count: 20);
+      inputItems.Add<ItemIngotSteel>(count: 15);
+      inputItems.Add<ItemBallisticPlate>(count: 1);
 
-      outputItems.Add<ItemSwordSteel>();
+      outputItems.Add<ItemKatana>();
     }
   }
 }
