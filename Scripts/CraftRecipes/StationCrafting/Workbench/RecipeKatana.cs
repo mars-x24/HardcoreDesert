@@ -22,7 +22,7 @@
       inputItems.Add<ItemLeather>(count: 1);
       inputItems.Add<ItemThread>(count: 5);
       inputItems.Add<ItemIngotSteel>(count: 15);
-      inputItems.Add<ItemBallisticPlate>(count: 1);
+      inputItems.Add<ItemGoldNugget>(count: 8);
 
       outputItems.Add<ItemKatana>();
     }
