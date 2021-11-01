@@ -15,6 +15,8 @@
     [NotLocalizable]
     public override string Name => "Ground trail";
 
+    public override bool HasIncreasedScopeSize => true;
+
     public override ObjectMaterial ObjectMaterial => ObjectMaterial.Glass;
 
     public override double ObstacleBlockDamageCoef => 0;
@@ -36,12 +38,13 @@
 
     protected override void CreateLayout(StaticObjectLayout layout)
     {
-      layout.Setup("       ######",
-                   "       ######",
-                   "     ###########",
-                   "     ###########",
-                   "    #########",
-                   "    #########");
+      layout.Setup("########",
+                   "########",
+                   "############",
+                   "################",
+                   "################",
+                   "###########",
+                   "#######");
     }
 
     protected override ITextureResource PrepareDefaultTexture(Type thisType)

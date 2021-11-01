@@ -20,6 +20,8 @@
   {
     public override string Name => "Crashed Spaceship";
 
+    public override bool HasIncreasedScopeSize => true;
+
     public override StaticObjectKind Kind => StaticObjectKind.Structure;
 
     public override ObjectMaterial ObjectMaterial => ObjectMaterial.Metal;
@@ -51,8 +53,8 @@
                    "########",
                    "########",
                    "########",
-                   "   ###",
-                   "   ###");
+                   "    ###",
+                   "    ###");
     }
 
     protected override ITextureResource PrepareDefaultTexture(Type thisType)

@@ -169,13 +169,19 @@
         if (character is null)
           continue;
 
+        //character has at least one claim
+        if (PlayerCharacter.GetPrivateState(character).OwnedLandClaimAreas.Count == 0)
+          continue;
+
         var technologies = character.SharedGetTechnologies();
         if (!technologies.SharedIsNodeUnlocked<TechNodeVehicleAssemblyBay>())
         {
           //character can't have a garage
           VehicleDespawnSystem.ServerIsVehicleInsideOwnerBase(vehicle, out bool isInsideNotOwnedBase);
-          if(!isInsideNotOwnedBase)
+          if (!isInsideNotOwnedBase)
+          {
             return; //if not inside another base, don't despawn
+          }
         }
       }
 
