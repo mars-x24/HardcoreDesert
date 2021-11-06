@@ -46,7 +46,7 @@
                         .HandleAll(
                             () =>
                             {
-                              bool overlayAlwaysVisible = Rates.RateConstructionOverlayAlwaysVisible.SharedValue;
+                              bool overlayAlwaysVisible = Rates.RateConstructionOverlayAlwaysVisible.GetSharedValue(false);
 
                               var isDisplayed =
                                   ClientInputManager.IsButtonHeld(GameButton.DisplayLandClaim)
