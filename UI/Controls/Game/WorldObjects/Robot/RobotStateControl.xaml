@@ -1,0 +1,55 @@
+﻿<base:BaseUserControl
+    x:Class="HardcoreDesert.UI.Controls.Game.WorldObjects.Robot.RobotStateControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:base="clr-namespace:AtomicTorch.GameEngine.Common.Client.MonoGame.UI;assembly=AtomicTorch.CBND.GameApi.WPF.Stubs"
+    xmlns:data="clr-namespace:HardcoreDesert.UI.Controls.Game.WorldObjects.Robot.Data"
+    xmlns:core="clr-namespace:AtomicTorch.CBND.CoreMod.UI.Controls.Core;assembly=Core"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    d:DataContext="{d:DesignInstance data:ViewModelRobotState, IsDesignTimeCreatable=True}"
+    FontSize="12"
+    FontWeight="Bold"
+    Foreground="{StaticResource BrushColor7}"
+    FontFamily="{StaticResource CondensedFontFamily}"
+    HorizontalAlignment="Center"
+    VerticalAlignment="Center">
+
+    <Grid>
+
+        <Grid
+            Visibility="{Binding IsRobotsAvailableForCurrentTier, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Reverse}">
+           
+            <core:FormattedTextBlock Content="Robots are available for higher tiers of the land claim building. Upgrade this claim as soon as possible to unlock this feature."
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"
+                                         MaxWidth="300" />
+        </Grid>
+
+        <Grid
+            Visibility="{Binding IsRobotsAvailableForCurrentTier, Converter={StaticResource BoolToVisibilityConverter}}">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+
+            <CheckBox Grid.Row="0" 
+                         Content="Allow robots to fill input slots. (coming soon)"
+                         IsChecked="{Binding ManufacturerInputSlots, Mode=TwoWay}"
+                         Focusable="False"
+                         Foreground="{StaticResource BrushColor6}"
+                         Margin="0,0,5,0" />
+
+            <CheckBox Grid.Row="1"
+                         Content="Allow robots to take output slots."
+                         IsChecked="{Binding ManufacturerOutputSlots, Mode=TwoWay}"
+                         Focusable="False"
+                         Foreground="{StaticResource BrushColor6}"
+                         Margin="0,0,5,0" />
+        </Grid>
+    </Grid>
+</base:BaseUserControl>

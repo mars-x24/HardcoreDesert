@@ -69,6 +69,12 @@
     <Page Update="UI\Controls\Game\WorldObjects\Character\CharacterOverlayControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Update="UI\Controls\Game\WorldObjects\LandClaims\WindowLandClaim.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Game\WorldObjects\Robot\RobotStateControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Controls\Game\WorldObjects\Storage\StorageIconControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

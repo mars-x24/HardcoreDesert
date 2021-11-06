@@ -8,8 +8,8 @@
     Discord:Mars#8365, druffzilla#8949, Salvick#3333
   </author>
   <description>Pincess and King in the desert</description>
-  <version>1.54.2</version>
-  <updated>01.11.2021</updated>
+  <version>1.55.0</version>
+  <updated>06.11.2021</updated>
   
 <!-- 
 Available settings
@@ -23,6 +23,11 @@ MigrationMutantMobCount: Number of mobs for each claims, default 1,4,8,13,20
 MigrationMutantMobMaxLevelPerWave: Max level of mobs for each wave, default 1,2,3,4,5
 ServerGlobalStorageItemsSlotsCapacity: How many global storage slots are allowed per base. The value should be within 0-128 range, default 64
 WreckedHoverboardChance: A chance to get wrecked hoverboard in garbage pile (1 / RateValue ;  Default 30 ; Set 0 for none)
+
+1.55.0
+Robots settings in the land claim
+Added back the rate "Land claim safe storage capacity" for PvE, looks like it wasn't working in PvE anymore
+Renamed the rate for S.H.I.E.L.D to "Base S.H.I.E.L.D. protection available" without PvP in it
 
 1.54.2
 Removed the T4 in Katana's recipe

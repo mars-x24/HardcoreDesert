@@ -130,10 +130,16 @@
         var areaGroupsTest = groupPrivateState.ServerLandClaimAreasGroups;
         if (areaGroupsTest.Count > 0)
         {
-          if (LandClaimAreasGroup.GetPublicState(areaGroupsTest[0]).FactionClanTag == factionClanTag)
+          foreach (var areaGroup in areaGroupsTest)
           {
-            groupFound = group;
-            break;
+            if (areaGroup is null)
+              continue;
+
+            if (LandClaimAreasGroup.GetPublicState(areaGroup).FactionClanTag == factionClanTag)
+            {
+              groupFound = group;
+              break;
+            }
           }
         }
 
@@ -168,6 +174,9 @@
       {
         foreach (var areasGroup in groupPrivateState.ServerLandClaimAreasGroups)
         {
+          if (areasGroup is null)
+            continue;
+
           var areasGroupPrivateState = LandClaimAreasGroup.GetPrivateState(areasGroup);
           GetAreaGroupOwners(owners, areasGroupPrivateState);
         }

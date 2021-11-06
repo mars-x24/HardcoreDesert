@@ -109,57 +109,43 @@
         return;
 
       IStaticWorldObject target = null;
-      List<IItem> targetItems = new List<IItem>();
 
+      List<IItem> targetItems = new List<IItem>();
       int targetCount = 0;
 
-      using (var temp = Api.Shared.GetTempList<IStaticWorldObject>())
+      var outputManufacturer = new List<IStaticWorldObject>();
+      var inputManufacturer = new List<IStaticWorldObject>();
+
+      foreach (var area in areasGroup.GetPrivateState<LandClaimAreasGroupPrivateState>().ServerLandClaimsAreas)
       {
-        foreach (var area in areasGroup.GetPrivateState<LandClaimAreasGroupPrivateState>().ServerLandClaimsAreas)
+        if (owner is ICharacter)
+          if (!LandClaimSystem.ServerIsOwnedArea(area, (ICharacter)owner, false))
+            continue;
+
+        var areaPrivateState = area.GetPrivateState<LandClaimAreaPrivateState>();
+        if (!areaPrivateState.RobotManufacturerInputEnabled && !areaPrivateState.RobotManufacturerOutputEnabled)
+          continue;
+
+        var bounds = LandClaimSystem.SharedGetLandClaimAreaBounds(area, false);
+
+        using (var temp = Api.Shared.GetTempList<IStaticWorldObject>())
         {
-          if (owner is ICharacter)
-            if (!LandClaimSystem.ServerIsOwnedArea(area, (ICharacter)owner, false))
-              continue;
+          temp.AddRange(Api.Server.World.GetStaticWorldObjectsOfProtoInBounds<IProtoObjectManufacturer>(bounds));
 
-          var bounds = LandClaimSystem.SharedGetLandClaimAreaBounds(area, false);
-          temp.AddRange(Api.Server.World.GetStaticWorldObjectsOfProto<IProtoObjectManufacturer>());
-        }
+          if (areaPrivateState.RobotManufacturerOutputEnabled)
+            outputManufacturer.AddRange(temp.AsList());
 
-        foreach (IStaticWorldObject m in temp.AsList())
-        {
-          using (var items = Api.Shared.GetTempList<IItem>())
-          {
-            var itemOrdered = RobotTargetHelper.GetOutputContainersItems(m);
-
-            List<IItem> tempTargetItems = new List<IItem>();
-            int tempTargetCount = 0;
-
-            foreach (var item in itemOrdered)
-            {
-              if (tempTargetItems.Count >= robotProto.ItemDeliveryCount)
-                break;
-
-              if (!RobotTargetHelper.ServerPickupAllowed(item, robotObject))
-                continue;
-
-              if (targetProto is not null && (item.ProtoGameObject.GetType() != targetProto.GetType()))
-                continue;
-
-              tempTargetItems.Add(item);
-              tempTargetCount += item.Count;
-            }
-
-            if (tempTargetCount > targetCount && data.GameObject.Container.EmptySlotsCount >= tempTargetItems.Count)
-            {
-              target = m;
-              targetItems.Clear();
-              targetItems.AddRange(tempTargetItems);
-              targetCount = tempTargetCount;
-            }
-            tempTargetItems.Clear();
-          }
+          if (areaPrivateState.RobotManufacturerInputEnabled)
+            inputManufacturer.AddRange(temp.AsList());
         }
       }
+
+      if (outputManufacturer.Count == 0 && inputManufacturer.Count == 0)
+        return;
+
+      FindIdleManufacturer();
+
+      FindMaxOutputItems();
 
       //launch robot to target
       if (target is null)
@@ -172,6 +158,57 @@
       publicStateRobot.SetTargetPosition(target, targetItems);
 
       RobotTargetHelper.ServerTryRegisterCurrentPickup(targetItems, robotObject);
+
+
+      void FindIdleManufacturer()
+      {
+        foreach (IStaticWorldObject m in inputManufacturer)
+        {
+          var privateState = m.GetPrivateState<ObjectManufacturerPrivateState>();
+          if (privateState is null)
+            continue;
+
+          if (privateState.ManufacturingState.HasActiveRecipe)
+            continue;
+
+          //todo...
+        }
+      }
+
+      void FindMaxOutputItems()
+      {
+        foreach (IStaticWorldObject m in outputManufacturer)
+        {
+          var itemOrdered = RobotTargetHelper.GetOutputContainersItems(m);
+
+          List<IItem> tempTargetItems = new List<IItem>();
+          int tempTargetCount = 0;
+
+          foreach (var item in itemOrdered)
+          {
+            if (tempTargetItems.Count >= robotProto.ItemDeliveryCount)
+              break;
+
+            if (!RobotTargetHelper.ServerPickupAllowed(item, robotObject))
+              continue;
+
+            if (targetProto is not null && (item.ProtoGameObject.GetType() != targetProto.GetType()))
+              continue;
+
+            tempTargetItems.Add(item);
+            tempTargetCount += item.Count;
+          }
+
+          if (tempTargetCount > targetCount && data.GameObject.Container.EmptySlotsCount >= tempTargetItems.Count)
+          {
+            target = m;
+            targetItems.Clear();
+            targetItems.AddRange(tempTargetItems);
+            targetCount = tempTargetCount;
+          }
+          tempTargetItems.Clear();
+        }
+      }
     }
 
     public override void ServerOnDestroy(IItem gameObject)

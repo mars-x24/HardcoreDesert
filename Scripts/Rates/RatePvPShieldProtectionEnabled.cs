@@ -11,7 +11,7 @@ namespace AtomicTorch.CBND.CoreMod.Rates
 
     public override string Id => "PvP.ShieldProtection.Enabled";
 
-    public override string Name => "[PvP] Base S.H.I.E.L.D. protection available";
+    public override string Name => "Base S.H.I.E.L.D. protection available";
 
     public override bool ValueDefault => true;
 

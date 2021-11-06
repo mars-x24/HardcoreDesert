@@ -111,7 +111,7 @@
     protected abstract double EngineSoundVolume { get; }
 
     protected virtual double ShadowOpacity => 0.5;
-
+   
     public virtual byte ItemDeliveryCount => 1;
 
     public void ServerDropRobotToGround(
@@ -253,7 +253,7 @@
       var itemReservedSlot = privateState.AssociatedItemReservedSlot;
       if (itemReservedSlot is not null
           && !itemReservedSlot.IsDestroyed
-          && itemReservedSlot.Container != privateState.ReservedItemsContainer)
+          && itemReservedSlot.Container is not null && itemReservedSlot.Container != privateState.ReservedItemsContainer)
       {
         Server.Items.MoveOrSwapItem(itemReservedSlot,
                                     privateState.ReservedItemsContainer,
@@ -351,6 +351,9 @@
       var objectRobot = data.GameObject;
 
       var spriteRenderer = this.ClientSetupRendering(data);
+
+      spriteRenderer.DrawOrderOffsetY -= 5;
+
       this.ClientCreateRendererShadow(data.GameObject, scaleMultiplier: 1.0);
       this.ClientSetupSoundEmitter(data);
       this.ClientSetupHealthbar(data);
@@ -544,13 +547,19 @@
       {
         // should return to the owner to despawn
         if (privateState.Owner is null)
+        {
+          ServerOnRobotReturnedToOwner(objectRobot);
           return;
+        }
 
         if (privateState.Owner is ICharacter character)
         {
           if (PlayerCharacter.GetPrivateState(character).IsDespawned
            || PlayerCharacter.GetPublicState(character).IsDead)
+          {
+            ServerOnRobotReturnedToOwner(objectRobot);
             return;
+          }
         }
 
         destinationCoordinate = privateState.Owner.TilePosition.ToVector2D() + RobotTargetPositionHelper.GetTargetPosition(privateState.Owner);
@@ -689,14 +698,14 @@
         TPrivateState privateState,
         IDynamicWorldObject objectRobot)
     {
-      if (privateState.AssociatedItemReservedSlot is null
-          || privateState.AssociatedItemReservedSlot.IsDestroyed)
+      if (privateState.AssociatedItemReservedSlot is null || privateState.AssociatedItemReservedSlot.Container is null
+          || privateState.AssociatedItemReservedSlot.IsDestroyed || privateState.AssociatedItemReservedSlot.Container.IsDestroyed)
       {
         ServerCreateReservedSlotItem(objectRobot);
       }
     }
 
-    private static void ServerOnRobotReturnedToOwner(IDynamicWorldObject objectRobot)
+    private static bool ServerOnRobotReturnedToOwner(IDynamicWorldObject objectRobot)
     {
       var privateState = GetPrivateState(objectRobot);
       var owner = privateState.Owner;
@@ -706,13 +715,16 @@
       var tile = objectRobot.Tile;
       var storageContainer = privateState.StorageItemsContainer;
       if (storageContainer.OccupiedSlotsCount > 0)
-        MoveContents();
+      {
+        if (!MoveContents())
+          return false;
+      }
 
       ServerDespawnRobot(objectRobot, isReturnedToOwner: true);
 
       RobotTargetHelper.ServerUnregisterCurrentPickup(objectRobot);
 
-      void MoveContents()
+      bool MoveContents()
       {
         // drop storage container contents to owner container
         // but first, move the robot item to its original slot (if possible)
@@ -723,63 +735,73 @@
           itemReservedSlot = null;
         }
 
-        // ReSharper disable once PossibleNullReferenceException
-        var reservedContainer = itemReservedSlot?.Container;
-        var reservedContainerSlotId = itemReservedSlot?.ContainerSlotId ?? 0;
-        if (itemReservedSlot is not null)
+        if (ownerContainer is not null && !ownerContainer.IsDestroyed)
         {
-          Server.Items.MoveOrSwapItem(itemReservedSlot,
-                                      privateState.ReservedItemsContainer,
-                                      movedCount: out _);
-        }
+          if (storageContainer.OccupiedSlotsCount > ownerContainer.EmptySlotsCount)
+            return false; //not enough room, don't despawn
 
-        if (reservedContainer is not null
-            && reservedContainer.Owner == owner
-            && storageContainer.GetItemAtSlot(0) is { } itemRobot)
-        {
-          // Return the associated item (the robot item itself) to the reserved slot location.
-          // (The item in the first slot is the robot's associated item.
-          // It can be destroyed in the case when the robot's HP dropped <= 1
-          // so we check whether the item in the first slot is not null)
-          Server.Items.MoveOrSwapItem(itemRobot,
-                                      reservedContainer,
-                                      slotId: reservedContainerSlotId,
-                                      movedCount: out _);
-        }
-
-        var result = Server.Items.TryMoveAllItems(storageContainer, ownerContainer);
-        try
-        {
-          if (storageContainer.OccupiedSlotsCount == 0)
+           // ReSharper disable once PossibleNullReferenceException
+           var reservedContainer = itemReservedSlot?.Container;
+          var reservedContainerSlotId = itemReservedSlot?.ContainerSlotId ?? 0;
+          if (itemReservedSlot is not null)
           {
-            // all items moved from robot to player
-            return;
+            Server.Items.MoveOrSwapItem(itemReservedSlot,
+                                        privateState.ReservedItemsContainer,
+                                        movedCount: out _);
           }
 
-          if (storageContainer.OccupiedSlotsCount == 0)
+          if (reservedContainer is not null
+              && reservedContainer.Owner is not null && reservedContainer.Owner == owner
+              && storageContainer.GetItemAtSlot(0) is { } itemRobot)
           {
-            // all items moved from robot to owner
-            return;
+            // Return the associated item (the robot item itself) to the reserved slot location.
+            // (The item in the first slot is the robot's associated item.
+            // It can be destroyed in the case when the robot's HP dropped <= 1
+            // so we check whether the item in the first slot is not null)
+            Server.Items.MoveOrSwapItem(itemRobot,
+                                        reservedContainer,
+                                        slotId: reservedContainerSlotId,
+                                        movedCount: out _);
           }
-        }
-        finally
-        {
-          if (result.MovedItems.Count > 0)
+
+          var result = Server.Items.TryMoveAllItems(storageContainer, ownerContainer);
+          try
           {
-            // notify player about the received items
-            NotificationSystem.ServerSendItemsNotification(
-                characterOwner,
-                result.MovedItems
-                      .GroupBy(p => p.Key.ProtoItem)
-                      .Where(p => p.Key is not TItemRobot)
-                      .ToDictionary(p => p.Key, p => p.Sum(v => v.Value)));
+            if (storageContainer.OccupiedSlotsCount == 0)
+            {
+              // all items moved from robot to player
+              return true;
+            }
+
+            if (storageContainer.OccupiedSlotsCount == 0)
+            {
+              // all items moved from robot to owner
+              return true;
+            }
+          }
+          finally
+          {
+            if (result.MovedItems.Count > 0)
+            {
+              // notify player about the received items
+              NotificationSystem.ServerSendItemsNotification(
+                  characterOwner,
+                  result.MovedItems
+                        .GroupBy(p => p.Key.ProtoItem)
+                        .Where(p => p.Key is not TItemRobot)
+                        .ToDictionary(p => p.Key, p => p.Sum(v => v.Value)));
+            }
           }
         }
 
         // try to drop the remaining items on the ground
         ((IProtoRobot)objectRobot.ProtoGameObject)
             .ServerDropRobotToGround(objectRobot, tile, characterOwner);
+
+        return true;
       }
+
+      return true;
     }
 
     private static void ServerDespawnRobot(IDynamicWorldObject objectRobot, bool isReturnedToOwner)

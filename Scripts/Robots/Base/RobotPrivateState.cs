@@ -20,5 +20,11 @@
     public IItemsContainer ReservedItemsContainer { get; set; }
 
     public IItemsContainer StorageItemsContainer { get; set; }
+
+    [SyncToClient]
+    public bool RobotManufacturerInputEnabled { get; set; }
+
+    [SyncToClient]
+    public bool RobotManufacturerOutputEnabled { get; set; }
   }
 }
