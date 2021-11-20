@@ -4,13 +4,10 @@
   using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.Data.Items;
   using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.GameEngine.Common.Primitives;
 
   public interface IProtoRobot : IProtoDynamicWorldObject
   {
     IProtoItemRobot ProtoItemRobot { get; }
-
-    byte ItemDeliveryCount { get; }
 
     double StatMoveSpeed { get; }
 

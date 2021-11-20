@@ -10,5 +10,8 @@
 
     public override string Name => "Logistic robot";
 
+    public override byte ItemDeliveryCount => 1;
+
+    public override ushort DeliveryTimerSeconds => 12;
   }
 }

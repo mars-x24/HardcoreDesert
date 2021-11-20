@@ -1,6 +1,5 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Robots
 {
-  using AtomicTorch.CBND.GameApi.Data;
   using AtomicTorch.CBND.GameApi.Data.Items;
   using AtomicTorch.CBND.GameApi.Data.State;
   using AtomicTorch.CBND.GameApi.Data.World;
@@ -21,10 +20,6 @@
 
     public IItemsContainer StorageItemsContainer { get; set; }
 
-    [SyncToClient]
-    public bool RobotManufacturerInputEnabled { get; set; }
-
-    [SyncToClient]
-    public bool RobotManufacturerOutputEnabled { get; set; }
+    public double TimerInactive { get; set; }
   }
 }

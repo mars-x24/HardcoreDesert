@@ -111,8 +111,7 @@
     protected abstract double EngineSoundVolume { get; }
 
     protected virtual double ShadowOpacity => 0.5;
-   
-    public virtual byte ItemDeliveryCount => 1;
+
 
     public void ServerDropRobotToGround(
         IDynamicWorldObject objectRobot,
@@ -203,16 +202,14 @@
     {
       base.ServerOnDestroy(gameObject);
 
-      var droneTile = gameObject.Tile;
+      var robotTile = gameObject.Tile;
 
       var privateState = gameObject.GetPrivateState<RobotPrivateState>();
       var owner = privateState.Owner;
 
-      var droneItem = privateState.AssociatedItem;
-      if (droneItem is not null)
-      {
-        Server.Items.DestroyItem(droneItem);
-      }
+      var robotItem = privateState.AssociatedItem;
+      if (robotItem is not null)
+        Server.Items.DestroyItem(robotItem);
 
       if (privateState.AssociatedItemReservedSlot is not null)
       {
@@ -222,7 +219,9 @@
       try
       {
         var protoRobot = (IProtoRobot)gameObject.ProtoGameObject;
-        protoRobot.ServerDropRobotToGround(gameObject, droneTile, owner is ICharacter character ? character : null);
+        protoRobot.ServerDropRobotToGround(gameObject, robotTile, owner is ICharacter character ? character : null);
+
+        RobotTargetHelper.ServerUnregisterCurrentPickup(gameObject);
       }
       catch (Exception ex)
       {
@@ -293,6 +292,11 @@
       Server.Items.MoveOrSwapItem(itemRobot,
                                   this.ServerGetStorageItemsContainer(objectRobot),
                                   out ushort robotMovedCount);
+
+      //var tempList = Api.Shared.GetTempList<ICharacter>();
+      //Api.Server.World.GetScopedByPlayers(itemRobot, tempList.AsList());
+      //foreach (var player in tempList.AsList())
+      //  Api.Server.World.ForceExitScope(player, itemRobot);
 
       // move reserved slot item into the slot where the robot was located previously
       ServerCreateReservedSlotItemIfNecessary(privateState, objectRobot);
@@ -520,6 +524,8 @@
         return;
       }
 
+      privateState.TimerInactive = 0;
+
       ServerCreateReservedSlotItemIfNecessary(privateState, objectRobot);
 
       if (privateState.IsDespawned)
@@ -536,11 +542,21 @@
       {
         destinationCoordinate = publicState.Target.TilePosition.ToVector2D() + RobotTargetPositionHelper.GetTargetPosition(publicState.Target);
 
-        if (!RobotTargetHelper.ServerPickupAllowed(publicState.TargetItems, objectRobot))
+        if (!publicState.Loaded)
         {
-          // cannot pick this item as it's already targeted by another robot
-          publicState.ResetTargetPosition();
-          return;
+          if (publicState.TargetItems.Count != 0 && !RobotTargetHelper.ServerPickupAllowed(publicState.TargetItems.Keys, objectRobot))
+          {
+            // cannot pick this item as it's already targeted by another robot
+            publicState.ResetTargetPosition();
+            return;
+          }
+
+          //move items going in input containers in the robot storage
+          var itemsToBring = publicState.ItemsToBring();
+          foreach (var itemProto in itemsToBring.Keys)
+            MoveToContainer(privateState.OwnerContainer, privateState.StorageItemsContainer, itemProto, itemsToBring[itemProto]);
+
+          publicState.Loaded = true;
         }
       }
       else
@@ -568,6 +584,7 @@
       RefreshMovement(isToDelivery: hasTarget,
                       destinationCoordinate,
                       out var isDestinationReached);
+
       if (!isDestinationReached)
       {
         return;
@@ -575,9 +592,15 @@
 
       if (hasTarget)
       {
-        PickUpItem();
+        DropFuelItems();
+
+        DropItems();
+
+        PickUpItems();
 
         publicState.IsGoingBackToOwner = true;
+
+        RobotTargetHelper.ServerUnregisterCurrentStructure(objectRobot);
       }
       else
       {
@@ -642,19 +665,44 @@
         objectRobot.PhysicsBody.Friction = this.PhysicsBodyFriction;
       }
 
-      void PickUpItem()
+      void DropFuelItems()
       {
-        var items = RobotTargetHelper.GetOutputContainersItems(publicState.Target);
-
-        foreach (var item in publicState.TargetItems)
+        var containers = RobotTargetHelper.GetFuelContainers(publicState.Target);
+        foreach (var itemProto in publicState.FuelItems.Keys)
         {
+          ushort countToMove = publicState.FuelItems[itemProto];
+          containers.Any(it => MoveToContainer(privateState.StorageItemsContainer, it, itemProto, countToMove));
+        }
+      }
+
+      void DropItems()
+      {
+        var containers = RobotTargetHelper.GetInputContainers(publicState.Target);
+        foreach (var itemProto in publicState.InputItems.Keys)
+        {
+          ushort countToMove = publicState.InputItems[itemProto];
+          containers.Any(it => MoveToContainer(privateState.StorageItemsContainer, it, itemProto, countToMove));
+        }
+      }
+
+      void PickUpItems()
+      {
+        var items = RobotTargetHelper.GetOutputContainersItems(publicState.Target, true);
+
+        foreach (var item in publicState.TargetItems.Keys)
+        {
+          if (item.IsDestroyed)
+            continue;
+
           if (!items.Contains(item))
             continue;
 
           if (privateState.OwnerContainer is null || privateState.OwnerContainer.EmptySlotsCount == 0)
             return;
 
-          Api.Server.Items.MoveOrSwapItem(item, privateState.StorageItemsContainer, out _);
+          ushort countToMove = Math.Min(publicState.TargetItems[item], item.Count);
+
+          Api.Server.Items.MoveOrSwapItem(item, privateState.StorageItemsContainer, out _, countToMove: countToMove);
 
           // reduce robot durability on 1 unit (reflected as HP when it's a world object)
           // but ensure the new HP cannot drop to exact 0 (to prevent destruction)
@@ -662,6 +710,38 @@
                       - 1 * LazyProtoItemRobot.Value.DurabilityToStructurePointsConversionCoefficient;
           publicState.StructurePointsCurrent = Math.Max(float.Epsilon, (float)newHP);
         }
+      }
+
+      bool MoveToContainer(IItemsContainer containerSource, IItemsContainer containerDestination, IProtoItem itemProto, ushort countToMove)
+      {
+        bool moved = false;
+
+        ushort movedCount;
+
+        foreach (var item in containerSource.GetItemsOfProto(itemProto))
+        {
+          if (item.Count <= countToMove)
+          {
+            if (Api.Server.Items.MoveOrSwapItem(item, containerDestination, out movedCount, countToMove: item.Count))
+            {
+              moved = true;
+              countToMove -= item.Count;
+            }
+          }
+          else
+          {
+            if (Api.Server.Items.MoveOrSwapItem(item, containerDestination, out movedCount, countToMove: countToMove))
+            {
+              moved = true;
+              countToMove = 0;
+            }
+          }
+
+          if (countToMove <= 0)
+            break;
+        }
+
+        return moved;
       }
     }
 
@@ -740,8 +820,8 @@
           if (storageContainer.OccupiedSlotsCount > ownerContainer.EmptySlotsCount)
             return false; //not enough room, don't despawn
 
-           // ReSharper disable once PossibleNullReferenceException
-           var reservedContainer = itemReservedSlot?.Container;
+          // ReSharper disable once PossibleNullReferenceException
+          var reservedContainer = itemReservedSlot?.Container;
           var reservedContainerSlotId = itemReservedSlot?.ContainerSlotId ?? 0;
           if (itemReservedSlot is not null)
           {

@@ -22,7 +22,7 @@
 
     public override double MobKillExperienceMultiplier => 2.0;
 
-    public override string Name => "Pragmium Bear";
+    public override string Name => "Enraged Pragmium Bear";
 
     public override ObjectMaterial ObjectMaterial => ObjectMaterial.SoftTissues;
 

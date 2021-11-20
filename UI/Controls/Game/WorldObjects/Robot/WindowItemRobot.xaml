@@ -1,0 +1,170 @@
+﻿<core:BaseUserControlWithWindow
+    x:Class="HardcoreDesert.UI.Controls.Game.WorldObjects.Robot.WindowItemRobot"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:core="clr-namespace:AtomicTorch.CBND.CoreMod.UI.Controls.Core;assembly=Core"
+    xmlns:item="clr-namespace:AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Controls.Tooltips;assembly=Core"
+    xmlns:base="clr-namespace:AtomicTorch.GameEngine.Common.Client.MonoGame.UI;assembly=AtomicTorch.CBND.GameApi.WPF.Stubs"
+    xmlns:data="clr-namespace:HardcoreDesert.UI.Controls.Game.WorldObjects.Robot.Data"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    d:DataContext="{d:DesignInstance data:ViewModelWindowItemRobot, IsDesignTimeCreatable=True}"
+    FontSize="12"
+    FontWeight="Bold"
+    Foreground="{StaticResource BrushColor6}"
+    FontFamily="{StaticResource CondensedFontFamily}"
+    HorizontalAlignment="Center"
+    VerticalAlignment="Center">
+
+    <core:GameWindow x:Name="GameWindow"
+                     Width="400"
+                     Height="600"
+                     IsCached="True">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock 
+                Grid.Row="0"
+                Text="{Binding RobotName}"
+                VerticalAlignment="Center"
+                TextWrapping="Wrap"
+                TextAlignment="Center"
+                FontWeight="Bold"
+                FontSize="24"
+                Foreground="{StaticResource BrushColorRed6}"
+                FontFamily="{StaticResource CondensedFontFamily}"
+                Margin="0, 10, 0, 10" />
+
+            <item:ItemTooltipControl 
+                Grid.Row="1"             
+                DataContext="{Binding ViewModelItemTooltip}" />
+
+            <Grid 
+                Grid.Row="2"
+                Height="400"
+                Margin="25, 10, 0, 0">
+                <ScrollViewer              
+                    VerticalScrollBarVisibility="Auto">
+                    <Grid>
+                        <Grid.Resources>
+                            <ResourceDictionary>
+                                <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                                    <Setter Property="Margin" Value="0, 10, 0, 10" />
+                                    <Setter Property="FontSize" Value="15" />
+                                    <Setter Property="FontFamily" Value="{StaticResource CondensedFontFamily}" />
+                                    <Setter Property="Foreground" Value="{StaticResource BrushColor6}" />
+                                    <Setter Property="Focusable" Value="False" />
+                                </Style>
+                            </ResourceDictionary>
+                        </Grid.Resources>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <CheckBox Grid.Row="0" 
+                        Content="Allow robot to fill input slots."
+                        IsChecked="{Binding ManufacturerInputSlots, Mode=TwoWay}" />
+
+                        <CheckBox Grid.Row="1"
+                        Content="Allow robot to take output slots."
+                        IsChecked="{Binding ManufacturerOutputSlots, Mode=TwoWay}" />
+
+                        <CheckBox Grid.Row="2"               
+                        Content="Allow robot to fill fuel slots."
+                        IsChecked="{Binding ManufacturerFuelSlots, Mode=TwoWay}" />
+
+                        <StackPanel Grid.Row="3"
+                        Orientation="Horizontal">
+                            <TextBlock 
+                            Text="Time between runs in seconds. (0 to disable)"            
+                            Foreground="{StaticResource BrushColor6}"
+                            FontSize="15"
+                            FontFamily="{StaticResource CondensedFontFamily}"
+                            Margin="0, 10, 0, 10" />
+                            <TextBox 
+                            Text="{Binding TimeRunIntervalSeconds, Mode=TwoWay}"
+                            Width="50"
+                            Foreground="{StaticResource BrushColor6}"
+                            FontSize="15"
+                            FontFamily="{StaticResource CondensedFontFamily}"
+                            Margin="10, 10, 0, 10" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="4"
+                        Orientation="Horizontal">
+                            <TextBlock 
+                            Text="Structure load percent (1 to 100)"            
+                            Foreground="{StaticResource BrushColor6}"
+                            FontSize="15"
+                            FontFamily="{StaticResource CondensedFontFamily}"
+                            Margin="0, 10, 0, 10" />
+                            <TextBox 
+                            Text="{Binding StructureLoadPercent, Mode=TwoWay}"
+                            Width="50"
+                            Foreground="{StaticResource BrushColor6}"
+                            FontSize="15"
+                            FontFamily="{StaticResource CondensedFontFamily}"
+                            Margin="10, 10, 0, 10" />
+                        </StackPanel>
+
+                        <TextBlock 
+                        Grid.Row="5"
+                        Text="Allowed structures. (All if not selected)"            
+                        Foreground="{StaticResource BrushColor6}"
+                        FontSize="15"
+                        FontFamily="{StaticResource CondensedFontFamily}"
+                        Margin="0, 10, 0, 10" />
+
+                        <ItemsControl
+                        Grid.Row="6"
+                            ItemsSource="{Binding Path=EntityCollection}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox 
+                                    IsChecked="{Binding IsEnabled}"
+                                    Margin="0,2,0,2">
+                                        <CheckBox.Content>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Rectangle  Fill="{Binding Icon}"
+                                                    Margin="2,0,2,0"
+                                                    Width="24"
+                                                    Height="24" />
+                                                <TextBlock Text="{Binding Name}" />
+                                            </StackPanel>
+                                        </CheckBox.Content>
+                                        <base:ToolTipServiceExtend.ToolTip>
+                                            <StackPanel Orientation="Vertical">
+                                                <TextBlock  Text="{Binding Name}"
+                                                    HorizontalAlignment="Center"
+                                                    FontWeight="Bold"
+                                                    FontSize="13" />
+                                                <Rectangle  Fill="{Binding Icon}"
+                                                    Width="128"
+                                                    Height="128"
+                                                    UseLayoutRounding="True" />
+                                            </StackPanel>
+                                        </base:ToolTipServiceExtend.ToolTip>
+                                    </CheckBox>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+    </core:GameWindow>
+</core:BaseUserControlWithWindow>

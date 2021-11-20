@@ -1,6 +1,5 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Items.Storage
 {
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
   using AtomicTorch.CBND.CoreMod.ItemContainers.Items;
   using AtomicTorch.CBND.CoreMod.StaticObjects;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Loot;
@@ -74,8 +73,8 @@
       var character = ServerRemoteContext.Character;
 
       this.ServerValidateItemForRemoteCall(item, character);
- 
-      this.ServerInitContainer(item, character);  
+
+      this.ServerInitContainer(item, character);
 
       this.CallClient(character, _ => _.ClientRemote_OpenWindow(item));
     }
@@ -113,7 +112,7 @@
     {
       base.ServerOnDestroy(gameObject);
 
-      if(gameObject.Container is null)
+      if (gameObject.Container is null)
       {
         return;
       }
@@ -122,11 +121,7 @@
       if (character is null)
         return;
 
-      var playerPrivateState = PlayerCharacter.GetPrivateState(character);
-
-      IItemsContainer objectGroundContainer = null;
-
-      objectGroundContainer = ObjectPlayerLootContainer.ServerTryCreateLootContainer(character);
+      IItemsContainer objectGroundContainer = ObjectPlayerLootContainer.ServerTryCreateLootContainer(character);
 
       var privateState = GetPrivateState(gameObject);
 

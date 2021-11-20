@@ -27,6 +27,11 @@
           _ => _.RobotManufacturerOutputEnabled,
           _ => this.NotifyPropertyChanged(nameof(this.ManufacturerOutputSlots)),
           this);
+
+      state.ClientSubscribe(
+          _ => _.RobotManufacturerCharacterInventoryEnabled,
+          _ => this.NotifyPropertyChanged(nameof(this.ManufacturerCharacterInventory)),
+          this);
     }
 
     public bool IsRobotsAvailableForCurrentTier =>
@@ -36,13 +41,21 @@
     public bool ManufacturerInputSlots
     {
       get { return this.state.RobotManufacturerInputEnabled; }
-      set { LandClaimSystem.ClientSetRobotManufacturerSettings(state.GameObject as ILogicObject, Api.Client.Characters.CurrentPlayerCharacter.Name, true, value); }
+      set { RobotSystem.ClientSetRobotManufacturerSettings(state.GameObject as ILogicObject, Api.Client.Characters.CurrentPlayerCharacter.Name, true, value); }
     }
 
     public bool ManufacturerOutputSlots
     {
       get { return this.state.RobotManufacturerOutputEnabled; }
-      set { LandClaimSystem.ClientSetRobotManufacturerSettings(state.GameObject as ILogicObject, Api.Client.Characters.CurrentPlayerCharacter.Name, false, value); }
+      set { RobotSystem.ClientSetRobotManufacturerSettings(state.GameObject as ILogicObject, Api.Client.Characters.CurrentPlayerCharacter.Name, false, value); }
     }
+
+    public bool ManufacturerCharacterInventory
+    {
+      get { return this.state.RobotManufacturerCharacterInventoryEnabled; }
+      set { RobotSystem.ClientSetRobotManufacturerCharacterInventorySetting(state.GameObject as ILogicObject, Api.Client.Characters.CurrentPlayerCharacter.Name, value); }
+    }
+
+
   }
 }

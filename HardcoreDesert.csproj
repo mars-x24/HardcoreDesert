@@ -46,6 +46,7 @@
     <Content Include="Content\Animations\PragmiumBear\Front.json" />
     <Content Include="Content\Animations\PragmiumKing\Back.json" />
     <Content Include="Content\Animations\PragmiumKing\Front.json" />
+    <Content Include="PatchNotes.txt" />
   </ItemGroup>    
   
   <ItemGroup>
@@ -70,6 +71,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Controls\Game\WorldObjects\LandClaims\WindowLandClaim.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Game\WorldObjects\Robot\WindowItemRobot.xaml">
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Controls\Game\WorldObjects\Robot\RobotStateControl.xaml">

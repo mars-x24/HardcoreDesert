@@ -30,7 +30,6 @@
 
     protected override double EngineSoundVolume => 0.6;
 
-    override public byte ItemDeliveryCount => 4;
 
     public override Vector2D SharedGetObjectCenterWorldOffset(IWorldObject worldObject)
     {

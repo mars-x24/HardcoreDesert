@@ -1,6 +1,7 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Items.Robots
 {
   using AtomicTorch.CBND.CoreMod.Characters;
+  using AtomicTorch.CBND.CoreMod.Characters.Player;
   using AtomicTorch.CBND.CoreMod.Robots;
   using AtomicTorch.CBND.CoreMod.StaticObjects;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Crates;
@@ -14,10 +15,13 @@
   using AtomicTorch.CBND.GameApi.Data.State;
   using AtomicTorch.CBND.GameApi.Data.World;
   using AtomicTorch.CBND.GameApi.Scripting;
+  using AtomicTorch.CBND.GameApi.Scripting.Network;
   using AtomicTorch.GameEngine.Common.Primitives;
   using HardcoreDesert.Scripts.Robots.Base;
+  using HardcoreDesert.UI.Controls.Game.WorldObjects.Robot;
   using System;
   using System.Collections.Generic;
+  using System.Linq;
 
   public abstract class ProtoItemRobot
         <TObjectRobot,
@@ -54,7 +58,13 @@
 
     public IProtoRobot ProtoRobot => LazyProtoRobot.Value;
 
-    public override double ServerUpdateIntervalSeconds => 10;
+    public override double ServerUpdateIntervalSeconds => 1;
+
+    public string ItemUseCaption => "";
+
+    public virtual byte ItemDeliveryCount => 1;
+
+    public virtual ushort DeliveryTimerSeconds => 10;
 
     protected override void ServerUpdate(ServerUpdateData data)
     {
@@ -66,6 +76,14 @@
 
       var privateStateItem = data.GameObject.GetPrivateState<ItemRobotPrivateState>();
       var robotObject = privateStateItem.WorldObjectRobot;
+
+      var privateStateRobot = robotObject.GetPrivateState<RobotPrivateState>();
+
+      //wait for timer
+      privateStateRobot.TimerInactive += data.DeltaTime;
+      if (privateStateRobot.TimerInactive < this.DeliveryTimerSeconds)
+        return;
+
       var robotProto = robotObject.ProtoGameObject as IProtoRobot;
       var publicStateRobot = robotObject.GetPublicState<RobotPublicState>();
 
@@ -76,7 +94,7 @@
       var position = Vector2Ushort.Max;
       IWorldObject owner = null;
       var ownerContainer = data.GameObject.Container;
-      IProtoEntity targetProto = null;
+      IProtoEntity targetItemProto = null;
 
       if (data.GameObject.Container.OwnerAsStaticObject is not null)
       {
@@ -87,11 +105,12 @@
 
           var publicState = owner.GetPublicState<ObjectCratePublicState>();
           if (publicState is not null)
-            targetProto = publicState.IconSource;
+            targetItemProto = publicState.IconSource;
         }
       }
       else if (data.GameObject.Container.OwnerAsCharacter is not null)
       {
+
         owner = data.GameObject.Container.OwnerAsCharacter;
         position = data.GameObject.Container.OwnerAsCharacter.TilePosition;
 
@@ -108,11 +127,6 @@
       if (areasGroup is null)
         return;
 
-      IStaticWorldObject target = null;
-
-      List<IItem> targetItems = new List<IItem>();
-      int targetCount = 0;
-
       var outputManufacturer = new List<IStaticWorldObject>();
       var inputManufacturer = new List<IStaticWorldObject>();
 
@@ -126,11 +140,17 @@
         if (!areaPrivateState.RobotManufacturerInputEnabled && !areaPrivateState.RobotManufacturerOutputEnabled)
           continue;
 
+        if (!areaPrivateState.RobotManufacturerCharacterInventoryEnabled && owner is ICharacter)
+          continue;
+
         var bounds = LandClaimSystem.SharedGetLandClaimAreaBounds(area, false);
 
         using (var temp = Api.Shared.GetTempList<IStaticWorldObject>())
         {
-          temp.AddRange(Api.Server.World.GetStaticWorldObjectsOfProtoInBounds<IProtoObjectManufacturer>(bounds));
+          temp.AddRange(
+            Api.Server.World.GetStaticWorldObjectsOfProtoInBounds<IProtoObjectManufacturer>(bounds)
+              .Distinct()
+              .Where(m => RobotTargetHelper.ServerStructureAllowed(m, robotObject, privateStateItem)));
 
           if (areaPrivateState.RobotManufacturerOutputEnabled)
             outputManufacturer.AddRange(temp.AsList());
@@ -143,72 +163,32 @@
       if (outputManufacturer.Count == 0 && inputManufacturer.Count == 0)
         return;
 
-      FindIdleManufacturer();
+      var itemHelper = new RobotItemHelper(robotObject, robotProto, data.GameObject.Container, targetItemProto, outputManufacturer, inputManufacturer);
 
-      FindMaxOutputItems();
+      itemHelper.FindAllItems();
 
       //launch robot to target
-      if (target is null)
+      if (itemHelper.Target is null)
+        return;
+
+      //nothing to do
+      if (itemHelper.InputItems.Count + itemHelper.FuelItems.Count + itemHelper.TargetItems.Count == 0)
+        return;
+
+      if (!RobotTargetHelper.ServerStructureAllowed(itemHelper.Target, robotObject, privateStateItem))
+        return;
+
+      if (itemHelper.TargetItems.Count != 0 && !RobotTargetHelper.ServerPickupAllowed(itemHelper.TargetItems.Keys, robotObject))
         return;
 
       robotProto.ServerSetupAssociatedItem(robotObject, data.GameObject);
 
       robotProto.ServerStartRobot(robotObject, owner, ownerContainer);
 
-      publicStateRobot.SetTargetPosition(target, targetItems);
+      publicStateRobot.SetTargetPosition(itemHelper.Target, itemHelper.TargetItems, itemHelper.InputItems, itemHelper.FuelItems);
 
-      RobotTargetHelper.ServerTryRegisterCurrentPickup(targetItems, robotObject);
-
-
-      void FindIdleManufacturer()
-      {
-        foreach (IStaticWorldObject m in inputManufacturer)
-        {
-          var privateState = m.GetPrivateState<ObjectManufacturerPrivateState>();
-          if (privateState is null)
-            continue;
-
-          if (privateState.ManufacturingState.HasActiveRecipe)
-            continue;
-
-          //todo...
-        }
-      }
-
-      void FindMaxOutputItems()
-      {
-        foreach (IStaticWorldObject m in outputManufacturer)
-        {
-          var itemOrdered = RobotTargetHelper.GetOutputContainersItems(m);
-
-          List<IItem> tempTargetItems = new List<IItem>();
-          int tempTargetCount = 0;
-
-          foreach (var item in itemOrdered)
-          {
-            if (tempTargetItems.Count >= robotProto.ItemDeliveryCount)
-              break;
-
-            if (!RobotTargetHelper.ServerPickupAllowed(item, robotObject))
-              continue;
-
-            if (targetProto is not null && (item.ProtoGameObject.GetType() != targetProto.GetType()))
-              continue;
-
-            tempTargetItems.Add(item);
-            tempTargetCount += item.Count;
-          }
-
-          if (tempTargetCount > targetCount && data.GameObject.Container.EmptySlotsCount >= tempTargetItems.Count)
-          {
-            target = m;
-            targetItems.Clear();
-            targetItems.AddRange(tempTargetItems);
-            targetCount = tempTargetCount;
-          }
-          tempTargetItems.Clear();
-        }
-      }
+      if (!RobotTargetHelper.ServerTryRegisterCurrentPickup(publicStateRobot.TargetItems.Keys.ToList(), publicStateRobot.Target, robotObject, privateStateItem))
+        publicStateRobot.ResetTargetPosition();
     }
 
     public override void ServerOnDestroy(IItem gameObject)
@@ -223,9 +203,46 @@
       }
     }
 
+    protected override void ClientItemUseStart(ClientItemData data)
+    {
+      base.ClientItemUseStart(data);
+
+      this.CallServer(_ => _.ServerRemote_Use(data.Item));
+    }
+
+    protected override bool ClientItemUseFinish(ClientItemData data)
+    {
+      return true;
+    }
+
+    private void ServerRemote_Use(IItem item)
+    {
+      var character = ServerRemoteContext.Character;
+
+      this.ServerValidateItemForRemoteCall(item, character);
+
+      if (item.Container != PlayerCharacterItemsExtensions.SharedGetPlayerContainerInventory(character) &&
+          item.Container != PlayerCharacterItemsExtensions.SharedGetPlayerContainerHotbar(character) &&
+          item.Container != PlayerCharacterItemsExtensions.SharedGetPlayerContainerHotbar(character))
+      {
+        Api.Server.World.ForceEnterScope(character, item);
+        Api.Server.World.EnterPrivateScope(character, item);
+      }
+
+      this.CallClient(character, _ => _.ClientRemote_OpenWindow(item));
+    }
+
+    private void ClientRemote_OpenWindow(IItem item)
+    {
+      WindowItemRobot.Open(item);
+    }
+
     protected override void PrepareHints(List<string> hints)
     {
       base.PrepareHints(hints);
+      hints.Add(ItemHints.AltClickToUseItem);
+      hints.Add("Can hold " + this.ItemDeliveryCount + " stack" + (this.ItemDeliveryCount > 1 ? "s" : "") + " of items.");
+      hints.Add("Minimum of " + this.DeliveryTimerSeconds + " seconds between runs.");
     }
 
     protected override void ServerInitialize(ServerInitializeData data)
@@ -246,6 +263,8 @@
           CharacterDespawnSystem.ServerGetServiceAreaPosition().ToVector2D());
       protoRobot.ServerSetupAssociatedItem(objectRobot, itemRobot);
       data.PrivateState.WorldObjectRobot = objectRobot;
+      data.PrivateState.StructureLoadPercent = 100;
+      data.PrivateState.TimeRunIntervalSeconds = this.DeliveryTimerSeconds;
     }
   }
 

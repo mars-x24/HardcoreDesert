@@ -690,8 +690,11 @@
         return;
       }
 
+      //MOD
       // the land claim structure points is zero - it's broken now - set timer for destruction
-      var timeout = this.DestructionTimeout.TotalSeconds;
+      var timeout = byCharacter is not null && byCharacter.ProtoCharacter is ProtoCharacterMobEnraged
+                        ? TimeSpan.FromHours(72).TotalSeconds
+                        : this.DestructionTimeout.TotalSeconds;
       publicState.ServerTimeForDestruction = Server.Game.FrameTime + timeout;
 
       Logger.Important($"Timer for destruction set: {targetObject}. Timeout: {timeout}");

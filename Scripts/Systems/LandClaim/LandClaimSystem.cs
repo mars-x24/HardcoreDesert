@@ -2910,29 +2910,6 @@
           color: NotificationColor.Bad);
     }
 
-    //MOD-->
-    public static void ClientSetRobotManufacturerSettings(ILogicObject area, string playerName, bool isInputSlot, bool value)
-    {
-      Instance.CallServer(_ => _.ServerRemote_SetRobotManufacturerSettings(area, playerName, isInputSlot, value));
-    }
-
-    private void ServerRemote_SetRobotManufacturerSettings(ILogicObject area, string playerName, bool isInputSlot, bool value)
-    {
-      var areaPrivateState = area.GetPrivateState<LandClaimAreaPrivateState>();
-
-      var landClaim = areaPrivateState.ServerLandClaimWorldObject;
-      var proto = landClaim.ProtoGameObject as IProtoStaticWorldObject;
-
-      if (!proto.SharedCanInteract(Server.Characters.GetPlayerCharacter(playerName), landClaim, false))
-        return;
-
-      if (isInputSlot)
-        areaPrivateState.RobotManufacturerInputEnabled = value;
-      else
-        areaPrivateState.RobotManufacturerOutputEnabled = value;
-    }
-    //<--
-
     [RemoteCallSettings(timeInterval: 1)]
     private LandClaimsGroupDecayInfo ServerRemote_GetDecayInfo(IStaticWorldObject landClaimStructure)
     {

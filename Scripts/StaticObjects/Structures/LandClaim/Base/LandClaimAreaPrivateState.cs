@@ -32,6 +32,9 @@
     [SyncToClient]
     public bool RobotManufacturerOutputEnabled { get; set; }
 
+    [SyncToClient]
+    public bool RobotManufacturerCharacterInventoryEnabled { get; set; }
+
 
     public IStaticWorldObject ServerLandClaimWorldObject { get; set; }
 

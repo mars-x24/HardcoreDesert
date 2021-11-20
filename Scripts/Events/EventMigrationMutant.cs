@@ -22,6 +22,7 @@
   using AtomicTorch.GameEngine.Common.Primitives;
   using System;
   using System.Collections.Generic;
+  using System.Linq;
   using System.Threading.Tasks;
 
   public class EventMigrationMutant : ProtoEventWaveAttack
@@ -98,18 +99,24 @@
         }
       }
 
+      var claimPublicState = claimObject.GetPublicState<ObjectLandClaimPublicState>();
+      var area = claimPublicState.LandClaimAreaObject;
+      var areaState = area.GetPrivateState<LandClaimAreaPrivateState>();
+      var owners = areaState.ServerGetLandOwners().ToList();
+      bool ownersOnline = this.IsAnyOwnerOnline(owners);
+
       List<IProtoWorldObject> protoObjectToSpawns = new List<IProtoWorldObject>();
 
-      IProtoWorldObject bigBoss = this.GetLastWaveBossMob(tLevel);
       if (publicState.CurrentWave == RateMigrationMutantWaveCount.SharedValue)
       {
+        IProtoWorldObject bigBoss = this.GetLastWaveBossMob(tLevel, ownersOnline);
         if (bigBoss is not null)
           protoObjectToSpawns.Add(bigBoss);
       }
 
-      IProtoWorldObject boss = this.GetWaveBossMob(tLevel);
       if (publicState.CurrentWave >= RateMigrationMutantWaveCount.SharedValue - 2)
       {
+        IProtoWorldObject boss = this.GetWaveBossMob(tLevel, ownersOnline);
         if (boss is not null)
           protoObjectToSpawns.Add(boss);
       }
@@ -239,13 +246,6 @@
 
       if (spawnedObjects.Count > 0 && claimObject is not null)
       {
-        var claimPublicState = claimObject.GetPublicState<ObjectLandClaimPublicState>();
-        var area = claimPublicState.LandClaimAreaObject;
-
-        var areaPrivateState = LandClaimArea.GetPrivateState(area);
-
-        var owners = areaPrivateState.ServerGetLandOwners();
-
         foreach (string owner in owners)
         {
           var character = Api.Server.Characters.GetPlayerCharacter(owner);
@@ -400,8 +400,11 @@
       spawnPreset.Add(Api.GetProtoEntity<MobEnragedWolf>());
     }
 
-    private IProtoWorldObject GetLastWaveBossMob(int tLevel)
+    private IProtoWorldObject GetLastWaveBossMob(int tLevel, bool ownerOnline)
     {
+      if (!ownerOnline)
+        return null;
+
       if (tLevel >= 5)
         return Api.GetProtoEntity<MobEnragedLargePragmiumBear>();
       else if (tLevel >= 3)
@@ -410,12 +413,20 @@
         return null;
     }
 
-    private IProtoWorldObject GetWaveBossMob(int tLevel)
+    private IProtoWorldObject GetWaveBossMob(int tLevel, bool ownerOnline)
     {
+      if (!ownerOnline)
+        return null;
+
       if (tLevel >= 5)
         return Api.GetProtoEntity<MobEnragedPragmiumBear>();
       else
         return null;
+    }
+
+    private bool IsAnyOwnerOnline(List<string> owners)
+    {
+      return owners.Any(o => (Api.Server.Characters.GetPlayerCharacter(o)?.GetPublicState<PlayerCharacterPublicState>()?.IsOnline).GetValueOrDefault());
     }
 
     protected override bool ServerCreateEventSearchArea(

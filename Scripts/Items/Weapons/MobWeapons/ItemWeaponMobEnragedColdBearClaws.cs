@@ -6,14 +6,13 @@
   using AtomicTorch.CBND.CoreMod.SoundPresets;
   using AtomicTorch.CBND.CoreMod.Systems.Weapons;
   using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Physics;
   using AtomicTorch.CBND.GameApi.Data.Weapons;
   using AtomicTorch.CBND.GameApi.Data.World;
   using AtomicTorch.GameEngine.Common.Helpers;
   using System.Collections.Generic;
 
   public class ItemWeaponMobEnragedColdBearClaws : ProtoItemMobWeaponMelee
-  { 
+  {
     public override bool CanDamageStructures => true;
 
     public override double DamageApplyDelay => 0.15;
@@ -30,7 +29,7 @@
       compatibleAmmoProtos = null;
 
       overrideDamageDescription = new DamageDescription(
-          damageValue: 500,
+          damageValue: 250,
           armorPiercingCoef: 1.0,
           finalDamageMultiplier: 1,
           rangeMax: 1.5,

@@ -1,0 +1,254 @@
+﻿
+Available settings
+------------------
+AchievementsModdedServerEnabled : Achievement enabled in a modded server. Default to disabled like vanilla game.
+ConstructionOverlayAlwaysVisible : Determines if you see the construction overlay when building or relocating structures, default to true like vanilla game
+MigrationMutantAttackNumber: Number of base under attack for mutant migration event, default 3
+MigrationMutantAttackNumberLocalServer: Number of base under attack for mutant migration event, default 1
+MigrationMutantDurationWithoutDelay: Mutant migration duration in minutes without the 5 minutes delay, default 15
+MigrationMutantWaveCount: Number of waves for mutant migration event, default 5
+MigrationMutantMobCount: Number of mobs for each claims, default 1,4,8,13,20
+MigrationMutantMobMaxLevelPerWave: Max level of mobs for each wave, default 1,2,3,4,5
+ServerGlobalStorageItemsSlotsCapacity: How many global storage slots are allowed per base. The value should be within 0-128 range, default 64
+WreckedHoverboardChance: A chance to get wrecked hoverboard in garbage pile (1 / RateValue ;  Default 30 ; Set 0 for none)
+
+
+Ideas...
+--------
+item from ground to bag : waiting for ai_enabled TakeAll changes 
+reduce boss damage - waiting for ai_enabled weapon damage to structure multiplier
+
+setting robot time interval
+setting robot allowed iprotomanufacturer
+setting minimum recipe count
+
+Changes
+-------
+
+1.56.0
+Robots will fill input and fuel containers in manufacturer structures
+Robots settings with alt-click
+Gathered droplist items will go right into bags inside your hotbar
+Allow fish in bags
+Land claim destroy timer increased to 72h if destroyed by an enraged mob
+Mutant Migration : No boss if claim owners are not online
+
+1.55.1
+Robots settings in the land claim
+Added back the rate "Land claim safe storage capacity" for PvE, looks like it wasn't working in PvE anymore
+Renamed the rate for S.H.I.E.L.D to "Base S.H.I.E.L.D. protection available" without PvP in it
+
+1.54.2
+Removed the T4 in Katana's recipe
+
+1.54.1
+Despawn wrecked hoverboard if the player doesn't have any land claim
+Fixed crashed spaceship scope issue
+
+1.54.0
+Added Katana
+
+0.1.53
+R31.8.1 support
+Logistic robots (work in progress)
+Steel sword by Melody
+Different spaceship colors for the crash event, thanks Salvick
+
+0.1.52
+R31.7.2 support
+Mutant migration : Enraged mobs won't despawn before the event ends
+Need to finish T2 before kill enraged pragmium bear quest
+Timer to destroy spaceship in case it didn't despawn
+
+0.1.51
+New setting AchievementsModdedServerEnabled
+
+0.1.50
+Added a way to disable the construction overlay with ConstructionOverlayAlwaysVisible set to 0. You can still see it when holding ALT
+
+0.1.49
+Vechicles won't go in garage if the owner doesn't have the assembly bay unlocked
+
+0.1.48
+Added a chance for wrecked hoverboard in garbage pile (Rate WreckedHoverboardChance)
+
+0.1.47
+Added Crimson Elite NPC to spaceship crash site
+Spaceship will destroy when the event ends
+You can loot the spaceship
+Fixed max level for mobs in Mutant migration
+
+0.1.46
+A bit less loot in the crash event
+No boss in Mutant Migration event for T1-2 land claims
+Boss in Mutant Migration will have a random level, not always maxed
+
+0.1.45
+R31.6.1 support
+Using the map from Cryofall R31.6.1, added my Pragmium King and Giant Prag zones.
+Added waterfall near the King
+
+0.1.44
+R31.5.2 support
+Spaceship crash event
+Random Meteors in meteorite drop event
+
+0.1.43
+R31.3.3 support
+Piercing Energy Canon and Rapier
+
+0.1.42
+Added Enraged pragmium heart
+Changed escape stage 4
+
+0.1.41
+R31.3.1 support
+
+0.1.40
+R31 support
+Increased Vanguard weapon damage a bit
+Renamed Mass Driver to Ender Crate until I work on the UI and images
+Retreat AI
+Less calculation in Enraged AI
+SMG NPC on Space debris
+
+0.1.39
+Added Mass Driver (Shared crate between bases)
+
+0.1.38
+Fix for portable freezer not working
+Added huge grounded crate
+
+0.1.37
+Bag must be equipped in hotbar
+Added max number of items in bags
+Fixed crawler won't spawn in land claims
+Meteorites can drop on beach, moutains, meadows etc.
+Added Vanguard weapons
+Mutant migration event circle bound to player
+
+0.1.36
+Don't recall drones when switching to a weapon
+
+0.1.35
+Don't recall drones based on height
+Follow target distance limit on path finding
+Mob won't target a spectator 
+
+0.1.34
+Mobs will try to follow you on slopes
+
+Mutant migration:
+Mob won't attack a land claim with destruction timer
+Mob spawn is now an async function
+New setting "MigrationMutantMobMaxLevelPerWave", default "1,2,3,4,5", set "5,5,5,5,5" for no restriction on levels
+Boss will be max level for the wave
+Try to not spawn mobs behind cliff
+
+0.1.33
+Reduced number of mutant crawlers
+Changes to reduce lag with Mutant migration
+Added a setting to change the number of base under attack "MigrationMutantAttackNumber"
+Despawn mutant crawlers after 1 hour if not despawned correctly
+
+0.1.32
+Fixed a bug in path finding, thanks J422
+Added Mutant Crawlers Infestation by Salvick
+Added new quests for mutant migration event
+
+0.1.31
+Don't consider mobs in path finding
+Fixed moving mobs when they are too far away
+PvE soil/distance requirement for oil and lithium extraction like in PvP
+Princess will spawn only remains on death, no prag spire
+Added some random time for mobs spawn in Mutant migration
+
+0.1.30
+Mutant migration:
+Fixed a bug with mutant migration waves after clearing first wave
+Added destruction timeout on land claim
+Added raid block 
+
+0.1.29
+Pragmium sensor should now works with Giant Pragmium Source
+Added some mob AI
+Added MigrantMutantConstants
+
+0.1.28
+Fixed a problem when loading inventory with extra slots
+Added herbal medicine
+
+0.1.27
+You need a free slot to remove the backpack (problem with shift-click if inventory is full)
+
+Mutant migration : 
+Increased size circle for the event, mobs are not all spawning
+Spawn the boss first on last waves
+Added pragmium bear in last waves
+
+0.1.26
+Medical cool down to 3 seconds in pve
+Added max level of minion based on the parent mob (Boss or Princess)
+Added zone for mob level restrictions (if you want to make a map ZoneMobLevel1 to 5)
+                    
+Mutant migration : 
+First attempt for waves
+One attack location on local server
+Event set to each 1.0-1.5 hour
+Added large pragmium bear on last wave if claim T3+
+Added your land claim as a goal target for the mobs
+Fixed heavy turret damage on enraged mob
+                    
+0.1.25
+Added land claim storage and SHIELD
+                    
+0.1.24
+Land claim and turret can be destroyed by enraged mob             
+New vehicle remote control image by druffzilla
+Enraged mobs won't attack themself
+                    
+0.1.23
+Updated Jelly Bush mod
+                    
+0.1.22
+v1.30.7.3 compatibility
+druffzilla#8949, Salvick#3333 Jelly beans mod (corn recipes, butter, jelly fruit recipes)                   
+                    
+0.1.21
+Fixed Mutant Migration mobs despawn when there is an offline player
+                    
+0.1.20
+Turrets in pve
+Event Mutant Migration
+PsiGrove always drops prag
+                    
+0.1.19
+Fixed Boss damage to always x1 for all levels
+                    
+0.1.18                  
+Mech Crusher
+Sell backpack in fridge trading station
+                    
+0.1.17
+Enabled vehicle remote on pvp server
+More Princess
+Giant prag in desert
+                    
+0.1.16
+Powerbank durability dropping to fast in portable fridge
+Keinite and pragmium backpack rename
+                    
+0.1.15
+Cloth backpack rename
+Less ammo in spacebris
+Mob level hit 0.25 instead of 0.125
+                    
+0.1.14
+Higher level mobs hit harder
+                    
+0.1.13
+Can't put storage item in fridge
+You can now remove the backpack when there is a bag in the character inventory
+Fixed the storage interface when it is inside another chest
+
+  

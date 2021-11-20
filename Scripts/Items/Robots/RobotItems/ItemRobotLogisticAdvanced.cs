@@ -10,5 +10,9 @@
     public override uint DurabilityMax => 10000;
 
     public override string Name => "Advanced logistic robot";
+
+    public override byte ItemDeliveryCount => 2;
+
+    public override ushort DeliveryTimerSeconds => 10;
   }
 }
