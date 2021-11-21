@@ -9,7 +9,6 @@
   using AtomicTorch.CBND.GameApi.Data.Items;
   using AtomicTorch.CBND.GameApi.Data.State;
   using AtomicTorch.CBND.GameApi.Scripting;
-  using System.Collections.Generic;
   using System.Collections.ObjectModel;
 
   public class ViewModelWindowItemRobot : BaseViewModel
@@ -66,6 +65,11 @@
           this);
 
       this.state.ClientSubscribe(
+        _ => _.LoadInactiveOnly,
+        _ => this.NotifyPropertyChanged(nameof(this.ManufacturerLoadInactiveOnly)),
+        this);
+
+      this.state.ClientSubscribe(
           _ => _.AllowedStructure,
           _ => this.LoadAllowedStructure(),
           this);
@@ -95,17 +99,26 @@
       set { RobotSystem.ClientSetRobotManufacturerFuelSetting(this.state.GameObject as IItem, value); }
     }
 
+    public ushort TimeRunIntervalSeconds
+    {
+      get { return this.state.TimeRunIntervalSeconds; }
+      set { RobotSystem.ClientSetRobotManufacturerTimeRunSetting(this.state.GameObject as IItem, value); }
+    }
+
     public byte StructureLoadPercent
     {
       get { return this.state.StructureLoadPercent; }
       set { RobotSystem.ClientSetRobotManufacturerLoadSetting(state.GameObject as IItem, value); }
     }
 
-    public ushort TimeRunIntervalSeconds
+    public bool ManufacturerLoadInactiveOnly
     {
-      get { return this.state.TimeRunIntervalSeconds; }
-      set { RobotSystem.ClientSetRobotManufacturerTimeRunSetting(this.state.GameObject as IItem, value); }
+      get { return this.state.LoadInactiveOnly; }
+      set { RobotSystem.ClientSetRobotManufacturerLoadInactiveOnlySetting(state.GameObject as IItem, value); }
     }
+
+
+
 
     public void LoadAllowedStructure()
     {

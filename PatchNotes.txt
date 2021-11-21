@@ -19,11 +19,16 @@ item from ground to bag : waiting for ai_enabled TakeAll changes
 reduce boss damage - waiting for ai_enabled weapon damage to structure multiplier
 
 setting robot time interval
-setting robot allowed iprotomanufacturer
+
 setting minimum recipe count
 
 Changes
 -------
+
+1.56.1
+Close the robot setting window when it starts the run
+Finished robot structure load percent setting and time between runs
+Robot load inactive structure only setting
 
 1.56.0
 Robots will fill input and fuel containers in manufacturer structures

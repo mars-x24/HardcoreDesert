@@ -1,4 +1,5 @@
 ﻿using AtomicTorch.CBND.CoreMod.Items.Robots;
+using AtomicTorch.CBND.CoreMod.Robots;
 using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
 using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Manufacturers;
 using AtomicTorch.CBND.GameApi.Data.Items;
@@ -51,6 +52,27 @@ namespace AtomicTorch.CBND.CoreMod.Systems.LandClaim
       state.RobotManufacturerCharacterInventoryEnabled = value;
     }
 
+    public static void ClientSetRobotManufacturerEnderCrateSetting(ILogicObject area, string playerName, bool value)
+    {
+      Instance.CallServer(_ => _.ServerRemote_SetRobotManufacturerEnderCrateSetting(area, playerName, value));
+    }
+
+    private void ServerRemote_SetRobotManufacturerEnderCrateSetting(ILogicObject area, string playerName, bool value)
+    {
+      var state = area.GetPrivateState<LandClaimAreaPrivateState>();
+
+      var landClaim = state.ServerLandClaimWorldObject;
+      var proto = landClaim.ProtoGameObject as IProtoStaticWorldObject;
+
+      if (!proto.SharedCanInteract(Server.Characters.GetPlayerCharacter(playerName), landClaim, false))
+        return;
+
+      state.RobotManufacturerEnderCrateEnabled = value;
+    }
+
+
+
+
 
 
 
@@ -59,10 +81,11 @@ namespace AtomicTorch.CBND.CoreMod.Systems.LandClaim
       Instance.CallServer(_ => _.ServerRemote_SetRobotManufacturerSettings(itemRobot, isInputSlot, value));
     }
 
-    private void ServerRemote_SetRobotManufacturerSettings(IItem robot, bool isInputSlot, bool value)
+    private void ServerRemote_SetRobotManufacturerSettings(IItem itemRobot, bool isInputSlot, bool value)
     {
-      var state = robot.GetPrivateState<ItemRobotPrivateState>();
+      var state = itemRobot.GetPrivateState<ItemRobotPrivateState>();
 
+      this.CheckCharacterRobotPrivateState(itemRobot, state);
       if (isInputSlot)
         state.RobotManufacturerInputEnabled = value;
       else
@@ -74,10 +97,11 @@ namespace AtomicTorch.CBND.CoreMod.Systems.LandClaim
       Instance.CallServer(_ => _.ServerRemote_SetRobotManufacturerFuelSetting(itemRobot, value));
     }
 
-    private void ServerRemote_SetRobotManufacturerFuelSetting(IItem robot, bool value)
+    private void ServerRemote_SetRobotManufacturerFuelSetting(IItem itemRobot, bool value)
     {
-      var state = robot.GetPrivateState<ItemRobotPrivateState>();
+      var state = itemRobot.GetPrivateState<ItemRobotPrivateState>();
 
+      this.CheckCharacterRobotPrivateState(itemRobot, state);
       state.RobotManufacturerFuelEnabled = value;
     }
 
@@ -92,6 +116,7 @@ namespace AtomicTorch.CBND.CoreMod.Systems.LandClaim
 
       var protoItem = itemRobot.ProtoGameObject as IProtoItemRobot;
 
+      this.CheckCharacterRobotPrivateState(itemRobot, state);
       state.TimeRunIntervalSeconds = value == 0 ? (ushort)0 : MathHelper.Clamp(value, protoItem.DeliveryTimerSeconds, ushort.MaxValue);
     }
 
@@ -100,21 +125,38 @@ namespace AtomicTorch.CBND.CoreMod.Systems.LandClaim
       Instance.CallServer(_ => _.ServerRemote_SetRobotManufacturerLoadSetting(itemRobot, value));
     }
 
-    private void ServerRemote_SetRobotManufacturerLoadSetting(IItem robot, byte value)
+    private void ServerRemote_SetRobotManufacturerLoadSetting(IItem itemRobot, byte value)
     {
-      var state = robot.GetPrivateState<ItemRobotPrivateState>();
+      var state = itemRobot.GetPrivateState<ItemRobotPrivateState>();
 
+      this.CheckCharacterRobotPrivateState(itemRobot, state);
       state.StructureLoadPercent = MathHelper.Clamp(value, (byte)1, (byte)100);
     }
+
+    public static void ClientSetRobotManufacturerLoadInactiveOnlySetting(IItem itemRobot, bool value)
+    {
+      Instance.CallServer(_ => _.ServerRemote_SetRobotManufacturerLoadInactiveOnlySetting(itemRobot, value));
+    }
+
+    private void ServerRemote_SetRobotManufacturerLoadInactiveOnlySetting(IItem itemRobot, bool value)
+    {
+      var state = itemRobot.GetPrivateState<ItemRobotPrivateState>();
+
+      this.CheckCharacterRobotPrivateState(itemRobot, state);
+      state.LoadInactiveOnly = value;
+    }
+
+
+
 
     public static void ClientSetRobotManufacturerStructureSetting(IItem itemRobot, IProtoObjectManufacturer proto, bool value)
     {
       Instance.CallServer(_ => _.ServerRemote_SetRobotManufacturerStructureSetting(itemRobot, proto, value));
     }
 
-    private void ServerRemote_SetRobotManufacturerStructureSetting(IItem robot, IProtoObjectManufacturer proto, bool value)
+    private void ServerRemote_SetRobotManufacturerStructureSetting(IItem itemRobot, IProtoObjectManufacturer proto, bool value)
     {
-      var state = robot.GetPrivateState<ItemRobotPrivateState>();
+      var state = itemRobot.GetPrivateState<ItemRobotPrivateState>();
 
       List<IProtoObjectManufacturer> temp = null;
       if (state.AllowedStructure != null)
@@ -137,7 +179,28 @@ namespace AtomicTorch.CBND.CoreMod.Systems.LandClaim
       if (temp.Count == 0)
         temp = null;
 
+      this.CheckCharacterRobotPrivateState(itemRobot, state);
       state.AllowedStructure = temp;
+    }
+
+    private void CheckCharacterRobotPrivateState(IItem robotItem, ItemRobotPrivateState state)
+    {
+      if (state.WorldObjectRobot is null)
+        return;
+
+      var stateRobot = state.WorldObjectRobot.GetPrivateState<RobotPrivateState>();
+      if (stateRobot.TimerInactive >= state.TimeRunIntervalSeconds)
+        stateRobot.TimerInactive = state.TimeRunIntervalSeconds - 5;
+
+      //var character = ServerRemoteContext.Character;
+      //if (!Server.World.IsInPrivateScope(robotItem, character))
+      //{
+      //  Server.World.ForceEnterScope(character, robotItem);
+      //  Server.World.EnterPrivateScope(character, robotItem);
+      //}
+
+
+
     }
   }
 

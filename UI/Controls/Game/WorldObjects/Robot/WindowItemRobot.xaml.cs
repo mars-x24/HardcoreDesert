@@ -47,6 +47,15 @@
       }
     }
 
+    public static void Close(uint itemRobotId)
+    {
+      if (instance?.IsOpened == true && instance.itemRobot.Id == itemRobotId)
+      {
+        instance.CloseWindow();
+      }
+    }
+
+
     protected override void InitControlWithWindow()
     {
       this.Window.IsCached = false;

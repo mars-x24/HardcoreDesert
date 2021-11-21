@@ -32,6 +32,11 @@
           _ => _.RobotManufacturerCharacterInventoryEnabled,
           _ => this.NotifyPropertyChanged(nameof(this.ManufacturerCharacterInventory)),
           this);
+
+      state.ClientSubscribe(
+          _ => _.RobotManufacturerEnderCrateEnabled,
+          _ => this.NotifyPropertyChanged(nameof(this.ManufacturerEnderCrate)),
+          this);
     }
 
     public bool IsRobotsAvailableForCurrentTier =>
@@ -56,6 +61,11 @@
       set { RobotSystem.ClientSetRobotManufacturerCharacterInventorySetting(state.GameObject as ILogicObject, Api.Client.Characters.CurrentPlayerCharacter.Name, value); }
     }
 
+    public bool ManufacturerEnderCrate
+    {
+      get { return this.state.RobotManufacturerEnderCrateEnabled; }
+      set { RobotSystem.ClientSetRobotManufacturerEnderCrateSetting(state.GameObject as ILogicObject, Api.Client.Characters.CurrentPlayerCharacter.Name, value); }
+    }
 
   }
 }

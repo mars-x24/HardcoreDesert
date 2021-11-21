@@ -81,7 +81,13 @@
 
       //wait for timer
       privateStateRobot.TimerInactive += data.DeltaTime;
-      if (privateStateRobot.TimerInactive < this.DeliveryTimerSeconds)
+
+      if (data.PrivateState.TimeRunIntervalSeconds == 0)
+        return;
+
+      ushort timeBetweenRuns = Math.Max(data.PrivateState.TimeRunIntervalSeconds, this.DeliveryTimerSeconds);
+
+      if (privateStateRobot.TimerInactive < timeBetweenRuns)
         return;
 
       var robotProto = robotObject.ProtoGameObject as IProtoRobot;
@@ -96,28 +102,35 @@
       var ownerContainer = data.GameObject.Container;
       IProtoEntity targetItemProto = null;
 
-      if (data.GameObject.Container.OwnerAsStaticObject is not null)
+      if (ownerContainer is null)
+        return;
+
+      if (ownerContainer.OwnerAsStaticObject is not null)
       {
-        if (data.GameObject.Container.OwnerAsStaticObject.ProtoGameObject is not ObjectGroundItemsContainer)  //nothing to do on ground       
+        if (ownerContainer.OwnerAsStaticObject.ProtoGameObject is not ObjectGroundItemsContainer)  //nothing to do on ground       
         {
-          owner = data.GameObject.Container.OwnerAsStaticObject;
-          position = data.GameObject.Container.OwnerAsStaticObject.TilePosition;
+          owner = ownerContainer.OwnerAsStaticObject;
+          position = ownerContainer.OwnerAsStaticObject.TilePosition;
 
           var publicState = owner.GetPublicState<ObjectCratePublicState>();
           if (publicState is not null)
             targetItemProto = publicState.IconSource;
         }
       }
-      else if (data.GameObject.Container.OwnerAsCharacter is not null)
+      else if (ownerContainer.OwnerAsCharacter is not null)
       {
-
-        owner = data.GameObject.Container.OwnerAsCharacter;
-        position = data.GameObject.Container.OwnerAsCharacter.TilePosition;
+        owner = ownerContainer.OwnerAsCharacter;
+        position = ownerContainer.OwnerAsCharacter.TilePosition;
 
         var characterPrivateState = owner.GetPrivateState<PlayerCharacterPrivateState>();
-        if (characterPrivateState.ContainerHand == data.GameObject.Container ||
-            characterPrivateState.ContainerHotbar == data.GameObject.Container)
+        if (characterPrivateState.ContainerHand == ownerContainer ||
+            characterPrivateState.ContainerHotbar == ownerContainer)
           owner = null; //must be in character inventory
+      }
+      else if (ownerContainer.Owner is LandClaimGroup)
+      {
+        //owner = ownerContainer.Owner;
+
       }
 
       if (owner is null)
@@ -243,6 +256,7 @@
       hints.Add(ItemHints.AltClickToUseItem);
       hints.Add("Can hold " + this.ItemDeliveryCount + " stack" + (this.ItemDeliveryCount > 1 ? "s" : "") + " of items.");
       hints.Add("Minimum of " + this.DeliveryTimerSeconds + " seconds between runs.");
+      hints.Add("You must allow robots inside your land claim building.");
     }
 
     protected override void ServerInitialize(ServerInitializeData data)
@@ -263,7 +277,7 @@
           CharacterDespawnSystem.ServerGetServiceAreaPosition().ToVector2D());
       protoRobot.ServerSetupAssociatedItem(objectRobot, itemRobot);
       data.PrivateState.WorldObjectRobot = objectRobot;
-      data.PrivateState.StructureLoadPercent = 100;
+      data.PrivateState.StructureLoadPercent = ItemRobotPrivateState.DEFAULT_STRUCTURE_LOAD_PERCENT;
       data.PrivateState.TimeRunIntervalSeconds = this.DeliveryTimerSeconds;
     }
   }

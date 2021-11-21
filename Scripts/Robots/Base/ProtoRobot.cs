@@ -27,6 +27,7 @@
   using AtomicTorch.CBND.GameApi.ServicesClient.Components;
   using AtomicTorch.GameEngine.Common.Primitives;
   using HardcoreDesert.Scripts.Robots.Base;
+  using HardcoreDesert.UI.Controls.Game.WorldObjects.Robot;
   using System;
   using System.Linq;
   using System.Windows.Media;
@@ -293,11 +294,6 @@
                                   this.ServerGetStorageItemsContainer(objectRobot),
                                   out ushort robotMovedCount);
 
-      //var tempList = Api.Shared.GetTempList<ICharacter>();
-      //Api.Server.World.GetScopedByPlayers(itemRobot, tempList.AsList());
-      //foreach (var player in tempList.AsList())
-      //  Api.Server.World.ForceExitScope(player, itemRobot);
-
       // move reserved slot item into the slot where the robot was located previously
       ServerCreateReservedSlotItemIfNecessary(privateState, objectRobot);
       Server.Items.MoveOrSwapItem(privateState.AssociatedItemReservedSlot,
@@ -328,7 +324,7 @@
       using var observers = Api.Shared.GetTempList<ICharacter>();
       Server.World.GetScopedByPlayers(objectRobot, observers);
       this.CallClient(observers.AsList(),
-                      _ => _.ClientRemote_OnRobotStart(objectRobot));
+                      _ => _.ClientRemote_OnRobotStart(objectRobot, itemRobot.Id));
     }
 
     protected virtual IComponentSpriteRenderer ClientCreateRendererShadow(
@@ -720,12 +716,14 @@
 
         foreach (var item in containerSource.GetItemsOfProto(itemProto))
         {
-          if (item.Count <= countToMove)
+          ushort itemCount = item.Count;
+
+          if (itemCount <= countToMove)
           {
-            if (Api.Server.Items.MoveOrSwapItem(item, containerDestination, out movedCount, countToMove: item.Count))
+            if (Api.Server.Items.MoveOrSwapItem(item, containerDestination, out movedCount, countToMove: itemCount))
             {
               moved = true;
-              countToMove -= item.Count;
+              countToMove -= itemCount;
             }
           }
           else
@@ -991,7 +989,7 @@
       }
     }
 
-    private void ClientRemote_OnRobotStart(IDynamicWorldObject objectRobot)
+    private void ClientRemote_OnRobotStart(IDynamicWorldObject objectRobot, uint itemRobotId)
     {
       if (!objectRobot.IsInitialized)
       {
@@ -1009,6 +1007,8 @@
       //Logger.Dev("Robot start sound at: " + objectRobot.Position);
 
       Client.Audio.PlayOneShot(this.RobotStartSoundResource, objectRobot);
+
+      WindowItemRobot.Close(itemRobotId);
     }
 
     private void ClientRemote_VehicleExploded(Vector2D position)

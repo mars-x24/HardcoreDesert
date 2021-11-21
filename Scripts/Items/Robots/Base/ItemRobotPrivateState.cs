@@ -7,6 +7,8 @@
 
   public class ItemRobotPrivateState : ItemWithDurabilityPrivateState
   {
+    public const byte DEFAULT_STRUCTURE_LOAD_PERCENT = 34;
+
     public IDynamicWorldObject WorldObjectRobot { get; set; }
 
     [SyncToClient]
@@ -26,5 +28,8 @@
 
     [SyncToClient]
     public byte StructureLoadPercent { get; set; }
+
+    [SyncToClient]
+    public bool LoadInactiveOnly { get; set; }
   }
 }

@@ -184,7 +184,7 @@ namespace HardcoreDesert.Scripts.Robots.Base
       if (privateStateManufacturer.ManufacturingState is not null)
         list.Add(privateStateManufacturer.ManufacturingState.ContainerInput);
 
-      return list;
+      return list.OrderBy(i => i.OccupiedSlotsCount).ToList();
     }
 
     public static List<IItemsContainer> GetFuelContainers(IStaticWorldObject worldObject)

@@ -59,6 +59,9 @@ namespace HardcoreDesert.Scripts.Robots.Base
     private bool outputAllowed = false;
     private bool fuelAllowed = false;
 
+    private byte loadPercent = ItemRobotPrivateState.DEFAULT_STRUCTURE_LOAD_PERCENT;
+    private bool loadInactiveOnly = false;
+
     public RobotItemHelper(IDynamicWorldObject robotObject, IProtoRobot robotProto, IItemsContainer parentContainer, IProtoEntity targetItemProto,
       List<IStaticWorldObject> outputManufacturer, List<IStaticWorldObject> inputManufacturer)
     {
@@ -75,6 +78,9 @@ namespace HardcoreDesert.Scripts.Robots.Base
         this.inputAllowed = state.RobotManufacturerInputEnabled;
         this.outputAllowed = state.RobotManufacturerOutputEnabled;
         this.fuelAllowed = state.RobotManufacturerFuelEnabled;
+
+        this.loadPercent = state.StructureLoadPercent;
+        this.loadInactiveOnly = state.LoadInactiveOnly;
       }
 
       this.parentContainer = parentContainer;
@@ -118,6 +124,9 @@ namespace HardcoreDesert.Scripts.Robots.Base
 
     private void FindInputItems()
     {
+      if (this.loadInactiveOnly)
+        return;
+
       foreach (IStaticWorldObject m in this.inputManufacturer)
       {
         this.FindInputItems(m);
@@ -132,7 +141,8 @@ namespace HardcoreDesert.Scripts.Robots.Base
         return;
       }
 
-      this.SetCurrent(m);
+      if (!this.SetCurrent(m))
+        return;
 
       var recipes = this.GetCurrentRecipes();
       for (int i = 0; i < recipes.Count; i++)
@@ -173,7 +183,8 @@ namespace HardcoreDesert.Scripts.Robots.Base
 
       foreach (IStaticWorldObject m in this.outputManufacturer)
       {
-        this.SetCurrent(m);
+        if (!this.SetCurrent(m))
+          continue;
 
         var itemOrdered = RobotTargetHelper.GetOutputContainersItems(m, false);
 
@@ -201,7 +212,7 @@ namespace HardcoreDesert.Scripts.Robots.Base
         if (tempTargetCount > targetCount && this.parentContainer.EmptySlotsCount >= tempTargetItems.Count)
         {
           this.target = m;
-          foreach(var targetItem in tempTargetItems)
+          foreach (var targetItem in tempTargetItems)
             this.targetItems.Add(targetItem, ushort.MaxValue);
           this.targetCount = tempTargetCount;
         }
@@ -311,7 +322,7 @@ namespace HardcoreDesert.Scripts.Robots.Base
 
       this.target = this.currentObject;
 
-      return true;    
+      return true;
     }
 
     private void RecipeRemoveUselessItems(Recipe recipe)
@@ -337,7 +348,7 @@ namespace HardcoreDesert.Scripts.Robots.Base
       if (recipe is null)
         return;
 
-      int recipeCount = this.GetRecipeCount(this.currentInputContainer, recipe);
+      int recipeCount = this.GetRecipeCountWithLoadPercent(this.currentInputContainer, recipe);
 
       Dictionary<IProtoItem, ushort> recipeItemMoveCount = new Dictionary<IProtoItem, ushort>();
 
@@ -400,6 +411,20 @@ namespace HardcoreDesert.Scripts.Robots.Base
       }
     }
 
+    private int GetRecipeCountWithLoadPercent(IItemsContainer itemContainer, Recipe recipe)
+    {
+      int count = this.GetRecipeCount(itemContainer, recipe);
+
+      if (count <= 1)
+        return count;
+
+      int newCount = (int)Math.Round(count * this.loadPercent / 100.0, 0);
+      if (newCount <= 1)
+        return count;
+
+      return newCount;
+    }
+
     private int GetRecipeCount(IItemsContainer itemContainer, Recipe recipe)
     {
       if (recipe is null)
@@ -445,9 +470,16 @@ namespace HardcoreDesert.Scripts.Robots.Base
       return count;
     }
 
-    private void SetCurrent(IStaticWorldObject m)
+    private bool SetCurrent(IStaticWorldObject m)
     {
-      if(this.currentObject != m)
+      if (this.currentObject == m)
+        return true;
+
+      //if an item is found, lock the current structure
+      if (this.inputItems.Count + this.targetItems.Count + this.fuelItems.Count > 0)
+        return false;
+
+      if (this.currentObject != m)
       {
         this.inputItems.Clear();
         this.fuelItems.Clear();
@@ -456,6 +488,8 @@ namespace HardcoreDesert.Scripts.Robots.Base
 
       this.currentObject = m;
       this.currentPrivateState = m.GetPrivateState<StructurePrivateState>();
+
+      return true;
     }
 
     private void SetCurrentContainer(int containerNumber)

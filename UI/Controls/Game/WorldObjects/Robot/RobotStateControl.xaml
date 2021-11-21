@@ -36,6 +36,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <CheckBox Grid.Row="0" 
@@ -59,8 +60,12 @@
                          Foreground="{StaticResource BrushColor6}"
                          Margin="0, 10, 0, 10" />
 
-
-
+            <CheckBox Grid.Row="3"
+                         Content="Allow robots from ender crate. (coming next...)"
+                         IsChecked="{Binding ManufacturerEnderCrate, Mode=TwoWay}"
+                         Focusable="False"
+                         Foreground="{StaticResource BrushColor6}"
+                         Margin="0, 10, 0, 10" />
         </Grid>
     </Grid>
 </base:BaseUserControl>
