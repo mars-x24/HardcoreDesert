@@ -3,6 +3,7 @@ using AtomicTorch.CBND.CoreMod.Items.Robots;
 using AtomicTorch.CBND.CoreMod.Robots;
 using AtomicTorch.CBND.CoreMod.StaticObjects.Structures;
 using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Barrels;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Generators;
 using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Manufacturers;
 using AtomicTorch.CBND.CoreMod.Systems.Crafting;
 using AtomicTorch.CBND.GameApi.Data;
@@ -266,6 +267,11 @@ namespace HardcoreDesert.Scripts.Robots.Base
       else if (this.currentObject.ProtoGameObject is ProtoObjectOilCrackingPlant protoOilCrackingPlant)
       {
         list.Add(protoOilCrackingPlant.ManufacturingConfig);
+      }
+
+      else if (this.currentObject.ProtoGameObject is ObjectGeneratorEngine protoObjectGeneratorEngine)
+      {
+        list.Add(protoObjectGeneratorEngine.ManufacturingConfig);
       }
 
       return list;
