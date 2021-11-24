@@ -314,10 +314,15 @@ namespace HardcoreDesert.Scripts.Robots.Base
         }
         else
         {
+          //if we plan to remove this proto, don't bring any yet
+          //int outputCount = this.targetItems.Where(i => i.Key.ProtoItem == item.ProtoItem).Sum(i => i.Value);
+          //if (outputCount == 0)
+          //{
           if (!this.inputItems.Keys.Contains(item.ProtoItem))
             this.inputItems.Add(item.ProtoItem, count);
           else
             this.inputItems[item.ProtoItem] = (ushort)((ushort)this.inputItems[item.ProtoItem] + count);
+          //}
         }
       }
       else
@@ -330,6 +335,7 @@ namespace HardcoreDesert.Scripts.Robots.Base
 
       return true;
     }
+
 
     private void RecipeRemoveUselessItems(Recipe recipe)
     {

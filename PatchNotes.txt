@@ -18,12 +18,13 @@ Ideas...
 item from ground to bag : waiting for ai_enabled TakeAll changes 
 reduce boss damage - waiting for ai_enabled weapon damage to structure multiplier
 
-setting robot time interval
-
-setting minimum recipe count
 
 Changes
 -------
+
+1.56.2
+Improved robots with oil refinery
+Disposing the manufacturer icons when the robot interface is closed
 
 1.56.1
 Close the robot setting window when it starts the run

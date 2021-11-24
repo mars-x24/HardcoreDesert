@@ -140,6 +140,13 @@
 
       this.ViewModelItemTooltip.Dispose();
       this.ViewModelItemTooltip = null;
+
+      foreach (var viewModelEntity in this.EntityCollection)
+      {
+        viewModelEntity.Dispose();
+      }
+      this.EntityCollection.Clear();
+      this.EntityCollection = null;
     }
 
   }
