@@ -6,6 +6,7 @@ using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Barrels;
 using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Generators;
 using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Manufacturers;
 using AtomicTorch.CBND.CoreMod.Systems.Crafting;
+using AtomicTorch.CBND.CoreMod.Systems.PowerGridSystem;
 using AtomicTorch.CBND.GameApi.Data;
 using AtomicTorch.CBND.GameApi.Data.Items;
 using AtomicTorch.CBND.GameApi.Data.World;
@@ -142,6 +143,13 @@ namespace HardcoreDesert.Scripts.Robots.Base
         return;
       }
 
+      //electricity off
+      if (m.ProtoGameObject is IProtoObjectElectricityConsumer o)
+      {
+        if (o.GetPublicState(m).ElectricityConsumerState == ElectricityConsumerState.PowerOff)
+          return;
+      }
+
       if (!this.SetCurrent(m))
         return;
 
@@ -267,6 +275,7 @@ namespace HardcoreDesert.Scripts.Robots.Base
       else if (this.currentObject.ProtoGameObject is ProtoObjectOilCrackingPlant protoOilCrackingPlant)
       {
         list.Add(protoOilCrackingPlant.ManufacturingConfig);
+        list.Add(protoOilCrackingPlant.ManufacturingConfigGasoline);
       }
 
       else if (this.currentObject.ProtoGameObject is ObjectGeneratorEngine protoObjectGeneratorEngine)

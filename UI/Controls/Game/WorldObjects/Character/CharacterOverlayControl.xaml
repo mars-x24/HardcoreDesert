@@ -118,7 +118,7 @@
                                         Margin="0,4,0,0"
                                         DataContext="{Binding ViewModelCharacterHealthBarControl}" />
 
-        <!-- State managers and triggers -->
+        <!-- State managers and triggers | to show level at night
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisibilityStates">
                 <VisualStateGroup.Transitions>
@@ -131,9 +131,6 @@
                 <VisualState x:Name="Visible" />
                 <VisualState x:Name="Collapsed">
                     <Storyboard>
-
-
-                        <!-- MOD -->
                         <DoubleAnimation Storyboard.TargetName="ItemsControlEffects"
                                          Storyboard.TargetProperty="Opacity"
                                          To="0"
@@ -147,6 +144,26 @@
                                          To="0"
                                          Duration="0" />
                         <DoubleAnimation Storyboard.TargetName="CharacterHealthBarControl"
+                                         Storyboard.TargetProperty="Opacity"
+                                         To="0"
+                                         Duration="0" />
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups> -->
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisibilityStates">
+                <VisualStateGroup.Transitions>
+                    <VisualTransition To="Visible"
+                                      GeneratedDuration="0:0:0.25" />
+                    <VisualTransition To="Collapsed"
+                                      GeneratedDuration="0:0:0.25" />
+                </VisualStateGroup.Transitions>
+
+                <VisualState x:Name="Visible" />
+                <VisualState x:Name="Collapsed">
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetName="LayoutRoot"
                                          Storyboard.TargetProperty="Opacity"
                                          To="0"
                                          Duration="0" />

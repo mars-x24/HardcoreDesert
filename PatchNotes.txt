@@ -18,9 +18,17 @@ Ideas...
 item from ground to bag : waiting for ai_enabled TakeAll changes 
 reduce boss damage - waiting for ai_enabled weapon damage to structure multiplier
 
-
 Changes
 -------
+
+1.57.0
+Hide mob level at night
+Electricity T1 + S.H.I.E.L.D.
+RateShieldProtectionDuration, default shield duration to 6 days
+Completionist data for Pragmium King, Mutant infestation, Crash site, Mutant migration
+Princess immune to pragmium explosion
+Fixed robot not going to cracking plant empty canister input
+Robot won't load an electricity consumer with power off
 
 1.56.2
 Improved robots with oil refinery

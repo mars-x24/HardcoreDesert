@@ -4,6 +4,8 @@
   using AtomicTorch.CBND.CoreMod.Items.Ammo;
   using AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons;
   using AtomicTorch.CBND.CoreMod.SoundPresets;
+  using AtomicTorch.CBND.CoreMod.StaticObjects.Explosives;
+  using AtomicTorch.CBND.CoreMod.StaticObjects.Explosives.Special;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Minerals;
   using AtomicTorch.CBND.CoreMod.Stats;
   using AtomicTorch.CBND.CoreMod.Systems.BossLootSystem;
@@ -247,8 +249,12 @@
           {
             damagePostMultiplier *= 1.333; // the artillery shells are too OP already
           }
-          else
+          else if (weaponCache.ProtoExplosive is ObjectMineralGiantPragmiumSourceExplosion || weaponCache.ProtoExplosive is ObjectMineralPragmiumSourceExplosion)
           {
+            damagePostMultiplier *= 0;
+          }
+          else
+          { 
             damagePostMultiplier *= 2;
           }
         }

@@ -48,7 +48,7 @@
     public void Load(bool isEnabled)
     {
       this.isEnabled = isEnabled;
-      NotifyThisPropertyChanged();
+      //NotifyThisPropertyChanged();
       NotifyPropertyChanged(nameof(this.IsEnabled));
     }
 

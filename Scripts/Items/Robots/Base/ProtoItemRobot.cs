@@ -166,10 +166,10 @@
               .Where(m => RobotTargetHelper.ServerStructureAllowed(m, robotObject, privateStateItem)));
 
           if (areaPrivateState.RobotManufacturerOutputEnabled)
-            outputManufacturer.AddRange(temp.AsList());
+            outputManufacturer.AddRange(temp.AsList().OrderBy(a => Guid.NewGuid()).ToList());
 
           if (areaPrivateState.RobotManufacturerInputEnabled)
-            inputManufacturer.AddRange(temp.AsList());
+            inputManufacturer.AddRange(temp.AsList().OrderBy(a => Guid.NewGuid()).ToList());
         }
       }
 

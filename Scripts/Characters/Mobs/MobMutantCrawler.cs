@@ -1,6 +1,8 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Characters.Mobs
 {
+  using AtomicTorch.CBND.CoreMod.Characters.Player;
   using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
+  using AtomicTorch.CBND.CoreMod.Events;
   using AtomicTorch.CBND.CoreMod.Items.Devices;
   using AtomicTorch.CBND.CoreMod.Items.Food;
   using AtomicTorch.CBND.CoreMod.Items.Generic;
@@ -8,9 +10,11 @@
   using AtomicTorch.CBND.CoreMod.Skills;
   using AtomicTorch.CBND.CoreMod.SoundPresets;
   using AtomicTorch.CBND.CoreMod.Stats;
+  using AtomicTorch.CBND.CoreMod.Systems.CharacterDeath;
   using AtomicTorch.CBND.CoreMod.Systems.Droplists;
-  using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
-  using AtomicTorch.CBND.GameApi.Data.World;
+  using AtomicTorch.CBND.GameApi.Data.Characters;
+  using AtomicTorch.CBND.GameApi.Data.Logic;
+  using AtomicTorch.CBND.GameApi.Scripting;
 
   public class MobMutantCrawler : ProtoCharacterMob
   {
@@ -70,6 +74,27 @@
                                    .Add<ItemToxin>(count: 1)
                                    .Add<ItemBones>(count: 1)
                                    .Add<ItemSlime>(count: 2));
+
+      if (!IsServer)
+      {
+        return;
+      }
+
+      ServerCharacterDeathMechanic.CharacterKilled += ServerCharacterKilledHandler;
+
+      static void ServerCharacterKilledHandler(
+          ICharacter attackerCharacter,
+          ICharacter targetCharacter)
+      {
+        if (!attackerCharacter.IsNpc
+            && targetCharacter.ProtoCharacter.GetType() == typeof(MobMutantCrawler)
+            && Api.Shared.WrapInTempList(Server.World.GetGameObjectsOfProto<ILogicObject, EventMutantCrawlersInfestation>()).AsList().Count > 0)
+        {
+          PlayerCharacter.GetPrivateState(attackerCharacter)
+                         .CompletionistData
+                         .ServerOnParticipatedInEvent(Api.GetProtoEntity<EventMutantCrawlersInfestation>());
+        }
+      }
     }
 
     protected override void ServerInitializeCharacterMob(ServerInitializeData data)
@@ -99,5 +124,6 @@
 
       this.ServerSetMobInput(character, movementDirection, rotationAngleRad);
     }
+
   }
 }

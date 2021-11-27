@@ -97,6 +97,5 @@
   
   <ItemGroup>
     <Folder Include="Content\Textures\Items\Weapons\MobWeapons\" />
-    <Folder Include="Content\Textures\StaticObjects\Structures\Misc\" />
   </ItemGroup>  
 </Project>
