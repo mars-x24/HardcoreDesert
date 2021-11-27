@@ -11,7 +11,7 @@ namespace AtomicTorch.CBND.CoreMod.Rates
 
     public override string Id => "ShieldProtection.Duration";
 
-    public override string Name => "Base S.H.I.E.L.D. protection duration";
+    public override string Name => "Base S.H.I.E.L.D. protection duration (in hours)";
 
     public override double ValueDefault => 6 * 24; // 6 days;
 
@@ -21,6 +21,6 @@ namespace AtomicTorch.CBND.CoreMod.Rates
 
     public override RateVisibility Visibility => RateVisibility.Advanced;
 
-    public override RateValueType ValueType => RateValueType.DurationSeconds;
+    public override RateValueType ValueType => RateValueType.Number;
   }
 }
