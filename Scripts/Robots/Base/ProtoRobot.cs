@@ -600,7 +600,7 @@
       }
       else
       {
-        // we were going to the player and reached its location, despawn
+        // we were going to the owner container and reached its location, despawn
         ServerOnRobotReturnedToOwner(objectRobot);
       }
 
@@ -792,11 +792,9 @@
 
       var tile = objectRobot.Tile;
       var storageContainer = privateState.StorageItemsContainer;
-      if (storageContainer.OccupiedSlotsCount > 0)
-      {
-        if (!MoveContents())
-          return false;
-      }
+
+      if (!MoveContents())
+        return false;
 
       ServerDespawnRobot(objectRobot, isReturnedToOwner: true);
 
@@ -815,7 +813,7 @@
 
         if (ownerContainer is not null && !ownerContainer.IsDestroyed)
         {
-          if (storageContainer.OccupiedSlotsCount > ownerContainer.EmptySlotsCount)
+          if (storageContainer.OccupiedSlotsCount - 1 > ownerContainer.EmptySlotsCount)
             return false; //not enough room, don't despawn
 
           // ReSharper disable once PossibleNullReferenceException

@@ -249,7 +249,10 @@
           {
             damagePostMultiplier *= 1.333; // the artillery shells are too OP already
           }
-          else if (weaponCache.ProtoExplosive is ObjectMineralGiantPragmiumSourceExplosion || weaponCache.ProtoExplosive is ObjectMineralPragmiumSourceExplosion)
+          else if (
+            weaponCache.ProtoExplosive is ObjectMineralGiantPragmiumSourceExplosion || 
+            weaponCache.ProtoExplosive is ObjectMineralPragmiumSourceExplosion || 
+            weaponCache.ProtoExplosive is ObjectMeteorExplosion)
           {
             damagePostMultiplier *= 0;
           }

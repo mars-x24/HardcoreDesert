@@ -18,8 +18,16 @@ Ideas...
 item from ground to bag : waiting for ai_enabled TakeAll changes 
 reduce boss damage - waiting for ai_enabled weapon damage to structure multiplier
 
+
+princess immune to meteor
+
 Changes
 -------
+
+1.57.1
+Fixing robot not filling generators or furnace when power is off
+Fixing robot not returning item in an almost full crate
+Princess immune to meteor explostion
 
 1.57.0
 Hide mob level at night

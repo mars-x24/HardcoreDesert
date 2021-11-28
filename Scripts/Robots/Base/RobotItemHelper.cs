@@ -144,10 +144,14 @@ namespace HardcoreDesert.Scripts.Robots.Base
       }
 
       //electricity off
-      if (m.ProtoGameObject is IProtoObjectElectricityConsumer o)
+      if (m.ProtoGameObject is IProtoObjectElectricityConsumer o && m.ProtoGameObject is not IProtoObjectElectricityProducer)
       {
-        if (o.GetPublicState(m).ElectricityConsumerState == ElectricityConsumerState.PowerOff)
-          return;
+        //Looks like we can't really use IProtoObjectElectricityConsumer since all ObjectManufacturer uses this proto
+        if (o.ElectricityConsumptionPerSecondWhenActive != 0)
+        {
+          if (o.GetPublicState(m).ElectricityConsumerState == ElectricityConsumerState.PowerOff)
+            return;
+        }      
       }
 
       if (!this.SetCurrent(m))
