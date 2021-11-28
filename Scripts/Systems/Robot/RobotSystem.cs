@@ -78,10 +78,10 @@ namespace AtomicTorch.CBND.CoreMod.Systems.LandClaim
 
     public static void ClientSetRobotManufacturerSlotSetting(IItem itemRobot, bool isInputSlot, bool value)
     {
-      Instance.CallServer(_ => _.ServerRemote_SetRobotManufacturerSettings(itemRobot, isInputSlot, value));
+      Instance.CallServer(_ => _.ServerRemote_SetRobotManufacturerSlotSetting(itemRobot, isInputSlot, value));
     }
 
-    private void ServerRemote_SetRobotManufacturerSettings(IItem itemRobot, bool isInputSlot, bool value)
+    private void ServerRemote_SetRobotManufacturerSlotSetting(IItem itemRobot, bool isInputSlot, bool value) 
     {
       var state = itemRobot.GetPrivateState<ItemRobotPrivateState>();
 

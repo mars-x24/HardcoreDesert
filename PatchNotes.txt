@@ -18,11 +18,14 @@ Ideas...
 item from ground to bag : waiting for ai_enabled TakeAll changes 
 reduce boss damage - waiting for ai_enabled weapon damage to structure multiplier
 
-
-princess immune to meteor
+visit inactif only
+reset run timer even if not moving
 
 Changes
 -------
+
+1.57.2
+Problem with robot setting checkboxes?
 
 1.57.1
 Fixing robot not filling generators or furnace when power is off

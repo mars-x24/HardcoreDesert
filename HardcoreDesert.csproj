@@ -23,6 +23,7 @@
   
   <ItemGroup>
     <Compile Remove="Scripts\Characters\State\SkeletonAngryPangolin.cs" />
+    <Compile Remove="Scripts\Systems\Robot\RobotSystem.cs" />
   </ItemGroup>    
   
   <ItemGroup>
@@ -97,5 +98,6 @@
   
   <ItemGroup>
     <Folder Include="Content\Textures\Items\Weapons\MobWeapons\" />
+    <Folder Include="Scripts\Systems\Robot\" />
   </ItemGroup>  
 </Project>
