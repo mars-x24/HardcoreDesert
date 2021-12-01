@@ -18,11 +18,14 @@ Ideas...
 item from ground to bag : waiting for ai_enabled TakeAll changes 
 reduce boss damage - waiting for ai_enabled weapon damage to structure multiplier
 
-visit inactif only
-reset run timer even if not moving
-
 Changes
 -------
+
+1.57.3
+Robot "load inactive structure only" changed to "visit inactive structure only", now works with input and output
+Robot will also looks for output items in inactive structure first
+Fixing the maxmimum of item of the same type the robot can carry
+Less calculation for robots in chest, but they might stay longer in there, their timer restart even if not moving
 
 1.57.2
 Problem with robot setting checkboxes?

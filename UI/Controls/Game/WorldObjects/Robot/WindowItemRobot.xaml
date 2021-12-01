@@ -127,7 +127,7 @@
                             </StackPanel>
 
                             <CheckBox Grid.Row="5"               
-                            Content="Load inactive structure only."
+                            Content="Visit inactive structure only."
                             IsChecked="{Binding ManufacturerLoadInactiveOnly, Mode=TwoWay}" />
                         </Grid>
                     </ScrollViewer>

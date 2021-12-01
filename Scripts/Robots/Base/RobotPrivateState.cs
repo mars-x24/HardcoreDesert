@@ -20,6 +20,10 @@
 
     public IItemsContainer StorageItemsContainer { get; set; }
 
+    [SyncToClient(
+      deliveryMode: DeliveryMode.ReliableSequenced,
+      maxUpdatesPerSecond: 10,
+      networkDataType: typeof(double))]
     public double TimerInactive { get; set; }
   }
 }

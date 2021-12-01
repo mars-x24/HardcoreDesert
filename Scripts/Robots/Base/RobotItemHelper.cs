@@ -42,8 +42,6 @@ namespace HardcoreDesert.Scripts.Robots.Base
     }
     private Dictionary<IProtoItem, ushort> fuelItems;
 
-    private int targetCount;
-
     private List<IStaticWorldObject> outputManufacturer, inputManufacturer;
 
     private IDynamicWorldObject robotObject;
@@ -88,7 +86,6 @@ namespace HardcoreDesert.Scripts.Robots.Base
       this.parentContainer = parentContainer;
 
       this.target = null;
-      this.targetCount = 0;
 
       this.targetItems = new Dictionary<IItem, ushort>();
       this.inputItems = new Dictionary<IProtoItem, ushort>();
@@ -104,7 +101,7 @@ namespace HardcoreDesert.Scripts.Robots.Base
     {
       this.FindIdleManufacturerItems();
 
-      this.FindMaxOutputItems();
+      this.FindOutputItems();
 
       this.FindInputItems();
     }
@@ -119,6 +116,8 @@ namespace HardcoreDesert.Scripts.Robots.Base
 
         if (state.IsActive)
           continue;
+
+        this.FindOutputItems(m);
 
         this.FindInputItems(m);
       }
@@ -151,7 +150,7 @@ namespace HardcoreDesert.Scripts.Robots.Base
         {
           if (o.GetPublicState(m).ElectricityConsumerState == ElectricityConsumerState.PowerOff)
             return;
-        }      
+        }
       }
 
       if (!this.SetCurrent(m))
@@ -189,47 +188,36 @@ namespace HardcoreDesert.Scripts.Robots.Base
       this.AddTargetItem(fuelItems[0], true, fuelItems[0].Count, true);
     }
 
-    private void FindMaxOutputItems()
+    private void FindOutputItems()
     {
-      if (!this.outputAllowed)
+      if (this.loadInactiveOnly)
         return;
 
       foreach (IStaticWorldObject m in this.outputManufacturer)
       {
-        if (!this.SetCurrent(m))
+        this.FindOutputItems(m);
+      }
+    }
+
+    private void FindOutputItems(IStaticWorldObject m)
+    {
+      if (!this.outputAllowed)
+        return;
+
+      if (this.parentContainer.EmptySlotsCount == 0)
+        return;
+
+      if (!this.SetCurrent(m))
+        return;
+
+      var itemOrdered = RobotTargetHelper.GetOutputContainersItems(m, false);
+
+      foreach (var item in itemOrdered)
+      {
+        if (!RobotTargetHelper.ServerPickupAllowed(item, this.robotObject))
           continue;
 
-        var itemOrdered = RobotTargetHelper.GetOutputContainersItems(m, false);
-
-        List<IItem> tempTargetItems = new List<IItem>();
-        int tempTargetCount = 0;
-
-        foreach (var item in itemOrdered)
-        {
-          if (this.targetItems.Keys.Contains(item))
-            continue;
-
-          if (tempTargetItems.Count >= this.robotProtoItem.ItemDeliveryCount)
-            break;
-
-          if (!RobotTargetHelper.ServerPickupAllowed(item, this.robotObject))
-            continue;
-
-          if (!this.IsItemAllowed(item) || !this.IsStructureAllowed())
-            continue;
-
-          tempTargetItems.Add(item);
-          tempTargetCount += item.Count;
-        }
-
-        if (tempTargetCount > targetCount && this.parentContainer.EmptySlotsCount >= tempTargetItems.Count)
-        {
-          this.target = m;
-          foreach (var targetItem in tempTargetItems)
-            this.targetItems.Add(targetItem, ushort.MaxValue);
-          this.targetCount = tempTargetCount;
-        }
-        tempTargetItems.Clear();
+        this.AddTargetItem(item, false, ushort.MaxValue);
       }
     }
 
@@ -297,7 +285,29 @@ namespace HardcoreDesert.Scripts.Robots.Base
 
     private bool DeliveryFull(bool isInput)
     {
-      return (isInput ? this.inputItems.Count + this.fuelItems.Count : this.targetItems.Count) >= this.robotProtoItem.ItemDeliveryCount;
+      byte count = 0;
+
+      if (isInput)
+      {
+        count += this.GetStackCountProto(this.inputItems);
+        count += this.GetStackCountProto(this.fuelItems);
+      }
+      else
+      {
+        count += (byte)this.targetItems.Count;
+      }
+
+      return count >= this.robotProtoItem.ItemDeliveryCount;
+    }
+
+    private byte GetStackCountProto(Dictionary<IProtoItem, ushort> list)
+    {
+      byte count = 0;
+      foreach (var protoItem in list.Keys)
+      {
+        count += (byte)Math.Ceiling((double)list[protoItem] / (double)protoItem.MaxItemsPerStack);
+      }
+      return count;
     }
 
     private bool IsStructureAllowed()
@@ -327,19 +337,17 @@ namespace HardcoreDesert.Scripts.Robots.Base
         }
         else
         {
-          //if we plan to remove this proto, don't bring any yet
-          //int outputCount = this.targetItems.Where(i => i.Key.ProtoItem == item.ProtoItem).Sum(i => i.Value);
-          //if (outputCount == 0)
-          //{
           if (!this.inputItems.Keys.Contains(item.ProtoItem))
             this.inputItems.Add(item.ProtoItem, count);
           else
             this.inputItems[item.ProtoItem] = (ushort)((ushort)this.inputItems[item.ProtoItem] + count);
-          //}
         }
       }
       else
       {
+        if (this.parentContainer.EmptySlotsCount <= this.targetItems.Count)
+          return false;
+
         if (!this.targetItems.Keys.Contains(item))
           this.targetItems.Add(item, count);
       }

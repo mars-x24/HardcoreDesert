@@ -23,7 +23,6 @@
   
   <ItemGroup>
     <Compile Remove="Scripts\Characters\State\SkeletonAngryPangolin.cs" />
-    <Compile Remove="Scripts\Systems\Robot\RobotSystem.cs" />
   </ItemGroup>    
   
   <ItemGroup>
@@ -62,9 +61,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Controls\Game\Items\Controls\SlotOverlays\ItemSlotStorageIconOverlayControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Update="UI\Controls\Game\Items\Controls\VehicleRemoteControl\WindowVehicleRemoteControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -98,6 +94,5 @@
   
   <ItemGroup>
     <Folder Include="Content\Textures\Items\Weapons\MobWeapons\" />
-    <Folder Include="Scripts\Systems\Robot\" />
   </ItemGroup>  
 </Project>
