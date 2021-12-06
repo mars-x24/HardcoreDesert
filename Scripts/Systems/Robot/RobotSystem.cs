@@ -5,7 +5,8 @@ using AtomicTorch.CBND.CoreMod.StaticObjects;
 using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Crates;
 using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
 using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Manufacturers;
-using AtomicTorch.CBND.GameApi.Data;
+using AtomicTorch.CBND.CoreMod.Systems;
+using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
 using AtomicTorch.CBND.GameApi.Data.Characters;
 using AtomicTorch.CBND.GameApi.Data.Items;
 using AtomicTorch.CBND.GameApi.Data.Logic;
@@ -13,13 +14,11 @@ using AtomicTorch.CBND.GameApi.Data.World;
 using AtomicTorch.CBND.GameApi.Scripting;
 using AtomicTorch.CBND.GameApi.Scripting.Network;
 using AtomicTorch.GameEngine.Common.Helpers;
-using AtomicTorch.GameEngine.Common.Primitives;
-using HardcoreDesert.Scripts.Robots.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AtomicTorch.CBND.CoreMod.Systems.LandClaim
+namespace HardcoreDesert.Scripts.Systems.Robot
 {
   public partial class RobotSystem : ProtoSystem<RobotSystem>
   {
@@ -57,22 +56,18 @@ namespace AtomicTorch.CBND.CoreMod.Systems.LandClaim
       if (publicStateRobot.StructurePointsCurrent < 5.0f)
         return;
 
-      if (!FindOwner(robotItem, out IWorldObject owner, out IItemsContainer ownerContainer, out Vector2Ushort position, out IProtoEntity targetItemProto))
+      var owners = FindOwners(robotItem, robotObject);
+      if (owners is null || owners.Count == 0)
         return;
 
-      if (!FindStructures(robotObject, owner, privateStateItem, position, out List<IStaticWorldObject> outputManufacturer, out List<IStaticWorldObject> inputManufacturer))
-        return;
-
-      var itemHelper = new RobotItemHelper(robotObject, robotProto, robotItem.Container, targetItemProto, outputManufacturer, inputManufacturer);
-
-      itemHelper.FindAllItems();
+      var itemHelper = FindBestItems(owners);
 
       //launch robot to target
-      if (itemHelper.Target is null)
+      if (itemHelper is null || itemHelper.Target is null)
         return;
 
       //nothing to do
-      if (itemHelper.InputItems.Count + itemHelper.FuelItems.Count + itemHelper.TargetItems.Count == 0)
+      if (!itemHelper.HasItems)
         return;
 
       if (!RobotTargetHelper.ServerStructureAllowed(itemHelper.Target, robotObject, privateStateItem))
@@ -83,7 +78,7 @@ namespace AtomicTorch.CBND.CoreMod.Systems.LandClaim
 
       robotProto.ServerSetupAssociatedItem(robotObject, robotItem);
 
-      robotProto.ServerStartRobot(robotObject, owner, ownerContainer);
+      robotProto.ServerStartRobot(robotObject, itemHelper.RobotOwner.Owner, itemHelper.RobotOwner.OwnerContainer);
 
       publicStateRobot.SetTargetPosition(itemHelper.Target, itemHelper.TargetItems, itemHelper.InputItems, itemHelper.FuelItems);
 
@@ -91,66 +86,148 @@ namespace AtomicTorch.CBND.CoreMod.Systems.LandClaim
         publicStateRobot.ResetTargetPosition();
     }
 
-    private static bool FindOwner(IItem robotItem, out IWorldObject owner, out IItemsContainer ownerContainer, out Vector2Ushort position, out IProtoEntity targetItemProto)
+    private static List<RobotOwner> FindOwners(IItem robotItem, IDynamicWorldObject robotObject)
     {
-      owner = null;
-      position = Vector2Ushort.Max;
-      ownerContainer = robotItem.Container;
-      targetItemProto = null;
-
+      var ownerContainer = robotItem.Container;
       if (ownerContainer is null)
-        return false;
+        return null;
+
+      if (ownerContainer.Owner is null)
+        return null;
+
+      List<RobotOwner> owners = null;
 
       if (ownerContainer.OwnerAsStaticObject is not null)
       {
         if (ownerContainer.OwnerAsStaticObject.ProtoGameObject is not ObjectGroundItemsContainer)  //nothing to do on ground       
         {
-          owner = ownerContainer.OwnerAsStaticObject;
-          position = ownerContainer.OwnerAsStaticObject.TilePosition;
+          RobotOwner robotOwner = new RobotOwner()
+          {
+            Owner = ownerContainer.OwnerAsStaticObject,
+            Position = ownerContainer.OwnerAsStaticObject.TilePosition,
+            OwnerContainer = ownerContainer,
+            TargetItemProto = null,
+            RobotItem = robotItem,
+            RobotObject = robotObject
+          };
 
-          var publicState = owner.GetPublicState<ObjectCratePublicState>();
+          var publicState = robotOwner.Owner.GetPublicState<ObjectCratePublicState>();
           if (publicState is not null)
-            targetItemProto = publicState.IconSource;
+            robotOwner.TargetItemProto = publicState.IconSource;
+
+          owners = new List<RobotOwner>() { robotOwner };
         }
       }
       else if (ownerContainer.OwnerAsCharacter is not null)
       {
-        owner = ownerContainer.OwnerAsCharacter;
-        position = ownerContainer.OwnerAsCharacter.TilePosition;
+        var characterPrivateState = ownerContainer.OwnerAsCharacter.GetPrivateState<PlayerCharacterPrivateState>();
 
-        var characterPrivateState = owner.GetPrivateState<PlayerCharacterPrivateState>();
-        if (characterPrivateState.ContainerHand == ownerContainer ||
-            characterPrivateState.ContainerHotbar == ownerContainer)
-          owner = null; //must be in character inventory
+        //must be in character inventory
+        if (characterPrivateState.ContainerHand != ownerContainer && characterPrivateState.ContainerHotbar != ownerContainer)
+        {
+          RobotOwner robotOwner = new RobotOwner()
+          {
+            Owner = ownerContainer.OwnerAsCharacter,
+            Position = ownerContainer.OwnerAsCharacter.TilePosition,
+            OwnerContainer = ownerContainer,
+            TargetItemProto = null,
+            RobotItem = robotItem,
+            RobotObject = robotObject
+          };
+
+          owners = new List<RobotOwner>() { robotOwner };
+        }
       }
-      else if (ownerContainer.Owner is LandClaimGroup)
+      else if (ownerContainer.Owner is ILogicObject logicObject)
       {
-        //owner = ownerContainer.Owner;
+        var privateState = logicObject.GetPrivateState­­<LandClaimGroupPrivateState>();
+        foreach (var areasGroup in privateState.ServerLandClaimAreasGroups)
+        {
+          if (areasGroup is null)
+            continue;
 
+          var privateStateAreasGroup = areasGroup.GetPrivateState<LandClaimAreasGroupPrivateState>();
+          foreach (var area in privateStateAreasGroup.ServerLandClaimsAreas)
+          {
+            var bounds = LandClaimSystem.SharedGetLandClaimAreaBounds(area, false);
+
+            using (var temp = Api.Shared.GetTempList<IStaticWorldObject>())
+            {
+              temp.AddRange(
+                Api.Server.World.GetStaticWorldObjectsOfProtoInBounds<ProtoObjectGlobalChest>(bounds)
+                  .Distinct());
+
+              if (temp.Count > 0 && owners == null)
+                owners = new List<RobotOwner>();
+
+              foreach(var globalChest in temp.AsList())
+              {
+                RobotOwner robotOwner = new RobotOwner()
+                {
+                  Owner = globalChest,
+                  Position = globalChest.TilePosition,
+                  OwnerContainer = ownerContainer,
+                  TargetItemProto = null,
+                  RobotItem = robotItem,
+                  RobotObject = robotObject
+                };
+
+                //var publicState = globalChest.GetPublicState<ObjectCratePublicState>();
+                //if (publicState is not null)
+                //  robotOwner.TargetItemProto = publicState.IconSource;
+
+                owners.Add(robotOwner);
+              }
+            }
+          }
+        }
       }
 
-      if (owner is null)
-        return false;
-
-      return true;
+      return owners;
     }
 
-    private static bool FindStructures(IDynamicWorldObject robotObject, IWorldObject owner, ItemRobotPrivateState privateStateItem, Vector2Ushort position, out List<IStaticWorldObject> outputManufacturer, out List<IStaticWorldObject> inputManufacturer)
+    private static RobotItemHelper FindBestItems(List<RobotOwner> owners)
     {
-      outputManufacturer = null;
-      inputManufacturer = null;
+      RobotItemHelper goodItems = null;
 
-      var areasGroup = LandClaimSystem.SharedGetLandClaimAreasGroup(position);
-      if (areasGroup is null)
-        return false;
+      //foreach case is for Ender crate, it has more than one owner structure, look all areas around each structure
+      foreach (var robotOwner in owners)
+      {
+        var areasGroup = LandClaimSystem.SharedGetLandClaimAreasGroup(robotOwner.Position);
+        if (areasGroup is null)
+          continue;
 
+        var areas = areasGroup.GetPrivateState<LandClaimAreasGroupPrivateState>().ServerLandClaimsAreas;
+
+        var privateStateItem = robotOwner.RobotItem.GetPrivateState<ItemRobotPrivateState>();
+
+        if (!FindStructures(areas, robotOwner.RobotObject, robotOwner.Owner, privateStateItem, out List<IStaticWorldObject> outputManufacturer, out List<IStaticWorldObject> inputManufacturer))
+          continue;
+
+        var itemHelper = new RobotItemHelper(robotOwner, outputManufacturer, inputManufacturer);
+
+        itemHelper.FindAllItems();
+
+        //structure is inactive, go there first
+        if (itemHelper.HasItems && !itemHelper.TargetIsActive)
+          return itemHelper;
+
+        if (itemHelper.HasItems)
+          goodItems = itemHelper;
+      }
+
+      return goodItems;
+    }
+
+    private static bool FindStructures(List<ILogicObject> areas, IDynamicWorldObject robotObject, IWorldObject owner, ItemRobotPrivateState privateStateItem,
+      out List<IStaticWorldObject> outputManufacturer, out List<IStaticWorldObject> inputManufacturer)
+    {
       outputManufacturer = new List<IStaticWorldObject>();
       inputManufacturer = new List<IStaticWorldObject>();
 
-      foreach (var area in areasGroup.GetPrivateState<LandClaimAreasGroupPrivateState>().ServerLandClaimsAreas)
+      foreach (var area in areas)
       {
-        if (owner is ICharacter)
-          if (!LandClaimSystem.ServerIsOwnedArea(area, (ICharacter)owner, false))
+        if (owner is ICharacter && !LandClaimSystem.ServerIsOwnedArea(area, (ICharacter)owner, false))
             continue;
 
         var areaPrivateState = area.GetPrivateState<LandClaimAreaPrivateState>();
@@ -158,6 +235,9 @@ namespace AtomicTorch.CBND.CoreMod.Systems.LandClaim
           continue;
 
         if (!areaPrivateState.RobotManufacturerCharacterInventoryEnabled && owner is ICharacter)
+          continue;
+
+        if (!areaPrivateState.RobotManufacturerEnderCrateEnabled && owner.ProtoWorldObject is ObjectMassDriver)
           continue;
 
         var bounds = LandClaimSystem.SharedGetLandClaimAreaBounds(area, false);

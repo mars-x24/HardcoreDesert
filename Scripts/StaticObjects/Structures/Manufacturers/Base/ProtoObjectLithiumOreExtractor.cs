@@ -1,12 +1,10 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Manufacturers
 {
-  using System.Linq;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Deposits;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.ConstructionSite;
   using AtomicTorch.CBND.CoreMod.Systems.Construction;
   using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
   using AtomicTorch.CBND.CoreMod.Systems.PowerGridSystem;
-  using AtomicTorch.CBND.CoreMod.Systems.PvE;
   using AtomicTorch.CBND.CoreMod.Tiles;
   using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
   using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Manufacturers;
@@ -14,6 +12,7 @@
   using AtomicTorch.CBND.GameApi.Data.World;
   using AtomicTorch.CBND.GameApi.Scripting;
   using AtomicTorch.CBND.GameApi.ServicesClient.Components;
+  using System.Linq;
 
   public abstract class ProtoObjectLithiumOreExtractor : ProtoObjectExtractor
   {

@@ -26,7 +26,7 @@
   using AtomicTorch.CBND.GameApi.Scripting.Network;
   using AtomicTorch.CBND.GameApi.ServicesClient.Components;
   using AtomicTorch.GameEngine.Common.Primitives;
-  using HardcoreDesert.Scripts.Robots.Base;
+  using HardcoreDesert.Scripts.Systems.Robot;
   using HardcoreDesert.UI.Controls.Game.WorldObjects.Robot;
   using System;
   using System.Linq;
@@ -315,7 +315,7 @@
       privateState.IsDespawned = false;
       objectRobot.ProtoGameObject.ServerSetUpdateRate(objectRobot, isRare: false);
 
-      var position = owner.TilePosition.ToVector2D() + RobotTargetPositionHelper.GetTargetPosition(owner);
+      var position = owner.TilePosition.ToVector2D() + RobotTargetHelper.GetTargetPosition(owner);
 
       Server.World.SetPosition(objectRobot, position, writeToLog: false);
       // recreate physics (as spawned robot has physics)
@@ -536,7 +536,7 @@
 
       if (hasTarget)
       {
-        destinationCoordinate = publicState.Target.TilePosition.ToVector2D() + RobotTargetPositionHelper.GetTargetPosition(publicState.Target);
+        destinationCoordinate = publicState.Target.TilePosition.ToVector2D() + RobotTargetHelper.GetTargetPosition(publicState.Target);
 
         if (!publicState.Loaded)
         {
@@ -574,7 +574,7 @@
           }
         }
 
-        destinationCoordinate = privateState.Owner.TilePosition.ToVector2D() + RobotTargetPositionHelper.GetTargetPosition(privateState.Owner);
+        destinationCoordinate = privateState.Owner.TilePosition.ToVector2D() + RobotTargetHelper.GetTargetPosition(privateState.Owner);
       }
 
       RefreshMovement(isToDelivery: hasTarget,

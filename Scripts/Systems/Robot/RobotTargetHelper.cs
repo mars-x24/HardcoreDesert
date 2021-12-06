@@ -4,10 +4,11 @@ using AtomicTorch.CBND.GameApi.Data.Items;
 using AtomicTorch.CBND.GameApi.Data.World;
 using AtomicTorch.CBND.GameApi.Extensions;
 using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.GameEngine.Common.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HardcoreDesert.Scripts.Robots.Base
+namespace HardcoreDesert.Scripts.Systems.Robot
 {
   public static class RobotTargetHelper
   {
@@ -197,6 +198,17 @@ namespace HardcoreDesert.Scripts.Robots.Base
         list.Add(privateStateManufacturer.FuelBurningState.ContainerFuel);
 
       return list;
+    }
+
+    public static Vector2D GetTargetPosition(IWorldObject targetWorldObject)
+    {
+      if (targetWorldObject is not IStaticWorldObject targetStaticWorldObject)
+        return (0, 0);
+
+      var protoStaticWorldObject = targetStaticWorldObject.ProtoStaticWorldObject;
+      var centerOffset = protoStaticWorldObject.SharedGetObjectCenterWorldOffset(targetWorldObject);
+
+      return centerOffset;
     }
   }
 }

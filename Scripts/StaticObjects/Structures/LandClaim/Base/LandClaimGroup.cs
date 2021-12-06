@@ -88,8 +88,6 @@
               if (newAreaGroup is not null)
                 areaGroups.Add(newAreaGroup);
             }
-            //if (areaGroups.Count == 0)
-            //  Api.Server.World.DestroyObject(group);
             return;
           }
         }
@@ -108,6 +106,12 @@
       var newAreaGroupPrivateState = LandClaimAreasGroup.GetPrivateState(newAreaGroups[0]);
       List<string> owners = new List<string>();
       GetAreaGroupOwners(owners, newAreaGroupPrivateState);
+
+      foreach (var group in tempList.AsList())
+      {
+        var groupPrivateState = LandClaimGroup.GetPrivateState(group);
+        groupPrivateState.ServerLandClaimAreasGroups = CleanAreasGroups(groupPrivateState.ServerLandClaimAreasGroups);
+      }
 
       foreach (var group in tempList.AsList())
       {
@@ -135,7 +139,7 @@
             if (areaGroup is null)
               continue;
 
-            if (LandClaimAreasGroup.GetPublicState(areaGroup).FactionClanTag == factionClanTag)
+            if (!string.IsNullOrEmpty(factionClanTag) && LandClaimAreasGroup.GetPublicState(areaGroup).FactionClanTag == factionClanTag)
             {
               groupFound = group;
               break;
@@ -161,11 +165,33 @@
       if (groupFoundPrivateState.ServerLandClaimAreasGroups is null)
         groupFoundPrivateState.ServerLandClaimAreasGroups = new List<ILogicObject>();
 
-      groupFoundPrivateState.ServerLandClaimAreasGroups.AddRange(newAreaGroups);
+      groupFoundPrivateState.ServerLandClaimAreasGroups = AddAreasGroups(groupFoundPrivateState.ServerLandClaimAreasGroups, newAreaGroups);
 
       groupFoundPrivateState.FactionClanTag = factionClanTag;
 
       groupFoundPrivateState.owners = owners;
+    }
+
+    private static List<ILogicObject> AddAreasGroups(List<ILogicObject> listAreasGroup, List<ILogicObject> newAreaGroups)
+    {
+      listAreasGroup.AddRange(newAreaGroups);
+
+      return CleanAreasGroups(listAreasGroup);
+    }
+
+    private static List<ILogicObject> CleanAreasGroups(List<ILogicObject> listAreasGroup)
+    {
+      var clean = listAreasGroup.Distinct().ToList();
+
+      for (int i = clean.Count - 1; i >= 0; i--)
+      {
+        if (clean[i] == null)
+          clean.RemoveAt(i);
+      }
+
+      listAreasGroup.Clear();
+
+      return clean;
     }
 
     private static void GetAreaGroupOwners(List<string> owners, LandClaimGroupPrivateState groupPrivateState)

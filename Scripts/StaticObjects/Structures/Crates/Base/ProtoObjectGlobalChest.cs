@@ -52,13 +52,13 @@
 
     void IInteractableProtoWorldObject.ServerOnClientInteract(ICharacter who, IWorldObject worldObject)
     {
+      this.UpdateContainer((IStaticWorldObject)worldObject);
+
       var group = LandClaimGroup.GetGroup((IStaticWorldObject)worldObject);
       if (group is null)
       {
         return;
       }
-
-      this.UpdateContainer((IStaticWorldObject)worldObject);
 
       var publicState = worldObject.GetPublicState<ObjectGlobalChestPublicState>();
       publicState.LandClaimGroup = group;

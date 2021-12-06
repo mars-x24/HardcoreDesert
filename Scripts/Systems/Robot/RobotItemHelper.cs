@@ -14,15 +14,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HardcoreDesert.Scripts.Robots.Base
+namespace HardcoreDesert.Scripts.Systems.Robot
 {
   public class RobotItemHelper
   {
+    public RobotOwner RobotOwner
+    {
+      get { return this.robotOwner; }
+    }
+    private RobotOwner robotOwner;
+
     public IStaticWorldObject Target
     {
       get { return this.target; }
     }
     private IStaticWorldObject target;
+
+    public bool TargetIsActive
+    {
+      get { return this.targetIsActive; }
+    }
+    private bool targetIsActive;
 
     public Dictionary<IItem, ushort> TargetItems
     {
@@ -42,15 +54,20 @@ namespace HardcoreDesert.Scripts.Robots.Base
     }
     private Dictionary<IProtoItem, ushort> fuelItems;
 
+    public bool HasItems
+    {
+      get { return this.inputItems.Count + this.fuelItems.Count + this.targetItems.Count != 0; }
+    }
+
     private List<IStaticWorldObject> outputManufacturer, inputManufacturer;
 
     private IDynamicWorldObject robotObject;
-    private IProtoRobot robotProto;
     private IProtoItemRobot robotProtoItem;
     private IItemsContainer parentContainer;
     private IProtoEntity targetItemProto;
 
-    private IStaticWorldObject currentObject = null;
+    private IStaticWorldObject currentTarget = null;
+    private bool currentTargetIsActive = false;
     private StructurePrivateState currentPrivateState = null;
     private IItemsContainer currentInputContainer = null;
     private IItemsContainer currentFuelContainer = null;
@@ -62,11 +79,11 @@ namespace HardcoreDesert.Scripts.Robots.Base
     private byte loadPercent = ItemRobotPrivateState.DEFAULT_STRUCTURE_LOAD_PERCENT;
     private bool loadInactiveOnly = false;
 
-    public RobotItemHelper(IDynamicWorldObject robotObject, IProtoRobot robotProto, IItemsContainer parentContainer, IProtoEntity targetItemProto,
-      List<IStaticWorldObject> outputManufacturer, List<IStaticWorldObject> inputManufacturer)
+    public RobotItemHelper(RobotOwner robotOwner, List<IStaticWorldObject> outputManufacturer, List<IStaticWorldObject> inputManufacturer)
     {
-      this.robotObject = robotObject;
-      this.robotProto = robotProto;
+      this.robotOwner = robotOwner;
+
+      this.robotObject = robotOwner.RobotObject;
 
       var itemRobot = robotObject.GetPrivateState<RobotPrivateState>()?.AssociatedItem;
       this.robotProtoItem = itemRobot.ProtoGameObject as IProtoItemRobot;
@@ -83,15 +100,16 @@ namespace HardcoreDesert.Scripts.Robots.Base
         this.loadInactiveOnly = state.LoadInactiveOnly;
       }
 
-      this.parentContainer = parentContainer;
+      this.parentContainer = robotOwner.RobotItem.Container;
 
       this.target = null;
+      this.targetIsActive = false;
 
       this.targetItems = new Dictionary<IItem, ushort>();
       this.inputItems = new Dictionary<IProtoItem, ushort>();
       this.fuelItems = new Dictionary<IProtoItem, ushort>();
 
-      this.targetItemProto = targetItemProto;
+      this.targetItemProto = robotOwner.TargetItemProto;
 
       this.outputManufacturer = outputManufacturer;
       this.inputManufacturer = inputManufacturer;
@@ -125,9 +143,6 @@ namespace HardcoreDesert.Scripts.Robots.Base
 
     private void FindInputItems()
     {
-      if (this.loadInactiveOnly)
-        return;
-
       foreach (IStaticWorldObject m in this.inputManufacturer)
       {
         this.FindInputItems(m);
@@ -190,9 +205,6 @@ namespace HardcoreDesert.Scripts.Robots.Base
 
     private void FindOutputItems()
     {
-      if (this.loadInactiveOnly)
-        return;
-
       foreach (IStaticWorldObject m in this.outputManufacturer)
       {
         this.FindOutputItems(m);
@@ -251,26 +263,26 @@ namespace HardcoreDesert.Scripts.Robots.Base
     {
       List<ManufacturingConfig> list = new List<ManufacturingConfig>();
 
-      if (this.currentObject.ProtoGameObject is ProtoObjectManufacturer protoManufacturer)
+      if (this.currentTarget.ProtoGameObject is ProtoObjectManufacturer protoManufacturer)
         list.Add(protoManufacturer.ManufacturingConfig);
 
-      else if (this.currentObject.ProtoGameObject is ProtoObjectExtractor protoExtractor)
+      else if (this.currentTarget.ProtoGameObject is ProtoObjectExtractor protoExtractor)
         list.Add(protoExtractor.ManufacturingConfig);
 
-      else if (this.currentObject.ProtoGameObject is ProtoObjectOilRefinery protoOilRefinery)
+      else if (this.currentTarget.ProtoGameObject is ProtoObjectOilRefinery protoOilRefinery)
       {
         list.Add(protoOilRefinery.ManufacturingConfig);
         list.Add(protoOilRefinery.ManufacturingConfigGasoline);
         list.Add(protoOilRefinery.ManufacturingConfigMineralOil);
       }
 
-      else if (this.currentObject.ProtoGameObject is ProtoObjectOilCrackingPlant protoOilCrackingPlant)
+      else if (this.currentTarget.ProtoGameObject is ProtoObjectOilCrackingPlant protoOilCrackingPlant)
       {
         list.Add(protoOilCrackingPlant.ManufacturingConfig);
         list.Add(protoOilCrackingPlant.ManufacturingConfigGasoline);
       }
 
-      else if (this.currentObject.ProtoGameObject is ObjectGeneratorEngine protoObjectGeneratorEngine)
+      else if (this.currentTarget.ProtoGameObject is ObjectGeneratorEngine protoObjectGeneratorEngine)
       {
         list.Add(protoObjectGeneratorEngine.ManufacturingConfig);
       }
@@ -312,11 +324,14 @@ namespace HardcoreDesert.Scripts.Robots.Base
 
     private bool IsStructureAllowed()
     {
-      return this.target is null || (this.target == this.currentObject);
+      return this.target is null || (this.target == this.currentTarget);
     }
 
     private bool AddTargetItem(IItem item, bool isInput, ushort count, bool isFuel = false)
     {
+      if (this.loadInactiveOnly && this.currentTargetIsActive)
+        return false;
+
       if (this.DeliveryFull(isInput))
         return false;
 
@@ -352,7 +367,8 @@ namespace HardcoreDesert.Scripts.Robots.Base
           this.targetItems.Add(item, count);
       }
 
-      this.target = this.currentObject;
+      this.target = this.currentTarget;
+      this.targetIsActive = this.currentTargetIsActive;
 
       return true;
     }
@@ -505,22 +521,27 @@ namespace HardcoreDesert.Scripts.Robots.Base
 
     private bool SetCurrent(IStaticWorldObject m)
     {
-      if (this.currentObject == m)
+      if (this.currentTarget == m)
         return true;
 
       //if an item is found, lock the current structure
       if (this.inputItems.Count + this.targetItems.Count + this.fuelItems.Count > 0)
         return false;
 
-      if (this.currentObject != m)
+      var state = m.GetPublicState<ObjectManufacturerPublicState>();
+      if (this.loadInactiveOnly && state.IsActive)
+        return false;
+
+      if (this.currentTarget != m)
       {
         this.inputItems.Clear();
         this.fuelItems.Clear();
         this.targetItems.Clear();
       }
 
-      this.currentObject = m;
+      this.currentTarget = m;
       this.currentPrivateState = m.GetPrivateState<StructurePrivateState>();
+      this.currentTargetIsActive = state.IsActive;
 
       return true;
     }

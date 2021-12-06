@@ -1,30 +1,32 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Character
 {
-  using System.Windows;
-  using System.Windows.Controls;
   using AtomicTorch.CBND.CoreMod.Characters.Player;
   using AtomicTorch.CBND.CoreMod.ClientOptions.General;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc;
   using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Character.Data;
   using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.GameEngine.Common.Client.MonoGame.UI;
+  using System.Windows;
+  using System.Windows.Controls;
 
   public partial class CharacterOverlayControl : BaseUserControl
   {
     private readonly ICharacter character;
 
-    private readonly bool isCurrentClientCharacter;
+    private readonly bool isCurrentPlayerCharacter;
+
+    private Visibility cachedVisibility = Visibility.Visible;
+
+    private bool isUpdateSubscribed;
 
     private Grid layoutRoot;
 
     private ViewModelCharacterOverlayControl viewModel;
 
-    private Visibility visibilityOverCurrentCharacter = Visibility.Visible;
-
     public CharacterOverlayControl(ICharacter character)
     {
       this.character = character;
-      this.isCurrentClientCharacter = this.character.IsCurrentClientCharacter;
+      this.isCurrentPlayerCharacter = this.character.IsCurrentClientCharacter;
     }
 
     protected override void InitControl()
@@ -43,10 +45,11 @@
       // (e.g. a creature enters the scope during the night, there should be no visible->collapsed animation)
       this.RefreshVisualState(useTransitions: false);
 
-      if (this.isCurrentClientCharacter)
+      if (this.character.ProtoGameObject.GetType() == typeof(PlayerCharacter))
       {
-        ClientUpdateHelper.UpdateCallback += this.Update;
-        this.Update();
+        ClientUpdateHelper.UpdateCallback += this.UpdateForPlayerCharacter;
+        this.isUpdateSubscribed = true;
+        this.UpdateForPlayerCharacter();
       }
     }
 
@@ -56,9 +59,10 @@
       this.viewModel?.Dispose();
       this.viewModel = null;
 
-      if (this.isCurrentClientCharacter)
+      if (this.isUpdateSubscribed)
       {
-        ClientUpdateHelper.UpdateCallback -= this.Update;
+        this.isUpdateSubscribed = false;
+        ClientUpdateHelper.UpdateCallback -= this.UpdateForPlayerCharacter;
       }
     }
 
@@ -69,36 +73,34 @@
         return;
       }
 
-      //MOD
-      string state = this.viewModel.GetVisualStateName();
-
       VisualStateManager.GoToElementState(this.layoutRoot,
-                                          state,
+                                          this.viewModel.GetVisualStateName(),
                                           useTransitions);
     }
 
-    private void Update()
+    private void UpdateForPlayerCharacter()
     {
-      var currentVisibility = GeneralOptionDisplayHealthbarAboveCurrentCharacter.IsDisplay
-                                  ? Visibility.Visible
-                                  : Visibility.Collapsed;
+      var visibility = this.isCurrentPlayerCharacter
+                           ? GeneralOptionDisplayHealthbarAboveCurrentCharacter.IsDisplay
+                                 ? Visibility.Visible
+                                 : Visibility.Collapsed
+                           : Visibility.Visible;
 
-      if (this.character.ProtoGameObject.GetType() == typeof(PlayerCharacter))
+      if (visibility == Visibility.Visible
+          && PlayerCharacter.GetPublicState(this.character).CurrentPublicActionState
+              is CharacterLaunchpadEscapeAction.PublicState)
       {
-        currentVisibility = GeneralOptionDisplayHealthbarAboveCurrentCharacter.IsDisplay
-                                    && PlayerCharacter.GetPublicState(this.character).CurrentPublicActionState
-                                        is not CharacterLaunchpadEscapeAction.PublicState
-                                        ? Visibility.Visible
-                                        : Visibility.Collapsed;
+        // launching on a rocket
+        visibility = Visibility.Collapsed;
       }
 
       // we're using cached field here for optimization reasons
-      if (this.visibilityOverCurrentCharacter == currentVisibility)
+      if (this.cachedVisibility == visibility)
       {
         return;
       }
 
-      this.Visibility = this.visibilityOverCurrentCharacter = currentVisibility;
+      this.Visibility = this.cachedVisibility = visibility;
     }
   }
 }

@@ -3,11 +3,11 @@
   using AtomicTorch.CBND.CoreMod.Characters.Player;
   using AtomicTorch.CBND.CoreMod.Robots;
   using AtomicTorch.CBND.CoreMod.Systems.CharacterDespawnSystem;
-  using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
   using AtomicTorch.CBND.GameApi.Data.Items;
   using AtomicTorch.CBND.GameApi.Data.State;
   using AtomicTorch.CBND.GameApi.Scripting;
   using AtomicTorch.CBND.GameApi.Scripting.Network;
+  using HardcoreDesert.Scripts.Systems.Robot;
   using HardcoreDesert.UI.Controls.Game.WorldObjects.Robot;
   using System;
   using System.Collections.Generic;

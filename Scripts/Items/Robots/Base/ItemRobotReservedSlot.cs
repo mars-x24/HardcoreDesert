@@ -2,9 +2,11 @@
 {
   using AtomicTorch.CBND.CoreMod.Robots;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Crates;
+  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
   using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
   using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.Data.Items;
+  using AtomicTorch.CBND.GameApi.Data.Logic;
   using AtomicTorch.CBND.GameApi.Data.State;
   using AtomicTorch.CBND.GameApi.Data.World;
   using AtomicTorch.CBND.GameApi.Resources;
@@ -63,6 +65,7 @@
         case ICharacter:
         case IDynamicWorldObject { ProtoGameObject: IProtoRobot }:
         case IStaticWorldObject { ProtoGameObject: IProtoObjectCrate }:
+        case ILogicObject { ProtoGameObject: LandClaimGroup }:
           // moved to owner or robot (as expected)
           return;
 

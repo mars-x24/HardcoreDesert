@@ -33,8 +33,7 @@
         = TimeSpan.FromHours(1.5);
 
     public override TimeSpan EventStartDelayDuration
-        => PveSystem.SharedIsPve(true)
-           && !SharedLocalServerHelper.IsLocalServer
+        => !SharedLocalServerHelper.IsLocalServer
                ? TimeSpan.FromMinutes(30)
                : TimeSpan.Zero;
 
