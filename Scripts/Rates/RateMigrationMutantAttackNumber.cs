@@ -18,7 +18,7 @@ namespace AtomicTorch.CBND.CoreMod.Rates
 
     public override byte ValueMaxReasonable => 5;
 
-    public override byte ValueMin => 1;
+    public override byte ValueMin => 0;
 
     public override RateValueType ValueType => RateValueType.Number;
 
