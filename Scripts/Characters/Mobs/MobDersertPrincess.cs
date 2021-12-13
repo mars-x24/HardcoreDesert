@@ -250,14 +250,14 @@
             damagePostMultiplier *= 1.333; // the artillery shells are too OP already
           }
           else if (
-            weaponCache.ProtoExplosive is ObjectMineralGiantPragmiumSourceExplosion || 
-            weaponCache.ProtoExplosive is ObjectMineralPragmiumSourceExplosion || 
+            weaponCache.ProtoExplosive is ObjectMineralGiantPragmiumSourceExplosion ||
+            weaponCache.ProtoExplosive is ObjectMineralPragmiumSourceExplosion ||
             weaponCache.ProtoExplosive is ObjectMeteorExplosion)
           {
             damagePostMultiplier *= 0;
           }
           else
-          { 
+          {
             damagePostMultiplier *= 2;
           }
         }
@@ -352,8 +352,8 @@
       ServerCharacterAiHelper.ProcessBossAi(
           character,
           weaponList,
-          distanceEnemyTooClose: 7.5,
-          distanceEnemyTooFar: 15.5,
+          distanceEnemyTooClose: 14.0,
+          distanceEnemyTooFar: 18.0,
           movementDirection: out var movementDirection,
           rotationAngleRad: out var rotationAngleRad);
 

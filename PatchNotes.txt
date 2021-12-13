@@ -18,8 +18,14 @@ Ideas...
 item from ground to bag : waiting for ai_enabled TakeAll changes 
 reduce boss damage - waiting for ai_enabled weapon damage to structure multiplier
 
+
 Changes
 -------
+
+1.58.2
+Increased princess range
+Robot won't deliver item to a destroyed building
+Fixed robot item loading problems when a building is seen by more than one land claim
 
 1.58.1
 0 allowed in both "Mutant Migration Attack Number" rates to disable this event

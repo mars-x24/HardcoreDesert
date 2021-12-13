@@ -79,6 +79,9 @@ namespace HardcoreDesert.Scripts.Systems.Robot
     private byte loadPercent = ItemRobotPrivateState.DEFAULT_STRUCTURE_LOAD_PERCENT;
     private bool loadInactiveOnly = false;
 
+    private bool inputDone = false;
+    private bool outputDone = false;
+
     public RobotItemHelper(RobotOwner robotOwner, List<IStaticWorldObject> outputManufacturer, List<IStaticWorldObject> inputManufacturer)
     {
       this.robotOwner = robotOwner;
@@ -151,6 +154,9 @@ namespace HardcoreDesert.Scripts.Systems.Robot
 
     private void FindInputItems(IStaticWorldObject m)
     {
+      if (this.inputDone)
+        return;
+
       if (m.ProtoGameObject is ProtoObjectBarrel)
       {
         //separate cases
@@ -182,6 +188,9 @@ namespace HardcoreDesert.Scripts.Systems.Robot
 
         this.FindItemsWithRecipe(recipes[i]);
       }
+
+      if (this.inputItems.Count + this.fuelItems.Count > 0)
+        this.inputDone = true;
     }
 
     private void FillFuelItem()
@@ -213,6 +222,9 @@ namespace HardcoreDesert.Scripts.Systems.Robot
 
     private void FindOutputItems(IStaticWorldObject m)
     {
+      if (this.outputDone)
+        return;
+
       if (!this.outputAllowed)
         return;
 
@@ -231,6 +243,9 @@ namespace HardcoreDesert.Scripts.Systems.Robot
 
         this.AddTargetItem(item, false, ushort.MaxValue);
       }
+
+      if (this.targetItems.Count > 0)
+        this.outputDone = true;
     }
 
     private List<Recipe> GetCurrentRecipes()
@@ -433,28 +448,18 @@ namespace HardcoreDesert.Scripts.Systems.Robot
 
         foreach (IItem item in items)
         {
-          if (item.Count >= moveCount)
+          if (moveCount <= 0)
+            break;
+
+          if (item.Count <= moveCount)
+          {
+            if (this.AddTargetItem(item, true, item.Count))
+              moveCount -= item.Count;
+          }
+          else
           {
             if (this.AddTargetItem(item, true, count: Convert.ToUInt16(moveCount)))
-            {
               moveCount = 0;
-              break;
-            }
-          }
-        }
-
-        if (moveCount > 0)
-        {
-          foreach (IItem item in items)
-          {
-            if (moveCount < 0)
-              break;
-
-            if (item.Count <= moveCount)
-            {
-              if (this.AddTargetItem(item, true, item.Count))
-                moveCount -= item.Count;
-            }
           }
         }
       }

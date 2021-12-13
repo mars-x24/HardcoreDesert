@@ -160,7 +160,7 @@ namespace HardcoreDesert.Scripts.Systems.Robot
               if (temp.Count > 0 && owners == null)
                 owners = new List<RobotOwner>();
 
-              foreach(var globalChest in temp.AsList())
+              foreach (var globalChest in temp.AsList())
               {
                 RobotOwner robotOwner = new RobotOwner()
                 {
@@ -228,7 +228,7 @@ namespace HardcoreDesert.Scripts.Systems.Robot
       foreach (var area in areas)
       {
         if (owner is ICharacter && !LandClaimSystem.ServerIsOwnedArea(area, (ICharacter)owner, false))
-            continue;
+          continue;
 
         var areaPrivateState = area.GetPrivateState<LandClaimAreaPrivateState>();
         if (!areaPrivateState.RobotManufacturerInputEnabled && !areaPrivateState.RobotManufacturerOutputEnabled)
@@ -259,6 +259,9 @@ namespace HardcoreDesert.Scripts.Systems.Robot
 
       if (outputManufacturer.Count == 0 && inputManufacturer.Count == 0)
         return false;
+
+      outputManufacturer = outputManufacturer.Distinct().ToList();
+      inputManufacturer = inputManufacturer.Distinct().ToList();
 
       return true;
     }

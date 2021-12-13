@@ -65,7 +65,7 @@
           damageValue: DamageRayAngleOffets.Length * 8,
           armorPiercingCoef: 0.1,
           finalDamageMultiplier: 1.25,
-          rangeMax: 13,
+          rangeMax: 14,
           damageDistribution: damageDistribution);
     }
 

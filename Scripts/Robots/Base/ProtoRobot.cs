@@ -532,7 +532,7 @@
 
       Vector2D destinationCoordinate;
 
-      var hasTarget = publicState.Target is not null && !publicState.IsGoingBackToOwner;
+      var hasTarget = publicState.Target is not null && !publicState.Target.IsDestroyed && !publicState.IsGoingBackToOwner;
 
       if (hasTarget)
       {
@@ -708,35 +708,52 @@
         }
       }
 
-      bool MoveToContainer(IItemsContainer containerSource, IItemsContainer containerDestination, IProtoItem itemProto, ushort countToMove)
+      bool MoveToContainer(IItemsContainer containerSource, IItemsContainer containerDestination, IProtoItem itemProto, ushort itemCountToMove)
       {
         bool moved = false;
 
         ushort movedCount;
 
-        foreach (var item in containerSource.GetItemsOfProto(itemProto))
+        for (int i = 0; i < 3; i++)
         {
-          ushort itemCount = item.Count;
-
-          if (itemCount <= countToMove)
-          {
-            if (Api.Server.Items.MoveOrSwapItem(item, containerDestination, out movedCount, countToMove: itemCount))
-            {
-              moved = true;
-              countToMove -= itemCount;
-            }
-          }
-          else
-          {
-            if (Api.Server.Items.MoveOrSwapItem(item, containerDestination, out movedCount, countToMove: countToMove))
-            {
-              moved = true;
-              countToMove = 0;
-            }
-          }
-
-          if (countToMove <= 0)
+          if (itemCountToMove <= 0)
             break;
+
+          foreach (var item in containerSource.GetItemsOfProto(itemProto))
+          {
+            if (itemCountToMove <= 0)
+              break;
+
+            ushort itemCount = item.Count;
+
+            if (itemCount <= itemCountToMove)
+            {
+              if (Api.Server.Items.MoveOrSwapItem(item, containerDestination, out movedCount, countToMove: itemCount))
+              {
+                //looks like movedCount = 0 when it returns true? sometimes
+                moved = true;
+                itemCountToMove -= itemCount;
+              }
+              else if (movedCount > 0)
+              {
+                moved = true;
+                itemCountToMove -= movedCount;
+              }
+            }
+            else
+            {
+              if (Api.Server.Items.MoveOrSwapItem(item, containerDestination, out movedCount, countToMove: itemCountToMove))
+              {
+                moved = true;
+                itemCountToMove = 0;
+              }
+              else if (movedCount > 0)
+              {
+                moved = true;
+                itemCountToMove -= movedCount;
+              }
+            }
+          }
         }
 
         return moved;
