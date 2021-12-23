@@ -22,6 +22,9 @@ reduce boss damage - waiting for ai_enabled weapon damage to structure multiplie
 Changes
 -------
 
+1.58.3
+Faction access right for S.H.I.E.L.D. in PvE
+
 1.58.2
 Increased princess range
 Robot won't deliver item to a destroyed building

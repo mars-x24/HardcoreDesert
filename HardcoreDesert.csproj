@@ -54,6 +54,9 @@
   </ItemGroup>    
   
   <ItemGroup>
+    <Page Update="UI\Controls\Game\Faction\FactionRoleAccessRightsEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Controls\Game\Items\Controls\HotbarOverlays\HotbarItemVehicleRemoteOverlayControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
