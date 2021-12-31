@@ -22,6 +22,9 @@ reduce boss damage - waiting for ai_enabled weapon damage to structure multiplie
 Changes
 -------
 
+1.59.1
+Increased waterfall sound
+
 1.59.0
 Double bait fishing rod
 Increased fishing line length
