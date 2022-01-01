@@ -6,9 +6,6 @@
   using AtomicTorch.CBND.CoreMod.Items.Devices;
   using AtomicTorch.CBND.CoreMod.Items.Drones;
   using AtomicTorch.CBND.CoreMod.Items.Equipment;
-  using AtomicTorch.CBND.CoreMod.Items.Equipment.ApartSuit;
-  using AtomicTorch.CBND.CoreMod.Items.Equipment.Assault;
-  using AtomicTorch.CBND.CoreMod.Items.Equipment.SuperHeavyArmor;
   using AtomicTorch.CBND.CoreMod.Items.Explosives.Bombs;
   using AtomicTorch.CBND.CoreMod.Items.Food;
   using AtomicTorch.CBND.CoreMod.Items.Generic;
@@ -313,7 +310,7 @@
                   // melee
                   .Add<ItemStunBaton>(count: 1, weight: 1 / 2.0, condition: T3BeforeT5)
                   // ranged
-                  .Add<ItemSubmachinegun10mm>(count: 1, weight: 1, condition: T3Only)
+                  .Add<ItemSubMachinegun10mm>(count: 1, weight: 1, condition: T3Only)
                   .Add<ItemRifle10mm>(count: 1, weight: 1, condition: T3Only)
                   .Add<ItemShotgunMilitary>(count: 1, weight: 1, condition: T3Only)
                   .Add<ItemMachinegun300>(count: 1, weight: 1, condition: T4Plus)
@@ -333,8 +330,6 @@
                   .Add<ItemHelmetMiner>(count: 1, condition: beforeT3)
                   .Add<ItemHelmetRespirator>(count: 1, condition: beforeT4)
                   .Add<ItemHelmetNightVision>(count: 1, condition: T3Only)
-                  .Add<ItemMetalHelmetClosed>(count: 1, condition: T3Only, weight: 1 / 2.0)
-                  .Add<ItemMetalHelmetSkull>(count: 1, condition: T3Only, weight: 1 / 2.0)
                   .Add<ItemMetalArmor>(count: 1, condition: T3Only)
                   .Add<ItemMilitaryHelmet>(count: 1, condition: T3Only)
                   .Add<ItemMilitaryArmor>(count: 1, condition: T3Only)

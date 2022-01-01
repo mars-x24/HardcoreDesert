@@ -1,8 +1,6 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Technologies.Tier3.Fishing
 {
-  using AtomicTorch.CBND.CoreMod.Technologies.Tier2.Construction;
-  using AtomicTorch.CBND.CoreMod.Technologies.Tier2.Industry;
-  using AtomicTorch.CBND.CoreMod.Technologies.Tier3.Chemistry;
+  using AtomicTorch.CBND.CoreMod.Technologies.Tier2.Fishing;
 
   public class TechGroupFishingT3 : TechGroup
   {
@@ -14,9 +12,7 @@
 
     protected override void PrepareTechGroup(Requirements requirements)
     {
-      requirements.AddGroup<TechGroupIndustryT2>(completion: 0.6);
-      requirements.AddGroup<TechGroupConstructionT2>(completion: 0.6);
-      requirements.AddGroup<TechGroupChemistryT3>(completion: 0.2);
+      requirements.AddGroup<TechGroupFishingT2>(completion: 1.0);
     }
   }
 }

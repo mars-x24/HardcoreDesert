@@ -15,7 +15,6 @@
   using AtomicTorch.GameEngine.Common.Primitives;
   using System;
   using System.Collections.Generic;
-  using System.Windows.Media;
 
   public class ComponentFishingVisualizer : ClientComponent
   {
@@ -33,23 +32,6 @@
     private static readonly Vector2D FloatLineConnectionOffsetDown = (0.027, 0.001);
 
     private static readonly Vector2D FloatLineConnectionOffsetUp = (0.0285, 0.097);
-
-    private static readonly Color LineColor = Color.FromArgb(0xAA, 0xAA, 0xAA, 0xAA);
-
-    private static readonly ITextureAtlasResource TextureResourceFishingFloat
-        = new TextureAtlasResource("FX/Fishing/Float.png",
-                                   columns: 6,
-                                   rows: 1,
-                                   isTransparent: true);
-
-    private static readonly ITextureAtlasResource TextureResourceFishingFloat2
-    = new TextureAtlasResource("FX/Fishing/Float2.png",
-                               columns: 6,
-                               rows: 1,
-                               isTransparent: true);
-
-    private static readonly TextureResource TextureResourceFishingLine
-        = new("FX/Fishing/Line.png");
 
     private ICharacter character;
 
@@ -98,22 +80,20 @@
       this.character = character;
       ComponentCharacterBinding[character] = this;
       this.fishingTargetPosition = fishingTargetPosition;
-      
-      var floatTexture = fishingRod?.BaitCount > 1 ? TextureResourceFishingFloat2 : TextureResourceFishingFloat;
 
       this.spriteRendererFloat = Api.Client.Rendering.CreateSpriteRenderer(
           this.SceneObject,
-          floatTexture,
+          fishingRod.TextureResourceFishingFloat,
           drawOrder: DrawOrder.OverDefault,
           scale: 0.667,
           spritePivotPoint: (0.5, 0.5));
 
       this.spriteRendererLine = Api.Client.Rendering.CreateSpriteRenderer(
           this.SceneObject,
-          TextureResourceFishingLine,
+          fishingRod.TextureResourceFishingLine,
           drawOrder: DrawOrder.OverDefault + 1,
           spritePivotPoint: (0, 0.5));
-      this.spriteRendererLine.Color = LineColor;
+      this.spriteRendererLine.Color = fishingRod.LineColor;
 
       this.spriteRendererFloat.DrawMode = this.GetDrawModeForFloat();
 
@@ -135,8 +115,8 @@
             this.spriteRendererFloat.IsEnabled = true;
             this.spriteRendererLine.IsEnabled = true;
 
-                  // play floater animation once
-                  this.CreateFloaterAnimationComponent();
+            // play floater animation once
+            this.CreateFloaterAnimationComponent();
             this.componentSpriteSheetAnimatorFloater.IsLooped = false;
           });
     }
@@ -209,11 +189,14 @@
 
       var protoSkeleton = clientState.CurrentProtoSkeleton;
       var slotName = protoSkeleton.SlotNameItemInHand;
-      var slotOffset = skeletonRenderer.GetSlotScreenOffset(attachmentName: slotName);
+      var slotOffset = skeletonRenderer.GetSlotScreenOffset(slotName);
+
+      var offset = protoItemToolFishing?.FishingLineStartScreenOffset ?? Vector2F.Zero;
+      offset = (offset.Y, -offset.X);
 
       var boneWorldPosition = skeletonRenderer.TransformSlotPosition(
           slotName,
-          slotOffset + protoItemToolFishing?.FishingLineStartScreenOffset,
+          slotOffset + (offset / skeletonRenderer.GetSlotScreenScale(slotName)),
           out _);
 
       return boneWorldPosition;

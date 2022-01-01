@@ -123,7 +123,7 @@
     protected override void PrepareMuzzleFlashDescription(MuzzleFlashDescription description)
     {
       description.Set(MuzzleFlashPresets.EnergyLaserWeaponBlue)
-                 .Set(textureScreenOffset: (28, 9));
+                 .Set(textureScreenOffset: (280, 57));
     }
 
     protected override void PrepareProtoWeaponRangedEnergy(

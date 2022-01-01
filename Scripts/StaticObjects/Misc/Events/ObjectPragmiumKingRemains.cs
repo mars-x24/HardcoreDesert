@@ -85,12 +85,7 @@
 
       config.Stage4
         .Add<ItemIngotGold>(count: 1, countRandom: 1)
-        .Add<ItemGemDiamond>(count: 1, countRandom: 1, probability: 1 / 40.0)
-        .Add<ItemGemEmerald>(count: 1, countRandom: 1, probability: 1 / 40.0)
-        .Add<ItemGemRuby>(count: 1, countRandom: 1, probability: 1 / 40.0)
-        .Add<ItemGemSapphire>(count: 1, countRandom: 1, probability: 1 / 40.0)
-        .Add<ItemGemTopaz>(count: 1, countRandom: 1, probability: 1 / 40.0)
-        .Add<ItemGemTourmaline>(count: 1, countRandom: 1, probability: 1 / 40.0)
+        .Add<ItemGemstones>(count: 1, countRandom: 5, probability: 1 / 40.0)
         .Add<ItemEnragedPragmiumHeart>(count: 1);
     }
 

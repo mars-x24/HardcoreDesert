@@ -7,16 +7,19 @@
   using AtomicTorch.CBND.CoreMod.SoundPresets;
   using AtomicTorch.CBND.CoreMod.Systems.FishingBaitReloadingSystem;
   using AtomicTorch.CBND.CoreMod.Systems.FishingSystem;
+  using AtomicTorch.CBND.CoreMod.Tiles;
   using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Controls.HotbarOverlays;
   using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.Data.Items;
   using AtomicTorch.CBND.GameApi.Data.State;
   using AtomicTorch.CBND.GameApi.Resources;
+  using AtomicTorch.CBND.GameApi.Scripting;
   using AtomicTorch.CBND.GameApi.Scripting.ClientComponents;
   using AtomicTorch.CBND.GameApi.ServicesClient.Components;
   using AtomicTorch.GameEngine.Common.Primitives;
   using System.Collections.Generic;
   using System.Windows.Controls;
+  using System.Windows.Media;
 
   /// <summary>
   /// Base tool item prototype for fishing rods.
@@ -30,7 +33,7 @@
               TPublicState,
               TClientState>,
           IProtoItemToolFishing
-        where TPrivateState : BasePrivateState, IItemWithDurabilityPrivateState, new()
+        where TPrivateState : ItemPrivateState, IItemWithDurabilityPrivateState, new()
         where TPublicState : ItemFishingRodPublicState, new()
         where TClientState : BaseClientState, new()
   {
@@ -44,13 +47,22 @@
           isProvidesMagentaPixelPosition: true);
     }
 
+    public virtual bool IsFishingLava => false;
+
     public virtual TextureResource CharacterTextureResource { get; }
+
+    public virtual Color LineColor => Color.FromArgb(0xAA, 0xAA, 0xAA, 0xAA);
+
+    public virtual ITextureAtlasResource TextureResourceFishingFloat
+        => new TextureAtlasResource("FX/Fishing/Float.png", columns: 6, rows: 1, isTransparent: true);
+
+    public virtual TextureResource TextureResourceFishingLine => new("FX/Fishing/Line.png");
 
     public abstract Vector2F FishingLineStartScreenOffset { get; }
 
     public abstract double FishingSpeedMultiplier { get; }
 
-    public abstract byte BaitCount { get; } //MOD
+    public virtual byte BaitCount => 1;
 
     public Control ClientCreateHotbarOverlayControl(IItem item)
     {

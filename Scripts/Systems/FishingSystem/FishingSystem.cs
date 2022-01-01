@@ -283,7 +283,7 @@
 
     private static ArrayWithWeights<IProtoItemFish> ServerSelectAvailableFishPrototypes(
         ICharacter character,
-        bool isSaltWater,
+        bool isSaltWater, bool isLava,
         Vector2Ushort fishingTilePosition,
         IProtoItemFishingBait protoItemFishingBait,
         byte characterFishingKnowledgeLevel)
@@ -292,7 +292,7 @@
 
       foreach (var protoItemFish in AllFishList)
       {
-        if (protoItemFish.IsSaltwaterFish != isSaltWater)
+        if (protoItemFish.IsSaltwaterFish != isSaltWater || protoItemFish.IsLavaFish != isLava)
         {
           // this fish is for different water type
           continue;
@@ -409,11 +409,21 @@
           return;
         }
 
+        var rodPublicState = state.ItemFishingRod.GetPublicState<ItemFishingRodPublicState>();
+        var fishingTilePosition = state.Request.FishingTargetPosition.ToVector2Ushort();
+        var protoTile = Server.World.GetTile(fishingTilePosition).ProtoTile;
+        var isSaltWater = protoTile is TileWaterSea;
+        var isLava = protoTile is TileLava;
+
         for (int i = 0; i < baitCount; i++)
         {
           state.ServerIsPlayerTriedToCatch = true;
 
           var fishCatchChance = character.SharedGetFinalStatMultiplier(StatName.FishingSuccess) - 1;
+
+          if (isLava)
+            fishCatchChance /= 10;
+
           fishCatchChance = MathHelper.Clamp(fishCatchChance, 0, 1);
 
           if (!RandomHelper.RollWithProbability(fishCatchChance))
@@ -431,23 +441,18 @@
 
           fishingKnowledgeCoef = MathHelper.Clamp(fishingKnowledgeCoef, 0, 1);
 
-          var itemFishingRod = state.ItemFishingRod;
-          var rodPublicState = itemFishingRod.GetPublicState<ItemFishingRodPublicState>();
-
-          ServerTimersSystem.AddAction(
-              delaySeconds: 1.5,
-              () => ItemDurabilitySystem.ServerModifyDurability(itemFishingRod, -1));
-
-          var fishingTilePosition = state.Request.FishingTargetPosition.ToVector2Ushort();
-          var isSaltWater = Server.World.GetTile(fishingTilePosition)
-                                  .ProtoTile is TileWaterSea;
+          state.ServerDeductDurability();
 
           var selectedFishPrototypes = ServerSelectAvailableFishPrototypes(
               character,
               isSaltWater,
+              isLava,
               fishingTilePosition,
               rodPublicState.CurrentProtoBait,
               characterFishingKnowledgeLevel: (byte)(100 * fishingKnowledgeCoef));
+
+          if (selectedFishPrototypes.Count == 0)
+            continue;
 
           var protoItemFish = selectedFishPrototypes.GetSingleRandomElement();
           var droplist = ServerGetDroplistForFish(protoItemFish);

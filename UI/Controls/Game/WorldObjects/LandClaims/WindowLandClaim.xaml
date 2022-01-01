@@ -353,8 +353,9 @@
                 <TabItem Header="Robots">
                     <robot:RobotStateControl DataContext="{Binding ViewModelRobotState}" />
                 </TabItem>
-                
-                <TabItem Header="{x:Static loc:CoreStrings.WindowLandClaim_DecayInfo}">
+
+                <TabItem Header="{x:Static loc:CoreStrings.WindowLandClaim_DecayInfo}"
+                         Visibility="{Binding IsDecayEnabled, Converter={StaticResource BoolToVisibilityConverter}}">
                     <ScrollViewer VerticalScrollBarVisibility="Auto"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center">

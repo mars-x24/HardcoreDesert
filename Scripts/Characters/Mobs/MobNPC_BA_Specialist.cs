@@ -82,7 +82,7 @@
         new DropItemsList(outputs: 1)
 
           .Add<ItemMilitaryArmor>(count: 1, weight: 1)
-          .Add<ItemSubmachinegun10mm>(count: 1, weight: 1));
+          .Add<ItemSubMachinegun10mm>(count: 1, weight: 1));
     }
 
     protected override void ServerInitializeCharacterMob(ServerInitializeData data)

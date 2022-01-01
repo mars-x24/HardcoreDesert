@@ -4,6 +4,9 @@
   using AtomicTorch.CBND.CoreMod.Helpers.Client;
   using AtomicTorch.CBND.CoreMod.Items.Fishing.Base;
   using AtomicTorch.CBND.CoreMod.Skills;
+  using AtomicTorch.CBND.CoreMod.Systems.ItemDurability;
+  using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
+  using AtomicTorch.CBND.CoreMod.Tiles;
   using AtomicTorch.CBND.CoreMod.UI;
   using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects;
   using AtomicTorch.CBND.GameApi.Data.Characters;
@@ -36,7 +39,16 @@
       if (Api.IsServer)
       {
         this.SharedFishingSession = Api.Server.World.CreateLogicObject<FishingSession>();
+
+        var publicState = this.SharedFishingSession.GetPublicState<FishingSession.PublicState>();
+
+        if (publicState.ServerTimeRemainsBeforeFishBiting > 0)
+          publicState.ServerTimeRemainsBeforeFishBiting *= ((ProtoItemFishingRod)this.ItemFishingRod.ProtoItem).FishingSpeedMultiplier;
+
         FishingSession.ServerSetup(this.SharedFishingSession, character);
+
+        //Lava hurts
+        this.ServerDeductDurability(true);
       }
     }
 
@@ -55,6 +67,24 @@
     public bool ServerIsSuccess { get; set; }
 
     public ILogicObject SharedFishingSession { get; private set; }
+
+    public void ServerDeductDurability(bool onlyIfLava = false)
+    {
+      var fishingTilePosition = this.FishingTargetPosition.ToVector2Ushort();
+      var protoTile = Api.Server.World.GetTile(fishingTilePosition).ProtoTile;
+      var isLava = protoTile is TileLava;
+
+      if (onlyIfLava && !isLava)
+        return;
+
+      var itemProtoFishingRod = (ProtoItemFishingRod)this.ItemFishingRod.ProtoItem;
+
+      var durability = isLava && !itemProtoFishingRod.IsFishingLava ? -10 : -1;
+
+      ServerTimersSystem.AddAction(
+                delaySeconds: 1.5,
+                () => ItemDurabilitySystem.ServerModifyDurability(this.ItemFishingRod, durability));
+    }
 
     public void ClientOnItemUse()
     {
@@ -115,14 +145,13 @@
 
     public byte ServerTryToDeductTheBait()
     {
-      var itemFishingRod = this.ItemFishingRod;
-      var protoItemFishingRod = (ProtoItemFishingRod)this.ItemFishingRod.ProtoItem;
-
       if (this.ServerIsBaitDeducted > 0)
       {
         return this.ServerIsBaitDeducted;
       }
-   
+
+      var itemFishingRod = this.ItemFishingRod;
+      var protoItemFishingRod = (ProtoItemFishingRod)this.ItemFishingRod.ProtoItem;
       var rodPublicState = itemFishingRod.GetPublicState<ItemFishingRodPublicState>();
 
       var itemBait = FishingSystem.SharedFindBaitItem(this.Character,
@@ -133,6 +162,8 @@
         return 0;
       }
 
+      bool canSaveBait = Api.Server.World.GetTile(this.FishingTargetPosition.ToVector2Ushort()).ProtoTile is not TileLava;
+
       byte baitCount = 0;
 
       for (byte i = 0; i < protoItemFishingRod.BaitCount; i++)
@@ -141,7 +172,7 @@
           break;
 
         // roll the chance to save the bait
-        if (this.Character.SharedHasSkillFlag(SkillFishing.Flags.FishingChanceToSaveBait)
+        if (canSaveBait && this.Character.SharedHasSkillFlag(SkillFishing.Flags.FishingChanceToSaveBait)
             && RandomHelper.RollWithProbability(SkillFishing.FishingChanceToSaveBait))
         {
           // saved the bait! just assume it was deducted

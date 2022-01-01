@@ -17,9 +17,9 @@
 
   public class ItemRobotReservedSlot
         : ProtoItem
-            <EmptyPrivateState,
-                ItemRobotReservedSlot.PublicState,
-                EmptyClientState>
+            <ItemPrivateState,
+             ItemRobotReservedSlot.PublicState,
+             EmptyClientState>
   {
     private static readonly Color ColorIcon
         = Color.FromArgb(0x99, 0xCC, 0xCC, 0xCC);

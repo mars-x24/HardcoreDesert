@@ -26,7 +26,8 @@
 
     public override double FireAnimationDuration => 0.6;
 
-    public override ITextureResource GroundIcon => new TextureResource("Items/Weapons/Melee/ItemRapierLaser");
+    public override ITextureResource GroundIcon
+        => new TextureResource("Items/Weapons/Melee/ItemRapierLaser/GroundIcon");
 
     public override double GroundIconScale => 1.2;
 
@@ -41,7 +42,7 @@
         ICharacter character,
         IClientSceneObject sceneObject)
     {
-      var lightSource = base.ClientCreateLightSource(item, character, sceneObject); 
+      var lightSource = base.ClientCreateLightSource(item, character, sceneObject);
       // restore circle shape by using x2 height
       lightSource.RenderingSize = new Size2F(lightSource.RenderingSize.X, lightSource.RenderingSize.Y * 2);
       return lightSource;
@@ -59,13 +60,13 @@
           finalDamageMultiplier: 1.2,
           rangeMax: 1.2,
           damageDistribution: new DamageDistribution(DamageType.Heat, 1));
-      
+
       lightConfig.IsLightEnabled = true;
       lightConfig.Color = this.LightColor;
-      lightConfig.ScreenOffset = (35, 0);
-      lightConfig.Size = 4; 
+      lightConfig.ScreenOffset = (20, 140);
+      lightConfig.Size = 4;
       // we want to make it lighting objects around much better even though the rendering size is small
-      lightConfig.LogicalSize = 16; 
+      lightConfig.LogicalSize = 16;
     }
 
     protected override ReadOnlySoundPreset<ObjectMaterial> PrepareSoundPresetHit()

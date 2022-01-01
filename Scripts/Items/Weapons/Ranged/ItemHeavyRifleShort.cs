@@ -44,7 +44,7 @@
     {
       description.Set(MuzzleFlashPresets.ModernRifle)
                  .Set(textureScale: 1.8)
-                 .Set(textureScreenOffset: (40, 8));
+                 .Set(textureScreenOffset: (340, 62));
     }
 
     protected override void PrepareProtoWeaponRanged(

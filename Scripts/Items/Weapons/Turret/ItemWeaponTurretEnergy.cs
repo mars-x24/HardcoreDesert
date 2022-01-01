@@ -1,6 +1,5 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Items.Weapons.Turret
 {
-  using System.Collections.Generic;
   using AtomicTorch.CBND.CoreMod.Items.Ammo;
   using AtomicTorch.CBND.CoreMod.SoundPresets;
   using AtomicTorch.CBND.CoreMod.Systems.Weapons;
@@ -8,6 +7,7 @@
   using AtomicTorch.CBND.GameApi.Data.Weapons;
   using AtomicTorch.CBND.GameApi.Data.World;
   using AtomicTorch.GameEngine.Common.Helpers;
+  using System.Collections.Generic;
 
   public class ItemWeaponTurretEnergy : ProtoItemWeaponTurretEnergy
   {
@@ -35,7 +35,7 @@
     protected override void PrepareMuzzleFlashDescription(MuzzleFlashDescription description)
     {
       description.Set(MuzzleFlashPresets.EnergyPlasmaWeapon)
-                 .Set(textureScreenOffset: (-7, -2), textureScale: 1.5);
+                 .Set(textureScreenOffset: (85, -17), textureScale: 1.5);
     }
 
     protected override void PrepareProtoWeaponRanged(

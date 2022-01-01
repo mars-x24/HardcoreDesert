@@ -12,7 +12,10 @@
   {
     public override bool IsBlockingMovement => true;
 
+    public override bool IsDisplayingProgress => true;
+
     public readonly IItem ItemVehicle;
+
     public VehicleRemoteActionState(
         ICharacter character,
         double durationSeconds,
@@ -24,15 +27,12 @@
 
     public class PublicState : BasePublicActionState
     {
-
       protected override void ClientOnCompleted()
       {
         if (this.IsCancelled)
         {
           return;
         }
-
-
       }
 
       protected override void ClientOnStart()

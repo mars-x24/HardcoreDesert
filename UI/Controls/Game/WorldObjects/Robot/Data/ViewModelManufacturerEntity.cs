@@ -9,9 +9,7 @@
 
   public class ViewModelManufacturerEntity : BaseViewModel
   {
-    private ITextureResource iconResource = null;
-
-    private TextureBrush icon;
+    private ITextureResource icon;
 
     private bool isEnabled;
 
@@ -60,16 +58,12 @@
       {
         if (icon == null)
         {
-          iconResource = Entity.Icon;
+          icon = Entity.Icon;
 
-          if (iconResource == null)
-          {
-            // Default icon.
-            iconResource = new TextureResource("Content/Textures/StaticObjects/ObjectUnknown.png");
-          }
-          icon = Api.Client.UI.GetTextureBrush(iconResource);
+          if (icon == null)
+            icon = new TextureResource("Content/Textures/StaticObjects/ObjectUnknown.png");
         }
-        return icon;
+        return Api.Client.UI.GetTextureBrush(icon);
       }
     }
   }
