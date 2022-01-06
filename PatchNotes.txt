@@ -11,16 +11,17 @@ MigrationMutantMobCount: Number of mobs for each claims, default 1,4,8,13,20
 MigrationMutantMobMaxLevelPerWave: Max level of mobs for each wave, default 1,2,3,4,5
 ServerGlobalStorageItemsSlotsCapacity: How many global storage slots are allowed per base. The value should be within 0-128 range, default 64
 WreckedHoverboardChance: A chance to get wrecked hoverboard in garbage pile (1 / RateValue ;  Default 30 ; Set 0 for none)
-
-
-Ideas...
---------
-item from ground to bag : waiting for ai_enabled TakeAll changes 
-reduce boss damage - waiting for ai_enabled weapon damage to structure multiplier
-
+VehicleBackupWeaponEnabled : You can deactivate backup weapon on mech
 
 Changes
 -------
+
+1.61.0
+Compatibility v1.32.2.3
+Steppen Hunter is now Steppen Hunter (Marauder) - Added a new default skin
+Large freezer
+Backup weapon on Mechs (still buggy if you have 2 weapons of the same type)
+Rate Setting VehicleBackupWeaponEnabled : You can deactivate backup weapon on mech
 
 1.60.0
 Compatibility v1.32.2.2

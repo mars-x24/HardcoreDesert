@@ -1,11 +1,11 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Items.Weapons.Ranged
 {
-  using System.Collections.Generic;
   using AtomicTorch.CBND.CoreMod.Items.Ammo;
   using AtomicTorch.CBND.CoreMod.Skills;
   using AtomicTorch.CBND.CoreMod.SoundPresets;
   using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.Data.Weapons;
+  using System.Collections.Generic;
 
   public class ItemHeavyRifleShort : ProtoItemWeaponRanged
   {
