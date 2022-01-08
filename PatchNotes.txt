@@ -16,6 +16,9 @@ VehicleBackupWeaponEnabled : You can deactivate backup weapon on mech
 Changes
 -------
 
+1.62.0
+Added Wall projector
+
 1.61.0
 Compatibility v1.32.2.3
 Steppen Hunter is now Steppen Hunter (Marauder) - Added a new default skin
