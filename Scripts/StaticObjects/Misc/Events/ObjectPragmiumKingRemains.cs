@@ -85,7 +85,7 @@
 
       config.Stage4
         .Add<ItemIngotGold>(count: 1, countRandom: 1)
-        .Add<ItemGemstones>(count: 1, countRandom: 5, probability: 1 / 40.0)
+        .Add<ItemGemstones>(count: 1, countRandom: 3, probability: 1 / 30.0)
         .Add<ItemEnragedPragmiumHeart>(count: 1);
     }
 

@@ -129,7 +129,7 @@
 
     public override ObjectMaterial ObjectMaterial => ObjectMaterial.HardTissues;
 
-    public override double StatDefaultHealthMax => 10000;
+    public override double StatDefaultHealthMax => 9000;
 
     // Please note: boss using different regeneration mechanism.
     public override double StatHealthRegenerationPerSecond => 0;
@@ -148,7 +148,7 @@
           {
             // explode
             var bossPosition = character.Position;
-            var protoExplosion = Api.GetProtoEntity<ObjectPragmiumQueenDeathExplosion>();
+            var protoExplosion = Api.GetProtoEntity<ObjectPragmiumKingDeathExplosion>();
             Server.World.CreateStaticWorldObject(protoExplosion,
                                                          (bossPosition - protoExplosion.Layout.Center)
                                                          .ToVector2Ushort());

@@ -16,6 +16,9 @@ VehicleBackupWeaponEnabled : You can deactivate backup weapon on mech
 Changes
 -------
 
+1.62.1
+Fixed King explosion and event timing
+
 1.62.0
 Added Wall projector
 

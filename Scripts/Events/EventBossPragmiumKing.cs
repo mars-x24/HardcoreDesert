@@ -104,7 +104,7 @@
         List<IProtoSpawnableObject> spawnPreset)
     {
       triggers.Add(GetTrigger<TriggerTimeInterval>()
-                       .Configure(RateWorldEventIntervalBossPragmiumQueen.SharedValueIntervalHours));
+                       .Configure(RateWorldEventIntervalBossPragmiumKing.SharedValueIntervalHours));
 
       spawnPreset.Add(Api.GetProtoEntity<MobBossPragmiumKing>());
     }

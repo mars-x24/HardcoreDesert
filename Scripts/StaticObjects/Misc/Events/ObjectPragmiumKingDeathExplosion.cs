@@ -76,7 +76,7 @@
 
       soundEmitter.Seek(0);
       soundEmitter.CustomMinDistance = ExplosionDamageRadius;
-      soundEmitter.CustomMaxDistance = 10 + ExplosionDamageRadius;
+      soundEmitter.CustomMaxDistance = 50 + ExplosionDamageRadius;
 
       var lightSource = ObjectMineralPragmiumHelper.ClientInitializeLightForSource(sceneObjectEffect);
       lightSource.LogicalSize = lightSource.RenderingSize = 24;
