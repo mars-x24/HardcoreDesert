@@ -16,6 +16,10 @@ VehicleBackupWeaponEnabled : You can deactivate backup weapon on mech
 Changes
 -------
 
+1.62.2
+Fixed the backup weapon interface in mech when the backup weapon is the same proto
+Wall projector moves with the wall when relocating, removed when the wall is destroyed/deconstructed
+
 1.62.1
 Fixed King explosion and event timing
 

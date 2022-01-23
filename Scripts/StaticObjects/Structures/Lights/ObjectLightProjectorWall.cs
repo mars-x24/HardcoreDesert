@@ -6,13 +6,16 @@
   using AtomicTorch.CBND.CoreMod.SoundPresets;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Walls;
   using AtomicTorch.CBND.CoreMod.Systems.Construction;
+  using AtomicTorch.CBND.CoreMod.Systems.Deconstruction;
   using AtomicTorch.CBND.CoreMod.Systems.Physics;
   using AtomicTorch.CBND.GameApi.Data.World;
   using AtomicTorch.CBND.GameApi.Resources;
+  using AtomicTorch.CBND.GameApi.Scripting;
   using AtomicTorch.CBND.GameApi.ServicesClient.Components;
   using AtomicTorch.CBND.GameApi.ServicesClient.Rendering;
   using AtomicTorch.GameEngine.Common.Primitives;
   using System;
+  using System.Linq;
   using System.Windows.Media;
 
   public class ObjectLightProjectorWall
@@ -73,20 +76,68 @@
       base.ClientInitialize(data);
 
       clientState.RendererLight.PositionOffset += (0, 1);
+
+      //clientState.Renderer.DrawOrderOffsetY -= 0.1;
     }
 
     protected override void ServerInitialize(ServerInitializeData data)
     {
       base.ServerInitialize(data);
+
+      DeconstructionSystem.ServerStructureDeconstructed += DeconstructionSystem_ServerStructureDeconstructed;
+      ConstructionRelocationSystem.ServerStructureRelocated += ConstructionRelocationSystem_ServerStructureRelocated;
+      ServerStructuresManager.StructureRemoved += ServerStructuresManager_StructureRemoved;
+    }
+
+    private void ConstructionRelocationSystem_ServerStructureRelocated(GameApi.Data.Characters.ICharacter character, Vector2Ushort fromPosition, IStaticWorldObject structure)
+    {
+      Tile toPositionTile = structure.OccupiedTile;
+
+      Tile fromPositionTile = Api.Server.World.GetTile(fromPosition);
+
+      foreach (var staticObject in fromPositionTile.StaticObjects.ToList())
+      {
+        if (staticObject.ProtoGameObject is ObjectLightProjectorWall)
+           Server.World.SetPosition(staticObject, toPositionTile.Position);
+      }
+    }
+
+    private void DeconstructionSystem_ServerStructureDeconstructed(DeconstructionActionState obj)
+    {
+      if (!obj.IsCompleted)
+        return;
+
+      if (obj.WorldObject.ProtoGameObject is ProtoObjectWall)
+      {
+        this.ValidateWall(obj.WorldObject.OccupiedTile);
+      }
+    }
+
+    private void ServerStructuresManager_StructureRemoved(IStaticWorldObject structure)
+    {
+      if (structure.ProtoGameObject is ProtoObjectWall)
+      {
+        this.ValidateWall(structure.OccupiedTile);
+      }
     }
 
     protected override void ServerUpdate(ServerUpdateData data)
     {
       base.ServerUpdate(data);
 
-      Tile tile = data.GameObject.OccupiedTile;
+      this.ValidateWall(data.GameObject.OccupiedTile);
+    }
+
+    private void ValidateWall(Tile tile)
+    {
       if (!IsWallPresent(tile))
-        Server.World.DestroyObject(data.GameObject);
+      {
+        foreach (var staticObject in tile.StaticObjects.ToList())
+        {
+          if (staticObject.ProtoGameObject is ObjectLightProjectorWall)
+            Server.World.DestroyObject(staticObject);
+        }
+      }
     }
 
     protected override void ClientUpdate(ClientUpdateData data)
@@ -102,6 +153,16 @@
           continue;
 
         return wall.ObstacleBlockDamageCoef >= 0.9;
+      }
+      return false;
+    }
+
+    private static bool IsLightPresent(Tile tile)
+    {
+      foreach (var obj in tile.StaticObjects)
+      {
+        if (obj.ProtoGameObject is ObjectLightProjectorWall)
+          return true;
       }
       return false;
     }
@@ -147,9 +208,9 @@
 
     public static readonly ConstructionTileRequirements.Validator ValidatorIsWallPresent
            = new(Error_UnsuitableGround_Message_CanBuildOnlyOnWalls,
-                 c => IsWallPresent(c.Tile));
+                 c => IsWallPresent(c.Tile) && !IsLightPresent(c.Tile));
 
-    public const string Error_UnsuitableGround_Message_CanBuildOnlyOnWalls = "You can only build on walls.";
+    public const string Error_UnsuitableGround_Message_CanBuildOnlyOnWalls = "You can only build on empty walls.";
 
     protected override ITextureResource PrepareDefaultTexture(Type thisType)
     {
@@ -166,10 +227,12 @@
     protected override void SharedCreatePhysics(CreatePhysicsData data)
     {
       data.PhysicsBody
-          //.AddShapeRectangle(size: (0.8, 0.4), offset: (0.1, 0.1))
+          //.AddShapeRectangle(size: (0.8, 2.1), offset: (0.1, 0.1))
           //.AddShapeRectangle(size: (0.5, 1.0), offset: (0.25, 0.3), group: CollisionGroups.HitboxMelee)
           .AddShapeRectangle(size: (0.5, 0.5), offset: (0.25, 1.3), group: CollisionGroups.HitboxRanged)
-          .AddShapeRectangle(size: (0.5, 1.0), offset: (0.25, 1.3), group: CollisionGroups.ClickArea);
+
+          .AddShapeRectangle(size: (0.8, 2.1), offset: (0.1, 0.1), group: CollisionGroups.ClickArea);
+      //.AddShapeRectangle(size: (0.5, 1.0), offset: (0.25, 1.3), group: CollisionGroups.ClickArea);
     }
 
     public class ClientState : ObjectLightClientState

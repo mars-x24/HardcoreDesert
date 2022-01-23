@@ -137,6 +137,9 @@
       //privateState.EquipmentItemsContainerBackup = container;
       //privateState.EquipmentItemsContainer = backupContainer;
 
+      var publicState = GetPublicState(vehicle);
+      publicState.ProtoItemLeftTurretSlot = null;
+
       //move temp to cargo
       for (byte i = 0; i < containerTemp.SlotsCount; i++)
       {
