@@ -15,6 +15,11 @@ VehicleBackupWeaponEnabled : You can deactivate backup weapon on mech
 
 Changes
 -------
+giant prag
+
+1.63.0
+Fixed zones around giant pragmium source
+New roads near the king
 
 1.62.2
 Fixed the backup weapon interface in mech when the backup weapon is the same proto

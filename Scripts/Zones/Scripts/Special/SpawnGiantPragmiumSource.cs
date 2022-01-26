@@ -10,9 +10,9 @@
     {
       triggers
           .Add(GetTrigger<TriggerWorldInit>())
-          .Add(GetTrigger<TriggerTimeInterval>().ConfigureForSpawn(TimeSpan.FromHours(3)));
+          .Add(GetTrigger<TriggerTimeInterval>().ConfigureForSpawn(TimeSpan.FromSeconds(30)));
 
-      spawnList.CreatePreset(interval: 10, padding: 10)
+      spawnList.CreatePreset(interval: 10, padding: 10, useSectorDensity: false, spawnAtLeastOnePerSector: true)
                .Add<ObjectMineralGiantPragmiumSource>().SetCustomPaddingWithSelf(79);
     }
   }
