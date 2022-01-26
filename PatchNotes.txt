@@ -15,7 +15,6 @@ VehicleBackupWeaponEnabled : You can deactivate backup weapon on mech
 
 Changes
 -------
-giant prag
 
 1.63.1
 Fixed zones around giant pragmium source
