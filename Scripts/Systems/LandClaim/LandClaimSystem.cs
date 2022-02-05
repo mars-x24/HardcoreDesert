@@ -154,11 +154,11 @@
             context =>
             {
               var forCharacter = context.CharacterBuilder;
-              if (forCharacter is not null
-                      && CreativeModeSystem.SharedIsInCreativeMode(forCharacter))
-              {
-                return true;
-              }
+              //if (forCharacter is not null
+              //        && CreativeModeSystem.SharedIsInCreativeMode(forCharacter))
+              //{
+              //  return true;
+              //}
 
               var position = context.Tile.Position;
 

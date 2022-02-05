@@ -14,6 +14,8 @@
   {
     public override bool AiIsRunAwayFromHeavyVehicles => false;
 
+    public override bool CanBeSpawnedByMobs => false;
+
     public override float CharacterWorldHeight => 1.9f;
 
     public override float CharacterWorldWeaponOffsetRanged => 0.45f;

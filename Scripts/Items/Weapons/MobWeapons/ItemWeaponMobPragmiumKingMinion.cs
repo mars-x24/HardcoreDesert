@@ -27,9 +27,9 @@
         if (mobs is null)
         {
           mobs = Api.FindProtoEntities<ProtoCharacterMob>();
+          mobs.RemoveAll(m => !m.CanBeSpawnedByMobs);
           mobs.RemoveAll(m => m.StatDefaultHealthMax < 80);
           mobs.RemoveAll(m => m.AiIsRunAwayFromHeavyVehicles);
-          mobs.RemoveAll(m => m.GetType().ToString().Contains("NPC"));
         }
 
         int r = RandomHelper.Next(mobs.Count);

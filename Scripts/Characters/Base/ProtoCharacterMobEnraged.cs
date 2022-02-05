@@ -25,6 +25,8 @@ namespace AtomicTorch.CBND.CoreMod.Characters
 
     public override bool AiIsRunAwayFromHeavyVehicles => false;
 
+    public override bool CanBeSpawnedByMobs => false;
+
     //the npc is attacking himself with the test line
     public override Vector2D SharedGetWeaponFireWorldPosition(ICharacter character, bool isMeleeWeapon)
     {

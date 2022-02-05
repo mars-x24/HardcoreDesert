@@ -16,7 +16,14 @@ VehicleBackupWeaponEnabled : You can deactivate backup weapon on mech
 Changes
 -------
 
-1.63.1
+1.64.3
+New snow biome by Cosiek
+Changed Cold bear style to a real blue
+Added Frozen pangolin and Psi flotter
+T5 Teleport and items
+Enriched items
+
+1.63.2
 Fixed zones around giant pragmium source
 New roads near the king
 

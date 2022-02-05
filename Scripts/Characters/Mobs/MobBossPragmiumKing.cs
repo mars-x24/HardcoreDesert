@@ -8,7 +8,9 @@
   using AtomicTorch.CBND.CoreMod.Rates;
   using AtomicTorch.CBND.CoreMod.SoundPresets;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Minerals;
+  using AtomicTorch.CBND.CoreMod.StaticObjects.Misc;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events;
+  using AtomicTorch.CBND.CoreMod.StaticObjects.Props.Alien;
   using AtomicTorch.CBND.CoreMod.Stats;
   using AtomicTorch.CBND.CoreMod.Systems.BossLootSystem;
   using AtomicTorch.CBND.CoreMod.Systems.Droplists;
@@ -16,6 +18,7 @@
   using AtomicTorch.CBND.CoreMod.Systems.Physics;
   using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
   using AtomicTorch.CBND.CoreMod.Systems.Weapons;
+  using AtomicTorch.CBND.CoreMod.Systems.WorldDiscovery;
   using AtomicTorch.CBND.CoreMod.Zones;
   using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.Data.State;
@@ -26,6 +29,7 @@
   using System;
   using System.Collections.Generic;
   using System.Linq;
+  using static AtomicTorch.CBND.CoreMod.Systems.BossLootSystem.ServerBossLootSystem;
 
   public class MobBossPragmiumKing
       : ProtoCharacterMob
@@ -53,17 +57,17 @@
     private const double MovementMaxRadius = 20;
 
     // Delay since the last damage before the HP regeneration will start.
-    private const double RegenerationDelaySeconds = 120;
+    private const double RegenerationDelaySeconds = 360;
 
     private const double SpawnMinionsCheckDistance = 21;
 
-    private const int SpawnMinionsPerPlayer = 2;
+    private const int SpawnMinionsPerPlayer = 1;
 
     private const int SpawnMinionsTotalNumberMax = 20;
 
     private const int SpawnMinionsTotalNumberMin = 1;
 
-    private const double VictoryLearningPointsBonusPerLootObject = 15; // give 10 LP per loot pile
+    private const double VictoryLearningPointsBonusPerLootObject = 15;
 
     // Determines how often the boss will attempt to use the nova attack (a time interval in seconds).
     private static readonly Interval<double> NovaAttackInterval
@@ -159,12 +163,14 @@
             // spawn loot and minions on death
             ServerTimersSystem.AddAction(
                 delaySeconds: protoExplosion.ExplosionDelay.TotalSeconds
-                              + protoExplosion.ExplosionPreset.ServerDamageApplyDelay * 1.01,
+                              + protoExplosion.ExplosionPreset.ServerDamageApplyDelay * 1.05,
                 () =>
                 {
+                  List<WinnerEntry> winners = null;
+
                   try
                   {
-                    ServerBossLootSystem.ServerCreateBossLoot(
+                    winners = ServerBossLootSystem.ServerCreateBossLoot(
                                     bossPosition: bossPosition.ToVector2Ushort(),
                                     protoCharacterBoss: this,
                                     character: character, //MOD
@@ -186,6 +192,8 @@
                                     minionsRadius: DeathSpawnMinionsRadius);
 
                     this.SpawnSalt(bossPosition.ToVector2Ushort(), 150.0);
+
+                    this.SpawnTeleport(winners);
                   }
                 });
 
@@ -242,6 +250,30 @@
             // spawned successfully!
             countToSpawnRemains--;
           }
+        }
+      }
+    }
+
+    private void SpawnTeleport(List<WinnerEntry> winners)
+    {
+      var teleports = Server.World.GetStaticWorldObjectsOfProto<ObjectPropAlienTeleportPragmiumKing>();
+      foreach (var teleport in teleports)
+      {
+        var tilePosition = teleport.TilePosition;
+        Server.World.DestroyObject(teleport);
+        var newTeleport = Server.World.CreateStaticWorldObject<ObjectAlienTeleport>(tilePosition);
+        
+        if (newTeleport is null)
+          continue;
+
+        if (winners is null)
+          continue;
+
+        foreach (var winner in winners)
+        {
+          WorldDiscoverySystem.Instance.ServerDiscoverWorldChunks(
+            winner.Character,
+            newTeleport.OccupiedTilePositions.ToList());
         }
       }
     }

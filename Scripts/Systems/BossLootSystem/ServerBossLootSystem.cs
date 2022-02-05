@@ -38,7 +38,7 @@
     public static event BossDefeatedDelegate BossDefeated;
 
     [SuppressMessage("ReSharper", "CanExtractXamlLocalizableStringCSharp")]
-    public static void ServerCreateBossLoot(
+    public static List<WinnerEntry> ServerCreateBossLoot(
         Vector2Ushort bossPosition,
         IProtoCharacterMob protoCharacterBoss,
         ICharacter character,
@@ -128,6 +128,8 @@
           () => BossDefeated?.Invoke(protoCharacterBoss,
                                      bossPosition,
                                      winnerEntries));
+
+      return winnerEntries;
 
       byte CalculateLootCountForScore(double score)
       {

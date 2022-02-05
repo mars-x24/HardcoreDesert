@@ -16,6 +16,8 @@
   {
     public override string Name => "Spec Ops";
 
+    public override bool CanBeSpawnedByMobs => false;
+
     public override ObjectMaterial ObjectMaterial => ObjectMaterial.HardTissues;
 
     public override float CharacterWorldHeight => 1.5f;

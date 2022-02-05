@@ -10,17 +10,17 @@
 
     public override string Name => "Cold bear";
 
-    public override string Hints => "This monster does not like any of the biomes. It is said that he is called in reinforcement.";
+    public override string Hints => "This monster does not like any of the known biomes. You may need a teleport location data.";
 
-    public override ushort RewardLearningPoints => QuestBookConstants.RewardStage2;
+    public override ushort RewardLearningPoints => QuestBookConstants.RewardStage4;
 
     protected override void PrepareQuest(QuestsList prerequisites, TasksList tasks, HintsList hints)
     {
       tasks
-           .Add(TaskKill.Require<MobColdBear>(count: 1));
+           .Add(TaskKill.Require<MobColdBear>(count: 5));
 
       prerequisites
-           .Add<QuestKillAngryPangolins>();
+           .Add<QuestPragmiumKingRemains>();
     }
   }
 }

@@ -68,6 +68,8 @@
 
     public virtual double AggroStateDuration => 30; // 30 seconds
 
+    public virtual bool CanBeSpawnedByMobs => true;
+
     public abstract bool AiIsRunAwayFromHeavyVehicles { get; }
 
     public virtual double AutoAggroNotificationDistance => 10;
