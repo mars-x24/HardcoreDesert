@@ -6,6 +6,7 @@ using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Crates;
 using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
 using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Manufacturers;
 using AtomicTorch.CBND.CoreMod.Systems;
+using AtomicTorch.CBND.CoreMod.Systems.ItemDurability;
 using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
 using AtomicTorch.CBND.GameApi.Data.Characters;
 using AtomicTorch.CBND.GameApi.Data.Items;
@@ -51,6 +52,11 @@ namespace HardcoreDesert.Scripts.Systems.Robot
       var robotProto = robotObject.ProtoGameObject as IProtoRobot;
 
       var publicStateRobot = robotObject.GetPublicState<RobotPublicState>();
+
+      //sync durability
+      var durabilityValue = ItemDurabilitySystem.SharedGetDurabilityValue(robotItem);
+      var hp = durabilityValue * proto.DurabilityToStructurePointsConversionCoefficient;
+      publicStateRobot.StructurePointsCurrent = Math.Max(float.Epsilon, (float)hp);
 
       //low hp
       if (publicStateRobot.StructurePointsCurrent < 5.0f)

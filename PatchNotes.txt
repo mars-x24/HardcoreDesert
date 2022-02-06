@@ -16,7 +16,7 @@ VehicleBackupWeaponEnabled : You can deactivate backup weapon on mech
 Changes
 -------
 
-1.64.4
+1.64.5
 Fixed Robot durability after repair
 Fixed spawn rate of giant prag
 King won't move more than 10 tiles instead of 20
