@@ -2,11 +2,14 @@
 {
   using AtomicTorch.CBND.CoreMod.Characters.Mobs;
   using AtomicTorch.CBND.CoreMod.Items.Ammo;
+  using AtomicTorch.CBND.CoreMod.StaticObjects.Minerals;
   using AtomicTorch.CBND.CoreMod.Systems.Weapons;
   using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.Data.Weapons;
   using AtomicTorch.CBND.GameApi.Resources;
+  using AtomicTorch.GameEngine.Common.Primitives;
   using System.Collections.Generic;
+  using System.Linq;
 
   public class ItemWeaponMobPragmiumKingNova : ItemWeaponMobWeaponNovaExplosion
   {
@@ -17,6 +20,8 @@
     public override bool SharedOnFire(ICharacter character, WeaponState weaponState)
     {
       base.SharedOnFire(character, weaponState);
+
+      DestroySalt(character.TilePosition.ToVector2D(), 20);
 
       // spawn minions after a nova attack
       (character.ProtoGameObject as MobBossPragmiumKing)
@@ -50,5 +55,20 @@
                 rangeMax: 4,
                 damageDistribution: new DamageDistribution().Set(DamageType.Kinetic, 1.0));
 
+    public static void DestroySalt(Vector2D circlePosition, ushort circleRadius)
+    {
+      int size = circleRadius * 2;
+      var rect = new RectangleInt((int)circlePosition.X - circleRadius, (int)circlePosition.Y - circleRadius, size, size);
+
+      var list = Server.World.GetStaticWorldObjectsOfProtoInBounds<ObjectMineralSalt>(rect).ToList();
+
+      foreach (var obj in list)
+      {
+        if (!obj.IsDestroyed)
+        {
+          Server.World.DestroyObject(obj);
+        }
+      }
+    }
   }
 }

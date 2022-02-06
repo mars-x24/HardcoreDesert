@@ -56,6 +56,14 @@
       {
         if (!this.Character.IsNpc)
         {
+          foreach (var item in this.Character.SharedGetPlayerContainerHotbar().Items)
+          {
+            if (item.ProtoItem is ProtoItemStorage)
+            {
+              yield return item.GetPrivateState<ItemStoragePrivateState>().ItemsContainer;
+            }
+          }
+         
           yield return this.Character.SharedGetPlayerContainerHotbar();
         }
       }

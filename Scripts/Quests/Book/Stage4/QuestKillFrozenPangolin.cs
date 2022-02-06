@@ -4,11 +4,11 @@
   using AtomicTorch.CBND.CoreMod.PlayerTasks;
   using HardcoreDesert.Scripts.Quests.Base;
 
-  public class QuestKillColdBear : ProtoQuest
+  public class QuestKillFrozenPangolin : ProtoQuest
   {
     public override string Description => "Time for some extreme hunting!";
 
-    public override string Name => "Cold bear";
+    public override string Name => "Frozen pangolin";
 
     public override string Hints => "Can be found in the snow biome. You may need a teleport location data.";
 
@@ -17,7 +17,7 @@
     protected override void PrepareQuest(QuestsList prerequisites, TasksList tasks, HintsList hints)
     {
       tasks
-           .Add(TaskKill.Require<MobColdBear>(count: 5));
+           .Add(TaskKill.Require<MobFrozenPangolin>(count: 5));
 
       prerequisites
            .Add<QuestPragmiumKingRemains>();

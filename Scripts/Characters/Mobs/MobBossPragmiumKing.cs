@@ -54,7 +54,7 @@
     private const double MinionSpawnNoObstaclesCircleRadius = 2.0;
 
     // The boss can move within the area in configured radius only.
-    private const double MovementMaxRadius = 20;
+    private const double MovementMaxRadius = 10;
 
     // Delay since the last damage before the HP regeneration will start.
     private const double RegenerationDelaySeconds = 360;
@@ -133,7 +133,7 @@
 
     public override ObjectMaterial ObjectMaterial => ObjectMaterial.HardTissues;
 
-    public override double StatDefaultHealthMax => 9000;
+    public override double StatDefaultHealthMax => 10000;
 
     // Please note: boss using different regeneration mechanism.
     public override double StatHealthRegenerationPerSecond => 0;

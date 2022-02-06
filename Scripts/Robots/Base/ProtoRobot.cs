@@ -315,8 +315,13 @@
       privateState.IsDespawned = false;
       objectRobot.ProtoGameObject.ServerSetUpdateRate(objectRobot, isRare: false);
 
-      var position = owner.TilePosition.ToVector2D() + RobotTargetHelper.GetTargetPosition(owner);
+      // reduce robot durability
+      var durabilityValue = ItemDurabilitySystem.SharedGetDurabilityValue(itemRobot);
+      var newHP = (durabilityValue - 10) * LazyProtoItemRobot.Value.DurabilityToStructurePointsConversionCoefficient;
+      var publicState = GetPublicState(objectRobot);
+      publicState.StructurePointsCurrent = Math.Max(float.Epsilon, (float)newHP);
 
+      var position = owner.TilePosition.ToVector2D() + RobotTargetHelper.GetTargetPosition(owner);
       Server.World.SetPosition(objectRobot, position, writeToLog: false);
       // recreate physics (as spawned robot has physics)
       objectRobot.ProtoWorldObject.SharedCreatePhysics(objectRobot);
@@ -696,15 +701,11 @@
           if (privateState.OwnerContainer is null || privateState.OwnerContainer.EmptySlotsCount == 0)
             return;
 
+          
+
           ushort countToMove = Math.Min(publicState.TargetItems[item], item.Count);
 
           Api.Server.Items.MoveOrSwapItem(item, privateState.StorageItemsContainer, out _, countToMove: countToMove);
-
-          // reduce robot durability on 1 unit (reflected as HP when it's a world object)
-          // but ensure the new HP cannot drop to exact 0 (to prevent destruction)
-          var newHP = publicState.StructurePointsCurrent
-                      - 1 * LazyProtoItemRobot.Value.DurabilityToStructurePointsConversionCoefficient;
-          publicState.StructurePointsCurrent = Math.Max(float.Epsilon, (float)newHP);
         }
       }
 

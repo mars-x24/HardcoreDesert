@@ -4,7 +4,6 @@
   using AtomicTorch.CBND.CoreMod.Characters.Mobs;
   using AtomicTorch.CBND.CoreMod.Helpers;
   using AtomicTorch.CBND.CoreMod.Rates;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Minerals;
   using AtomicTorch.CBND.CoreMod.Systems.PvE;
   using AtomicTorch.CBND.CoreMod.Technologies;
   using AtomicTorch.CBND.CoreMod.Triggers;
@@ -239,28 +238,6 @@
           }
         }
       }
-
-      this.DestroySalt(circlePosition, circleRadius);
     }
-
-    protected void DestroySalt(Vector2D circlePosition, ushort circleRadius)
-    {
-      int size = circleRadius * 2;
-      var rect = new RectangleInt((int)circlePosition.X - circleRadius, (int)circlePosition.Y - circleRadius, size, size);
-
-      var list = Server.World.GetStaticWorldObjectsOfProtoInBounds<ObjectMineralSalt>(rect).ToList();
-
-      foreach (var obj in list)
-      {
-        if (!obj.IsDestroyed)
-        {
-          Server.World.DestroyObject(obj);
-        }
-      }
-
-
-    }
-
-
   }
 }

@@ -16,10 +16,18 @@ VehicleBackupWeaponEnabled : You can deactivate backup weapon on mech
 Changes
 -------
 
+1.64.4
+Fixed Robot durability after repair
+Fixed spawn rate of giant prag
+King won't move more than 10 tiles instead of 20
+King's nova will destroy salts instead of the first spawn
+Droplist item should stack in bag first
+New quests
+
 1.64.3
 New snow biome by Cosiek
 Changed Cold bear style to a real blue
-Added Frozen pangolin and Psi flotter
+Added Frozen pangolin and Psi floater
 T5 Teleport and items
 Enriched items
 
