@@ -119,7 +119,10 @@ namespace HardcoreDesert.Scripts.Systems.Robot
 
           var publicState = robotOwner.Owner.GetPublicState<ObjectCratePublicState>();
           if (publicState is not null)
-            robotOwner.TargetItemProto = publicState.IconSource;
+          {
+            if(publicState.IconSource is not IProtoItemRobot)
+              robotOwner.TargetItemProto = publicState.IconSource;
+          }
 
           owners = new List<RobotOwner>() { robotOwner };
         }

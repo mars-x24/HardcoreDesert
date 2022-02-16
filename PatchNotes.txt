@@ -16,6 +16,10 @@ VehicleBackupWeaponEnabled : You can deactivate backup weapon on mech
 Changes
 -------
 
+1.65.0
+Gasoline world trading station
+You can put a robot as icon on chest, same as no icon for robots inside it
+
 1.64.5
 Fixed Robot durability after repair
 Fixed spawn rate of giant prag

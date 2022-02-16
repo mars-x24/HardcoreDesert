@@ -7,7 +7,7 @@
     public override string Description =>
         "Advanced version of the logistic robot offers increased speed and cargo, as well as other improvements.";
 
-    public override uint DurabilityMax => 10000;
+    public override uint DurabilityMax => 20000;
 
     public override string Name => "Advanced logistic robot";
 
