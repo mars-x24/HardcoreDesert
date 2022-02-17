@@ -193,7 +193,7 @@
 
                     this.SpawnSalt(bossPosition.ToVector2Ushort(), 150.0);
 
-                    this.SpawnTeleport(winners);
+                    SpawnTeleport(winners);
                   }
                 });
 
