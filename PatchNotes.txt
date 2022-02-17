@@ -16,6 +16,9 @@ VehicleBackupWeaponEnabled : You can deactivate backup weapon on mech
 Changes
 -------
 
+1.65.1
+Console command to unlock King's teleports (admin.unlockKingTeleports)
+
 1.65.0
 Gasoline world trading station
 You can put a robot as icon on chest, same as no icon for robots inside it

@@ -254,15 +254,19 @@
       }
     }
 
-    private void SpawnTeleport(List<WinnerEntry> winners)
+    public static int SpawnTeleport(List<WinnerEntry> winners)
     {
+      int nb = 0;
+
       var teleports = Server.World.GetStaticWorldObjectsOfProto<ObjectPropAlienTeleportPragmiumKing>();
       foreach (var teleport in teleports)
       {
         var tilePosition = teleport.TilePosition;
         Server.World.DestroyObject(teleport);
         var newTeleport = Server.World.CreateStaticWorldObject<ObjectAlienTeleport>(tilePosition);
-        
+
+        nb++;
+
         if (newTeleport is null)
           continue;
 
@@ -276,6 +280,8 @@
             newTeleport.OccupiedTilePositions.ToList());
         }
       }
+
+      return nb;
     }
 
     private static bool ServerTrySpawnNode(ProtoObjectMineral protoNode, Vector2Ushort spawnPosition)
