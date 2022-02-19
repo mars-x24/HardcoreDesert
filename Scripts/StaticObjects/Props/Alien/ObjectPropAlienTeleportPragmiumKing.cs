@@ -15,6 +15,7 @@
     protected override void ClientSetupRenderer(IComponentSpriteRenderer renderer)
     {
       base.ClientSetupRenderer(renderer);
+      renderer.DrawOrder = DrawOrder.Floor;
     }
 
     protected override void CreateLayout(StaticObjectLayout layout)

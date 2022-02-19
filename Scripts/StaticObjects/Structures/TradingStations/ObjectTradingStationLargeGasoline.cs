@@ -3,7 +3,11 @@
   using AtomicTorch.CBND.CoreMod.Items;
   using AtomicTorch.CBND.CoreMod.Items.Generic;
   using AtomicTorch.CBND.CoreMod.Rates;
+  using AtomicTorch.CBND.CoreMod.Systems.Weapons;
+  using AtomicTorch.CBND.GameApi.Data.Characters;
+  using AtomicTorch.CBND.GameApi.Data.World;
   using AtomicTorch.CBND.GameApi.Scripting;
+  using AtomicTorch.GameEngine.Common.Primitives;
   using System;
 
   public class ObjectTradingStationLargeGasoline : ObjectTradingStationLarge
@@ -12,7 +16,7 @@
 
     public override float StructurePointsMax => 0; // non-damageable
 
-    public override double ServerUpdateIntervalSeconds => 10800;
+    public override double ServerUpdateIntervalSeconds => 30; //10800;
 
     public override double ServerUpdateRareIntervalSeconds => this.ServerUpdateIntervalSeconds;
 
@@ -89,5 +93,33 @@
       publicState.Lots.Add(lot);
     }
 
+    public override bool SharedCanDeconstruct(IStaticWorldObject worldObject, ICharacter character)
+    {
+      return false;
+    }
+
+    public override void ServerApplyDecay(IStaticWorldObject worldObject, double deltaTime)
+    {
+      // no decay
+    }
+
+    protected override void ServerOnStaticObjectDamageApplied(WeaponFinalCache weaponCache, IStaticWorldObject targetObject, float previousStructurePoints, float currentStructurePoints)
+    {
+     
+    }
+
+    public override bool SharedOnDamage(WeaponFinalCache weaponCache, IStaticWorldObject targetObject, double damagePreMultiplier, out double obstacleBlockDamageCoef, out double damageApplied)
+    {
+      obstacleBlockDamageCoef = 1.0;
+      damageApplied = 0.0;
+      return false;
+    }
+
+    public override void ServerOnDestroy(IStaticWorldObject gameObject)
+    {
+      base.ServerOnDestroy(gameObject);
+
+      Api.Logger.Important("ObjectTradingStationLargeGasoline was destroyed");
+    }
   }
 }
