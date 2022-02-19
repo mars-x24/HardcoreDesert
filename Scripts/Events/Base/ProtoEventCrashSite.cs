@@ -378,6 +378,10 @@
       var worldEvent = data.GameObject;
       ServerRefreshEventState(worldEvent);
 
+      var privateState = GetPrivateState(worldEvent);
+      if (privateState.SpawnedCrashObject is not null && !privateState.SpawnedCrashObject.IsDestroyed)
+        return;
+
       if (publicState.ObjectsRemains == 0)
       {
         this.ServerTryFinishEvent(worldEvent);

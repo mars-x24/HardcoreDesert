@@ -38,6 +38,8 @@
 
     public override float VolumeExplosion => 3;
 
+    public override bool IsExplosionDelaySkippedOnDamage => false;
+
     public override bool SharedOnDamage(
         WeaponFinalCache weaponCache,
         IStaticWorldObject targetObject,

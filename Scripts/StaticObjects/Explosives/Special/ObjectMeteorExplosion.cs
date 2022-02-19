@@ -40,6 +40,8 @@
     [NotLocalizable]
     public override string Name => "Meteor";
 
+    public override bool IsExplosionDelaySkippedOnDamage => false;
+
     public override void ServerExecuteExplosion(
         Vector2D positionEpicenter,
         IPhysicsSpace physicsSpace,

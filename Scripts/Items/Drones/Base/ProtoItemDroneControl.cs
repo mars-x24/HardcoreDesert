@@ -1,8 +1,5 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Items.Drones
 {
-  using System;
-  using System.Collections.Generic;
-  using System.Windows;
   using AtomicTorch.CBND.CoreMod.Characters.Player;
   using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
   using AtomicTorch.CBND.CoreMod.Helpers.Client;
@@ -24,6 +21,9 @@
   using AtomicTorch.CBND.GameApi.ServicesClient;
   using AtomicTorch.CBND.GameApi.ServicesClient.Components;
   using AtomicTorch.GameEngine.Common.Primitives;
+  using System;
+  using System.Collections.Generic;
+  using System.Windows;
 
   public abstract class ProtoItemDroneControl
       : ProtoItemWithDurability,
@@ -72,7 +72,8 @@
         ICharacter character,
         ProtoCharacterSkeleton protoCharacterSkeleton,
         IComponentSkeleton skeletonRenderer,
-        List<IClientComponent> skeletonComponents)
+        List<IClientComponent> skeletonComponents,
+        bool isPreview = false)
     {
       // item in hand and animation disabled
       return;

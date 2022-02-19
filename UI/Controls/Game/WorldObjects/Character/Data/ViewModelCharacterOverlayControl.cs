@@ -1,11 +1,14 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Character.Data
 {
-  using System;
   using AtomicTorch.CBND.CoreMod.Characters;
+  using AtomicTorch.CBND.CoreMod.Characters.Player;
+  using AtomicTorch.CBND.CoreMod.ClientOptions.General;
+  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc;
   using AtomicTorch.CBND.CoreMod.Systems.TimeOfDaySystem;
   using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
   using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Data;
   using AtomicTorch.CBND.GameApi.Data.Characters;
+  using System;
 
   public class ViewModelCharacterOverlayControl : BaseViewModel
   {
@@ -68,9 +71,33 @@
         return "Collapsed";
       }
 
-      return ClientTimeOfDayVisibilityHelper.ClientIsObservable(this.character)
-                 ? "Visible" :
-                   "Collapsed";
+      if (!ClientTimeOfDayVisibilityHelper.ClientIsObservable(this.character))
+      {
+        return "Collapsed";
+      }
+
+      var isVisible = true;
+
+      if (!this.character.IsNpc)
+      {
+        if (this.character.IsCurrentClientCharacter)
+        {
+          isVisible = GeneralOptionDisplayHealthbarAboveCurrentCharacter.IsDisplay
+                      && this.character.ProtoGameObject.GetType() == typeof(PlayerCharacter);
+        }
+
+        if (isVisible
+            && (((PlayerCharacterPublicState)this.publicState)
+                .CurrentPublicActionState is CharacterLaunchpadEscapeAction.PublicState))
+        {
+          // launching on a rocket
+          isVisible = false;
+        }
+      }
+
+      return isVisible
+                  ? "Visible"
+                  : "Collapsed";
     }
 
     private void SetVisualStateName(string stateName)
@@ -86,8 +113,7 @@
 
     private void Update()
     {
-      this.SetVisualStateName(
-          this.GetDesiredVisualStateName());
+      this.SetVisualStateName(this.GetDesiredVisualStateName());
     }
   }
 }

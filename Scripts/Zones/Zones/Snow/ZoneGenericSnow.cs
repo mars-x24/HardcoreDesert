@@ -16,7 +16,8 @@
 
       // mobs
       scripts
-          .Add(GetScript<SpawnMobsSnow>());
+          .Add(GetScript<SpawnMobsSnow>())
+          .Add(GetScript<SpawnMobsBroodNest>());
     }
   }
 }

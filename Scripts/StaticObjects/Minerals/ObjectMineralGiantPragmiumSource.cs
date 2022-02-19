@@ -403,10 +403,10 @@
 
       if (!protoNode.CheckTileRequirements(spawnPosition,
                                            character: null,
-                                           out string errorMessage,
+                                           out object errorMessage,
                                            logErrors: false))
       {
-        if(!errorMessage.Contains("restricted area"))
+        if(!errorMessage.ToString().ToLower().Contains("restricted area"))
           return false;
       }
 
