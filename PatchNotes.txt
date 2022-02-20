@@ -18,7 +18,8 @@ Changes
 
 1.65.1
 Console command to unlock King's teleports (admin.unlockKingTeleports)
-Compatibility v1.33.1.8
+Compatibility v1.33.1.8, not using the new map
+Gasoline world trading station is vanishing, not sure why
 
 1.65.0
 Gasoline world trading station

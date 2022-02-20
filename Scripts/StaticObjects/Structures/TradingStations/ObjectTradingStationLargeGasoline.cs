@@ -8,6 +8,7 @@
   using AtomicTorch.CBND.GameApi.Data.World;
   using AtomicTorch.CBND.GameApi.Scripting;
   using AtomicTorch.GameEngine.Common.Primitives;
+  using JetBrains.Annotations;
   using System;
 
   public class ObjectTradingStationLargeGasoline : ObjectTradingStationLarge
@@ -113,6 +114,11 @@
       obstacleBlockDamageCoef = 1.0;
       damageApplied = 0.0;
       return false;
+    }
+
+    protected override void ServerOnStaticObjectZeroStructurePoints([CanBeNull] WeaponFinalCache weaponCache, [CanBeNull] ICharacter byCharacter, [NotNull] IWorldObject targetObject)
+    {
+      
     }
 
     public override void ServerOnDestroy(IStaticWorldObject gameObject)
