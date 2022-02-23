@@ -16,6 +16,9 @@ VehicleBackupWeaponEnabled : You can deactivate backup weapon on mech
 Changes
 -------
 
+1.65.2
+Fixed giant prag source nodes spawn
+
 1.65.1
 Console command to unlock King's teleports (admin.unlockKingTeleports)
 Compatibility v1.33.1.8, not using the new map

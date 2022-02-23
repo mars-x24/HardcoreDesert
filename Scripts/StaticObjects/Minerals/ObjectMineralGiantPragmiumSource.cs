@@ -406,7 +406,7 @@
                                            out object errorMessage,
                                            logErrors: false))
       {
-        if(!errorMessage.ToString().ToLower().Contains("restricted area"))
+        if(!errorMessage.ToString().ToLower().Replace(" ", "").Contains("restrictedarea"))
           return false;
       }
 
