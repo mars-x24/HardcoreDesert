@@ -1,5 +1,6 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Bootstrappers
 {
+  using AtomicTorch.CBND.CoreMod.StaticObjects.Misc;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Ruins.Gates;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Structures;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
@@ -91,6 +92,11 @@
         if (protoGameObject is IProtoObjectPlant)
         {
           // farm plants considered player structures (alas we cannot determine player-planted trees)
+          continue;
+        }
+
+        if(protoGameObject is ObjectAlienTeleportReplica)
+        {
           continue;
         }
 

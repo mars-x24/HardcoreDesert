@@ -17,7 +17,9 @@ Changes
 -------
 
 1.65.2
-Fixed giant prag source nodes spawn
+Fixed giant prag nodes spawn in restricted areas
+Rare alien brain in floater droplist
+ObjectAlienTeleportReplica won't be deleted on map update
 
 1.65.1
 Console command to unlock King's teleports (admin.unlockKingTeleports)
