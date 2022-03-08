@@ -11,5 +11,7 @@
     [SyncToClient]
     [TempOnly]
     public byte PowerGridChargePercent { get; set; }
+
+    public double UpdateItemsDeltaTime { get; set; }
   }
 }

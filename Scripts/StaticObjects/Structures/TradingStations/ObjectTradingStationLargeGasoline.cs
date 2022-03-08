@@ -12,15 +12,13 @@
   using JetBrains.Annotations;
   using System;
 
-  public class ObjectTradingStationLargeGasoline : ObjectTradingStationLarge
+  public class ObjectTradingStationLargeGasoline : ObjectTradingStationLargeFridge
   {
     public override string Name => "Gasoline needed!";
 
     public override float StructurePointsMax => 0; // non-damageable
 
-    public override double ServerUpdateIntervalSeconds => 30; //10800;
-
-    public override double ServerUpdateRareIntervalSeconds => this.ServerUpdateIntervalSeconds;
+    public double ServerUpdateItemsIntervalSeconds => 3600;
 
     public override bool IsRelocatable => false;
 
@@ -32,18 +30,24 @@
         data.PrivateState.Owners.Add("");
 
       this.CreateLots(data.PublicState);
-      this.CreateItems(data.GameObject, data.PublicState, data.PrivateState);
+      this.CreateItems(data.GameObject, data.PrivateState);
     }
 
     protected override void ServerUpdate(ServerUpdateData data)
     {
-      this.CreateItems(data.GameObject, data.PublicState, data.PrivateState);
+      data.PrivateState.UpdateItemsDeltaTime += data.DeltaTime;
+
+      if (data.PrivateState.UpdateItemsDeltaTime > ServerUpdateItemsIntervalSeconds)
+      {
+        data.PrivateState.UpdateItemsDeltaTime = 0;
+
+        this.CreateItems(data.GameObject, data.PrivateState);
+      }
 
       base.ServerUpdate(data);
     }
 
-    private void CreateItems(IStaticWorldObject tradingStation, 
-      ObjectTradingStationPublicState publicState, ObjectTradingStationPrivateState privateState)
+    private void CreateItems(IStaticWorldObject tradingStation, ObjectTradingStationPrivateState privateState)
     {
       var container = privateState.StockItemsContainer;
 
@@ -69,8 +73,6 @@
         if (pennies == 0)
           break;
       }
-
-      TradingStationsSystem.ServerRefreshTradingStationLots(tradingStation, privateState, publicState);
     }
 
     private void CreateLots(ObjectTradingStationPublicState publicState)

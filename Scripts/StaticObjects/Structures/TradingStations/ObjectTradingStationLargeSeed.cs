@@ -15,15 +15,13 @@
   using System;
   using System.Linq;
 
-  public class ObjectTradingStationLargeSeed : ObjectTradingStationLarge
+  public class ObjectTradingStationLargeSeed : ObjectTradingStationLargeFridge
   {
     public override string Name => "Seeds for sale!";
 
     public override float StructurePointsMax => 0; // non-damageable
 
-    public override double ServerUpdateIntervalSeconds => 30; //10800;
-
-    public override double ServerUpdateRareIntervalSeconds => this.ServerUpdateIntervalSeconds;
+    public double ServerUpdateItemsIntervalSeconds => 3600;
 
     public override bool IsRelocatable => false;
 
@@ -39,7 +37,14 @@
 
     protected override void ServerUpdate(ServerUpdateData data)
     {
-      this.CreateRandomLots(data.GameObject, data.PublicState, data.PrivateState);
+      data.PrivateState.UpdateItemsDeltaTime += data.DeltaTime;
+
+      if (data.PrivateState.UpdateItemsDeltaTime > ServerUpdateItemsIntervalSeconds)
+      {
+        data.PrivateState.UpdateItemsDeltaTime = 0;
+
+        this.CreateRandomLots(data.GameObject, data.PublicState, data.PrivateState);
+      }
 
       base.ServerUpdate(data);
     }
@@ -47,8 +52,6 @@
     private void CreateRandomLots(IStaticWorldObject tradingStation, ObjectTradingStationPublicState publicState, ObjectTradingStationPrivateState privateState)
     {
       publicState.Mode = TradingStationMode.StationSelling;
-
-      publicState.Lots.Clear();
 
       for (byte i = 0; i < privateState.StockItemsContainer.SlotsCount; i++)
       {
@@ -58,8 +61,6 @@
 
         Server.Items.DestroyItem(item);
       }
-
-      TradingStationsSystem.ServerRefreshTradingStationLots(tradingStation, privateState, publicState);
 
       this.CreateLot(6, tradingStation, publicState, privateState);
     }
@@ -79,20 +80,26 @@
         var randomSeed = seeds[RandomHelper.Next(0, seeds.Count)];
         seeds.Remove(randomSeed);
         if (seeds.Count == 0)
-          continue;
+          break;
 
-        var lot = new TradingStationLot();
+        TradingStationLot lot;
+        if (publicState.Lots.Count > i)
+        {
+          lot = publicState.Lots[i];
+        }
+        else
+        {
+          lot = new TradingStationLot();
+          publicState.Lots.Add(lot);
+        }
+        
         lot.ProtoItem = randomSeed;
         lot.SetLotQuantity(1);
         lot.SetPrices(price, 0);
         lot.State = TradingStationLotState.Available;
-
-        publicState.Lots.Add(lot);
         
         Server.Items.CreateItem(randomSeed, privateState.StockItemsContainer, count: 5);
       }
-
-      TradingStationsSystem.ServerRefreshTradingStationLots(tradingStation, privateState, publicState);
     }
 
     public override bool SharedCanDeconstruct(IStaticWorldObject worldObject, ICharacter character)

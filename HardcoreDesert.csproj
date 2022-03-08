@@ -73,6 +73,9 @@
     <Page Update="UI\Controls\Game\WorldObjects\LandClaims\WindowLandClaim.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Update="UI\Controls\Game\WorldObjects\PowerGrid\PowerSwitchControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Controls\Game\WorldObjects\Robot\WindowItemRobot.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

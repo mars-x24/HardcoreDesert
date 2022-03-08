@@ -21,7 +21,7 @@ Changes
 1.65.3
 Fixed cold source damage near ice in south east snow area
 Cold protection from items will work on status effects cold/frostbite/coldsource
-Added a random seed world trading station structure iwth 
+Added a random seed world trading station structure  
 
 1.65.2
 Fixed giant prag nodes spawn in restricted areas
