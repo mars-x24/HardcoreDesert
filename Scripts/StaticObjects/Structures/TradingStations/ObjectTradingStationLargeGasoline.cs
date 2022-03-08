@@ -3,6 +3,7 @@
   using AtomicTorch.CBND.CoreMod.Items;
   using AtomicTorch.CBND.CoreMod.Items.Generic;
   using AtomicTorch.CBND.CoreMod.Rates;
+  using AtomicTorch.CBND.CoreMod.Systems.TradingStations;
   using AtomicTorch.CBND.CoreMod.Systems.Weapons;
   using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.Data.World;
@@ -27,24 +28,28 @@
     {
       base.ServerInitialize(data);
 
+      if (data.PrivateState.Owners.Count == 0)
+        data.PrivateState.Owners.Add("");
+
       this.CreateLots(data.PublicState);
-      this.CreateItems(data.PrivateState);
+      this.CreateItems(data.GameObject, data.PublicState, data.PrivateState);
     }
 
     protected override void ServerUpdate(ServerUpdateData data)
     {
-      this.CreateItems(data.PrivateState);
+      this.CreateItems(data.GameObject, data.PublicState, data.PrivateState);
 
       base.ServerUpdate(data);
     }
 
-    private void CreateItems(ObjectTradingStationPrivateState privateState)
+    private void CreateItems(IStaticWorldObject tradingStation, 
+      ObjectTradingStationPublicState publicState, ObjectTradingStationPrivateState privateState)
     {
       var container = privateState.StockItemsContainer;
 
       for (byte i = 0; i < container.SlotsCount; i++)
       {
-        var item = privateState.StockItemsContainer.GetItemAtSlot(i);
+        var item = container.GetItemAtSlot(i);
         if (item is null)
           continue;
 
@@ -64,6 +69,8 @@
         if (pennies == 0)
           break;
       }
+
+      TradingStationsSystem.ServerRefreshTradingStationLots(tradingStation, privateState, publicState);
     }
 
     private void CreateLots(ObjectTradingStationPublicState publicState)

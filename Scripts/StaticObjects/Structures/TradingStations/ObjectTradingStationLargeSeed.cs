@@ -4,6 +4,7 @@
   using AtomicTorch.CBND.CoreMod.Items.Generic;
   using AtomicTorch.CBND.CoreMod.Items.Seeds;
   using AtomicTorch.CBND.CoreMod.Rates;
+  using AtomicTorch.CBND.CoreMod.Systems.TradingStations;
   using AtomicTorch.CBND.CoreMod.Systems.Weapons;
   using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.Data.World;
@@ -12,6 +13,7 @@
   using AtomicTorch.GameEngine.Common.Primitives;
   using JetBrains.Annotations;
   using System;
+  using System.Linq;
 
   public class ObjectTradingStationLargeSeed : ObjectTradingStationLarge
   {
@@ -29,50 +31,26 @@
     {
       base.ServerInitialize(data);
 
-      this.CreateRandomLots(data.PublicState);
+      if(data.PrivateState.Owners.Count == 0)
+        data.PrivateState.Owners.Add("");
+
+      this.CreateRandomLots(data.GameObject, data.PublicState, data.PrivateState);
     }
 
     protected override void ServerUpdate(ServerUpdateData data)
     {
-      this.CreateRandomLots(data.PublicState);
+      this.CreateRandomLots(data.GameObject, data.PublicState, data.PrivateState);
 
       base.ServerUpdate(data);
     }
 
-    private void CreateRandomLots(ObjectTradingStationPublicState publicState)
+    private void CreateRandomLots(IStaticWorldObject tradingStation, ObjectTradingStationPublicState publicState, ObjectTradingStationPrivateState privateState)
     {
       publicState.Mode = TradingStationMode.StationSelling;
 
       publicState.Lots.Clear();
 
-      this.CreateLot(6, publicState);
-    }
-
-    private void CreateLot(byte count, ObjectTradingStationPublicState publicState)
-    {
-      var price = Convert.ToUInt16(RateSeedTradePrice.SharedValue);
-
-      var seeds = Api.FindProtoEntities<IProtoItemSeed>();
-      if (seeds.Count == 0)
-        return;
-
-      for (int i = 0; i < count; i++)
-      {
-        var lot = new TradingStationLot();
-        lot.ProtoItem = seeds[RandomHelper.Next(0, seeds.Count)];
-        lot.SetLotQuantity(1);
-        lot.SetPrices(price, 0);
-        lot.State = TradingStationLotState.Available;
-
-        publicState.Lots.Add(lot);
-      }
-    }
-
-    private void CreateItems(ObjectTradingStationPrivateState privateState)
-    {
-      var container = privateState.StockItemsContainer;
-
-      for (byte i = 0; i < container.SlotsCount; i++)
+      for (byte i = 0; i < privateState.StockItemsContainer.SlotsCount; i++)
       {
         var item = privateState.StockItemsContainer.GetItemAtSlot(i);
         if (item is null)
@@ -81,19 +59,40 @@
         Server.Items.DestroyItem(item);
       }
 
-      var pennies = RateGasolineCanisterTradePrice.SharedValue * 1000 / ItemStackSize.Huge;
+      TradingStationsSystem.ServerRefreshTradingStationLots(tradingStation, privateState, publicState);
 
-      for (byte i = 0; i < container.SlotsCount - 3; i++)
+      this.CreateLot(6, tradingStation, publicState, privateState);
+    }
+
+    private void CreateLot(byte count, IStaticWorldObject tradingStation,
+      ObjectTradingStationPublicState publicState, ObjectTradingStationPrivateState privateState)
+    {
+      var price = Convert.ToUInt16(RateSeedTradePrice.SharedValue);
+
+      var seeds = Api.FindProtoEntities<IProtoItemSeed>().Where(s => s is not IProtoItemSapling).ToList();
+      
+      if (seeds.Count == 0)
+        return;
+
+      for (int i = 0; i < count; i++)
       {
-        if (container.IsSlotOccupied(i))
+        var randomSeed = seeds[RandomHelper.Next(0, seeds.Count)];
+        seeds.Remove(randomSeed);
+        if (seeds.Count == 0)
           continue;
 
-        Server.Items.CreateItem<ItemCoinPenny>(container, count: ItemStackSize.Huge, slotId: i);
+        var lot = new TradingStationLot();
+        lot.ProtoItem = randomSeed;
+        lot.SetLotQuantity(1);
+        lot.SetPrices(price, 0);
+        lot.State = TradingStationLotState.Available;
 
-        pennies--;
-        if (pennies == 0)
-          break;
+        publicState.Lots.Add(lot);
+        
+        Server.Items.CreateItem(randomSeed, privateState.StockItemsContainer, count: 5);
       }
+
+      TradingStationsSystem.ServerRefreshTradingStationLots(tradingStation, privateState, publicState);
     }
 
     public override bool SharedCanDeconstruct(IStaticWorldObject worldObject, ICharacter character)

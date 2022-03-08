@@ -535,7 +535,7 @@
       return TradingResult.Success;
     }
 
-    private static void ServerRefreshTradingStationLots(
+    public static void ServerRefreshTradingStationLots(
         IStaticWorldObject tradingStation,
         ObjectTradingStationPrivateState privateState,
         ObjectTradingStationPublicState publicState)
