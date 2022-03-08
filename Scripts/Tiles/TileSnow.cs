@@ -6,8 +6,8 @@
     using AtomicTorch.CBND.GameApi.Resources;
     using AtomicTorch.CBND.GameApi.ServicesClient.Components;
 
-    public class TileSnow : ProtoTile
-    {
+    public class TileSnow : ProtoTile, IProtoTileCold
+  {
         private static readonly TextureResource GroundTexture1
             = new("Terrain/Snow/TileSnow1.jpg",
                   isTransparent: false);

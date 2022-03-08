@@ -12,9 +12,16 @@ MigrationMutantMobMaxLevelPerWave: Max level of mobs for each wave, default 1,2,
 ServerGlobalStorageItemsSlotsCapacity: How many global storage slots are allowed per base. The value should be within 0-128 range, default 64
 WreckedHoverboardChance: A chance to get wrecked hoverboard in garbage pile (1 / RateValue ;  Default 30 ; Set 0 for none)
 VehicleBackupWeaponEnabled : You can deactivate backup weapon on mech
+RateGasolineCanisterTradePrice : Price for gasoline in ObjectTradingStationLargeGasoline
+RateSeedTradePrice : Price for seeds in ObjectTradingStationLargeSeed
 
 Changes
 -------
+
+1.65.3
+Fixed cold source damage near ice in south east snow area
+Cold protection from items will work on status effects cold/frostbite/coldsource
+Added a random seed world trading station structure iwth 
 
 1.65.2
 Fixed giant prag nodes spawn in restricted areas
