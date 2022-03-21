@@ -5,6 +5,7 @@ using AtomicTorch.CBND.CoreMod.StaticObjects.Structures;
 using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Barrels;
 using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Generators;
 using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Manufacturers;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc;
 using AtomicTorch.CBND.CoreMod.Systems.Crafting;
 using AtomicTorch.CBND.CoreMod.Systems.PowerGridSystem;
 using AtomicTorch.CBND.GameApi.Data;
@@ -68,6 +69,7 @@ namespace HardcoreDesert.Scripts.Systems.Robot
 
     private IStaticWorldObject currentTarget = null;
     private bool currentTargetIsActive = false;
+    private bool currentTargetIsActiveUsed = true;
     private StructurePrivateState currentPrivateState = null;
     private IItemsContainer currentInputContainer = null;
     private IItemsContainer currentFuelContainer = null;
@@ -301,6 +303,11 @@ namespace HardcoreDesert.Scripts.Systems.Robot
       {
         list.Add(protoObjectGeneratorEngine.ManufacturingConfig);
       }
+      
+      else if (this.currentTarget.ProtoGameObject is ProtoObjectSprinkler protoObjectSprinkler)
+      {
+        list.Add(protoObjectSprinkler.ManufacturingConfig);
+      }
 
       return list;
     }
@@ -344,7 +351,7 @@ namespace HardcoreDesert.Scripts.Systems.Robot
 
     private bool AddTargetItem(IItem item, bool isInput, ushort count, bool isFuel = false)
     {
-      if (this.loadInactiveOnly && this.currentTargetIsActive)
+      if (this.loadInactiveOnly && this.currentTargetIsActive && this.currentTargetIsActiveUsed)
         return false;
 
       if (this.DeliveryFull(isInput))
@@ -534,8 +541,11 @@ namespace HardcoreDesert.Scripts.Systems.Robot
         return false;
 
       var state = m.GetPublicState<ObjectManufacturerPublicState>();
-      if (this.loadInactiveOnly && state.IsActive)
-        return false;
+      if (state is not null)
+      {
+        if (this.loadInactiveOnly && state.IsActive)
+          return false;
+      }
 
       if (this.currentTarget != m)
       {
@@ -546,7 +556,8 @@ namespace HardcoreDesert.Scripts.Systems.Robot
 
       this.currentTarget = m;
       this.currentPrivateState = m.GetPrivateState<StructurePrivateState>();
-      this.currentTargetIsActive = state.IsActive;
+      this.currentTargetIsActive = state is not null ? state.IsActive : true;
+      this.currentTargetIsActiveUsed = state is not null;
 
       return true;
     }
@@ -586,6 +597,10 @@ namespace HardcoreDesert.Scripts.Systems.Robot
           this.currentInputContainer = privateStateCrackingPlant.ManufacturingState.ContainerInput;
           //this.currentOutputContainer = privateStateCrackingPlant.ManufacturingState.ContainerOutput;
         }
+      }
+      else if (this.currentPrivateState is ProtoObjectSprinkler.PrivateState privateStateSprinkler)
+      {
+        this.currentInputContainer = privateStateSprinkler.ManufacturingState.ContainerInput;
       }
       else if (this.currentPrivateState is ObjectManufacturerPrivateState privateStateManufacturer)
       {

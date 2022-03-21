@@ -1,5 +1,6 @@
 ﻿using AtomicTorch.CBND.CoreMod.Items.Robots;
 using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Manufacturers;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc;
 using AtomicTorch.CBND.GameApi.Data.Items;
 using AtomicTorch.CBND.GameApi.Data.World;
 using AtomicTorch.CBND.GameApi.Extensions;
@@ -49,9 +50,9 @@ namespace HardcoreDesert.Scripts.Systems.Robot
 
     public static bool ServerTryRegisterCurrentStructure(IStaticWorldObject structure, IDynamicWorldObject robotObject, ItemRobotPrivateState itemRobotPrivateState)
     {
-      if (itemRobotPrivateState.AllowedStructure != null && itemRobotPrivateState.AllowedStructure.Count != 0)
+      if (itemRobotPrivateState.AllowedStructures != null && itemRobotPrivateState.AllowedStructures.Count != 0)
       {
-        if (!itemRobotPrivateState.AllowedStructure.Contains(structure.ProtoGameObject))
+        if (!itemRobotPrivateState.AllowedStructures.Contains(structure.ProtoGameObject))
           return false;
       }
 
@@ -66,9 +67,9 @@ namespace HardcoreDesert.Scripts.Systems.Robot
 
     public static bool ServerStructureAllowed(IStaticWorldObject structure, IDynamicWorldObject robotObject, ItemRobotPrivateState itemRobotPrivateState)
     {
-      if (itemRobotPrivateState.AllowedStructure != null && itemRobotPrivateState.AllowedStructure.Count != 0)
+      if (itemRobotPrivateState.AllowedStructures != null && itemRobotPrivateState.AllowedStructures.Count != 0)
       {
-        if (!itemRobotPrivateState.AllowedStructure.Contains(structure.ProtoGameObject))
+        if (!itemRobotPrivateState.AllowedStructures.Contains(structure.ProtoGameObject))
           return false;
       }
 
@@ -147,10 +148,20 @@ namespace HardcoreDesert.Scripts.Systems.Robot
             items.AddRange(privateStateRefinery.ManufacturingStateMineralOil.ContainerInput.Items);
         }
       }
+      else if (worldObject.ProtoGameObject is ProtoObjectSprinkler)
+      {
+        var privateStateSprinkler = worldObject.GetPrivateState<ProtoObjectSprinkler.PrivateState>();
+        if (privateStateSprinkler is not null)
+        {
+          items.AddRange(privateStateSprinkler.ManufacturingState.ContainerOutput.Items);
+          if (includeInput)
+            items.AddRange(privateStateSprinkler.ManufacturingState.ContainerInput.Items);
+        }
+      }
 
       var privateStateManufacturer = worldObject.GetPrivateState<ObjectManufacturerPrivateState>();
 
-      if (privateStateManufacturer.ManufacturingState is not null)
+      if (privateStateManufacturer?.ManufacturingState is not null)
       {
         items.AddRange(privateStateManufacturer.ManufacturingState.ContainerOutput.Items);
         if (includeInput)
@@ -179,10 +190,16 @@ namespace HardcoreDesert.Scripts.Systems.Robot
           list.Add(privateStateRefinery.ManufacturingStateMineralOil.ContainerInput);
         }
       }
+      else if (worldObject.ProtoGameObject is ProtoObjectSprinkler)
+      {
+        var privateStateSprinkler = worldObject.GetPrivateState<ProtoObjectSprinkler.PrivateState>();
+        if (privateStateSprinkler is not null)
+          list.Add(privateStateSprinkler.ManufacturingState.ContainerInput);
+      }
 
       var privateStateManufacturer = worldObject.GetPrivateState<ObjectManufacturerPrivateState>();
 
-      if (privateStateManufacturer.ManufacturingState is not null)
+      if (privateStateManufacturer?.ManufacturingState is not null)
         list.Add(privateStateManufacturer.ManufacturingState.ContainerInput);
 
       return list.OrderBy(i => i.Items.Sum(i => i.Count)).ToList();
@@ -194,7 +211,7 @@ namespace HardcoreDesert.Scripts.Systems.Robot
 
       var privateStateManufacturer = worldObject.GetPrivateState<ObjectManufacturerPrivateState>();
 
-      if (privateStateManufacturer.FuelBurningState is not null)
+      if (privateStateManufacturer?.FuelBurningState is not null)
         list.Add(privateStateManufacturer.FuelBurningState.ContainerFuel);
 
       return list;

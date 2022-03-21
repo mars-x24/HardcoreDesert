@@ -59,6 +59,16 @@
     {
       base.ServerUpdate(data);
 
+      //clear the old structure list
+      if (data.PrivateState.AllowedStructure?.Count > 0)
+      {
+        if (data.PrivateState.AllowedStructures is null)
+          data.PrivateState.AllowedStructures = new List<StaticObjects.Structures.IProtoObjectStructure>();
+
+        data.PrivateState.AllowedStructures.AddRange(data.PrivateState.AllowedStructure);
+        data.PrivateState.AllowedStructure.Clear();
+      }
+
       RobotSystem.TryStartRobotFromContainer(this, data.GameObject, data.PrivateState, data.DeltaTime);
     }
 

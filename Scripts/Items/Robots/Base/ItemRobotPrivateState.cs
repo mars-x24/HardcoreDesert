@@ -1,5 +1,6 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Items.Robots
 {
+  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Manufacturers;
   using AtomicTorch.CBND.GameApi.Data.State;
   using AtomicTorch.CBND.GameApi.Data.World;
@@ -21,7 +22,10 @@
     public bool RobotManufacturerFuelEnabled { get; set; }
 
     [SyncToClient]
-    public List<IProtoObjectManufacturer> AllowedStructure { get; set; }
+    public List<IProtoObjectStructure> AllowedStructures { get; set; }
+
+    [SyncToClient]
+    public List<IProtoObjectManufacturer> AllowedStructure { get; set; } //Old way
 
     [SyncToClient]
     public ushort TimeRunIntervalSeconds { get; set; }

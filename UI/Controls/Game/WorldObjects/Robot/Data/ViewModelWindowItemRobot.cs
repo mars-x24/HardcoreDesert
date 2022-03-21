@@ -1,14 +1,17 @@
 ﻿namespace HardcoreDesert.UI.Controls.Game.WorldObjects.Robot.Data
 {
   using AtomicTorch.CBND.CoreMod.Items.Robots;
+  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Barrels;
   using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Manufacturers;
+  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc;
   using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
   using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Controls.Tooltips.Data;
   using AtomicTorch.CBND.GameApi.Data.Items;
   using AtomicTorch.CBND.GameApi.Data.State;
   using AtomicTorch.CBND.GameApi.Scripting;
   using HardcoreDesert.Scripts.Systems.Robot;
+  using System.Collections.Generic;
   using System.Collections.ObjectModel;
 
   public class ViewModelWindowItemRobot : BaseViewModel
@@ -24,7 +27,10 @@
     public ViewModelWindowItemRobot(IItem itemRobot)
     {
       this.EntityCollection = new ObservableCollection<ViewModelManufacturerEntity>();
-      var listStructures = Api.FindProtoEntities<IProtoObjectManufacturer>();
+      var listStructures = new List<IProtoObjectStructure>();
+      listStructures.AddRange(Api.FindProtoEntities<IProtoObjectManufacturer>());
+      listStructures.AddRange(Api.FindProtoEntities<IProtoObjectSprinkler>());
+
       foreach (var entity in listStructures)
       {
         if (entity is ProtoObjectBarrel)
@@ -70,7 +76,7 @@
         this);
 
       this.state.ClientSubscribe(
-          _ => _.AllowedStructure,
+          _ => _.AllowedStructures,
           _ => this.LoadAllowedStructure(),
           this);
 
@@ -124,7 +130,7 @@
     {
       foreach (var entity in this.EntityCollection)
       {
-        bool enabled = this.state.AllowedStructure != null && this.state.AllowedStructure.Contains(entity.Entity);
+        bool enabled = this.state.AllowedStructures != null && this.state.AllowedStructures.Contains(entity.Entity);
         entity.Load(enabled);
       }
     }

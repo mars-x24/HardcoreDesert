@@ -1,6 +1,6 @@
 ﻿namespace HardcoreDesert.UI.Controls.Game.WorldObjects.Robot.Data
 {
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Manufacturers;
+  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures;
   using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
   using AtomicTorch.CBND.GameApi.Resources;
   using AtomicTorch.CBND.GameApi.Scripting;
@@ -13,9 +13,9 @@
 
     private bool isEnabled;
 
-    public readonly IProtoObjectManufacturer Entity;
+    public readonly IProtoObjectStructure Entity;
 
-    public ViewModelManufacturerEntity(IProtoObjectManufacturer entity, bool defaultIsEnabled = false)
+    public ViewModelManufacturerEntity(IProtoObjectStructure entity, bool defaultIsEnabled = false)
     {
       Entity = entity;
       Name = entity.Name;

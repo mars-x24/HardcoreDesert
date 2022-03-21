@@ -12,7 +12,7 @@ namespace AtomicTorch.CBND.CoreMod.Vehicles
 
     public override string InteractionTooltipText => "Enter";
 
-    public override string Name => "Wrecked Hoverboard Mk1";
+    public override string Name => "Wrecked Hoverboard Mk2";
 
     protected override void ClientInteractStart(ClientObjectData data)
     {
@@ -22,10 +22,10 @@ namespace AtomicTorch.CBND.CoreMod.Vehicles
     }
 
     public override TextureResource TextureResourceHoverboard { get; }
-    = new("Vehicles/WreckedHoverboardMk1");
+        = new("Vehicles/WreckedHoverboardMk2");
 
     public override TextureResource TextureResourceHoverboardLight { get; }
-        = new("Vehicles/WreckedHoverboardMk1Light");
+        = new("Vehicles/WreckedHoverboardMk2Light");
 
     public override BaseUserControlWithWindow ClientOpenUI(IWorldObject worldObject)
     {

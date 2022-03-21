@@ -2,9 +2,11 @@
 using AtomicTorch.CBND.CoreMod.Items.Robots;
 using AtomicTorch.CBND.CoreMod.Robots;
 using AtomicTorch.CBND.CoreMod.StaticObjects;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures;
 using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Crates;
 using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
 using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Manufacturers;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc;
 using AtomicTorch.CBND.CoreMod.Systems;
 using AtomicTorch.CBND.CoreMod.Systems.ItemDurability;
 using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
@@ -120,7 +122,7 @@ namespace HardcoreDesert.Scripts.Systems.Robot
           var publicState = robotOwner.Owner.GetPublicState<ObjectCratePublicState>();
           if (publicState is not null)
           {
-            if(publicState.IconSource is not IProtoItemRobot)
+            if (publicState.IconSource is not IProtoItemRobot)
               robotOwner.TargetItemProto = publicState.IconSource;
           }
 
@@ -255,6 +257,11 @@ namespace HardcoreDesert.Scripts.Systems.Robot
         {
           temp.AddRange(
             Api.Server.World.GetStaticWorldObjectsOfProtoInBounds<IProtoObjectManufacturer>(bounds)
+              .Distinct()
+              .Where(m => RobotTargetHelper.ServerStructureAllowed(m, robotObject, privateStateItem)));
+
+          temp.AddRange(
+            Api.Server.World.GetStaticWorldObjectsOfProtoInBounds<IProtoObjectSprinkler>(bounds)
               .Distinct()
               .Where(m => RobotTargetHelper.ServerStructureAllowed(m, robotObject, privateStateItem)));
 
@@ -412,23 +419,23 @@ namespace HardcoreDesert.Scripts.Systems.Robot
 
 
 
-    public static void ClientSetRobotManufacturerStructureSetting(IItem itemRobot, IProtoObjectManufacturer proto, bool value)
+    public static void ClientSetRobotManufacturerStructureSetting(IItem itemRobot, IProtoObjectStructure proto, bool value)
     {
       Instance.CallServer(_ => _.ServerRemote_SetRobotManufacturerStructureSetting(itemRobot, proto, value));
     }
 
-    private void ServerRemote_SetRobotManufacturerStructureSetting(IItem itemRobot, IProtoObjectManufacturer proto, bool value)
+    private void ServerRemote_SetRobotManufacturerStructureSetting(IItem itemRobot, IProtoObjectStructure proto, bool value)
     {
       var state = itemRobot.GetPrivateState<ItemRobotPrivateState>();
 
-      List<IProtoObjectManufacturer> temp = null;
-      if (state.AllowedStructure != null)
-        temp = new List<IProtoObjectManufacturer>(state.AllowedStructure);
+      List<IProtoObjectStructure> temp = null;
+      if (state.AllowedStructures != null)
+        temp = new List<IProtoObjectStructure>(state.AllowedStructures);
 
       if (value)
       {
         if (temp is null)
-          temp = new List<IProtoObjectManufacturer>();
+          temp = new List<IProtoObjectStructure>();
 
         if (!temp.Contains(proto))
           temp.Add(proto);
@@ -443,7 +450,7 @@ namespace HardcoreDesert.Scripts.Systems.Robot
         temp = null;
 
       this.CheckCharacterRobotPrivateState(itemRobot, state);
-      state.AllowedStructure = temp;
+      state.AllowedStructures = temp;
     }
 
     private void CheckCharacterRobotPrivateState(IItem robotItem, ItemRobotPrivateState state)
