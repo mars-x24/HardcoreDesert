@@ -27,10 +27,11 @@
 
       // primary loot
       lootDroplist
+          .Add<ItemMeatRawEnraged>(count: 1)
           .Add<ItemFur>(count: 1, probability: 1 / 2.0)
           .Add<ItemBones>(count: 1)
           // requires device
-          .Add<ItemKeiniteRaw>(count: 1, probability: 0.1, condition: ItemKeiniteCollector.ConditionHasDeviceEquipped);
+          .Add<ItemKeiniteRaw>(count: 1, probability: 0.2, condition: ItemKeiniteCollector.ConditionHasDeviceEquipped);
     }
 
     protected override void ServerInitializeCharacterMob(ServerInitializeData data)

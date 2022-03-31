@@ -247,10 +247,14 @@
       Vector2Ushort circlePosition,
       ushort circleRadius)
     {
+      if (worldEvent.IsDestroyed)
+        return;
+
       var publicState = GetPublicState(worldEvent);
       Api.Assert(!publicState.IsSpawnCompleted, "Spawn already completed");
 
       var privateState = GetPrivateState(worldEvent);
+
       var spawnedObjects = privateState.SpawnedWorldObjects;
       var sqrMinDistanceBetweenSpawnedObjects = this.MinDistanceBetweenSpawnedObjects
                                                 * this.MinDistanceBetweenSpawnedObjects;

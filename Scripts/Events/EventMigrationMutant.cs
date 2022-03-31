@@ -48,6 +48,9 @@
 
     protected override async void ServerSpawnObjectsAsync(ILogicObject worldEvent, Vector2Ushort circlePosition, ushort circleRadius)
     {
+      if (worldEvent.IsDestroyed)
+        return;
+
       var privateState = GetPrivateState(worldEvent);
       var spawnedObjects = privateState.SpawnedWorldObjects;
 
@@ -223,7 +226,7 @@
             //if ((boss is not null && spawnedObject.ProtoGameObject.GetType() == boss.GetType()) ||
             //    (bigBoss is not null && spawnedObject.ProtoGameObject.GetType() == bigBoss.GetType()))
             //  level = publicState.CurrentWave;
-            LevelHelper.RebuildLevel(level, maxLevel, (ICharacter)spawnedObject, mobPublicState, mobPrivateState);
+            LevelHelper.RebuildLevel((ICharacter)spawnedObject, mobPublicState, mobPrivateState, level, maxLevel);
 
             break;
           }

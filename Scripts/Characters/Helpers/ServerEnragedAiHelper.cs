@@ -15,6 +15,7 @@
   using AtomicTorch.CBND.GameApi.Data.Characters;
   using AtomicTorch.CBND.GameApi.Data.Physics;
   using AtomicTorch.CBND.GameApi.Data.World;
+  using AtomicTorch.CBND.GameApi.Extensions;
   using AtomicTorch.CBND.GameApi.Scripting;
   using AtomicTorch.CBND.GameApi.ServicesServer;
   using AtomicTorch.GameEngine.Common.Helpers;
@@ -382,14 +383,20 @@
       privateState.TargetStructureTimer -= deltaTime;
       if (privateState.TargetStructureTimer <= 0.0)
       {
-        privateState.TargetStructureTimer = 10.0 + RandomHelper.Next(1, 20) / 10.0;
+        privateState.TargetStructureTimer = RandomHelper.Next(20, 60);
 
-        //retarget only each 10.0 seconds
-        targetStructure = ServerEnragedAiHelper.GetClosestTargetStructure(characterNpc);
+        //if target is close, keep it
+        if (targetStructure is null || targetStructure.IsDestroyed || targetStructure.TilePosition.TileDistanceTo(characterNpc.TilePosition) > 2)
+          targetStructure = ServerEnragedAiHelper.GetClosestTargetStructure(characterNpc);
       }
 
-      if(targetStructure is null || targetStructure.IsDestroyed)
-        targetStructure = ServerEnragedAiHelper.GetClosestTargetStructure(characterNpc);
+      if (targetStructure is null || targetStructure.IsDestroyed)
+      {
+        if(privateState.GoalTargetStructure is not null && !privateState.GoalTargetStructure.IsDestroyed)
+          targetStructure = privateState.GoalTargetStructure;
+        else
+          targetStructure = ServerEnragedAiHelper.GetClosestTargetStructure(characterNpc);
+      }
 
       ICharacter targetCharacter = ServerEnragedAiHelper.GetClosestTargetPlayer(characterNpc);
 
@@ -398,13 +405,15 @@
       var isRangedWeapon = weaponState.ProtoWeapon is IProtoItemWeaponRanged
                            || weaponState.ProtoWeapon is ProtoItemMobWeaponRangedNoAim;
 
-      //Goal target 5 seconds each 60 seconds
+      //Goal target
       if (privateState.GoalTargetTimer <= 0)
         privateState.GoalTargetTimer = secondsBeforeTryingGoalTarget + RandomHelper.Next(10);
 
       bool attackGoal = (privateState.GoalTargetTimer > secondsBeforeTryingGoalTarget - secondsToAttackGoalTarget)
-                        && privateState.GoalTargetStructure is not null &&
-                        (!privateState.FirstRunOnGoalDone || privateState.GoalTargetStructure.ProtoStaticWorldObject is not ProtoObjectLandClaim || !IsLandClaimToBeDestroyed(privateState.GoalTargetStructure));
+                        && privateState.GoalTargetStructure is not null && 
+                        (!privateState.FirstRunOnGoalDone 
+                        || (privateState.GoalTargetStructure.ProtoStaticWorldObject is not ProtoObjectLandClaim && !privateState.GoalTargetStructure.IsDestroyed) 
+                        || !IsLandClaimToBeDestroyed(privateState.GoalTargetStructure));
       if (attackGoal)
       {
         targetStructure = privateState.GoalTargetStructure;
@@ -428,7 +437,7 @@
                                            out var directionToEnemyPosition,
                                            out var directionToEnemyHitbox,
                                            out var hasObstacles,
-                                           out var destinationIsEnemy);
+                                           out var destinationIsEnemy, false, false);
 
       if (distanceToTarget > distanceAttackEnemyTooClose && !focusOnPlayer && (distanceToTargetStructure < distanceToTarget || double.IsNaN(distanceToTarget)))
       {

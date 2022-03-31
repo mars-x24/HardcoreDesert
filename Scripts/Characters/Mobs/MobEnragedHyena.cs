@@ -39,7 +39,7 @@
 
       // primary loot
       lootDroplist
-          .Add<ItemMeatRaw>(count: 1)
+          .Add<ItemMeatRawEnraged>(count: 1)
           .Add<ItemFur>(count: 1, probability: 1 / 2.0)
           .Add<ItemBones>(count: 1);
 

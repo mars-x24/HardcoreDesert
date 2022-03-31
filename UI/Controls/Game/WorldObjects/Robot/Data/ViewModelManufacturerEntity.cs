@@ -2,10 +2,12 @@
 {
   using AtomicTorch.CBND.CoreMod.StaticObjects.Structures;
   using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
+  using AtomicTorch.CBND.GameApi.Extensions;
   using AtomicTorch.CBND.GameApi.Resources;
   using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.GameEngine.Common.Client.MonoGame.UI;
   using System;
+  using System.Threading.Tasks;
+  using System.Windows.Media;
 
   public class ViewModelManufacturerEntity : BaseViewModel
   {
@@ -15,7 +17,7 @@
 
     public readonly IProtoObjectStructure Entity;
 
-    public ViewModelManufacturerEntity(IProtoObjectStructure entity, bool defaultIsEnabled = false)
+    public ViewModelManufacturerEntity(IProtoObjectStructure entity, bool defaultIsEnabled = false) : base(false)
     {
       Entity = entity;
       Name = entity.Name;
@@ -52,19 +54,43 @@
 
     public event Action<ViewModelManufacturerEntity> IsEnabledChanged;
 
-    public TextureBrush Icon
+    /// <summary>
+    /// Entity icon.
+    /// </summary>
+    public virtual Brush Icon
     {
       get
       {
         if (icon == null)
         {
-          icon = Entity.Icon;
-
-          if (icon == null)
-            icon = new TextureResource("Content/Textures/StaticObjects/ObjectUnknown.png");
+          icon = new ProceduralTexture("Robot icon for " + Name,
+                  proceduralTextureRequest => GenerateIcon(proceduralTextureRequest),
+                  isTransparent: true,
+                  isUseCache: false);
         }
         return Api.Client.UI.GetTextureBrush(icon);
       }
+    }
+
+    public virtual async Task<ITextureResource> GenerateIcon(
+          ProceduralTextureRequest request,
+          ushort textureWidth = 512,
+          ushort textureHeight = 512,
+          sbyte spriteQualityOffset = 0)
+    {
+      if (!(GetPropertyByName(Entity, "Icon") is ITextureResource iconResource))
+      {
+        // Default icon.
+        iconResource = new TextureResource(
+            localFilePath: "Content/Textures/StaticObjects/ObjectUnknown.png",
+            qualityOffset: spriteQualityOffset);
+      }
+      return iconResource;
+    }
+
+    private static object GetPropertyByName(object obj, string name)
+    {
+      return obj?.GetType().ScriptingGetProperty(name)?.GetValue(obj, null);
     }
   }
 }

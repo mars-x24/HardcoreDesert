@@ -81,7 +81,8 @@
         out Vector2F directionToEnemyHitbox,
         out bool hasObstacles,
         out bool destinationIsEnemy,
-        bool tryOtherPath = false)
+        bool tryOtherPath = false,
+        bool usePathFinder = true)
     {
       if (enemyCharacter is null)
       {
@@ -101,16 +102,29 @@
                                 ? characterNpc.ProtoCharacter.CharacterWorldWeaponOffsetRanged
                                 : characterNpc.ProtoCharacter.CharacterWorldWeaponOffsetMelee;
 
-      using (FindPathHelper findPathHelper = new FindPathHelper(characterNpc, characterNpc.Position, enemyCharacter, npcWeaponOffset, enemyWeaponOffset, 1))
+      var deltaPos = enemyCharacter.Position - characterNpc.Position;
+      directionToEnemyPosition = (Vector2F)deltaPos;
+
+      deltaPos = (deltaPos.X, deltaPos.Y + enemyWeaponOffset - npcWeaponOffset);
+      distanceToTarget = distanceToOriginalTarget = deltaPos.Length;
+      directionToEnemyHitbox = (Vector2F)deltaPos;
+      hasObstacles = false;
+      destinationIsEnemy = true;
+
+      //use path finding only if lower than 15 tiles away
+      if (usePathFinder && distanceToTarget <= 15)
       {
-        findPathHelper.FindPathToEnemy(
-          out distanceToOriginalTarget,
-          out distanceToTarget,
-          out directionToEnemyPosition,
-          out directionToEnemyHitbox,
-          out hasObstacles,
-          out destinationIsEnemy,
-          tryOtherPath);
+        using (FindPathHelper findPathHelper = new FindPathHelper(characterNpc, characterNpc.Position, enemyCharacter, npcWeaponOffset, enemyWeaponOffset, 1))
+        {
+          findPathHelper.FindPathToEnemy(
+            out distanceToOriginalTarget,
+            out distanceToTarget,
+            out directionToEnemyPosition,
+            out directionToEnemyHitbox,
+            out hasObstacles,
+            out destinationIsEnemy,
+            tryOtherPath);
+        }
       }
     }
 

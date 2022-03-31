@@ -18,6 +18,13 @@ RateSeedTradePrice : Price for seeds in ObjectTradingStationLargeSeed
 Changes
 -------
 
+1.67.0
+Enraged mob will drop enraged meat instead of normal meat
+New recipe for keinite with enraged meat (Spawns enraged mob to destroy your furnace)
+Trying to fix missing manufacturer icons again
+Trying to reduce lags with some changes in mobs AI
+Stop mutant migration waves if admin kills the event
+
 1.66.0
 Added water sprinkler in robot logistic list
 Fixed wrecked hoverboard mk2 name and texture

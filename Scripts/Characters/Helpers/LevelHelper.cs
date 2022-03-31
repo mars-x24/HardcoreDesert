@@ -18,7 +18,7 @@ namespace AtomicTorch.CBND.CoreMod.Characters
     /// Set the level after mob initialization
     /// </summary>
     /// <param name="level">mob level, -1 for random</param>
-    public static void RebuildLevel(int level, int maxLevel, ICharacter mob, CharacterMobPublicState mobPublicState, CharacterMobPrivateState mobPrivateState)
+    public static void RebuildLevel(ICharacter mob, CharacterMobPublicState mobPublicState, CharacterMobPrivateState mobPrivateState, int level = -1, int maxLevel = 5)
     {
       IProtoCharacterMob proto = mob.ProtoGameObject as IProtoCharacterMob;
       if (proto is null)

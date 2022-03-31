@@ -11,6 +11,7 @@ namespace AtomicTorch.CBND.CoreMod.Helpers.Server
   using AtomicTorch.GameEngine.Common.Primitives;
   using System;
   using System.Collections.Generic;
+  using System.Linq;
 
   public static class ServerMobSpawnHelper
   {
@@ -178,5 +179,157 @@ namespace AtomicTorch.CBND.CoreMod.Helpers.Server
       }
     }
 
+    public static List<ICharacter> GetCloseEnragedMobs(Vector2Ushort tilePosition, byte radius)
+    {
+      List<ICharacter> list = null;
+
+      using (var tempList = Api.Shared.GetTempList<ICharacter>())
+      {
+        Api.Server.World.GetCharactersInRadius(tilePosition, tempList, radius, false);
+
+        list = tempList.AsList().Where(c => c.ProtoWorldObject is ProtoCharacterMobEnraged).ToList();
+      }
+
+      return list;
+    }
+
+    public static void ChangeEnragedMobsGoal(IStaticWorldObject worldObject, List<ICharacter> mobs, bool ifNoGoalOnly)
+    {
+      foreach (var mob in mobs)
+      {
+        var privateState = mob.GetPrivateState<CharacterMobEnragedPrivateState>();
+        if (privateState is null)
+          continue;
+
+        if (!ifNoGoalOnly || (privateState.GoalTargetStructure is null || privateState.GoalTargetStructure.IsDestroyed))
+        {
+          privateState.GoalTargetStructure = worldObject;
+          privateState.GoalTargetTimer = 0;
+        }
+      }
+    }
+
+    public static void ServerTrySpawnMobsEnraged(IStaticWorldObject goal, double MinDistanceBetweenSpawnedObjects, ushort circleRadius, int count = 1)
+    {
+      Tile centerTile = goal.OccupiedTile;
+      Vector2Ushort circlePosition = centerTile.Position;
+
+      var mobs = Api.FindProtoEntities<ProtoCharacterMobEnraged>();
+
+      var mobsToSpawn = new List<ProtoCharacterMobEnraged>();
+
+      for (int i = 0; i < count; i++)
+        mobsToSpawn.Add(mobs[RandomHelper.Next(0, mobs.Count)]);
+
+      var sqrMinDistanceBetweenSpawnedObjects = MinDistanceBetweenSpawnedObjects * MinDistanceBetweenSpawnedObjects;
+
+      var physicsSpace = Api.Server.World.GetPhysicsSpace();
+
+      var mobsSpawned = new List<IWorldObject>();
+
+      foreach (var protoObjectToSpawn in mobsToSpawn)
+      {
+        var attempts = 5000;
+
+        do
+        {
+          var spawnPosition =
+              SharedSelectRandomOuterPositionInsideTheCircle(
+                  circlePosition,
+                  circleRadius);
+
+          if (!ServerCheckCanSpawn(protoObjectToSpawn, spawnPosition, centerTile.Height))
+          {
+            // doesn't match the tile requirements or inside a claimed land area
+            continue;
+          }
+
+          var isTooClose = false;
+          foreach (var obj in mobsSpawned)
+          {
+            if (spawnPosition.TileSqrDistanceTo(obj.TilePosition)
+                > sqrMinDistanceBetweenSpawnedObjects)
+            {
+              continue;
+            }
+
+            isTooClose = true;
+            break;
+          }
+
+          if (isTooClose)
+          {
+            continue;
+          }
+
+          if (attempts < 100 && Api.Server.World.IsObservedByAnyPlayer(spawnPosition))
+          {
+            // observed by players
+            continue;
+          }
+
+          //check for cliff
+          bool hasCliff = false;
+          var tempLineTestResults = physicsSpace.TestLine(spawnPosition.ToVector2D(), centerTile.Position.ToVector2D(), CollisionGroups.Default, false);
+          foreach (var testResult in tempLineTestResults.AsList())
+          {
+            var worldObject = testResult.PhysicsBody.AssociatedWorldObject;
+            if (testResult.PhysicsBody.AssociatedProtoTile != null)
+            {
+              if (testResult.PhysicsBody.AssociatedProtoTile.Kind != TileKind.Solid)
+                continue;
+              hasCliff = true;
+              break;
+            }
+          }
+          if (hasCliff)
+            continue;
+
+          var spawnedObject = Api.Server.Characters.SpawnCharacter(protoObjectToSpawn as IProtoCharacterMob, spawnPosition.ToVector2D());
+
+          mobsSpawned.Add(spawnedObject);
+
+          var mobPrivateState = spawnedObject.GetPrivateState<CharacterMobEnragedPrivateState>();
+          if (mobPrivateState is not null)
+            mobPrivateState.GoalTargetStructure = goal;
+
+          var mobPublicState = spawnedObject.GetPublicState<CharacterMobPublicState>();
+
+          //LevelHelper.RebuildLevel((ICharacter)spawnedObject, mobPublicState, mobPrivateState);
+
+          break;
+        }
+        while (--attempts > 0);
+      }
+    }
+
+    private static Vector2Ushort SharedSelectRandomOuterPositionInsideTheCircle(
+                            Vector2Ushort circlePosition,
+                            ushort circleRadius)
+    {
+      return SharedSelectRandomOuterPositionInsideTheCircle(
+              circlePosition.ToVector2D(),
+              circleRadius)
+          .ToVector2Ushort();
+    }
+
+    private static Vector2D SharedSelectRandomOuterPositionInsideTheCircle(
+                        Vector2D circlePosition,
+                        double circleRadius)
+    {
+      var offset = circleRadius / 2.0 * RandomHelper.NextDouble() + circleRadius / 2.0;
+      var angle = RandomHelper.NextDouble() * MathConstants.DoublePI;
+      return new Vector2D(circlePosition.X + offset * Math.Cos(angle),
+                          circlePosition.Y + offset * Math.Sin(angle));
+    }
+
+    private static bool ServerCheckCanSpawn(IProtoWorldObject protoObjectToSpawn, Vector2Ushort spawnPosition, byte height)
+    {
+      return !LandClaimSystem.SharedIsLandClaimedByAnyone(spawnPosition)
+             && Api.Server.World.GetTile(spawnPosition).Height == height
+             && ServerCharacterSpawnHelper.IsPositionValidForCharacterSpawn(
+                   spawnPosition.ToVector2D(),
+                   isPlayer: false);
+    }
   }
 }

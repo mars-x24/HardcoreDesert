@@ -40,6 +40,9 @@
     [TempOnly]
     public double TimerDespawn { get; set; }
 
+    [TempOnly]
+    public double TimerLifeTime { get; set; }
+
     public bool IsAutoDespawnWithParent { get; set; }
 
     public IWorldObject ParentObject { get; set; }

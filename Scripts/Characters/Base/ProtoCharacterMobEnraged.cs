@@ -27,6 +27,8 @@ namespace AtomicTorch.CBND.CoreMod.Characters
 
     public override bool CanBeSpawnedByMobs => false;
 
+    protected override double LifeTime => 60 * 60;
+
     //the npc is attacking himself with the test line
     public override Vector2D SharedGetWeaponFireWorldPosition(ICharacter character, bool isMeleeWeapon)
     {

@@ -132,6 +132,8 @@
     /// </summary>
     protected virtual bool IsAutoDespawn => true;
 
+    protected virtual double LifeTime => 0;
+
     protected virtual byte SoundEventsNetworkRadius => 15;
 
     public override void ClientDeinitialize(ICharacter gameObject)
@@ -536,7 +538,45 @@
         ICharacter characterMob,
         TPrivateState privateState,
         double deltaTime)
-    { 
+    {
+      if (this.LifeTime != 0)
+      {
+        if (privateState.TimerLifeTime < this.LifeTime)
+        {
+          privateState.TimerLifeTime += deltaTime;
+        }
+        else
+        {
+          //Life time over, kill it
+
+          // check that nobody is observing the mob
+          var playersInViewTest = TempListPlayersInView;
+          playersInViewTest.Clear();
+          ServerWorld.GetCharactersInView(characterMob,
+                                          playersInViewTest,
+                                          onlyPlayerCharacters: true);
+
+          bool someoneInView = false;
+
+          foreach (var playerCharacter in playersInViewTest)
+          {
+            if (playerCharacter.ServerIsOnline)
+            {
+              // cannot despawn - scoped by a player
+              someoneInView = true;
+              break;
+            }
+          }
+
+          // nobody is observing, can
+          if (!someoneInView)
+          {
+            Logger.Important("Mob despawned life time over: " + characterMob);
+            ServerWorld.DestroyObject(characterMob);
+          }
+        }
+      }
+
       if (!this.IsAutoDespawn)
       {
         return;

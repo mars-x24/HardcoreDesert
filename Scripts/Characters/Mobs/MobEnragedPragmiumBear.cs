@@ -55,7 +55,7 @@
 
       // primary loot
       lootDroplist
-          .Add<ItemMeatRaw>(count: 2)
+          .Add<ItemMeatRawEnraged>(count: 2)
           .Add<ItemFur>(count: 2, countRandom: 1)
           .Add<ItemAnimalFat>(count: 2, countRandom: 1)
           .Add<ItemBones>(count: 2, countRandom: 1)
@@ -86,7 +86,7 @@
       // chance for extra loot (2 bonus items)
       lootDroplist.Add(condition: SkillHunting.ServerRollExtraLoot,
                        nestedList: new DropItemsList(outputs: 2)
-                                   .Add<ItemMeatRaw>(count: 1)
+                                   .Add<ItemMeatRawEnraged>(count: 1)
                                    .Add<ItemFur>(count: 1)
                                    .Add<ItemAnimalFat>(count: 1)
                                    .Add<ItemBones>(count: 1)

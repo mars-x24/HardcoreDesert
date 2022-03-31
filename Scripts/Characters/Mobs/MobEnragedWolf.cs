@@ -1,9 +1,9 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Characters.Mobs
 {
   using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
+  using AtomicTorch.CBND.CoreMod.Items.Food;
   using AtomicTorch.CBND.CoreMod.Items.Generic;
   using AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons;
-  using AtomicTorch.CBND.CoreMod.Skills;
   using AtomicTorch.CBND.CoreMod.SoundPresets;
   using AtomicTorch.CBND.CoreMod.Stats;
   using AtomicTorch.CBND.CoreMod.Systems.Droplists;
@@ -40,6 +40,7 @@
 
       // primary loot
       lootDroplist
+          .Add<ItemMeatRawEnraged>(count: 1)
           .Add<ItemFur>(count: 1, probability: 1 / 2.0)
           .Add<ItemBones>(count: 1)
           .Add<ItemAnimalFat>(count: 1, probability: 1 / 3.0);
