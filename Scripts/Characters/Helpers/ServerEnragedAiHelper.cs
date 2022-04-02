@@ -4,6 +4,7 @@
   using System.Collections.Generic;
   using System.Linq;
   using AtomicTorch.CBND.CoreMod.Characters.Player;
+  using AtomicTorch.CBND.CoreMod.Characters.Turrets;
   using AtomicTorch.CBND.CoreMod.Items.Weapons;
   using AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons;
   using AtomicTorch.CBND.CoreMod.SoundPresets;
@@ -421,6 +422,14 @@
       }
 
       privateState.GoalTargetTimer -= deltaTime;
+
+
+      if (lastTargetCharacter?.ProtoGameObject is IProtoCharacterTurret && !lastTargetCharacter.IsDestroyed)
+      {
+        //keep the turret
+        targetStructure = null;
+        targetCharacter = lastTargetCharacter;
+      }
 
       CalculateDistanceAndDirectionToStructure(characterNpc,
                                      targetStructure,

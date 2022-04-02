@@ -1,4 +1,5 @@
-﻿using AtomicTorch.CBND.CoreMod.Systems.Weapons;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Turrets;
+using AtomicTorch.CBND.CoreMod.Systems.Weapons;
 using AtomicTorch.CBND.GameApi.Data.Characters;
 using AtomicTorch.CBND.GameApi.Data.World;
 using AtomicTorch.GameEngine.Common.Primitives;
@@ -48,6 +49,20 @@ namespace AtomicTorch.CBND.CoreMod.Characters
 
       if (weaponCache.Character?.ProtoGameObject is ProtoCharacterMobEnraged && targetObject.ProtoGameObject is ProtoCharacterMobEnraged)
         return false;
+
+      //Set target
+      if (IsServer)
+      {
+        if (weaponCache.Character?.ProtoGameObject is IProtoCharacterTurret && targetObject.ProtoGameObject is ProtoCharacterMobEnraged)
+        {
+          var privateState = targetObject.GetPrivateState<CharacterMobEnragedPrivateState>();
+          if (privateState.CurrentTargetCharacter?.ProtoGameObject is not IProtoCharacterTurret)
+          {
+            privateState.CurrentAggroCharacter = weaponCache.Character;
+            privateState.CurrentTargetCharacter = weaponCache.Character;
+          }
+        }
+      }
 
       return base.SharedOnDamage(weaponCache, targetObject, damagePreMultiplier, damagePostMultiplier, out obstacleBlockDamageCoef, out damageApplied);
     }

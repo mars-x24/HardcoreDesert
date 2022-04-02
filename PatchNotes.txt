@@ -21,6 +21,7 @@ Changes
 1.67.0
 Enraged mob will drop enraged meat instead of normal meat
 New recipe for keinite with enraged meat (Spawns enraged mob to destroy your furnace)
+Enraged mob will attack turrets
 Trying to fix missing manufacturer icons again
 Trying to reduce lags with some changes in mobs AI
 Stop mutant migration waves if admin kills the event
