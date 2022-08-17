@@ -29,7 +29,7 @@
 
     public override double ObstacleBlockDamageCoef => 1;
 
-    public override double ShieldProtectionDuration => RateShieldProtectionDuration.SharedValue * 60 * 60; //MOD
+    public override double ShieldProtectionDuration => RatePvPShieldProtectionDuration.SharedValue;
 
     public override double ShieldProtectionTotalElectricityCost => 6000; //MOD
 

@@ -11,6 +11,8 @@
     <CryoFallSdk>$(ProjectDir)..\CryoFall.Mod.Sdk\</CryoFallSdk>
     <CryoFallSdk Condition="!Exists('$(CryoFallSdk)')">$(ProjectDir)..\..\..\Core\CryoFall.Mod.Sdk\</CryoFallSdk>
     <CryoFallSdk Condition="!Exists('$(CryoFallSdk)')">"CryoFall SDK cannot be located. Please ensure the mod csproj is located at CryoFall/Data/Mods"</CryoFallSdk>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <OutputType>Library</OutputType>
   </PropertyGroup>    
   
   <Import Project="$(CryoFallSdk)Sdk.props" />    

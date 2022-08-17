@@ -18,6 +18,9 @@ RateSeedTradePrice : Price for seeds in ObjectTradingStationLargeSeed
 Changes
 -------
 
+1.68.0
+Compatibility v1.33.1.15, still not using the new map
+
 1.67.0
 Enraged mob will drop enraged meat instead of normal meat
 New recipe for keinite with enraged meat (Spawns enraged mob to destroy your furnace)

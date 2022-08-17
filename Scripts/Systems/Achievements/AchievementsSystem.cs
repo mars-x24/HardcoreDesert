@@ -124,7 +124,7 @@
         if (CanUnlockAchievements)
         {
           Logger.Important("Synchronizing Steam achievements: " + achievementIds.Length);
-          Client.SteamApi.UnlockAchievements(achievementIds);
+          Client.ExternalApi.UnlockAchievements(achievementIds);
         }
       }
 
@@ -138,7 +138,7 @@
 
         if (CanUnlockAchievements)
         {
-          Client.SteamApi.UnlockAchievement(achievementId);
+          Client.ExternalApi.UnlockAchievement(achievementId);
         }
       }
     }
