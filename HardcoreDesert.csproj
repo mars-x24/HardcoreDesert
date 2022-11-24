@@ -7,7 +7,7 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <TargetFramework>net471</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <CryoFallSdk>$(ProjectDir)..\CryoFall.Mod.Sdk\</CryoFallSdk>
     <CryoFallSdk Condition="!Exists('$(CryoFallSdk)')">$(ProjectDir)..\..\..\Core\CryoFall.Mod.Sdk\</CryoFallSdk>
     <CryoFallSdk Condition="!Exists('$(CryoFallSdk)')">"CryoFall SDK cannot be located. Please ensure the mod csproj is located at CryoFall/Data/Mods"</CryoFallSdk>

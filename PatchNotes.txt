@@ -18,6 +18,9 @@ RateSeedTradePrice : Price for seeds in ObjectTradingStationLargeSeed
 Changes
 -------
 
+1.69.0
+Using v.1.33.1.15 map
+
 1.68.0
 Compatibility v1.33.1.15, still not using the new map
 
