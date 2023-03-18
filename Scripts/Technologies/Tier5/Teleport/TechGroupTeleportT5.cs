@@ -1,9 +1,9 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Technologies.Tier5.Teleport
-{
-  using AtomicTorch.CBND.CoreMod.Technologies.Tier5.Chemistry;
-  using AtomicTorch.CBND.CoreMod.Technologies.Tier5.Construction;
-  using AtomicTorch.CBND.CoreMod.Technologies.Tier5.Industry;
+﻿using AtomicTorch.CBND.CoreMod.Technologies.Tier5.Chemistry;
+using AtomicTorch.CBND.CoreMod.Technologies.Tier5.Construction;
+using AtomicTorch.CBND.CoreMod.Technologies.Tier5.Industry;
 
+namespace AtomicTorch.CBND.CoreMod.Technologies.Tier5.Teleport
+{
   public class TechGroupTeleportT5 : TechGroup
   {
     public override string Description => "Attempt to master the teleportation network";

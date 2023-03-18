@@ -1,12 +1,11 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Rates
-{
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Menu.Servers.Data;
-  using AtomicTorch.CBND.GameApi.Data;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.ServicesClient;
-  using AtomicTorch.GameEngine.Common.Helpers;
-  using System;
+﻿using AtomicTorch.CBND.CoreMod.UI.Controls.Menu.Servers.Data;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.ServicesClient;
+using AtomicTorch.GameEngine.Common.Helpers;
+using System;
 
+namespace AtomicTorch.CBND.CoreMod.Rates
+{
   public class RateMigrationMutantMobMaxLevelPerWave
       : BaseRate<RateMigrationMutantMobMaxLevelPerWave, string>
   {
@@ -65,7 +64,7 @@
       ushort[] ret;
 
       string[] mobMaxLevelSplit = str.Replace(" ", "").Split(',');
-      
+
       ret = Array.ConvertAll(mobMaxLevelSplit, s => ushort.Parse(s));
 
       for (int i = 0; i < ret.Length; i++)

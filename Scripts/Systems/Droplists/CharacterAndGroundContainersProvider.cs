@@ -1,14 +1,14 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Systems.Droplists
-{
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.Items.Storage;
-  using AtomicTorch.CBND.CoreMod.StaticObjects;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System.Collections.Generic;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.Items.Storage;
+using AtomicTorch.CBND.CoreMod.StaticObjects;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System.Collections.Generic;
 
+namespace AtomicTorch.CBND.CoreMod.Systems.Droplists
+{
   public class CharacterAndGroundContainersProvider : IItemsContainerProvider
   {
     public CharacterAndGroundContainersProvider(ICharacter character, Vector2Ushort tilePosition)
@@ -63,7 +63,7 @@
               yield return item.GetPrivateState<ItemStoragePrivateState>().ItemsContainer;
             }
           }
-         
+
           yield return this.Character.SharedGetPlayerContainerHotbar();
         }
       }

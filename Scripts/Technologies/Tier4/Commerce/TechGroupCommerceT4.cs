@@ -1,10 +1,10 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Technologies.Tier4.Commerce
-{
-  using AtomicTorch.CBND.CoreMod.Technologies.Tier3.Commerce;
-  using AtomicTorch.CBND.CoreMod.Technologies.Tier3.Construction;
-  using AtomicTorch.CBND.CoreMod.Technologies.Tier3.Industry;
-  using AtomicTorch.CBND.CoreMod.Technologies.Tier4.Electricity;
+﻿using AtomicTorch.CBND.CoreMod.Technologies.Tier3.Commerce;
+using AtomicTorch.CBND.CoreMod.Technologies.Tier3.Construction;
+using AtomicTorch.CBND.CoreMod.Technologies.Tier3.Industry;
+using AtomicTorch.CBND.CoreMod.Technologies.Tier4.Electricity;
 
+namespace AtomicTorch.CBND.CoreMod.Technologies.Tier4.Commerce
+{
   public class TechGroupCommerceT4 : TechGroup
   {
     public override string Description => TechGroupsLocalization.CommerceDescription;

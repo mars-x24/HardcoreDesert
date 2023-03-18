@@ -1,9 +1,9 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Characters
-{
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.GameEngine.Common.Primitives;
+﻿using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.GameEngine.Common.Primitives;
 
+namespace AtomicTorch.CBND.CoreMod.Characters
+{
   public class CharacterMobEnragedPrivateState : CharacterMobPrivateState
   {
     [TempOnly]

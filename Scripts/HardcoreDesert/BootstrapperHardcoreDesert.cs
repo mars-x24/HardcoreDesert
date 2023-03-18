@@ -1,9 +1,8 @@
-﻿namespace CryoFall.HardcoreDesert
+﻿using AtomicTorch.CBND.CoreMod.ClientComponents.InputListeners;
+using AtomicTorch.CBND.GameApi.Scripting;
+
+namespace CryoFall.HardcoreDesert
 {
-  using AtomicTorch.CBND.CoreMod.ClientComponents.InputListeners;
-  using AtomicTorch.CBND.GameApi.Scripting;
-
-
   public class BootstrapperHardcoreDesert : BaseBootstrapper
   {
     private static IClientSceneObject sceneObjectInputComponents;

@@ -1,31 +1,29 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events
-{
-  using AtomicTorch.CBND.CoreMod.Characters;
-  using AtomicTorch.CBND.CoreMod.Characters.Mobs;
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.Helpers.Client;
-  using AtomicTorch.CBND.CoreMod.Helpers.Server;
-  using AtomicTorch.CBND.CoreMod.Objects;
-  using AtomicTorch.CBND.CoreMod.Skills;
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Loot;
-  using AtomicTorch.CBND.CoreMod.Systems.Cursor;
-  using AtomicTorch.CBND.CoreMod.Systems.Droplists;
-  using AtomicTorch.CBND.CoreMod.Systems.Hacking;
-  using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
-  using AtomicTorch.CBND.CoreMod.Systems.NewbieProtection;
-  using AtomicTorch.CBND.CoreMod.Systems.Notifications;
-  using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
-  using AtomicTorch.CBND.CoreMod.Systems.Weapons;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Hacking;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Extensions;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.ServicesClient.Components;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Mobs;
+using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.Helpers.Client;
+using AtomicTorch.CBND.CoreMod.Helpers.Server;
+using AtomicTorch.CBND.CoreMod.Objects;
+using AtomicTorch.CBND.CoreMod.Skills;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Loot;
+using AtomicTorch.CBND.CoreMod.Systems.Cursor;
+using AtomicTorch.CBND.CoreMod.Systems.Droplists;
+using AtomicTorch.CBND.CoreMod.Systems.Hacking;
+using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
+using AtomicTorch.CBND.CoreMod.Systems.NewbieProtection;
+using AtomicTorch.CBND.CoreMod.Systems.Notifications;
+using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
+using AtomicTorch.CBND.CoreMod.Systems.Weapons;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Hacking;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.ServicesClient.Components;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events
+{
   public abstract class ProtoObjectHackableContainer
       : ProtoStaticWorldObject
         <ObjectHackableContainerPrivateState,

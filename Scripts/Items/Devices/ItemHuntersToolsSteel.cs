@@ -1,16 +1,16 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Devices
-{
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.Items.Equipment;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Loot;
-  using AtomicTorch.CBND.CoreMod.Stats;
-  using AtomicTorch.CBND.CoreMod.Systems.Droplists;
-  using AtomicTorch.CBND.CoreMod.Systems.ItemDurability;
-  using AtomicTorch.CBND.CoreMod.Systems.Resources;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using System.Linq;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.Items.Equipment;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Loot;
+using AtomicTorch.CBND.CoreMod.Stats;
+using AtomicTorch.CBND.CoreMod.Systems.Droplists;
+using AtomicTorch.CBND.CoreMod.Systems.ItemDurability;
+using AtomicTorch.CBND.CoreMod.Systems.Resources;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.World;
+using System.Linq;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Devices
+{
   public class ItemHuntersToolsSteel : ProtoItemEquipmentDevice
   {
     private const int DurabilityDecreasePerUse = 1;

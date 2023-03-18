@@ -1,13 +1,13 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Characters
-{
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System.Collections.Generic;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System.Collections.Generic;
 
+namespace AtomicTorch.CBND.CoreMod.Characters
+{
   public class CharacterMobPrivateState : BaseCharacterPrivateState
   {
     [TempOnly]
@@ -27,6 +27,9 @@
 
     [TempOnly]
     public bool IsRetreating { get; set; }
+
+    [TempOnly]
+    public double RetreatingTimeRemains { get; set; }
 
     [TempOnly]
     public double LastFleeSoundTime { get; set; }
@@ -49,7 +52,7 @@
 
     public void SetCurrentTargetWithPosition(ICharacter target)
     {
-      if(target is null || target.ProtoCharacter == Api.GetProtoEntity<PlayerCharacterSpectator>())
+      if (target is null || target.ProtoCharacter == Api.GetProtoEntity<PlayerCharacterSpectator>())
       {
         CurrentTargetCharacter = null;
         CurrentTargetPosition = null;

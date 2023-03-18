@@ -1,15 +1,15 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Fishing.Base
-{
-  using AtomicTorch.CBND.CoreMod.Rates;
-  using AtomicTorch.CBND.CoreMod.Systems.Droplists;
-  using AtomicTorch.CBND.CoreMod.Systems.Notifications;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Scripting.Network;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System.Collections.Generic;
+﻿using AtomicTorch.CBND.CoreMod.Rates;
+using AtomicTorch.CBND.CoreMod.Systems.Droplists;
+using AtomicTorch.CBND.CoreMod.Systems.Notifications;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Scripting.Network;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System.Collections.Generic;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Fishing.Base
+{
   public abstract class ProtoItemFish : ProtoItemWithFreshness, IProtoItemFish
   {
     public FishingBaitWeightReadOnlyList BaitWeightList { get; private set; }

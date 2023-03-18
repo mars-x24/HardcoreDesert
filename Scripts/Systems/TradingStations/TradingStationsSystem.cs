@@ -1,34 +1,33 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Systems.TradingStations
-{
-  using AtomicTorch.CBND.CoreMod.ItemContainers;
-  using AtomicTorch.CBND.CoreMod.Items;
-  using AtomicTorch.CBND.CoreMod.Items.Generic;
-  using AtomicTorch.CBND.CoreMod.StaticObjects;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Fridges;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.TradingStations;
-  using AtomicTorch.CBND.CoreMod.Systems.Creative;
-  using AtomicTorch.CBND.CoreMod.Systems.Droplists;
-  using AtomicTorch.CBND.CoreMod.Systems.ItemDurability;
-  using AtomicTorch.CBND.CoreMod.Systems.ItemFreshnessSystem;
-  using AtomicTorch.CBND.CoreMod.Systems.Notifications;
-  using AtomicTorch.CBND.CoreMod.Systems.PvE;
-  using AtomicTorch.CBND.CoreMod.Systems.WorldObjectOwners;
-  using AtomicTorch.CBND.CoreMod.UI;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.State.NetSync;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.Scripting.Network;
-  using AtomicTorch.CBND.GameApi.ServicesServer;
-  using AtomicTorch.GameEngine.Common.Extensions;
-  using System;
-  using System.Collections.Generic;
-  using System.ComponentModel;
-  using System.Linq;
+﻿using AtomicTorch.CBND.CoreMod.ItemContainers;
+using AtomicTorch.CBND.CoreMod.Items;
+using AtomicTorch.CBND.CoreMod.Items.Generic;
+using AtomicTorch.CBND.CoreMod.StaticObjects;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Fridges;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.TradingStations;
+using AtomicTorch.CBND.CoreMod.Systems.Creative;
+using AtomicTorch.CBND.CoreMod.Systems.Droplists;
+using AtomicTorch.CBND.CoreMod.Systems.ItemDurability;
+using AtomicTorch.CBND.CoreMod.Systems.Notifications;
+using AtomicTorch.CBND.CoreMod.Systems.PvE;
+using AtomicTorch.CBND.CoreMod.Systems.WorldObjectOwners;
+using AtomicTorch.CBND.CoreMod.UI;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.State.NetSync;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.Scripting.Network;
+using AtomicTorch.CBND.GameApi.ServicesServer;
+using AtomicTorch.GameEngine.Common.Extensions;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 
+namespace AtomicTorch.CBND.CoreMod.Systems.TradingStations
+{
   public class TradingStationsSystem : ProtoSystem<TradingStationsSystem>
   {
     public const byte DefaultMinQualityFractionWhenStationBuying = 50;
@@ -288,7 +287,7 @@
       }
 
       if (requiredProtoItem is IProtoItemWithFreshness
-          && ItemFreshnessSystem.SharedGetFreshnessFraction(item) < minQualityFraction)
+          && ItemFreshnessSystem.ItemFreshnessSystem.SharedGetFreshnessFraction(item) < minQualityFraction)
       {
         return TradeErrorCode.TooLowFreshness;
       }

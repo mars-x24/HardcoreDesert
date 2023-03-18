@@ -1,12 +1,12 @@
-﻿namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Data
-{
-  using AtomicTorch.CBND.CoreMod.Helpers.Client;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using System.Windows;
+﻿using AtomicTorch.CBND.CoreMod.Helpers.Client;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.World;
+using System.Windows;
 
+namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Data
+{
   public class ViewModelBrokenObjectLandClaimTooltip : BaseViewModel
   {
     public const double TimerRefreshIntervalSeconds = 1 / 60.0;

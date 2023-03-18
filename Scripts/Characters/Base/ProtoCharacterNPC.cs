@@ -1,33 +1,35 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Characters
+﻿using AtomicTorch.CBND.CoreMod.Characters.Input;
+using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
+using AtomicTorch.CBND.CoreMod.Helpers.Client;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Loot;
+using AtomicTorch.CBND.CoreMod.Stats;
+using AtomicTorch.CBND.CoreMod.Systems.Droplists;
+using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
+using AtomicTorch.CBND.CoreMod.Systems.TeleportsSystem;
+using AtomicTorch.CBND.CoreMod.Systems.Weapons;
+using AtomicTorch.CBND.CoreMod.Tiles;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Character;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.SoundCue;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Extensions;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.Scripting.Network;
+using AtomicTorch.CBND.GameApi.ServicesServer;
+using AtomicTorch.GameEngine.Common.Primitives;
+using JetBrains.Annotations;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
+
+namespace AtomicTorch.CBND.CoreMod.Characters
 {
-  using AtomicTorch.CBND.CoreMod.Characters.Input;
-  using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
-  using AtomicTorch.CBND.CoreMod.Helpers.Client;
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Loot;
-  using AtomicTorch.CBND.CoreMod.Stats;
-  using AtomicTorch.CBND.CoreMod.Systems.Droplists;
-  using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
-  using AtomicTorch.CBND.CoreMod.Systems.TeleportsSystem;
-  using AtomicTorch.CBND.CoreMod.Systems.Weapons;
-  using AtomicTorch.CBND.CoreMod.Tiles;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Character;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.SoundCue;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Extensions;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.Scripting.Network;
-  using AtomicTorch.CBND.GameApi.ServicesServer;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using JetBrains.Annotations;
-  using System;
-  using System.Collections.Generic;
-  using System.Diagnostics.CodeAnalysis;
-  using System.Runtime.CompilerServices;
+
 
   public abstract class ProtoCharacterNPC
       <TPrivateState,

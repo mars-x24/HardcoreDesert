@@ -1,11 +1,11 @@
-﻿namespace AtomicTorch.CBND.CoreMod.CraftRecipes
-{
-  using AtomicTorch.CBND.CoreMod.Items.Generic;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.CraftingStations;
-  using AtomicTorch.CBND.CoreMod.Systems;
-  using AtomicTorch.CBND.CoreMod.Systems.Crafting;
-  using System;
+﻿using AtomicTorch.CBND.CoreMod.Items.Generic;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.CraftingStations;
+using AtomicTorch.CBND.CoreMod.Systems;
+using AtomicTorch.CBND.CoreMod.Systems.Crafting;
+using System;
 
+namespace AtomicTorch.CBND.CoreMod.CraftRecipes
+{
   public class RecipeEnrichedVialBiomaterial : Recipe.RecipeForStationCrafting
   {
     protected override void SetupRecipe(

@@ -1,13 +1,13 @@
-﻿namespace HardcoreDesert.UI.Controls.Game.WorldObjects.Robot.Data
-{
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
-  using AtomicTorch.CBND.GameApi.Data.Logic;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using HardcoreDesert.Scripts.Systems.Robot;
+﻿using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
+using AtomicTorch.CBND.GameApi.Data.Logic;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Scripting;
+using HardcoreDesert.Scripts.Systems.Robot;
 
+namespace HardcoreDesert.UI.Controls.Game.WorldObjects.Robot.Data
+{
   public class ViewModelRobotState : BaseViewModel
   {
     private readonly LandClaimAreaPrivateState state;

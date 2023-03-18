@@ -1,22 +1,22 @@
-﻿namespace AtomicTorch.CBND.CoreMod.ItemContainers
-{
-  using System;
-  using System.Collections.Generic;
-  using AtomicTorch.CBND.CoreMod.Items.Ammo;
-  using AtomicTorch.CBND.CoreMod.Items.Drones;
-  using AtomicTorch.CBND.CoreMod.Items.Equipment;
-  using AtomicTorch.CBND.CoreMod.Items.Explosives;
-  using AtomicTorch.CBND.CoreMod.Items.Generic;
-  using AtomicTorch.CBND.CoreMod.Items.Medical;
-  using AtomicTorch.CBND.CoreMod.Items.Seeds;
-  using AtomicTorch.CBND.CoreMod.Items.Tools;
-  using AtomicTorch.CBND.CoreMod.Items.Weapons;
-  using AtomicTorch.CBND.CoreMod.Rates;
-  using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Scripting;
+﻿using AtomicTorch.CBND.CoreMod.Items.Ammo;
+using AtomicTorch.CBND.CoreMod.Items.Drones;
+using AtomicTorch.CBND.CoreMod.Items.Equipment;
+using AtomicTorch.CBND.CoreMod.Items.Explosives;
+using AtomicTorch.CBND.CoreMod.Items.Generic;
+using AtomicTorch.CBND.CoreMod.Items.Medical;
+using AtomicTorch.CBND.CoreMod.Items.Seeds;
+using AtomicTorch.CBND.CoreMod.Items.Tools;
+using AtomicTorch.CBND.CoreMod.Items.Weapons;
+using AtomicTorch.CBND.CoreMod.Rates;
+using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Scripting;
+using System;
+using System.Collections.Generic;
 
+namespace AtomicTorch.CBND.CoreMod.ItemContainers
+{
   public class ItemsContainerLandClaimSafeStorage : ProtoItemsContainer
   {
     private static readonly List<Type> WhitelistItemPrototypes;

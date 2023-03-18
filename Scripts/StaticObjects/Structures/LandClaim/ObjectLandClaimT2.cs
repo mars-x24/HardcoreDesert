@@ -1,14 +1,14 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim
-{
-  using AtomicTorch.CBND.CoreMod.ClientComponents.Rendering.Lighting;
-  using AtomicTorch.CBND.CoreMod.Items.Generic;
-  using AtomicTorch.CBND.CoreMod.Rates;
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.CoreMod.Systems.Construction;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using System;
+﻿using AtomicTorch.CBND.CoreMod.ClientComponents.Rendering.Lighting;
+using AtomicTorch.CBND.CoreMod.Items.Generic;
+using AtomicTorch.CBND.CoreMod.Rates;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.CoreMod.Systems.Construction;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.Scripting;
+using System;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim
+{
   public class ObjectLandClaimT2 : ProtoObjectLandClaim
   {
     public override TimeSpan DecayDelayDuration { get; } = TimeSpan.FromHours(80);

@@ -1,14 +1,14 @@
-﻿namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Storage.Data
-{
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.Items.Storage;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Managers;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.Scripting.Network;
-  using System;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.Items.Storage;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Managers;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.Scripting.Network;
+using System;
 
+namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Storage.Data
+{
   public class ViewModelWindowStorageFridgeContainer : ViewModelWindowStorageContainer
   {
     private ItemStorageFridgePrivateState privateState;
@@ -33,7 +33,7 @@
 
       this.publicState.ClientSubscribe(
           _ => _.IsOn,
-          _ => 
+          _ =>
           {
             this.isOn = this.publicState.IsOn;
             this.NotifyPropertyChanged("IsOn");

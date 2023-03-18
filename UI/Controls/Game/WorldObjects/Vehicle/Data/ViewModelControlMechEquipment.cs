@@ -1,15 +1,15 @@
-﻿namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Vehicle.Data
-{
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.ItemContainers.Vehicles;
-  using AtomicTorch.CBND.CoreMod.Rates;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Managers;
-  using AtomicTorch.CBND.CoreMod.Vehicles;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.GameEngine.Common.Extensions;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.ItemContainers.Vehicles;
+using AtomicTorch.CBND.CoreMod.Rates;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Managers;
+using AtomicTorch.CBND.CoreMod.Vehicles;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.GameEngine.Common.Extensions;
 
+namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Vehicle.Data
+{
   public class ViewModelControlMechEquipment : BaseViewModel, IViewModelWithActiveState
   {
     private bool isActive;

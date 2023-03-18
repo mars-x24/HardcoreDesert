@@ -1,15 +1,15 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Crates
-{
-  using AtomicTorch.CBND.CoreMod.ItemContainers;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
-  using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
-  using AtomicTorch.CBND.CoreMod.Systems.WorldObjectAccessMode;
-  using AtomicTorch.CBND.CoreMod.Systems.WorldObjectOwners;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Scripting;
+﻿using AtomicTorch.CBND.CoreMod.ItemContainers;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
+using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
+using AtomicTorch.CBND.CoreMod.Systems.WorldObjectAccessMode;
+using AtomicTorch.CBND.CoreMod.Systems.WorldObjectOwners;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Scripting;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Crates
+{
   public abstract class ProtoObjectGlobalChest
     <TPrivateState,
      TPublicState,
@@ -23,9 +23,9 @@
     where TPublicState : ObjectGlobalChestPublicState, new()
     where TClientState : StaticObjectClientState, new()
   {
-    protected override IProtoItemsContainer ItemsContainerType =>  Api.GetProtoEntity<ItemsContainerGlobalStorage>();
+    protected override IProtoItemsContainer ItemsContainerType => Api.GetProtoEntity<ItemsContainerGlobalStorage>();
 
-   
+
     protected override void ServerInitialize(ServerInitializeData data)
     {
       base.ServerInitialize(data);
@@ -85,7 +85,7 @@
     private void UpdateContainer(IStaticWorldObject worldObject)
     {
       var landClaimGroup = LandClaimGroup.GetGroup(worldObject);
-      if(landClaimGroup is null)
+      if (landClaimGroup is null)
       {
         //old server
         var areasGroup = LandClaimSystem.SharedGetLandClaimAreasGroup(worldObject);

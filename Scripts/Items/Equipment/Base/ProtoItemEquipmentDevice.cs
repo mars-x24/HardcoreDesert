@@ -1,11 +1,11 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Equipment
-{
-  using AtomicTorch.CBND.CoreMod.Systems.Notifications;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using System.Collections.Generic;
-  using System.Linq;
+﻿using AtomicTorch.CBND.CoreMod.Systems.Notifications;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.State;
+using System.Collections.Generic;
+using System.Linq;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Equipment
+{
   /// <summary>
   /// Item prototype for device equipment.
   /// </summary>

@@ -1,10 +1,10 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Fishing
-{
-  using AtomicTorch.CBND.CoreMod.Items.Fishing.Base;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System.Windows.Media;
+﻿using AtomicTorch.CBND.CoreMod.Items.Fishing.Base;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System.Windows.Media;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Fishing
+{
   public class ItemFishingRodPragmium : ProtoItemFishingRod
   {
     public override string Description =>

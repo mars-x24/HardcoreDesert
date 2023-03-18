@@ -1,12 +1,12 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Food
-{
-  using AtomicTorch.CBND.CoreMod.CharacterStatusEffects;
-  using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Buffs;
-  using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Debuffs;
-  using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Neutral;
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using System;
+﻿using AtomicTorch.CBND.CoreMod.CharacterStatusEffects;
+using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Buffs;
+using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Debuffs;
+using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Neutral;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using System;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Food
+{
   public class ItemTincture : ProtoItemFood
   {
     public override string Description =>

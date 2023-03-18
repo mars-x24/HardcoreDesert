@@ -1,11 +1,11 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Quests.Book
-{
-  using AtomicTorch.CBND.CoreMod.PlayerTasks;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using HardcoreDesert.Scripts.Quests.Base;
+﻿using AtomicTorch.CBND.CoreMod.PlayerTasks;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.Scripting;
+using HardcoreDesert.Scripts.Quests.Base;
 
+namespace AtomicTorch.CBND.CoreMod.Quests.Book
+{
   public class QuestPragmiumKingRemains : ProtoQuest
   {
     public override string Description => "Time for some extreme hunting! This time not even just animals!";

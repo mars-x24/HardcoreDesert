@@ -1,17 +1,17 @@
-﻿namespace AtomicTorch.CBND.CoreMod.ItemContainers
-{
-  using System.Linq;
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Neutral;
-  using AtomicTorch.CBND.CoreMod.Items.Devices;
-  using AtomicTorch.CBND.CoreMod.Items.Equipment;
-  using AtomicTorch.CBND.CoreMod.Items.Implants;
-  using AtomicTorch.CBND.CoreMod.Systems.Creative;
-  using AtomicTorch.CBND.CoreMod.Systems.Notifications;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Scripting.Network;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Neutral;
+using AtomicTorch.CBND.CoreMod.Items.Devices;
+using AtomicTorch.CBND.CoreMod.Items.Equipment;
+using AtomicTorch.CBND.CoreMod.Items.Implants;
+using AtomicTorch.CBND.CoreMod.Systems.Creative;
+using AtomicTorch.CBND.CoreMod.Systems.Notifications;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Scripting.Network;
+using System.Linq;
 
+namespace AtomicTorch.CBND.CoreMod.ItemContainers
+{
   public class ItemsContainerCharacterEquipment : ProtoItemsContainer
   {
     public const string NotificationCannotEquip = "Cannot equip";

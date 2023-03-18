@@ -1,12 +1,12 @@
 ﻿// ReSharper disable CanExtractXamlLocalizableStringCSharp
 
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
+using AtomicTorch.CBND.CoreMod.Systems.Console;
+using AtomicTorch.CBND.GameApi.Data.Logic;
+using AtomicTorch.CBND.GameApi.Scripting;
+
 namespace AtomicTorch.CBND.CoreMod.ConsoleCommands.Admin
 {
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
-  using AtomicTorch.CBND.CoreMod.Systems.Console;
-  using AtomicTorch.CBND.GameApi.Data.Logic;
-  using AtomicTorch.CBND.GameApi.Scripting;
-
   public class ConsoleAdminClearLandClaimGroups : BaseConsoleCommand
   {
     public override string Description =>

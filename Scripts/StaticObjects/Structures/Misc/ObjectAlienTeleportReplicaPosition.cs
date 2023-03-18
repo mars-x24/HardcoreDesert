@@ -1,27 +1,27 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Misc
-{
-  using AtomicTorch.CBND.CoreMod.ClientComponents.Rendering.Lighting;
-  using AtomicTorch.CBND.CoreMod.Helpers.Client;
-  using AtomicTorch.CBND.CoreMod.Items;
-  using AtomicTorch.CBND.CoreMod.Items.Generic;
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.CoreMod.StaticObjects;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.ConstructionSite;
-  using AtomicTorch.CBND.CoreMod.Systems.Construction;
-  using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
-  using AtomicTorch.CBND.CoreMod.Systems.Physics;
-  using AtomicTorch.CBND.CoreMod.Zones;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.ServicesClient.Components;
-  using AtomicTorch.CBND.GameApi.ServicesServer;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
-  using System.Collections.Generic;
+﻿using AtomicTorch.CBND.CoreMod.ClientComponents.Rendering.Lighting;
+using AtomicTorch.CBND.CoreMod.Helpers.Client;
+using AtomicTorch.CBND.CoreMod.Items;
+using AtomicTorch.CBND.CoreMod.Items.Generic;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.CoreMod.StaticObjects;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.ConstructionSite;
+using AtomicTorch.CBND.CoreMod.Systems.Construction;
+using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
+using AtomicTorch.CBND.CoreMod.Systems.Physics;
+using AtomicTorch.CBND.CoreMod.Zones;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.ServicesClient.Components;
+using AtomicTorch.CBND.GameApi.ServicesServer;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+using System.Collections.Generic;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Misc
+{
   public class ObjectAlienTeleportReplicaPosition : ProtoObjectStructure
   {
     private static readonly Vector2Ushort ComposedTextureSize = (1024, 1076);

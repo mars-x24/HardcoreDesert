@@ -1,12 +1,12 @@
+using AtomicTorch.CBND.CoreMod.StaticObjects.Explosives;
+using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
+using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.GameEngine.Common.Helpers;
+using AtomicTorch.GameEngine.Common.Primitives;
+
 namespace AtomicTorch.CBND.CoreMod.Helpers.Server
 {
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Explosives;
-  using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
-  using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.GameEngine.Common.Helpers;
-  using AtomicTorch.GameEngine.Common.Primitives;
-
   public static class ServerMeteorHelper
   {
     public static void Start(Vector2Ushort circleCenterPosition, ushort radius, int totalSeconds, int meteorPerSecond)

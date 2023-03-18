@@ -1,7 +1,7 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Technologies.Tier5.Chemistry
-{
-  using AtomicTorch.CBND.CoreMod.Technologies.Tier4.Chemistry;
+﻿using AtomicTorch.CBND.CoreMod.Technologies.Tier4.Chemistry;
 
+namespace AtomicTorch.CBND.CoreMod.Technologies.Tier5.Chemistry
+{
   public class TechGroupChemistryT5 : TechGroup
   {
     public override string Description => TechGroupsLocalization.ChemistryDescription;

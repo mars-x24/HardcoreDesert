@@ -1,14 +1,13 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons
-{
-  using AtomicTorch.CBND.CoreMod.Items.Ammo;
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.CoreMod.Systems.Weapons;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Weapons;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.GameEngine.Common.Helpers;
-  using System.Collections.Generic;
+﻿using AtomicTorch.CBND.CoreMod.Items.Ammo;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.CoreMod.Systems.Weapons;
+using AtomicTorch.CBND.GameApi.Data.Weapons;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.GameEngine.Common.Helpers;
+using System.Collections.Generic;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons
+{
   public class ItemWeaponMobSMG : ProtoItemMobNPCWeaponRanged
   {
     public override ushort AmmoCapacity => 5;
@@ -30,7 +29,7 @@
 
     public override uint DurabilityMax => 0;
 
-    public override double FireInterval => 1 / 5.0; 
+    public override double FireInterval => 1 / 5.0;
 
     public override string Name => "Submachine gun";
 

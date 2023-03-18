@@ -1,8 +1,8 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Systems.VehicleSystem
-{
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
+﻿using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
 
+namespace AtomicTorch.CBND.CoreMod.Systems.VehicleSystem
+{
   public class VehicleRemoteActionState
         : BaseSystemActionState<
             VehicleRemoteSystem,

@@ -1,15 +1,15 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Weapons.Vehicle
-{
-  using AtomicTorch.CBND.CoreMod.Items.Ammo;
-  using AtomicTorch.CBND.CoreMod.Skills;
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.CoreMod.Systems.Notifications;
-  using AtomicTorch.CBND.CoreMod.UI;
-  using AtomicTorch.CBND.CoreMod.Vehicles;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using System.Collections.Generic;
+﻿using AtomicTorch.CBND.CoreMod.Items.Ammo;
+using AtomicTorch.CBND.CoreMod.Skills;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.CoreMod.Systems.Notifications;
+using AtomicTorch.CBND.CoreMod.UI;
+using AtomicTorch.CBND.CoreMod.Vehicles;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using System.Collections.Generic;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Weapons.Vehicle
+{
   public class ItemVehicleCustomCannonArtillery : ProtoItemVehicleWeaponGrenadeLauncher
   {
     public override ushort AmmoCapacity => 10;

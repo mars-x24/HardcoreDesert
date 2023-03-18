@@ -1,9 +1,9 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Zones
-{
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Minerals;
-  using AtomicTorch.CBND.CoreMod.Triggers;
-  using System;
+﻿using AtomicTorch.CBND.CoreMod.StaticObjects.Minerals;
+using AtomicTorch.CBND.CoreMod.Triggers;
+using System;
 
+namespace AtomicTorch.CBND.CoreMod.Zones
+{
   public class SpawnGiantPragmiumSource : ProtoZoneSpawnScript
   {
     protected override void PrepareZoneSpawnScript(Triggers triggers, SpawnList spawnList)

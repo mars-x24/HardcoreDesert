@@ -1,15 +1,15 @@
-﻿namespace AtomicTorch.CBND.CoreMod.ItemContainers
-{
-  using AtomicTorch.CBND.CoreMod.Rates;
-  using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.Scripting.Network;
-  using System;
-  using System.Threading.Tasks;
+﻿using AtomicTorch.CBND.CoreMod.Rates;
+using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.Scripting.Network;
+using System;
+using System.Threading.Tasks;
 
+namespace AtomicTorch.CBND.CoreMod.ItemContainers
+{
   public class ItemsContainerGlobalStorage : ProtoItemsContainer
   {
     private static ItemsContainerGlobalStorage instance;

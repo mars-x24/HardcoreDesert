@@ -1,35 +1,35 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Minerals
-{
-  using AtomicTorch.CBND.CoreMod.Characters.Mobs;
-  using AtomicTorch.CBND.CoreMod.ClientComponents.FX;
-  using AtomicTorch.CBND.CoreMod.Helpers.Server;
-  using AtomicTorch.CBND.CoreMod.Items.Weapons;
-  using AtomicTorch.CBND.CoreMod.Objects;
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Explosives.Special;
-  using AtomicTorch.CBND.CoreMod.Systems.Creative;
-  using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
-  using AtomicTorch.CBND.CoreMod.Systems.Physics;
-  using AtomicTorch.CBND.CoreMod.Systems.PvE;
-  using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
-  using AtomicTorch.CBND.CoreMod.Systems.Weapons;
-  using AtomicTorch.CBND.CoreMod.Systems.WorldObjectClaim;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Extensions;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.Scripting.Network;
-  using AtomicTorch.CBND.GameApi.ServicesClient.Components;
-  using AtomicTorch.CBND.GameApi.ServicesServer;
-  using AtomicTorch.GameEngine.Common.Extensions;
-  using AtomicTorch.GameEngine.Common.Helpers;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
-  using System.Collections.Generic;
-  using System.Linq;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Mobs;
+using AtomicTorch.CBND.CoreMod.ClientComponents.FX;
+using AtomicTorch.CBND.CoreMod.Helpers.Server;
+using AtomicTorch.CBND.CoreMod.Items.Weapons;
+using AtomicTorch.CBND.CoreMod.Objects;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Explosives.Special;
+using AtomicTorch.CBND.CoreMod.Systems.Creative;
+using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
+using AtomicTorch.CBND.CoreMod.Systems.Physics;
+using AtomicTorch.CBND.CoreMod.Systems.PvE;
+using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
+using AtomicTorch.CBND.CoreMod.Systems.Weapons;
+using AtomicTorch.CBND.CoreMod.Systems.WorldObjectClaim;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Extensions;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.Scripting.Network;
+using AtomicTorch.CBND.GameApi.ServicesClient.Components;
+using AtomicTorch.CBND.GameApi.ServicesServer;
+using AtomicTorch.GameEngine.Common.Extensions;
+using AtomicTorch.GameEngine.Common.Helpers;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Minerals
+{
   public class ObjectMineralGiantPragmiumSource
       : ProtoObjectMineral
         <ObjectMineralGiantPragmiumSource.PrivateState,
@@ -406,7 +406,7 @@
                                            out object errorMessage,
                                            logErrors: false))
       {
-        if(!errorMessage.ToString().ToLower().Replace(" ", "").Contains("restrictedarea"))
+        if (!errorMessage.ToString().ToLower().Replace(" ", "").Contains("restrictedarea"))
           return false;
       }
 

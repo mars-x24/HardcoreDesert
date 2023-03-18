@@ -1,9 +1,8 @@
-﻿namespace AtomicTorch.CBND.CoreMod.ItemContainers.Items
-{
-  using AtomicTorch.CBND.CoreMod.ItemContainers.Items;
-  using AtomicTorch.CBND.CoreMod.Items.Storage;
-  using AtomicTorch.CBND.GameApi.Data.Items;
+﻿using AtomicTorch.CBND.CoreMod.Items.Storage;
+using AtomicTorch.CBND.GameApi.Data.Items;
 
+namespace AtomicTorch.CBND.CoreMod.ItemContainers.Items
+{
   public class ItemsContainerStorageFridge : ItemsContainerStorage, IProtoItemsContainerFridge
   {
     public double SharedGetCurrentFoodFreshnessDecreaseCoefficient(IItemsContainer container)

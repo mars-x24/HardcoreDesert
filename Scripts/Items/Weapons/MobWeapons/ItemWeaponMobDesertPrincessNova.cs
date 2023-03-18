@@ -1,10 +1,10 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons
-{
-  using AtomicTorch.CBND.CoreMod.Characters.Mobs;
-  using AtomicTorch.CBND.CoreMod.Systems.Weapons;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Resources;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Mobs;
+using AtomicTorch.CBND.CoreMod.Systems.Weapons;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Resources;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons
+{
   public class ItemWeaponMobDesertPrincessNova : ItemWeaponMobWeaponNovaExplosion
   {
     protected override TextureResource FXBlast => new TextureResource("FX/ExplosionBlastPrincess");

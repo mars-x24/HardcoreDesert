@@ -1,20 +1,20 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Vehicles
-{
-  using AtomicTorch.CBND.CoreMod.Characters;
-  using AtomicTorch.CBND.CoreMod.StaticObjects;
-  using AtomicTorch.CBND.CoreMod.Systems;
-  using AtomicTorch.CBND.CoreMod.Systems.Weapons;
-  using AtomicTorch.CBND.CoreMod.Systems.WorldObjectAccessMode;
-  using AtomicTorch.CBND.CoreMod.Systems.WorldObjectOwners;
-  using AtomicTorch.CBND.CoreMod.Technologies;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.Scripting.ClientComponents;
-  using AtomicTorch.CBND.GameApi.ServicesClient.Components;
-  using System.Collections.Generic;
+﻿using AtomicTorch.CBND.CoreMod.Characters;
+using AtomicTorch.CBND.CoreMod.StaticObjects;
+using AtomicTorch.CBND.CoreMod.Systems;
+using AtomicTorch.CBND.CoreMod.Systems.Weapons;
+using AtomicTorch.CBND.CoreMod.Systems.WorldObjectAccessMode;
+using AtomicTorch.CBND.CoreMod.Systems.WorldObjectOwners;
+using AtomicTorch.CBND.CoreMod.Technologies;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.Scripting.ClientComponents;
+using AtomicTorch.CBND.GameApi.ServicesClient.Components;
+using System.Collections.Generic;
 
+namespace AtomicTorch.CBND.CoreMod.Vehicles
+{
   public interface IProtoVehicle
         : IProtoDynamicWorldObject,
           IProtoObjectWithOwnersList,

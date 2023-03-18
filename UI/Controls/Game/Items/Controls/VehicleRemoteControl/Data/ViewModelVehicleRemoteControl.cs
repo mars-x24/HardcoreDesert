@@ -1,19 +1,16 @@
-﻿namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.VehicleRemoteControl.Data
-{
-  using AtomicTorch.CBND.CoreMod.Items.Tools.Special;
-  using AtomicTorch.CBND.CoreMod.Systems.VehicleGarageSystem;
-  using AtomicTorch.CBND.CoreMod.Systems.VehicleSystem;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Core.Data;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.Scripting.Network;
-  using AtomicTorch.GameEngine.Common.Client.MonoGame.UI;
-  using System.Collections.Generic;
-  using System.Collections.ObjectModel;
-  using System.Linq;
-  using System.Threading.Tasks;
+﻿using AtomicTorch.CBND.CoreMod.Systems.VehicleGarageSystem;
+using AtomicTorch.CBND.CoreMod.Systems.VehicleSystem;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Core.Data;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Scripting.Network;
+using AtomicTorch.GameEngine.Common.Client.MonoGame.UI;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
+namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.VehicleRemoteControl.Data
+{
   public class ViewModelVehicleRemoteControl : BaseViewModel
   {
     private IItem item;

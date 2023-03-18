@@ -1,13 +1,12 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Characters.Mobs
-{
-  using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
-  using AtomicTorch.CBND.CoreMod.Items.Devices;
-  using AtomicTorch.CBND.CoreMod.Items.Food;
-  using AtomicTorch.CBND.CoreMod.Items.Generic;
-  using AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons;
-  using AtomicTorch.CBND.CoreMod.Skills;
-  using AtomicTorch.CBND.CoreMod.Systems.Droplists;
+﻿using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
+using AtomicTorch.CBND.CoreMod.Items.Devices;
+using AtomicTorch.CBND.CoreMod.Items.Food;
+using AtomicTorch.CBND.CoreMod.Items.Generic;
+using AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons;
+using AtomicTorch.CBND.CoreMod.Systems.Droplists;
 
+namespace AtomicTorch.CBND.CoreMod.Characters.Mobs
+{
   public class MobEnragedMutantHyena : MobEnragedHyena
   {
     public override double MobKillExperienceMultiplier => 5.0;

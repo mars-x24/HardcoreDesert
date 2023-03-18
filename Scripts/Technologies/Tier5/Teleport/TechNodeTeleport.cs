@@ -1,7 +1,7 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Technologies.Tier5.Teleport
-{
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Misc;
+﻿using AtomicTorch.CBND.CoreMod.StaticObjects.Misc;
 
+namespace AtomicTorch.CBND.CoreMod.Technologies.Tier5.Teleport
+{
   public class TechNodeTeleport : TechNode<TechGroupTeleportT5>
   {
     protected override void PrepareTechNode(Config config)

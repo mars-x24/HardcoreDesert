@@ -1,10 +1,8 @@
-﻿
+﻿using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Resources;
 
 namespace AtomicTorch.CBND.CoreMod.Items.Storage
 {
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Resources;
-
   public class ItemBagFreezer : ProtoItemStorageFridge
   {
     public override int MaxItemCount => 200;

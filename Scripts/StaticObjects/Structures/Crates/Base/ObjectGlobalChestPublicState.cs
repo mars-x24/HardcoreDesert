@@ -1,10 +1,9 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim
-{
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Crates;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.Logic;
-  using AtomicTorch.CBND.GameApi.Data.State;
+﻿using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Crates;
+using AtomicTorch.CBND.GameApi.Data.Logic;
+using AtomicTorch.CBND.GameApi.Data.State;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim
+{
   public class ObjectGlobalChestPublicState : ObjectCratePublicState
   {
     [SyncToClient]

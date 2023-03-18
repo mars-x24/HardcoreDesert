@@ -1,15 +1,15 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons
-{
-  using AtomicTorch.CBND.CoreMod.CharacterStatusEffects;
-  using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Debuffs;
-  using AtomicTorch.CBND.CoreMod.Items.Ammo;
-  using AtomicTorch.CBND.CoreMod.Systems.Weapons;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Weapons;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.GameEngine.Common.Helpers;
-  using System.Collections.Generic;
+﻿using AtomicTorch.CBND.CoreMod.CharacterStatusEffects;
+using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Debuffs;
+using AtomicTorch.CBND.CoreMod.Items.Ammo;
+using AtomicTorch.CBND.CoreMod.Systems.Weapons;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Weapons;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.GameEngine.Common.Helpers;
+using System.Collections.Generic;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons
+{
   public class ItemWeaponMobLizardCold : ProtoItemMobWeaponRangedNoAim
   {
     public override double DamageApplyDelay => 0.5;

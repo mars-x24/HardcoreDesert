@@ -1,10 +1,10 @@
-﻿namespace AtomicTorch.CBND.CoreMod.CharacterSkeletons
-{
-  using AtomicTorch.CBND.CoreMod.Systems.Physics;
-  using AtomicTorch.CBND.GameApi.Data.Physics;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.ServicesClient.Components;
+﻿using AtomicTorch.CBND.CoreMod.Systems.Physics;
+using AtomicTorch.CBND.GameApi.Data.Physics;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.ServicesClient.Components;
 
+namespace AtomicTorch.CBND.CoreMod.CharacterSkeletons
+{
   public class SkeletonNPC_CE_SpecOps : ProtoCharacterSkeletonNPC
   {
     public override double DefaultMoveSpeed => 2.0;

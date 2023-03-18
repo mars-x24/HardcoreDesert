@@ -1,59 +1,59 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Vehicles
-{
-  using AtomicTorch.CBND.CoreMod.Characters;
-  using AtomicTorch.CBND.CoreMod.Characters.Input;
-  using AtomicTorch.CBND.CoreMod.Characters.Input.ClientPrediction;
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
-  using AtomicTorch.CBND.CoreMod.ClientComponents.Rendering.Lighting;
-  using AtomicTorch.CBND.CoreMod.Helpers.Client;
-  using AtomicTorch.CBND.CoreMod.ItemContainers;
-  using AtomicTorch.CBND.CoreMod.ItemContainers.Vehicles;
-  using AtomicTorch.CBND.CoreMod.Items;
-  using AtomicTorch.CBND.CoreMod.Items.Tools;
-  using AtomicTorch.CBND.CoreMod.Items.Weapons.Melee;
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.CoreMod.StaticObjects;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Explosives;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc;
-  using AtomicTorch.CBND.CoreMod.Systems;
-  using AtomicTorch.CBND.CoreMod.Systems.Creative;
-  using AtomicTorch.CBND.CoreMod.Systems.InteractionChecker;
-  using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
-  using AtomicTorch.CBND.CoreMod.Systems.Notifications;
-  using AtomicTorch.CBND.CoreMod.Systems.Physics;
-  using AtomicTorch.CBND.CoreMod.Systems.PowerGridSystem;
-  using AtomicTorch.CBND.CoreMod.Systems.PvE;
-  using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
-  using AtomicTorch.CBND.CoreMod.Systems.VehicleNamesSystem;
-  using AtomicTorch.CBND.CoreMod.Systems.VehicleSystem;
-  using AtomicTorch.CBND.CoreMod.Systems.Weapons;
-  using AtomicTorch.CBND.CoreMod.Systems.WorldObjectClaim;
-  using AtomicTorch.CBND.CoreMod.Systems.WorldObjectOwners;
-  using AtomicTorch.CBND.CoreMod.Technologies;
-  using AtomicTorch.CBND.CoreMod.Tiles;
-  using AtomicTorch.CBND.CoreMod.UI;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Vehicle;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.VehicleAssemblyBay;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.Physics;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.Weapons;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.Scripting.ClientComponents;
-  using AtomicTorch.CBND.GameApi.Scripting.Network;
-  using AtomicTorch.CBND.GameApi.ServicesClient.Components;
-  using AtomicTorch.GameEngine.Common.Client.MonoGame.UI;
-  using AtomicTorch.GameEngine.Common.Extensions;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
-  using System.Collections.Generic;
-  using System.Linq;
+﻿using AtomicTorch.CBND.CoreMod.Characters;
+using AtomicTorch.CBND.CoreMod.Characters.Input;
+using AtomicTorch.CBND.CoreMod.Characters.Input.ClientPrediction;
+using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
+using AtomicTorch.CBND.CoreMod.ClientComponents.Rendering.Lighting;
+using AtomicTorch.CBND.CoreMod.Helpers.Client;
+using AtomicTorch.CBND.CoreMod.ItemContainers;
+using AtomicTorch.CBND.CoreMod.ItemContainers.Vehicles;
+using AtomicTorch.CBND.CoreMod.Items;
+using AtomicTorch.CBND.CoreMod.Items.Tools;
+using AtomicTorch.CBND.CoreMod.Items.Weapons.Melee;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.CoreMod.StaticObjects;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Explosives;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc;
+using AtomicTorch.CBND.CoreMod.Systems;
+using AtomicTorch.CBND.CoreMod.Systems.Creative;
+using AtomicTorch.CBND.CoreMod.Systems.InteractionChecker;
+using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
+using AtomicTorch.CBND.CoreMod.Systems.Notifications;
+using AtomicTorch.CBND.CoreMod.Systems.Physics;
+using AtomicTorch.CBND.CoreMod.Systems.PowerGridSystem;
+using AtomicTorch.CBND.CoreMod.Systems.PvE;
+using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
+using AtomicTorch.CBND.CoreMod.Systems.VehicleNamesSystem;
+using AtomicTorch.CBND.CoreMod.Systems.VehicleSystem;
+using AtomicTorch.CBND.CoreMod.Systems.Weapons;
+using AtomicTorch.CBND.CoreMod.Systems.WorldObjectClaim;
+using AtomicTorch.CBND.CoreMod.Systems.WorldObjectOwners;
+using AtomicTorch.CBND.CoreMod.Technologies;
+using AtomicTorch.CBND.CoreMod.Tiles;
+using AtomicTorch.CBND.CoreMod.UI;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Vehicle;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.VehicleAssemblyBay;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.Physics;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.Weapons;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.Scripting.ClientComponents;
+using AtomicTorch.CBND.GameApi.Scripting.Network;
+using AtomicTorch.CBND.GameApi.ServicesClient.Components;
+using AtomicTorch.GameEngine.Common.Client.MonoGame.UI;
+using AtomicTorch.GameEngine.Common.Extensions;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
+namespace AtomicTorch.CBND.CoreMod.Vehicles
+{
   public abstract class ProtoVehicle
         <TVehiclePrivateState,
          TVehiclePublicState,
@@ -464,6 +464,9 @@
       var privateState = GetPrivateState((IDynamicWorldObject)worldObject);
       privateState.ServerTimeSinceLastUse = 0;
       this.ServerSetUpdateRate(worldObject, isRare: false);
+
+      if (Rates.RateGrandTheftAuto.SharedValue)
+        VehicleSystem.ServerGtaModTransferOwnership((IDynamicWorldObject)worldObject, who);
     }
 
     public override void ServerOnDestroy(IDynamicWorldObject gameObject)
@@ -668,6 +671,52 @@
 
     public override bool SharedCanInteract(ICharacter character, IDynamicWorldObject worldObject, bool writeToLog)
     {
+      if (Rates.RateGrandTheftAuto.SharedValue)
+        return SharedCanInteract_GTA(character, worldObject, writeToLog);
+
+      return SharedCanInteract_Normal(character, worldObject, writeToLog);
+    }
+
+    private bool SharedCanInteract_GTA(ICharacter character, IDynamicWorldObject worldObject, bool writeToLog)
+    {
+      try
+      {
+        this.VerifyGameObject(worldObject);
+      }
+      catch (Exception ex)
+      {
+        Logger.Warning($"Interaction check failed: {ex.GetType().FullName}: {ex.Message}");
+        return false;
+      }
+
+      if (character.GetPublicState<ICharacterPublicState>().IsDead
+          || IsServer && !character.ServerIsOnline
+          || ((IsServer || character.IsCurrentClientCharacter)
+              && PlayerCharacter.GetPrivateState(character).IsDespawned))
+      {
+        if (writeToLog)
+        {
+          Logger.Warning(
+              $"Character cannot interact with {worldObject} - character is offline/despawned/dead.",
+              character);
+        }
+
+        return false;
+      }
+
+      if (!this.SharedIsInsideCharacterInteractionArea(character,
+                                                       worldObject,
+                                                       writeToLog))
+      {
+        return false;
+      }
+
+      // no ownership check
+      return true;
+    }
+
+    private bool SharedCanInteract_Normal(ICharacter character, IDynamicWorldObject worldObject, bool writeToLog)
+    {
       if (!base.SharedCanInteract(character, worldObject, writeToLog))
       {
         return false;
@@ -709,10 +758,16 @@
       return null;
     }
 
+    /// <summary>
+    /// Mod:HardcoreDesert
+    /// </summary>
     public virtual IItemsContainer SharedGetHotbarItemsContainerBackup(IDynamicWorldObject vehicle)
     {
       return null;
-    } 
+    }
+    /// <summary>
+    /// Mod:HardcoreDesert
+    /// </summary>
     public virtual bool ServerUseContainerBackup(IDynamicWorldObject vehicle)
     {
       return false;

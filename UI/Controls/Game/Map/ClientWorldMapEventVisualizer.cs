@@ -1,18 +1,18 @@
-﻿namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.Map
-{
-  using AtomicTorch.CBND.CoreMod.Events;
-  using AtomicTorch.CBND.CoreMod.Helpers.Client;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Map.Data;
-  using AtomicTorch.CBND.GameApi.Data.Logic;
-  using AtomicTorch.CBND.GameApi.Extensions;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.ServicesClient;
-  using AtomicTorch.GameEngine.Common.Client.MonoGame.UI;
-  using System.Collections.Generic;
-  using System.Windows;
-  using System.Windows.Controls;
-  using System.Windows.Media;
+﻿using AtomicTorch.CBND.CoreMod.Events;
+using AtomicTorch.CBND.CoreMod.Helpers.Client;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Map.Data;
+using AtomicTorch.CBND.GameApi.Data.Logic;
+using AtomicTorch.CBND.GameApi.Extensions;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.ServicesClient;
+using AtomicTorch.GameEngine.Common.Client.MonoGame.UI;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
+namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.Map
+{
   public class ClientWorldMapEventVisualizer : BaseWorldMapVisualizer
   {
     public const string Notification_ActiveEvent_Finished = "Event finished!";

@@ -1,21 +1,21 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Systems.FishingSystem
-{
-  using AtomicTorch.CBND.CoreMod.Characters;
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.ClientComponents.Rendering;
-  using AtomicTorch.CBND.CoreMod.Items.Fishing.Base;
-  using AtomicTorch.CBND.CoreMod.Items.Tools;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Logic;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.Scripting.ClientComponents;
-  using AtomicTorch.CBND.GameApi.ServicesClient.Components;
-  using AtomicTorch.GameEngine.Common.Helpers;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
-  using System.Collections.Generic;
+﻿using AtomicTorch.CBND.CoreMod.Characters;
+using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.ClientComponents.Rendering;
+using AtomicTorch.CBND.CoreMod.Items.Fishing.Base;
+using AtomicTorch.CBND.CoreMod.Items.Tools;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Logic;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.Scripting.ClientComponents;
+using AtomicTorch.CBND.GameApi.ServicesClient.Components;
+using AtomicTorch.GameEngine.Common.Helpers;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+using System.Collections.Generic;
 
+namespace AtomicTorch.CBND.CoreMod.Systems.FishingSystem
+{
   public class ComponentFishingVisualizer : ClientComponent
   {
     public const double DelayFishingOut = 1.0;

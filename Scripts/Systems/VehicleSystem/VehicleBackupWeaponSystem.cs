@@ -1,19 +1,19 @@
+using AtomicTorch.CBND.CoreMod.Characters;
+using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.Systems;
+using AtomicTorch.CBND.CoreMod.Vehicles;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Scripting.Network;
+
 namespace AtomicTorch.CBND.CoreMod.Helpers.Server
 {
-  using AtomicTorch.CBND.CoreMod.Characters;
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.Systems;
-  using AtomicTorch.CBND.CoreMod.Vehicles;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Scripting.Network;
-
   public class VehicleBackupWeaponSystem : ProtoSystem<VehicleBackupWeaponSystem>
   {
     public static void ClientTrySwitchingWeapon()
     {
       if (!IsClient)
         return;
-      
+
       if (!SharedTrySwitchWeapon(Client.Characters.CurrentPlayerCharacter))
         return;
 
@@ -27,7 +27,7 @@ namespace AtomicTorch.CBND.CoreMod.Helpers.Server
     }
 
     private static bool SharedTrySwitchWeapon(ICharacter character)
-    {     
+    {
       var publicState = character.GetPublicState<PlayerCharacterPublicState>();
       var vehicle = publicState.CurrentVehicle;
       bool hasVehicle = vehicle is not null;
@@ -49,7 +49,7 @@ namespace AtomicTorch.CBND.CoreMod.Helpers.Server
       {
         if (vehicleProto.ServerUseContainerBackup(vehicle))
           PlayerCharacter.SharedSelectHotbarSlotId(character, 0, false);
-            //SharedForceRefreshCurrentItem(character);
+        //SharedForceRefreshCurrentItem(character);
       }
 
       return true;

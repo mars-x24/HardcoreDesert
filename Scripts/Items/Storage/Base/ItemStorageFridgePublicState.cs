@@ -1,10 +1,7 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Storage
-{
-  using AtomicTorch.CBND.GameApi.Data;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using System;
+﻿using AtomicTorch.CBND.GameApi.Data.State;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Storage
+{
   public class ItemStorageFridgePublicState : ItemStoragePublicState
   {
     [SyncToClient]

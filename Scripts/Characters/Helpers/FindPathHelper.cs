@@ -211,7 +211,7 @@ namespace AtomicTorch.CBND.CoreMod.Characters
       }
     }
 
-    private static List<float> RetreatAngles = new List<float> { 
+    private static List<float> RetreatAngles = new List<float> {
       0.0f, 15.0f, -15.0f, 30.0f, -30.0f, 45.0f, -45.0f, 60.0f, -60.0f, 75.0f, -75.0f, 90.0f, -90.0f,
       105.0f, -105.0f };
 
@@ -223,7 +223,7 @@ namespace AtomicTorch.CBND.CoreMod.Characters
       //directionToEnemyPosition * -1;
       float rotateAngle = 180;
 
-      foreach(float distance in RetreatDistances)
+      foreach (float distance in RetreatDistances)
       {
         foreach (float angle in RetreatAngles)
         {

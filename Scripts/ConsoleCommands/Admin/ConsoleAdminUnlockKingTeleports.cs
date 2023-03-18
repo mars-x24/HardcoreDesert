@@ -1,13 +1,11 @@
 ﻿// ReSharper disable CanExtractXamlLocalizableStringCSharp
 
+using AtomicTorch.CBND.CoreMod.Characters.Mobs;
+using AtomicTorch.CBND.CoreMod.Systems.Console;
+using AtomicTorch.CBND.GameApi.Scripting;
+
 namespace AtomicTorch.CBND.CoreMod.ConsoleCommands.Admin
 {
-  using AtomicTorch.CBND.CoreMod.Characters.Mobs;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
-  using AtomicTorch.CBND.CoreMod.Systems.Console;
-  using AtomicTorch.CBND.GameApi.Data.Logic;
-  using AtomicTorch.CBND.GameApi.Scripting;
-
   public class ConsoleAdminUnlockKingTeleports : BaseConsoleCommand
   {
     public override string Description =>
@@ -19,7 +17,10 @@ namespace AtomicTorch.CBND.CoreMod.ConsoleCommands.Admin
 
     public string Execute()
     {
-      return MobBossPragmiumKing.SpawnTeleport(null).ToString();
+      using var playerCharacters = Api.Shared.WrapInTempList(
+        Server.Characters.EnumerateAllPlayerCharacters(onlyOnline: false));
+
+      return MobBossPragmiumKing.SpawnTeleport(playerCharacters.AsList()).ToString();
     }
 
 

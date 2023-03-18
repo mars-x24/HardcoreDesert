@@ -1,26 +1,26 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Characters
-{
-  using AtomicTorch.CBND.CoreMod.CharacterOrigins;
-  using AtomicTorch.CBND.CoreMod.Characters.Input;
-  using AtomicTorch.CBND.CoreMod.ItemContainers;
-  using AtomicTorch.CBND.CoreMod.Skills;
-  using AtomicTorch.CBND.CoreMod.Systems;
-  using AtomicTorch.CBND.CoreMod.Systems.Achievements;
-  using AtomicTorch.CBND.CoreMod.Systems.CharacterDroneControl;
-  using AtomicTorch.CBND.CoreMod.Systems.Completionist;
-  using AtomicTorch.CBND.CoreMod.Systems.Crafting;
-  using AtomicTorch.CBND.CoreMod.Systems.Quests;
-  using AtomicTorch.CBND.CoreMod.Systems.Technologies;
-  using AtomicTorch.CBND.CoreMod.Systems.VehicleSystem;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.Logic;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.State.NetSync;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.GameEngine.Common.Primitives;
+﻿using AtomicTorch.CBND.CoreMod.CharacterOrigins;
+using AtomicTorch.CBND.CoreMod.Characters.Input;
+using AtomicTorch.CBND.CoreMod.ItemContainers;
+using AtomicTorch.CBND.CoreMod.Skills;
+using AtomicTorch.CBND.CoreMod.Systems;
+using AtomicTorch.CBND.CoreMod.Systems.Achievements;
+using AtomicTorch.CBND.CoreMod.Systems.CharacterDroneControl;
+using AtomicTorch.CBND.CoreMod.Systems.Completionist;
+using AtomicTorch.CBND.CoreMod.Systems.Crafting;
+using AtomicTorch.CBND.CoreMod.Systems.Quests;
+using AtomicTorch.CBND.CoreMod.Systems.Technologies;
+using AtomicTorch.CBND.CoreMod.Systems.VehicleSystem;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.Logic;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.State.NetSync;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.GameEngine.Common.Primitives;
 
+namespace AtomicTorch.CBND.CoreMod.Characters
+{
   public class PlayerCharacterPrivateState : BaseCharacterPrivateState
   {
     private IStaticWorldObject currentBedObject;

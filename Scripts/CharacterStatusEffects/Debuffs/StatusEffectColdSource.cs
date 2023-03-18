@@ -1,20 +1,20 @@
-﻿namespace AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Debuffs
-{
-  using AtomicTorch.CBND.CoreMod.Characters;
-  using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Debuffs.Client;
-  using AtomicTorch.CBND.CoreMod.Helpers;
-  using AtomicTorch.CBND.CoreMod.Objects;
-  using AtomicTorch.CBND.CoreMod.Stats;
-  using AtomicTorch.CBND.CoreMod.Tiles;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.ServicesServer;
-  using AtomicTorch.GameEngine.Common.Helpers;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
-  using System.Linq;
+﻿using AtomicTorch.CBND.CoreMod.Characters;
+using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Debuffs.Client;
+using AtomicTorch.CBND.CoreMod.Helpers;
+using AtomicTorch.CBND.CoreMod.Objects;
+using AtomicTorch.CBND.CoreMod.Stats;
+using AtomicTorch.CBND.CoreMod.Tiles;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.ServicesServer;
+using AtomicTorch.GameEngine.Common.Helpers;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+using System.Linq;
 
+namespace AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Debuffs
+{
   public class StatusEffectColdSource : ProtoRadiantStatusEffect
   {
     public const double DamagePerSecondByIntensity = 10;
@@ -24,8 +24,9 @@
     private static readonly IWorldServerService ServerWorld = IsServer ? Server.World : null;
 
     private ProtoTile serverProtoTileIce;
-
+    private ProtoTile serverProtoTileDarkIce;
     private ProtoTile serverProtoTileSnow;
+    private ProtoTile serverProtoTileWaterSea;
 
     private Vector2Int[] serverTileOffsetsCircle;
 
@@ -81,7 +82,9 @@
           rate: 3);
 
       this.serverProtoTileIce = Api.GetProtoEntity<TileIce>();
+      this.serverProtoTileDarkIce = Api.GetProtoEntity<TileDarkIce>();
       this.serverProtoTileSnow = Api.GetProtoEntity<TileSnow>();
+      this.serverProtoTileWaterSea = Api.GetProtoEntity<TileWaterSea>();
     }
 
     protected override void ServerAddIntensity(StatusEffectData data, double intensityToAdd)
@@ -164,11 +167,15 @@
 
       var tileSnowSessionIndex = this.serverProtoTileSnow.SessionIndex;
       var tileIceSessionIndex = this.serverProtoTileIce.SessionIndex;
+      var tileDarkIceSessionIndex = this.serverProtoTileDarkIce.SessionIndex;
+      var tileWaterSeaSessionIndex = this.serverProtoTileWaterSea.SessionIndex;
 
       var characterCurrentTileSessionIndex = character.Tile.ProtoTileSessionIndex;
 
       if (characterCurrentTileSessionIndex != tileSnowSessionIndex
-          && characterCurrentTileSessionIndex != tileIceSessionIndex)
+          && characterCurrentTileSessionIndex != tileIceSessionIndex
+          && characterCurrentTileSessionIndex != tileDarkIceSessionIndex
+          && characterCurrentTileSessionIndex != tileWaterSeaSessionIndex)
       {
         // process ice cold only for players in snow biome
         return 0;
@@ -182,7 +189,8 @@
         var tilePosition = characterTilePosition.AddAndClamp(tileOffset);
         var tile = ServerWorld.GetTile(tilePosition, logOutOfBounds: false);
         if (!tile.IsValidTile
-            || tileIceSessionIndex != tile.ProtoTileSessionIndex)
+            || (tileIceSessionIndex != tile.ProtoTileSessionIndex
+            && tileDarkIceSessionIndex != tile.ProtoTileSessionIndex))
         {
           continue;
         }

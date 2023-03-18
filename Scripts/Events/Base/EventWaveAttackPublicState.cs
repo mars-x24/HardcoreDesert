@@ -1,7 +1,7 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Events
-{
-  using AtomicTorch.CBND.GameApi.Data.State;
+﻿using AtomicTorch.CBND.GameApi.Data.State;
 
+namespace AtomicTorch.CBND.CoreMod.Events
+{
   public class EventWaveAttackPublicState : EventWithAreaPublicState
   {
     [SyncToClient]

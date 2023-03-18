@@ -1,9 +1,9 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Quests.Book
-{
-  using AtomicTorch.CBND.CoreMod.Characters.Mobs;
-  using AtomicTorch.CBND.CoreMod.PlayerTasks;
-  using HardcoreDesert.Scripts.Quests.Base;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Mobs;
+using AtomicTorch.CBND.CoreMod.PlayerTasks;
+using HardcoreDesert.Scripts.Quests.Base;
 
+namespace AtomicTorch.CBND.CoreMod.Quests.Book
+{
   public class QuestKillEnragedLargePragmiumBear : ProtoQuest
   {
     public override string Description => "Protect your base against an enraged large pragmium bear";

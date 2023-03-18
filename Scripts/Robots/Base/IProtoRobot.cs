@@ -1,10 +1,10 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Robots
-{
-  using AtomicTorch.CBND.CoreMod.Items.Robots;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.World;
+﻿using AtomicTorch.CBND.CoreMod.Items.Robots;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.World;
 
+namespace AtomicTorch.CBND.CoreMod.Robots
+{
   public interface IProtoRobot : IProtoDynamicWorldObject
   {
     IProtoItemRobot ProtoItemRobot { get; }

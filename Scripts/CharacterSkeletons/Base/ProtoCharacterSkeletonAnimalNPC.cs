@@ -1,16 +1,16 @@
-﻿namespace AtomicTorch.CBND.CoreMod.CharacterSkeletons
-{
-  using System;
-  using System.Threading.Tasks;
-  using System.Windows.Media;
-  using AtomicTorch.CBND.CoreMod.Characters;
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.ServicesClient.Components;
-  using AtomicTorch.GameEngine.Common.Extensions;
-  using AtomicTorch.GameEngine.Common.Primitives;
+﻿using AtomicTorch.CBND.CoreMod.Characters;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.ServicesClient.Components;
+using AtomicTorch.GameEngine.Common.Extensions;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+using System.Threading.Tasks;
+using System.Windows.Media;
 
+namespace AtomicTorch.CBND.CoreMod.CharacterSkeletons
+{
   public abstract class ProtoCharacterSkeletonAnimalNPC : ProtoCharacterSkeleton
   {
     // cache singleton instance for human footsteps sound
@@ -24,8 +24,8 @@
               {
                 var soundFileName = GroundSoundMaterial.Solid;
 
-                    // use Solid sound for all ground materials except Vegetation and Mud
-                    switch (enumValue)
+                // use Solid sound for all ground materials except Vegetation and Mud
+                switch (enumValue)
                 {
                   case GroundSoundMaterial.Vegetation:
                   case GroundSoundMaterial.Mud:
@@ -37,8 +37,8 @@
               }
 
               var readOnlySoundPreset = preset.ToReadOnly();
-                  //this.VerifySoundPreset(readOnlySoundPreset);
-                  return readOnlySoundPreset;
+              //this.VerifySoundPreset(readOnlySoundPreset);
+              return readOnlySoundPreset;
             });
 
     private readonly Lazy<ITextureResource> lazyIcon;

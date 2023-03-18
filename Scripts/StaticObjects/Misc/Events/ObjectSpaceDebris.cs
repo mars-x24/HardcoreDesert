@@ -1,34 +1,34 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events
-{
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.Events;
-  using AtomicTorch.CBND.CoreMod.Items.Ammo;
-  using AtomicTorch.CBND.CoreMod.Items.Devices;
-  using AtomicTorch.CBND.CoreMod.Items.Drones;
-  using AtomicTorch.CBND.CoreMod.Items.Equipment;
-  using AtomicTorch.CBND.CoreMod.Items.Explosives.Bombs;
-  using AtomicTorch.CBND.CoreMod.Items.Food;
-  using AtomicTorch.CBND.CoreMod.Items.Generic;
-  using AtomicTorch.CBND.CoreMod.Items.Implants;
-  using AtomicTorch.CBND.CoreMod.Items.Medical;
-  using AtomicTorch.CBND.CoreMod.Items.Tools.Special;
-  using AtomicTorch.CBND.CoreMod.Items.Weapons.Melee;
-  using AtomicTorch.CBND.CoreMod.Items.Weapons.Ranged;
-  using AtomicTorch.CBND.CoreMod.Rates;
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.CoreMod.Systems.Droplists;
-  using AtomicTorch.CBND.CoreMod.Systems.Physics;
-  using AtomicTorch.CBND.CoreMod.Systems.PvE;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.ServicesClient.Components;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
-  using System.Linq;
-  using static Technologies.ServerTechTimeGateHelper;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.Events;
+using AtomicTorch.CBND.CoreMod.Items.Ammo;
+using AtomicTorch.CBND.CoreMod.Items.Devices;
+using AtomicTorch.CBND.CoreMod.Items.Drones;
+using AtomicTorch.CBND.CoreMod.Items.Equipment;
+using AtomicTorch.CBND.CoreMod.Items.Explosives.Bombs;
+using AtomicTorch.CBND.CoreMod.Items.Food;
+using AtomicTorch.CBND.CoreMod.Items.Generic;
+using AtomicTorch.CBND.CoreMod.Items.Implants;
+using AtomicTorch.CBND.CoreMod.Items.Medical;
+using AtomicTorch.CBND.CoreMod.Items.Tools.Special;
+using AtomicTorch.CBND.CoreMod.Items.Weapons.Melee;
+using AtomicTorch.CBND.CoreMod.Items.Weapons.Ranged;
+using AtomicTorch.CBND.CoreMod.Rates;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.CoreMod.Systems.Droplists;
+using AtomicTorch.CBND.CoreMod.Systems.Physics;
+using AtomicTorch.CBND.CoreMod.Systems.PvE;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.ServicesClient.Components;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+using System.Linq;
+using static AtomicTorch.CBND.CoreMod.Technologies.ServerTechTimeGateHelper;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events
+{
   public class ObjectSpaceDebris : ProtoObjectHackableContainer
   {
     private const int WorldOffsetY = 2;

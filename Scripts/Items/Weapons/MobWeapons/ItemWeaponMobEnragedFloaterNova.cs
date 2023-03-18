@@ -1,22 +1,22 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons
-{
-  using AtomicTorch.CBND.CoreMod.ClientComponents.FX;
-  using AtomicTorch.CBND.CoreMod.Items.Ammo;
-  using AtomicTorch.CBND.CoreMod.Systems.Physics;
-  using AtomicTorch.CBND.CoreMod.Systems.Weapons;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Physics;
-  using AtomicTorch.CBND.GameApi.Data.Weapons;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Extensions;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.ServicesClient.Components;
-  using AtomicTorch.CBND.GameApi.ServicesClient.Rendering;
-  using AtomicTorch.GameEngine.Common.Helpers;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System.Collections.Generic;
-  using System.Windows.Media;
+﻿using AtomicTorch.CBND.CoreMod.ClientComponents.FX;
+using AtomicTorch.CBND.CoreMod.Items.Ammo;
+using AtomicTorch.CBND.CoreMod.Systems.Physics;
+using AtomicTorch.CBND.CoreMod.Systems.Weapons;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Physics;
+using AtomicTorch.CBND.GameApi.Data.Weapons;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Extensions;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.ServicesClient.Components;
+using AtomicTorch.CBND.GameApi.ServicesClient.Rendering;
+using AtomicTorch.GameEngine.Common.Helpers;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System.Collections.Generic;
+using System.Windows.Media;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons
+{
   public class ItemWeaponMobEnragedFloaterNova : ProtoItemMobWeaponNova
   {
     public override bool CanDamageStructures => true;

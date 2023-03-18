@@ -1,16 +1,16 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Tools.Special
-{
-  using AtomicTorch.CBND.CoreMod.Systems.CharacterEnergySystem;
-  using AtomicTorch.CBND.CoreMod.Systems.VehicleSystem;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Controls.HotbarOverlays;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.VehicleRemoteControl;
-  using AtomicTorch.CBND.CoreMod.Vehicles;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using System.Windows.Controls;
+﻿using AtomicTorch.CBND.CoreMod.Systems.CharacterEnergySystem;
+using AtomicTorch.CBND.CoreMod.Systems.VehicleSystem;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Controls.HotbarOverlays;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.VehicleRemoteControl;
+using AtomicTorch.CBND.CoreMod.Vehicles;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Scripting;
+using System.Windows.Controls;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Tools.Special
+{
   public abstract class ProtoItemVehicleRemoteControl
       : ProtoItemTool<ItemVehicleRemoteControlPrivateState,
             EmptyPublicState,

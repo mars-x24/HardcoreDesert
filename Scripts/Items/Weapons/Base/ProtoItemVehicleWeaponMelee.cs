@@ -1,18 +1,14 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Weapons
-{
-  using System;
-  using System.Collections.Generic;
-  using AtomicTorch.CBND.CoreMod.Characters;
-  using AtomicTorch.CBND.CoreMod.Systems.Notifications;
-  using AtomicTorch.CBND.CoreMod.Systems.VehicleSystem;
-  using AtomicTorch.CBND.CoreMod.Systems.Weapons;
-  using AtomicTorch.CBND.CoreMod.UI;
-  using AtomicTorch.CBND.CoreMod.Vehicles;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.GameEngine.Common.Extensions;
+﻿using AtomicTorch.CBND.CoreMod.Systems.Notifications;
+using AtomicTorch.CBND.CoreMod.UI;
+using AtomicTorch.CBND.CoreMod.Vehicles;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.GameEngine.Common.Extensions;
+using System.Collections.Generic;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Weapons
+{
   public abstract class ProtoItemVehicleWeaponMelee
     <TPrivateState,
      TPublicState,

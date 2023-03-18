@@ -1,9 +1,8 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Quests.Book
-{
-  using AtomicTorch.CBND.CoreMod.Items.Food;
-  using AtomicTorch.CBND.CoreMod.PlayerTasks;
-  using HardcoreDesert.Scripts.Quests.Base;
+﻿using AtomicTorch.CBND.CoreMod.PlayerTasks;
+using HardcoreDesert.Scripts.Quests.Base;
 
+namespace AtomicTorch.CBND.CoreMod.Quests.Book
+{
   public class QuestCookMoreFoodStage4 : ProtoQuest
   {
     public override string Description =>

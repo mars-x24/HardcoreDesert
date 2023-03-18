@@ -1,13 +1,13 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Systems.FishingSystem
-{
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.Helpers.Client;
-  using AtomicTorch.CBND.CoreMod.Items.Fishing.Base;
-  using AtomicTorch.CBND.GameApi.Data.Logic;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.Helpers.Client;
+using AtomicTorch.CBND.CoreMod.Items.Fishing.Base;
+using AtomicTorch.CBND.GameApi.Data.Logic;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
 
+namespace AtomicTorch.CBND.CoreMod.Systems.FishingSystem
+{
   public class FishingActionPublicActionState : BasePublicActionState
   {
     private const string FishingInAnimationName = "Fishing_In";

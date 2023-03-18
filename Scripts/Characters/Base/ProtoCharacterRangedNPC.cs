@@ -1,11 +1,8 @@
 ﻿using AtomicTorch.CBND.CoreMod.SoundPresets;
 using AtomicTorch.CBND.CoreMod.Systems.Weapons;
 using AtomicTorch.CBND.GameApi.Data.Characters;
-using AtomicTorch.CBND.GameApi.Data.Items;
 using AtomicTorch.CBND.GameApi.Scripting;
 using AtomicTorch.CBND.GameApi.Scripting.Network;
-using System;
-using System.Threading.Tasks;
 
 namespace AtomicTorch.CBND.CoreMod.Characters
 {

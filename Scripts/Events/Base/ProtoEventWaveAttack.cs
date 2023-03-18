@@ -1,26 +1,24 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Events
-{
-  using AtomicTorch.CBND.CoreMod.Characters;
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.Helpers;
-  using AtomicTorch.CBND.CoreMod.Rates;
-  using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
-  using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
-  using AtomicTorch.CBND.CoreMod.Zones;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Logic;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Extensions;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.ServicesServer;
-  using AtomicTorch.GameEngine.Common.Helpers;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
-  using System.Collections.Generic;
-  using System.Threading;
-  using System.Threading.Tasks;
+﻿using AtomicTorch.CBND.CoreMod.Characters;
+using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.Helpers;
+using AtomicTorch.CBND.CoreMod.Rates;
+using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
+using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Logic;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Extensions;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.ServicesServer;
+using AtomicTorch.GameEngine.Common.Helpers;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
+namespace AtomicTorch.CBND.CoreMod.Events
+{
   public abstract class ProtoEventWaveAttack
       : ProtoEventWithArea<
           EventWaveAttackPrivateState,
@@ -140,9 +138,9 @@
         () => this.ServerSpawnObjectsAsync(worldEvent, publicState.AreaCirclePosition, publicState.AreaCircleRadius));
     }
 
-    protected abstract void ServerPrepareSpawnPreset(Triggers triggers, List<IProtoWorldObject> spawnPreset);
+    protected abstract void ServerPrepareSpawnPreset(AtomicTorch.CBND.CoreMod.Zones.Triggers triggers, List<IProtoWorldObject> spawnPreset);
 
-    protected override void ServerPrepareEvent(Triggers triggers)
+    protected override void ServerPrepareEvent(AtomicTorch.CBND.CoreMod.Zones.Triggers triggers)
     {
       var list = new List<IProtoWorldObject>();
       this.ServerPrepareSpawnPreset(triggers, list);
@@ -241,7 +239,7 @@
         _ => throw new Exception("Unknown object type to spawn: " + protoObjectToSpawn)
       };
     }
- 
+
     protected virtual async void ServerSpawnObjectsAsync(
       ILogicObject worldEvent,
       Vector2Ushort circlePosition,
@@ -408,7 +406,7 @@
           {
             publicState.CurrentWave = publicState.NextWave;
 
-            
+
             ServerTimersSystem.AddAction(
               delaySeconds: 10 + RandomHelper.Next(0, 5),
               () => this.ServerSpawnObjectsAsync(activeEvent, publicState.AreaCirclePosition, publicState.AreaCircleRadius));

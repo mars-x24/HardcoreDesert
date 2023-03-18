@@ -1,10 +1,10 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Fishing
-{
-  using AtomicTorch.CBND.CoreMod.Items.Fishing.Base;
-  using AtomicTorch.CBND.CoreMod.Items.Generic;
-  using AtomicTorch.CBND.CoreMod.Systems.Droplists;
-  using System;
+﻿using AtomicTorch.CBND.CoreMod.Items.Fishing.Base;
+using AtomicTorch.CBND.CoreMod.Items.Generic;
+using AtomicTorch.CBND.CoreMod.Systems.Droplists;
+using System;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Fishing
+{
   public class ItemFishRedGoby : ProtoItemFish
   {
     public override string Description => GetProtoEntity<ItemFishBass>().Description;

@@ -1,8 +1,8 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events
-{
-  using AtomicTorch.CBND.GameApi.Resources;
-  using System;
+﻿using AtomicTorch.CBND.GameApi.Resources;
+using System;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events
+{
   public class ObjectCrashSiteSpaceship3 : ProtoObjectCrashSiteSpaceship
   {
     protected override ITextureResource PrepareDefaultTexture(Type thisType)

@@ -1,22 +1,22 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Characters
-{
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.Items.Weapons;
-  using AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons;
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.CoreMod.Systems.Physics;
-  using AtomicTorch.CBND.CoreMod.Systems.Weapons;
-  using AtomicTorch.CBND.CoreMod.Vehicles;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Physics;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.ServicesServer;
-  using AtomicTorch.GameEngine.Common.Helpers;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
-  using System.Collections.Generic;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.Items.Weapons;
+using AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.CoreMod.Systems.Physics;
+using AtomicTorch.CBND.CoreMod.Systems.Weapons;
+using AtomicTorch.CBND.CoreMod.Vehicles;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Physics;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.ServicesServer;
+using AtomicTorch.GameEngine.Common.Helpers;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+using System.Collections.Generic;
 
+namespace AtomicTorch.CBND.CoreMod.Characters
+{
   public static class ServerCharacterAiHelper
   {
     private const double FleeSoundRepeatInterval = 3;
@@ -333,6 +333,24 @@
           // retreat from heavy vehicle
           distanceRetreat = Math.Max(7, distanceRetreat);
           isRetreating = true;
+        }
+      }
+
+      // always retreat
+      if (privateState.RetreatingTimeRemains > 0)
+      {
+        distanceRetreat = Math.Max(50, distanceRetreat);
+        isRetreating = true;
+      }
+
+      // water
+      if (!isRetreating && targetCharacter is not null && !targetCharacter.IsNpc)
+      {
+        if (targetCharacter.Tile.ProtoTile.Kind == TileKind.Water)
+        {
+          distanceRetreat = Math.Max(50, distanceRetreat);
+          isRetreating = true;
+          privateState.RetreatingTimeRemains = 2;
         }
       }
 

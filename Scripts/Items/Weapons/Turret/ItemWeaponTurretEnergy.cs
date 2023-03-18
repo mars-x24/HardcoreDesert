@@ -1,14 +1,14 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Weapons.Turret
-{
-  using AtomicTorch.CBND.CoreMod.Items.Ammo;
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.CoreMod.Systems.Weapons;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Weapons;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.GameEngine.Common.Helpers;
-  using System.Collections.Generic;
+﻿using AtomicTorch.CBND.CoreMod.Items.Ammo;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.CoreMod.Systems.Weapons;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Weapons;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.GameEngine.Common.Helpers;
+using System.Collections.Generic;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Weapons.Turret
+{
   public class ItemWeaponTurretEnergy : ProtoItemWeaponTurretEnergy
   {
     public override double CharacterAnimationAimingRecoilDuration => 0.45;

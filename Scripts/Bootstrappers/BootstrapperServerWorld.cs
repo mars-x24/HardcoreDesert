@@ -1,20 +1,20 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Bootstrappers
-{
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Misc;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Ruins.Gates;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Vegetation;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Vegetation.Plants;
-  using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
-  using AtomicTorch.CBND.CoreMod.Systems.WorldMapResourceMarks;
-  using AtomicTorch.CBND.GameApi.Data;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using System.Collections.Generic;
-  using System.Diagnostics.CodeAnalysis;
+﻿using AtomicTorch.CBND.CoreMod.StaticObjects.Misc;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Ruins.Gates;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Vegetation;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Vegetation.Plants;
+using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
+using AtomicTorch.CBND.CoreMod.Systems.WorldMapResourceMarks;
+using AtomicTorch.CBND.GameApi.Data;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.Scripting;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
+namespace AtomicTorch.CBND.CoreMod.Bootstrappers
+{
   [PrepareOrder(afterType: typeof(BootstrapperServerCore))]
   [PrepareOrder(afterType: typeof(LandClaimSystem.BootstrapperLandClaimSystem))]
   [PrepareOrder(afterType: typeof(WorldMapResourceMarksSystem.Bootstrapper))]
@@ -95,7 +95,7 @@
           continue;
         }
 
-        if(protoGameObject is ObjectAlienTeleportReplica)
+        if (protoGameObject is ObjectAlienTeleportReplica)
         {
           continue;
         }

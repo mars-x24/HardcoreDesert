@@ -1,11 +1,11 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Robots
-{
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using System.Collections.Generic;
+﻿using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Scripting;
+using System.Collections.Generic;
 
+namespace AtomicTorch.CBND.CoreMod.Robots
+{
   public class RobotPublicState : BasePublicState, IPublicStateWithStructurePoints
   {
     [SyncToClient]

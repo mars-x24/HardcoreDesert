@@ -1,7 +1,7 @@
+using AtomicTorch.CBND.GameApi;
+
 namespace AtomicTorch.CBND.CoreMod.Rates
 {
-  using AtomicTorch.CBND.GameApi;
-
   public class RateBossDifficultyPragmiumKing
       : BaseRateDouble<RateBossDifficultyPragmiumKing>
   {

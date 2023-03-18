@@ -1,30 +1,30 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Drones
-{
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
-  using AtomicTorch.CBND.CoreMod.Helpers.Client;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Vegetation;
-  using AtomicTorch.CBND.CoreMod.Systems.CharacterDroneControl;
-  using AtomicTorch.CBND.CoreMod.Systems.ItemDurability;
-  using AtomicTorch.CBND.CoreMod.Systems.PvE;
-  using AtomicTorch.CBND.CoreMod.Systems.WorldObjectClaim;
-  using AtomicTorch.CBND.CoreMod.UI;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Controls.Tooltips;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Extensions;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.Scripting.ClientComponents;
-  using AtomicTorch.CBND.GameApi.ServicesClient;
-  using AtomicTorch.CBND.GameApi.ServicesClient.Components;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
-  using System.Collections.Generic;
-  using System.Windows;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
+using AtomicTorch.CBND.CoreMod.Helpers.Client;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Vegetation;
+using AtomicTorch.CBND.CoreMod.Systems.CharacterDroneControl;
+using AtomicTorch.CBND.CoreMod.Systems.ItemDurability;
+using AtomicTorch.CBND.CoreMod.Systems.PvE;
+using AtomicTorch.CBND.CoreMod.Systems.WorldObjectClaim;
+using AtomicTorch.CBND.CoreMod.UI;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Controls.Tooltips;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Extensions;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.Scripting.ClientComponents;
+using AtomicTorch.CBND.GameApi.ServicesClient;
+using AtomicTorch.CBND.GameApi.ServicesClient.Components;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+using System.Collections.Generic;
+using System.Windows;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Drones
+{
   public abstract class ProtoItemDroneControl
       : ProtoItemWithDurability,
         IProtoItemDroneControl,

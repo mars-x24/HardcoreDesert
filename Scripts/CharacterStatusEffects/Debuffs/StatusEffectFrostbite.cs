@@ -1,9 +1,9 @@
-﻿namespace AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Debuffs
-{
-  using AtomicTorch.CBND.CoreMod.Characters;
-  using AtomicTorch.CBND.CoreMod.Stats;
-  using System;
+﻿using AtomicTorch.CBND.CoreMod.Characters;
+using AtomicTorch.CBND.CoreMod.Stats;
+using System;
 
+namespace AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Debuffs
+{
   public class StatusEffectFrostbite : ProtoStatusEffect
   {
     public const double DamagePerSecondByIntensity = 1;

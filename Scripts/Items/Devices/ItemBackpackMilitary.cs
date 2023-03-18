@@ -1,7 +1,7 @@
 ﻿namespace AtomicTorch.CBND.CoreMod.Items.Devices
 {
   public class ItemBackpackMilitary : ProtoItemBackpack
-  { 
+  {
     public override byte SlotsCount => 30;
 
     public override string Name => "Military backpack";

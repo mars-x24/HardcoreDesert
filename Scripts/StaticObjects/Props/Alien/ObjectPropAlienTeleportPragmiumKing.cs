@@ -1,9 +1,9 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Props.Alien
-{
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.ServicesClient.Components;
+﻿using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.ServicesClient.Components;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Props.Alien
+{
   public class ObjectPropAlienTeleportPragmiumKing : ProtoObjectProp
   {
     public override bool CanFlipSprite => true;

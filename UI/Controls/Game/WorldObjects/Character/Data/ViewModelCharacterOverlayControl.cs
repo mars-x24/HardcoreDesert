@@ -1,15 +1,15 @@
-﻿namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Character.Data
-{
-  using AtomicTorch.CBND.CoreMod.Characters;
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.ClientOptions.General;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc;
-  using AtomicTorch.CBND.CoreMod.Systems.TimeOfDaySystem;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Data;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using System;
+﻿using AtomicTorch.CBND.CoreMod.Characters;
+using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.ClientOptions.General;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc;
+using AtomicTorch.CBND.CoreMod.Systems.TimeOfDaySystem;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Data;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using System;
 
+namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Character.Data
+{
   public class ViewModelCharacterOverlayControl : BaseViewModel
   {
     private readonly Action callbackVisualStateChanged;

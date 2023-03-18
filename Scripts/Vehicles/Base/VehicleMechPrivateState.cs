@@ -1,8 +1,8 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Vehicles
-{
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.State;
+﻿using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.State;
 
+namespace AtomicTorch.CBND.CoreMod.Vehicles
+{
   public class VehicleMechPrivateState : VehiclePrivateState
   {
     [SyncToClient]

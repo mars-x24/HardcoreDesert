@@ -1,37 +1,34 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Systems.FishingSystem
-{
-  using AtomicTorch.CBND.CoreMod.Characters;
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.ClientComponents.Input;
-  using AtomicTorch.CBND.CoreMod.Helpers.Client;
-  using AtomicTorch.CBND.CoreMod.Items;
-  using AtomicTorch.CBND.CoreMod.Items.Fishing.Base;
-  using AtomicTorch.CBND.CoreMod.Items.Tools;
-  using AtomicTorch.CBND.CoreMod.Skills;
-  using AtomicTorch.CBND.CoreMod.Stats;
-  using AtomicTorch.CBND.CoreMod.Systems.Droplists;
-  using AtomicTorch.CBND.CoreMod.Systems.FishingBaitReloadingSystem;
-  using AtomicTorch.CBND.CoreMod.Systems.ItemDurability;
-  using AtomicTorch.CBND.CoreMod.Systems.Notifications;
-  using AtomicTorch.CBND.CoreMod.Systems.Physics;
-  using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
-  using AtomicTorch.CBND.CoreMod.Tiles;
-  using AtomicTorch.CBND.CoreMod.UI;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.Logic;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.Scripting.Network;
-  using AtomicTorch.CBND.GameApi.ServicesServer;
-  using AtomicTorch.GameEngine.Common.DataStructures;
-  using AtomicTorch.GameEngine.Common.Helpers;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
-  using System.Collections.Generic;
-  using System.Linq;
+﻿using AtomicTorch.CBND.CoreMod.Characters;
+using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.ClientComponents.Input;
+using AtomicTorch.CBND.CoreMod.Helpers.Client;
+using AtomicTorch.CBND.CoreMod.Items;
+using AtomicTorch.CBND.CoreMod.Items.Fishing.Base;
+using AtomicTorch.CBND.CoreMod.Items.Tools;
+using AtomicTorch.CBND.CoreMod.Skills;
+using AtomicTorch.CBND.CoreMod.Stats;
+using AtomicTorch.CBND.CoreMod.Systems.Droplists;
+using AtomicTorch.CBND.CoreMod.Systems.Notifications;
+using AtomicTorch.CBND.CoreMod.Systems.Physics;
+using AtomicTorch.CBND.CoreMod.Tiles;
+using AtomicTorch.CBND.CoreMod.UI;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.Logic;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.Scripting.Network;
+using AtomicTorch.CBND.GameApi.ServicesServer;
+using AtomicTorch.GameEngine.Common.DataStructures;
+using AtomicTorch.GameEngine.Common.Helpers;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
+namespace AtomicTorch.CBND.CoreMod.Systems.FishingSystem
+{
   public class FishingSystem
         : ProtoActionSystem
             <FishingSystem,
@@ -142,7 +139,7 @@
           || SharedFindBaitItem(character, fishingRodPublicState.CurrentProtoBait) is null)
       {
         // no bait selected - try switch it
-        FishingBaitReloadingSystem.ClientTrySwitchBaitType();
+        FishingBaitReloadingSystem.FishingBaitReloadingSystem.ClientTrySwitchBaitType();
         if (fishingRodPublicState.CurrentProtoBait is null
             || SharedFindBaitItem(character, fishingRodPublicState.CurrentProtoBait) is null)
         {
@@ -351,8 +348,8 @@
               return;
             }
 
-                  //Logger.Dev("Client received fishing session: " + currentFishingSession);
-                  actionState.ClientSetCurrentFishingSession(currentFishingSession);
+            //Logger.Dev("Client received fishing session: " + currentFishingSession);
+            actionState.ClientSetCurrentFishingSession(currentFishingSession);
           });
     }
 

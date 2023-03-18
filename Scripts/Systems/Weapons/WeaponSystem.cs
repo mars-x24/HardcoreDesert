@@ -1,36 +1,36 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Systems.Weapons
-{
-  using System;
-  using System.Collections.Generic;
-  using AtomicTorch.CBND.CoreMod.Characters;
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Neutral;
-  using AtomicTorch.CBND.CoreMod.Helpers.Physics;
-  using AtomicTorch.CBND.CoreMod.Helpers.Client.Physics;
-  using AtomicTorch.CBND.CoreMod.Helpers.Primitives;
-  using AtomicTorch.CBND.CoreMod.Items.Ammo;
-  using AtomicTorch.CBND.CoreMod.Items.Devices;
-  using AtomicTorch.CBND.CoreMod.Items.Weapons;
-  using AtomicTorch.CBND.CoreMod.Items.Weapons.Base;
-  using AtomicTorch.CBND.CoreMod.Skills;
-  using AtomicTorch.CBND.CoreMod.Stats;
-  using AtomicTorch.CBND.CoreMod.Systems.Faction;
-  using AtomicTorch.CBND.CoreMod.Systems.Party;
-  using AtomicTorch.CBND.CoreMod.Systems.Physics;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.Physics;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.Weapons;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.Scripting.Network;
-  using AtomicTorch.CBND.GameApi.ServicesClient;
-  using AtomicTorch.GameEngine.Common.DataStructures;
-  using AtomicTorch.GameEngine.Common.Extensions;
-  using AtomicTorch.GameEngine.Common.Helpers;
-  using AtomicTorch.GameEngine.Common.Primitives;
+﻿using AtomicTorch.CBND.CoreMod.Characters;
+using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Neutral;
+using AtomicTorch.CBND.CoreMod.Helpers.Client.Physics;
+using AtomicTorch.CBND.CoreMod.Helpers.Physics;
+using AtomicTorch.CBND.CoreMod.Helpers.Primitives;
+using AtomicTorch.CBND.CoreMod.Items.Ammo;
+using AtomicTorch.CBND.CoreMod.Items.Devices;
+using AtomicTorch.CBND.CoreMod.Items.Weapons;
+using AtomicTorch.CBND.CoreMod.Items.Weapons.Base;
+using AtomicTorch.CBND.CoreMod.Skills;
+using AtomicTorch.CBND.CoreMod.Stats;
+using AtomicTorch.CBND.CoreMod.Systems.Faction;
+using AtomicTorch.CBND.CoreMod.Systems.Party;
+using AtomicTorch.CBND.CoreMod.Systems.Physics;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.Physics;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.Weapons;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.Scripting.Network;
+using AtomicTorch.CBND.GameApi.ServicesClient;
+using AtomicTorch.GameEngine.Common.DataStructures;
+using AtomicTorch.GameEngine.Common.Extensions;
+using AtomicTorch.GameEngine.Common.Helpers;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+using System.Collections.Generic;
 
+namespace AtomicTorch.CBND.CoreMod.Systems.Weapons
+{
   /// <summary>
   /// System to process weapon states (firing, cooldown, etc).
   /// </summary>

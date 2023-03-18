@@ -1,11 +1,11 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Rates
-{
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Menu.Servers.Data;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.ServicesClient;
-  using AtomicTorch.GameEngine.Common.Helpers;
-  using System;
+﻿using AtomicTorch.CBND.CoreMod.UI.Controls.Menu.Servers.Data;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.ServicesClient;
+using AtomicTorch.GameEngine.Common.Helpers;
+using System;
 
+namespace AtomicTorch.CBND.CoreMod.Rates
+{
   public class RateMigrationMutantMobCount
       : BaseRate<RateMigrationMutantMobCount, string>
   {

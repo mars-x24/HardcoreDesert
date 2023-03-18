@@ -1,25 +1,16 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events
-{
-  using AtomicTorch.CBND.CoreMod.Characters;
-  using AtomicTorch.CBND.CoreMod.Characters.Mobs;
-  using AtomicTorch.CBND.CoreMod.CharacterStatusEffects;
-  using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Debuffs;
-  using AtomicTorch.CBND.CoreMod.Helpers.Server;
-  using AtomicTorch.CBND.CoreMod.Items.Tools;
-  using AtomicTorch.CBND.CoreMod.Items.Weapons;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Minerals;
-  using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
-  using AtomicTorch.CBND.CoreMod.Systems.NewbieProtection;
-  using AtomicTorch.CBND.CoreMod.Systems.Notifications;
-  using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
-  using AtomicTorch.CBND.CoreMod.Systems.Weapons;
-  using AtomicTorch.CBND.CoreMod.UI;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Extensions;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using System;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Mobs;
+using AtomicTorch.CBND.CoreMod.Helpers.Server;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Minerals;
+using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
+using AtomicTorch.CBND.CoreMod.Systems.NewbieProtection;
+using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
+using AtomicTorch.CBND.CoreMod.Systems.Weapons;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.World;
+using System;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events
+{
   public abstract class ProtoObjectMineralMeteorite
         : ProtoObjectMineral
           <ObjectMineralMeteoritePrivateState,

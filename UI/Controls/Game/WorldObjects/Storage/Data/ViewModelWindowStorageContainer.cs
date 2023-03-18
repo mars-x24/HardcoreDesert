@@ -1,10 +1,10 @@
-﻿namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Storage.Data
-{
-  using AtomicTorch.CBND.CoreMod.Items.Storage;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Data;
-  using AtomicTorch.CBND.GameApi.Data.Items;
+﻿using AtomicTorch.CBND.CoreMod.Items.Storage;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Data;
+using AtomicTorch.CBND.GameApi.Data.Items;
 
+namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Storage.Data
+{
   public class ViewModelWindowStorageContainer : BaseViewModel
   {
     public ViewModelWindowStorageContainer(IItem itemStorage)

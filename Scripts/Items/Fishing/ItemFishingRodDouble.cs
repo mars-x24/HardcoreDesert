@@ -1,9 +1,9 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Fishing
-{
-  using AtomicTorch.CBND.CoreMod.Items.Fishing.Base;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.GameEngine.Common.Primitives;
+﻿using AtomicTorch.CBND.CoreMod.Items.Fishing.Base;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.GameEngine.Common.Primitives;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Fishing
+{
   public class ItemFishingRodDouble : ProtoItemFishingRod
   {
     public override string Description =>

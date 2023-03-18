@@ -1,17 +1,17 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Misc
-{
-  using AtomicTorch.CBND.CoreMod.ClientComponents.Rendering.Lighting;
-  using AtomicTorch.CBND.CoreMod.Helpers.Client;
-  using AtomicTorch.CBND.CoreMod.Items;
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.CoreMod.Systems.Physics;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.ServicesClient.Components;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
+﻿using AtomicTorch.CBND.CoreMod.ClientComponents.Rendering.Lighting;
+using AtomicTorch.CBND.CoreMod.Helpers.Client;
+using AtomicTorch.CBND.CoreMod.Items;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.CoreMod.Systems.Physics;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.ServicesClient.Components;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Misc
+{
   public class ObjectAlienTeleportReplica : ProtoObjectTeleport
   {
     private static readonly Vector2Ushort ComposedTextureSize = (1024, 1076);

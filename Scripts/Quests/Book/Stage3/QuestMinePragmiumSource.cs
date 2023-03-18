@@ -1,10 +1,10 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Quests.Book
-{
-  using AtomicTorch.CBND.CoreMod.PlayerTasks;
-  using AtomicTorch.CBND.CoreMod.Quests.Tutorial;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Minerals;
-  using HardcoreDesert.Scripts.Quests.Base;
+﻿using AtomicTorch.CBND.CoreMod.PlayerTasks;
+using AtomicTorch.CBND.CoreMod.Quests.Tutorial;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Minerals;
+using HardcoreDesert.Scripts.Quests.Base;
 
+namespace AtomicTorch.CBND.CoreMod.Quests.Book
+{
   public class QuestMinePragmiumSource : ProtoQuest
   {
     public override string Description =>

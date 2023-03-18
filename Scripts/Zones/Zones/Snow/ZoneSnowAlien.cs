@@ -1,8 +1,9 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Zones
-{
-  using AtomicTorch.CBND.GameApi;
+﻿using AtomicTorch.CBND.CoreMod.Systems.TimeOfDaySystem;
+using AtomicTorch.CBND.GameApi;
 
-  public class ZoneSnowAlien : ProtoZoneDefault
+namespace AtomicTorch.CBND.CoreMod.Zones
+{
+  public class ZoneSnowAlien : ProtoZoneDefault, IProtoNoAmbientLight
   {
     [NotLocalizable]
     public override string Name => "Snow - Alien";

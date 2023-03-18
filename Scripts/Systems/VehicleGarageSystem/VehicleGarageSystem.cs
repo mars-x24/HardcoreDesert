@@ -1,31 +1,29 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Systems.VehicleGarageSystem
-{
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.Helpers.Client;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc;
-  using AtomicTorch.CBND.CoreMod.Systems.CharacterDespawnSystem;
-  using AtomicTorch.CBND.CoreMod.Systems.InteractionChecker;
-  using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
-  using AtomicTorch.CBND.CoreMod.Systems.Notifications;
-  using AtomicTorch.CBND.CoreMod.Systems.PvE;
-  using AtomicTorch.CBND.CoreMod.Systems.VehicleSystem;
-  using AtomicTorch.CBND.CoreMod.Systems.WorldObjectOwners;
-  using AtomicTorch.CBND.CoreMod.Technologies.Tier3.Vehicles;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.VehicleAssemblyBay;
-  using AtomicTorch.CBND.CoreMod.Vehicles;
-  using AtomicTorch.CBND.GameApi.Data;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.Scripting.Network;
-  using AtomicTorch.GameEngine.Common.Extensions;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
-  using System.Collections.Generic;
-  using System.Threading.Tasks;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.Helpers.Client;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc;
+using AtomicTorch.CBND.CoreMod.Systems.InteractionChecker;
+using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
+using AtomicTorch.CBND.CoreMod.Systems.Notifications;
+using AtomicTorch.CBND.CoreMod.Systems.PvE;
+using AtomicTorch.CBND.CoreMod.Systems.WorldObjectOwners;
+using AtomicTorch.CBND.CoreMod.Technologies.Tier3.Vehicles;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.VehicleAssemblyBay;
+using AtomicTorch.CBND.CoreMod.Vehicles;
+using AtomicTorch.CBND.GameApi.Data;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.Scripting.Network;
+using AtomicTorch.GameEngine.Common.Extensions;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
+namespace AtomicTorch.CBND.CoreMod.Systems.VehicleGarageSystem
+{
   public class VehicleGarageSystem : ProtoSystem<VehicleGarageSystem>
   {
     public const string Notification_CannotTakeVehicle_Title = "Cannot take vehicle";
@@ -185,7 +183,7 @@
         }
       }
 
-      var position = CharacterDespawnSystem.ServerGetServiceAreaPosition().ToVector2D();
+      var position = CharacterDespawnSystem.CharacterDespawnSystem.ServerGetServiceAreaPosition().ToVector2D();
 
       if (vehiclePrivateState.IsInGarage
           && vehicle.Position == position)
@@ -197,7 +195,7 @@
       var vehicleCurrentPilot = vehicle.GetPublicState<VehiclePublicState>().PilotCharacter;
       if (vehicleCurrentPilot is not null)
       {
-        VehicleSystem.ServerCharacterExitCurrentVehicle(vehicleCurrentPilot, force: true);
+        VehicleSystem.VehicleSystem.ServerCharacterExitCurrentVehicle(vehicleCurrentPilot, force: true);
       }
 
       vehiclePrivateState.IsInGarage = true;
@@ -206,7 +204,7 @@
                                position,
                                writeToLog: false);
 
-      VehicleSystem.ServerResetLastVehicleMapMark(vehiclePrivateState);
+      VehicleSystem.VehicleSystem.ServerResetLastVehicleMapMark(vehiclePrivateState);
 
       vehicle.ProtoWorldObject.SharedCreatePhysics(vehicle);
       Logger.Important("Vehicle put into the garage: " + vehicle,

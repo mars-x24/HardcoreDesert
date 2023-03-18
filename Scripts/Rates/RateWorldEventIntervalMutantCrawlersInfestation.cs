@@ -1,8 +1,8 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Rates
-{
-  using AtomicTorch.CBND.CoreMod.Events;
-  using AtomicTorch.GameEngine.Common.Primitives;
+﻿using AtomicTorch.CBND.CoreMod.Events;
+using AtomicTorch.GameEngine.Common.Primitives;
 
+namespace AtomicTorch.CBND.CoreMod.Rates
+{
   public class RateWorldEventIntervalMutantCrawlersInfestation
       : BaseRateWorldEventInterval<EventMutantCrawlersInfestation, RateWorldEventIntervalMutantCrawlersInfestation>
   {

@@ -1,9 +1,9 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Robots
-{
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.World;
+﻿using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.World;
 
+namespace AtomicTorch.CBND.CoreMod.Robots
+{
   public class RobotPrivateState : BasePrivateState
   {
     public IItem AssociatedItem { get; set; }

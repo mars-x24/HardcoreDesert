@@ -1,10 +1,10 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim
-{
-  using System.Collections.Generic;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.Logic;
-  using AtomicTorch.CBND.GameApi.Data.State;
+﻿using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.Logic;
+using AtomicTorch.CBND.GameApi.Data.State;
+using System.Collections.Generic;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim
+{
   public class LandClaimGroupPrivateState : BasePrivateState
   {
     [SyncToClient]

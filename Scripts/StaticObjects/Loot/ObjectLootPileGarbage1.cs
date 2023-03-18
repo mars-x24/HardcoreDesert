@@ -1,16 +1,16 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Loot
-{
-  using AtomicTorch.CBND.CoreMod.Helpers.Server;
-  using AtomicTorch.CBND.CoreMod.Items.Generic;
-  using AtomicTorch.CBND.CoreMod.Rates;
-  using AtomicTorch.CBND.CoreMod.Skills;
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.CoreMod.Systems.Droplists;
-  using AtomicTorch.CBND.CoreMod.Systems.Physics;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.ServicesClient.Components;
-  using AtomicTorch.GameEngine.Common.Primitives;
+﻿using AtomicTorch.CBND.CoreMod.Helpers.Server;
+using AtomicTorch.CBND.CoreMod.Items.Generic;
+using AtomicTorch.CBND.CoreMod.Rates;
+using AtomicTorch.CBND.CoreMod.Skills;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.CoreMod.Systems.Droplists;
+using AtomicTorch.CBND.CoreMod.Systems.Physics;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.ServicesClient.Components;
+using AtomicTorch.GameEngine.Common.Primitives;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Loot
+{
   public class ObjectLootPileGarbage1 : ProtoObjectLootContainer
   {
     public override double DurationGatheringSeconds => 1;
@@ -42,7 +42,7 @@
       base.ClientSetupRenderer(renderer);
       renderer.DrawOrderOffsetY = 0.5;
     }
-     
+
     public override void ServerOnDestroy(IStaticWorldObject gameObject)
     {
       base.ServerOnDestroy(gameObject);

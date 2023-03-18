@@ -1,31 +1,30 @@
-﻿namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.LandClaims.Data
-{
-  using AtomicTorch.CBND.CoreMod.Helpers.Client;
-  using AtomicTorch.CBND.CoreMod.Rates;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
-  using AtomicTorch.CBND.CoreMod.Systems.Creative;
-  using AtomicTorch.CBND.CoreMod.Systems.Faction;
-  using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
-  using AtomicTorch.CBND.CoreMod.Systems.PowerGridSystem;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Construction.Data;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Data;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Data;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.PowerGrid.Data;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.ShieldProtection.Data;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.Logic;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.GameEngine.Common.Client.MonoGame.UI;
-  using AtomicTorch.GameEngine.Common.Extensions;
-  using HardcoreDesert.UI.Controls.Game.WorldObjects.Robot.Data;
-  using System;
-  using System.Linq;
-  using System.Windows;
-  using System.Windows.Controls;
-  using System.Windows.Media;
+﻿using AtomicTorch.CBND.CoreMod.Helpers.Client;
+using AtomicTorch.CBND.CoreMod.Rates;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
+using AtomicTorch.CBND.CoreMod.Systems.Creative;
+using AtomicTorch.CBND.CoreMod.Systems.Faction;
+using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Construction.Data;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Data;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Data;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.PowerGrid.Data;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.ShieldProtection.Data;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.Logic;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.GameEngine.Common.Client.MonoGame.UI;
+using AtomicTorch.GameEngine.Common.Extensions;
+using HardcoreDesert.UI.Controls.Game.WorldObjects.Robot.Data;
+using System;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
+namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.LandClaims.Data
+{
   public class ViewModelWindowLandClaim : BaseViewModel
   {
     public const string AccessListEmpty = "You can provide other survivors with access to your land claim.";
@@ -332,7 +331,7 @@
       // setup power grid
       var powerGrid = areasGroupPrivateState.PowerGrid;
       var oldViewModelPowerGridState = this.ViewModelPowerGridState;
-      this.ViewModelPowerGridState = new ViewModelPowerGridState(PowerGrid.GetPublicState(powerGrid));
+      this.ViewModelPowerGridState = new ViewModelPowerGridState(Systems.PowerGridSystem.PowerGrid.GetPublicState(powerGrid));
       oldViewModelPowerGridState?.Dispose();
 
       // setup safe storage

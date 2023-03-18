@@ -1,14 +1,14 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Technologies.Tier3.Cooking
+﻿using AtomicTorch.CBND.CoreMod.CraftRecipes;
+
+namespace AtomicTorch.CBND.CoreMod.Technologies.Tier3.Cooking
 {
-    using AtomicTorch.CBND.CoreMod.CraftRecipes;
-
-    public class TechNodeArepas : TechNode<TechGroupCookingT3>
+  public class TechNodeArepas : TechNode<TechGroupCookingT3>
+  {
+    protected override void PrepareTechNode(Config config)
     {
-        protected override void PrepareTechNode(Config config)
-        {
-            config.Effects.AddRecipe<RecipeArepas>();
+      config.Effects.AddRecipe<RecipeArepas>();
 
-            config.SetRequiredNode<TechNodeSalami>();
-        }
+      config.SetRequiredNode<TechNodeSalami>();
     }
+  }
 }

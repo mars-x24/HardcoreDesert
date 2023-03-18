@@ -1,7 +1,7 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Technologies.Tier5.Construction
-{
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Crates;
+﻿using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Crates;
 
+namespace AtomicTorch.CBND.CoreMod.Technologies.Tier5.Construction
+{
   public class TechNodeMassDriver : TechNode<TechGroupConstructionT5>
   {
     protected override void PrepareTechNode(Config config)

@@ -1,21 +1,21 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Manufacturers
-{
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Deposits;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.ConstructionSite;
-  using AtomicTorch.CBND.CoreMod.Systems.Construction;
-  using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
-  using AtomicTorch.CBND.CoreMod.Systems.PowerGridSystem;
-  using AtomicTorch.CBND.CoreMod.Tiles;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Manufacturers;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Manufacturers.Data;
-  using AtomicTorch.CBND.GameApi;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.GameEngine.Common.Extensions;
-  using System.ComponentModel;
-  using System.Linq;
+﻿using AtomicTorch.CBND.CoreMod.StaticObjects.Deposits;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.ConstructionSite;
+using AtomicTorch.CBND.CoreMod.Systems.Construction;
+using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
+using AtomicTorch.CBND.CoreMod.Systems.PowerGridSystem;
+using AtomicTorch.CBND.CoreMod.Tiles;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Manufacturers;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Manufacturers.Data;
+using AtomicTorch.CBND.GameApi;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.GameEngine.Common.Extensions;
+using System.ComponentModel;
+using System.Linq;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Manufacturers
+{
   public abstract class ProtoObjectOilPump : ProtoObjectExtractor
   {
     public const string ErrorTooCloseToAnotherOilPump

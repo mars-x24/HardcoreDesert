@@ -1,19 +1,19 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Vehicles
-{
-  using System.Collections.Generic;
-  using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
-  using AtomicTorch.CBND.CoreMod.ClientComponents.Rendering.Lighting;
-  using AtomicTorch.CBND.CoreMod.ItemContainers.Vehicles;
-  using AtomicTorch.CBND.CoreMod.Items;
-  using AtomicTorch.CBND.CoreMod.Items.Generic;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Explosives;
-  using AtomicTorch.CBND.CoreMod.Systems;
-  using AtomicTorch.CBND.CoreMod.Systems.Physics;
-  using AtomicTorch.CBND.GameApi.Data.Weapons;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.GameEngine.Common.Primitives;
+﻿using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
+using AtomicTorch.CBND.CoreMod.ClientComponents.Rendering.Lighting;
+using AtomicTorch.CBND.CoreMod.ItemContainers.Vehicles;
+using AtomicTorch.CBND.CoreMod.Items;
+using AtomicTorch.CBND.CoreMod.Items.Generic;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Explosives;
+using AtomicTorch.CBND.CoreMod.Systems;
+using AtomicTorch.CBND.CoreMod.Systems.Physics;
+using AtomicTorch.CBND.GameApi.Data.Weapons;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System.Collections.Generic;
 
+namespace AtomicTorch.CBND.CoreMod.Vehicles
+{
   public class VehicleMechCrusher : ProtoVehicleMech
   {
     public override byte CargoItemsSlotsCount => 64;

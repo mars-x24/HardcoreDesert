@@ -1,12 +1,12 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Characters
-{
-  using AtomicTorch.CBND.CoreMod.CharacterStatusEffects;
-  using AtomicTorch.CBND.CoreMod.Items.Equipment;
-  using AtomicTorch.CBND.CoreMod.Stats;
-  using AtomicTorch.CBND.CoreMod.Technologies;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.GameEngine.Common.Extensions;
+﻿using AtomicTorch.CBND.CoreMod.CharacterStatusEffects;
+using AtomicTorch.CBND.CoreMod.Items.Equipment;
+using AtomicTorch.CBND.CoreMod.Stats;
+using AtomicTorch.CBND.CoreMod.Technologies;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.GameEngine.Common.Extensions;
 
+namespace AtomicTorch.CBND.CoreMod.Characters
+{
   public static class SharedCharacterStatsHelper
   {
     public static string GetFullStatTitle(StatName statName)
@@ -45,7 +45,7 @@
         {
           double healthMaxAddpercent = LevelHelper.GetLevelIncreaseHealthPourcent(puMob.Level);
           tempStatsCache.AddPercent(prMob.GameObject.ProtoGameObject, StatName.HealthMax, healthMaxAddpercent);
-        
+
           bool isBoss = puMob.GameObject.ProtoGameObject is IProtoCharacterBoss;
           double damageFactor = LevelHelper.GetLevelIncreaseDamagePourcent(isBoss, puMob.Level);
           tempStatsCache.AddPercent(prMob.GameObject.ProtoGameObject, StatName.AttackFinalDamageMultiplier, damageFactor);

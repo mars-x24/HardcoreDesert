@@ -1,15 +1,15 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Technologies.Tier2.Cooking
+﻿using AtomicTorch.CBND.CoreMod.CraftRecipes;
+
+namespace AtomicTorch.CBND.CoreMod.Technologies.Tier2.Cooking
 {
-    using AtomicTorch.CBND.CoreMod.CraftRecipes;
-
-    public class TechNodeJelly : TechNode<TechGroupCookingT2>
+  public class TechNodeJelly : TechNode<TechGroupCookingT2>
+  {
+    protected override void PrepareTechNode(Config config)
     {
-        protected override void PrepareTechNode(Config config)
-        {
-            config.Effects
-                  .AddRecipe<RecipeJelly>();
+      config.Effects
+            .AddRecipe<RecipeJelly>();
 
-            config.SetRequiredNode<TechNodeJam>();
-        }
+      config.SetRequiredNode<TechNodeJam>();
     }
+  }
 }

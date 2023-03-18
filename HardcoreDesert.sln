@@ -6,16 +6,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HardcoreDesert", "HardcoreD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AtomicTorch.CBND.CoreMod", "..\Core.cpk\AtomicTorch.CBND.CoreMod.csproj", "{93E3D838-4839-4F1D-BC9E-A2E5F7CD9FA7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C1F7EB73-E7E5-40A3-B3F4-538F118D05EC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrashSite", "..\CrashSite\CrashSite.csproj", "{55211382-2BC8-46B2-9DB5-94536693C3B5}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chicken", "..\Chicken\Chicken.csproj", "{AB0FE8C8-1C21-43B4-8A07-424DC1444E0E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CNEI", "..\CNEI\CNEI.csproj", "{4DE3B417-722D-41E2-9302-03F6183660C9}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HardcoreDesertDuality", "..\HardcoreDesertDuality\HardcoreDesertDuality.csproj", "{485E8B42-A124-4DCF-8474-2C2A202C58A0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AtomicTorch.CBND.CoreMod.Editor", "..\Editor.mpk\AtomicTorch.CBND.CoreMod.Editor.csproj", "{D7F28DA5-E4D2-407A-AD12-8DC4658FCB29}"
 EndProject
 Global

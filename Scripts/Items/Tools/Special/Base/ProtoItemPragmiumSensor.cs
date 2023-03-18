@@ -1,26 +1,26 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Tools.Special
-{
-  using System;
-  using System.Collections.Generic;
-  using System.Windows.Controls;
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.Helpers.Client;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Minerals;
-  using AtomicTorch.CBND.CoreMod.Systems.CharacterEnergySystem;
-  using AtomicTorch.CBND.CoreMod.Systems.ItemDurability;
-  using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
-  using AtomicTorch.CBND.CoreMod.Systems.WorldObjectClaim;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Controls.HotbarOverlays;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Extensions;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.Scripting.Network;
-  using AtomicTorch.GameEngine.Common.Primitives;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.Helpers.Client;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Minerals;
+using AtomicTorch.CBND.CoreMod.Systems.CharacterEnergySystem;
+using AtomicTorch.CBND.CoreMod.Systems.ItemDurability;
+using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
+using AtomicTorch.CBND.CoreMod.Systems.WorldObjectClaim;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Controls.HotbarOverlays;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Extensions;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.Scripting.Network;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+using System.Collections.Generic;
+using System.Windows.Controls;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Tools.Special
+{
   public abstract class ProtoItemPragmiumSensor
       : ProtoItemTool<ItemPragmiumSensorPrivateState,
             EmptyPublicState,

@@ -1,13 +1,13 @@
-﻿namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.VehicleRemoteControl.Data
-{
-  using AtomicTorch.CBND.CoreMod.Systems.VehicleGarageSystem;
-  using AtomicTorch.CBND.CoreMod.Systems.VehicleNamesSystem;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
-  using AtomicTorch.CBND.CoreMod.Vehicles;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.GameEngine.Common.Client.MonoGame.UI;
-  using AtomicTorch.GameEngine.Common.Extensions;
+﻿using AtomicTorch.CBND.CoreMod.Systems.VehicleGarageSystem;
+using AtomicTorch.CBND.CoreMod.Systems.VehicleNamesSystem;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
+using AtomicTorch.CBND.CoreMod.Vehicles;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.GameEngine.Common.Client.MonoGame.UI;
+using AtomicTorch.GameEngine.Common.Extensions;
 
+namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.VehicleRemoteControl.Data
+{
   public class ViewModelVehicleRemoteControlEntry : BaseViewModel
   {
     private VehicleStatus status;

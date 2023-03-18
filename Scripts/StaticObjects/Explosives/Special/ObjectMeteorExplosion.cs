@@ -1,25 +1,23 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Explosives
-{
-  using AtomicTorch.CBND.CoreMod.Characters;
-  using AtomicTorch.CBND.CoreMod.CharacterStatusEffects;
-  using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Debuffs;
-  using AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons;
-  using AtomicTorch.CBND.CoreMod.Systems.Physics;
-  using AtomicTorch.CBND.CoreMod.Systems.Weapons;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Special;
-  using AtomicTorch.CBND.CoreMod.Vehicles;
-  using AtomicTorch.CBND.GameApi;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Physics;
-  using AtomicTorch.CBND.GameApi.Data.Weapons;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.ServicesClient.Components;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
-  using System.Windows;
-  using System.Windows.Media;
+﻿using AtomicTorch.CBND.CoreMod.CharacterStatusEffects;
+using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Debuffs;
+using AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons;
+using AtomicTorch.CBND.CoreMod.Systems.Weapons;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Special;
+using AtomicTorch.CBND.CoreMod.Vehicles;
+using AtomicTorch.CBND.GameApi;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Physics;
+using AtomicTorch.CBND.GameApi.Data.Weapons;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.ServicesClient.Components;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+using System.Windows;
+using System.Windows.Media;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Explosives
+{
   public class ObjectMeteorExplosion : ProtoObjectExplosive
   {
     public override bool AllowNpcToNpcDamage => false;

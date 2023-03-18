@@ -1,9 +1,9 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Quests.Book
-{
-  using AtomicTorch.CBND.CoreMod.CraftRecipes;
-  using AtomicTorch.CBND.CoreMod.PlayerTasks;
-  using HardcoreDesert.Scripts.Quests.Base;
+﻿using AtomicTorch.CBND.CoreMod.CraftRecipes;
+using AtomicTorch.CBND.CoreMod.PlayerTasks;
+using HardcoreDesert.Scripts.Quests.Base;
 
+namespace AtomicTorch.CBND.CoreMod.Quests.Book
+{
   public class QuestBuildATeleporter : ProtoQuest
   {
     public override string Description => "Time to build a teleporter where you prefer!";

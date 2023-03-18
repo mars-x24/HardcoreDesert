@@ -1,7 +1,7 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Technologies.Tier5.EnergyWeapons
-{
-  using AtomicTorch.CBND.CoreMod.CraftRecipes;
+﻿using AtomicTorch.CBND.CoreMod.CraftRecipes;
 
+namespace AtomicTorch.CBND.CoreMod.Technologies.Tier5.EnergyWeapons
+{
   public class TechNodeLaserCannon : TechNode<TechGroupEnergyWeaponsT5>
   {
     protected override void PrepareTechNode(Config config)

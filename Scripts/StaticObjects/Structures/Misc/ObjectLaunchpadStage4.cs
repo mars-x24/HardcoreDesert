@@ -1,13 +1,13 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc
-{
-  using AtomicTorch.CBND.CoreMod.Items.Equipment;
-  using AtomicTorch.CBND.CoreMod.Items.Food;
-  using AtomicTorch.CBND.CoreMod.Items.Generic;
-  using AtomicTorch.CBND.CoreMod.Items.Medical;
-  using AtomicTorch.CBND.CoreMod.Systems;
-  using AtomicTorch.CBND.CoreMod.Systems.Construction;
-  using AtomicTorch.CBND.GameApi.Resources;
+﻿using AtomicTorch.CBND.CoreMod.Items.Equipment;
+using AtomicTorch.CBND.CoreMod.Items.Food;
+using AtomicTorch.CBND.CoreMod.Items.Generic;
+using AtomicTorch.CBND.CoreMod.Items.Medical;
+using AtomicTorch.CBND.CoreMod.Systems;
+using AtomicTorch.CBND.CoreMod.Systems.Construction;
+using AtomicTorch.CBND.GameApi.Resources;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc
+{
   public class ObjectLaunchpadStage4 : ProtoObjectLaunchpad
   {
     public const string TaskFuelTheRocket = "Fuel the rocket";

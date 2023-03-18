@@ -1,15 +1,15 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Characters.Mobs
-{
-  using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
-  using AtomicTorch.CBND.CoreMod.Items.Fishing;
-  using AtomicTorch.CBND.CoreMod.Items.Food;
-  using AtomicTorch.CBND.CoreMod.Items.Generic;
-  using AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons;
-  using AtomicTorch.CBND.CoreMod.Skills;
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.CoreMod.Stats;
-  using AtomicTorch.CBND.CoreMod.Systems.Droplists;
+﻿using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
+using AtomicTorch.CBND.CoreMod.Items.Fishing;
+using AtomicTorch.CBND.CoreMod.Items.Food;
+using AtomicTorch.CBND.CoreMod.Items.Generic;
+using AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons;
+using AtomicTorch.CBND.CoreMod.Skills;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.CoreMod.Stats;
+using AtomicTorch.CBND.CoreMod.Systems.Droplists;
 
+namespace AtomicTorch.CBND.CoreMod.Characters.Mobs
+{
   public class MobPragmiumBear : ProtoCharacterMob
   {
     public override bool AiIsRunAwayFromHeavyVehicles => false;

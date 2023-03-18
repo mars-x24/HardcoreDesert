@@ -1,13 +1,13 @@
-﻿namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Controls.SlotOverlays.Data
-{
-  using AtomicTorch.CBND.CoreMod.Items.Storage;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Crates;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using System.Windows.Media;
+﻿using AtomicTorch.CBND.CoreMod.Items.Storage;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Crates;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Scripting;
+using System.Windows.Media;
 
+namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Controls.SlotOverlays.Data
+{
   public class ViewModelItemStorageIcon : BaseViewModel
   {
     private ItemStoragePublicState publicState;

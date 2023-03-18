@@ -1,8 +1,8 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Characters.Player
-{
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
+﻿using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
 
+namespace AtomicTorch.CBND.CoreMod.Characters.Player
+{
   public static class PlayerCharacterItemsExtensions
   {
     public static void ClientInvalidateSkeletonRenderer(this ICharacter character)

@@ -11,7 +11,6 @@ using AtomicTorch.CBND.GameApi.Data.State;
 using AtomicTorch.CBND.GameApi.Resources;
 using AtomicTorch.CBND.GameApi.Scripting;
 using AtomicTorch.GameEngine.Common.Helpers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
@@ -53,7 +52,7 @@ namespace AtomicTorch.CBND.CoreMod.Items.Storage
     {
       controls.Add(ItemSlotStorageFridgeIconOverlayControl.Create(item));
 
-      base.ClientCreateItemSlotOverlayControls(item, controls);  
+      base.ClientCreateItemSlotOverlayControls(item, controls);
     }
 
     public virtual double GetCurrentFreshnessDurationMultiplier(ItemStorageFridgePublicState publicState)
@@ -189,7 +188,7 @@ namespace AtomicTorch.CBND.CoreMod.Items.Storage
       }
 
       // reduce durability proportionally to the removed charge, durability as int is dropping to fast
-      if(RandomHelper.Next(20) == 1)
+      if (RandomHelper.Next(20) == 1)
         ItemDurabilitySystem.ServerModifyDurability(item, -energyAmountUsed, true);
     }
 

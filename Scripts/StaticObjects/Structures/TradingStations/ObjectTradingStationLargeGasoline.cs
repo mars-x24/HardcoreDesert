@@ -1,17 +1,15 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.TradingStations
-{
-  using AtomicTorch.CBND.CoreMod.Items;
-  using AtomicTorch.CBND.CoreMod.Items.Generic;
-  using AtomicTorch.CBND.CoreMod.Rates;
-  using AtomicTorch.CBND.CoreMod.Systems.TradingStations;
-  using AtomicTorch.CBND.CoreMod.Systems.Weapons;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using JetBrains.Annotations;
-  using System;
+﻿using AtomicTorch.CBND.CoreMod.Items;
+using AtomicTorch.CBND.CoreMod.Items.Generic;
+using AtomicTorch.CBND.CoreMod.Rates;
+using AtomicTorch.CBND.CoreMod.Systems.Weapons;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Scripting;
+using JetBrains.Annotations;
+using System;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.TradingStations
+{
   public class ObjectTradingStationLargeGasoline : ObjectTradingStationLargeFridge
   {
     public override string Name => "Gasoline needed!";
@@ -115,7 +113,7 @@
 
     protected override void ServerOnStaticObjectDamageApplied(WeaponFinalCache weaponCache, IStaticWorldObject targetObject, float previousStructurePoints, float currentStructurePoints)
     {
-     
+
     }
 
     public override bool SharedOnDamage(WeaponFinalCache weaponCache, IStaticWorldObject targetObject, double damagePreMultiplier, out double obstacleBlockDamageCoef, out double damageApplied)
@@ -127,7 +125,7 @@
 
     protected override void ServerOnStaticObjectZeroStructurePoints([CanBeNull] WeaponFinalCache weaponCache, [CanBeNull] ICharacter byCharacter, [NotNull] IWorldObject targetObject)
     {
-      
+
     }
 
     public override void ServerOnDestroy(IStaticWorldObject gameObject)

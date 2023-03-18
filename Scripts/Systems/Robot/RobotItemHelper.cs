@@ -303,7 +303,7 @@ namespace HardcoreDesert.Scripts.Systems.Robot
       {
         list.Add(protoObjectGeneratorEngine.ManufacturingConfig);
       }
-      
+
       else if (this.currentTarget.ProtoGameObject is ProtoObjectSprinkler protoObjectSprinkler)
       {
         list.Add(protoObjectSprinkler.ManufacturingConfig);

@@ -1,19 +1,19 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Systems.Achievements
-{
-  using AtomicTorch.CBND.CoreMod.Achievements;
-  using AtomicTorch.CBND.CoreMod.Bootstrappers;
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.Helpers;
-  using AtomicTorch.CBND.GameApi.Data;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.State.NetSync;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.ServicesClient;
-  using AtomicTorch.GameEngine.Common.Extensions;
-  using System;
-  using System.Collections.Generic;
-  using System.Linq;
+﻿using AtomicTorch.CBND.CoreMod.Achievements;
+using AtomicTorch.CBND.CoreMod.Bootstrappers;
+using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.Helpers;
+using AtomicTorch.CBND.GameApi.Data;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.State.NetSync;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.ServicesClient;
+using AtomicTorch.GameEngine.Common.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
+namespace AtomicTorch.CBND.CoreMod.Systems.Achievements
+{
   [PrepareOrder(afterType: typeof(IProtoAchievement))]
   public class AchievementsSystem : ProtoSystem<AchievementsSystem>
   {

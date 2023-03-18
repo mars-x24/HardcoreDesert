@@ -1,21 +1,15 @@
-﻿namespace AtomicTorch.CBND.CoreMod.CraftRecipes
-{
-  using AtomicTorch.CBND.CoreMod.Characters;
-  using AtomicTorch.CBND.CoreMod.Helpers.Server;
-  using AtomicTorch.CBND.CoreMod.Items.Food;
-  using AtomicTorch.CBND.CoreMod.Items.Generic;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Manufacturers;
-  using AtomicTorch.CBND.CoreMod.Systems;
-  using AtomicTorch.CBND.CoreMod.Systems.Crafting;
-  using AtomicTorch.CBND.CoreMod.Systems.LandClaimShield;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
-  using System.Collections.Generic;
-  using System.Linq;
+﻿using AtomicTorch.CBND.CoreMod.Helpers.Server;
+using AtomicTorch.CBND.CoreMod.Items.Food;
+using AtomicTorch.CBND.CoreMod.Items.Generic;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Manufacturers;
+using AtomicTorch.CBND.CoreMod.Systems;
+using AtomicTorch.CBND.CoreMod.Systems.Crafting;
+using AtomicTorch.CBND.CoreMod.Systems.LandClaimShield;
+using AtomicTorch.CBND.GameApi.Data.World;
+using System;
 
+namespace AtomicTorch.CBND.CoreMod.CraftRecipes
+{
   public class RecipeKeiniteEnraged : Recipe.RecipeForManufacturing
   {
     protected override void SetupRecipe(

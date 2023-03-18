@@ -1,14 +1,14 @@
-﻿namespace HardcoreDesert.UI.Controls.Game.WorldObjects.Robot.Data
-{
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
-  using AtomicTorch.CBND.GameApi.Extensions;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using System;
-  using System.Threading.Tasks;
-  using System.Windows.Media;
+﻿using AtomicTorch.CBND.CoreMod.StaticObjects.Structures;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
+using AtomicTorch.CBND.GameApi.Extensions;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.Scripting;
+using System;
+using System.Threading.Tasks;
+using System.Windows.Media;
 
+namespace HardcoreDesert.UI.Controls.Game.WorldObjects.Robot.Data
+{
   public class ViewModelManufacturerEntity : BaseViewModel
   {
     private ITextureResource icon;

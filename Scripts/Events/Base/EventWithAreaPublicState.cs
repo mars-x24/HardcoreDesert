@@ -1,9 +1,9 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Events
-{
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.State.NetSync;
-  using AtomicTorch.GameEngine.Common.Primitives;
+﻿using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.State.NetSync;
+using AtomicTorch.GameEngine.Common.Primitives;
 
+namespace AtomicTorch.CBND.CoreMod.Events
+{
   public class EventWithAreaPublicState : EventPublicState
   {
     [SyncToClient]

@@ -1,27 +1,27 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Characters
-{
-  using System;
-  using System.Collections.Generic;
-  using System.Linq;
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.Characters.Turrets;
-  using AtomicTorch.CBND.CoreMod.Items.Weapons;
-  using AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons;
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
-  using AtomicTorch.CBND.CoreMod.Systems.Physics;
-  using AtomicTorch.CBND.CoreMod.Systems.Weapons;
-  using AtomicTorch.CBND.CoreMod.Vehicles;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Physics;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Extensions;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.ServicesServer;
-  using AtomicTorch.GameEngine.Common.Helpers;
-  using AtomicTorch.GameEngine.Common.Primitives;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.Characters.Turrets;
+using AtomicTorch.CBND.CoreMod.Items.Weapons;
+using AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
+using AtomicTorch.CBND.CoreMod.Systems.Physics;
+using AtomicTorch.CBND.CoreMod.Systems.Weapons;
+using AtomicTorch.CBND.CoreMod.Vehicles;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Physics;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Extensions;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.ServicesServer;
+using AtomicTorch.GameEngine.Common.Helpers;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
+namespace AtomicTorch.CBND.CoreMod.Characters
+{
   public static class ServerEnragedAiHelper
   {
     private static readonly IWorldServerService ServerWorldService
@@ -393,7 +393,7 @@
 
       if (targetStructure is null || targetStructure.IsDestroyed)
       {
-        if(privateState.GoalTargetStructure is not null && !privateState.GoalTargetStructure.IsDestroyed)
+        if (privateState.GoalTargetStructure is not null && !privateState.GoalTargetStructure.IsDestroyed)
           targetStructure = privateState.GoalTargetStructure;
         else
           targetStructure = ServerEnragedAiHelper.GetClosestTargetStructure(characterNpc);
@@ -411,9 +411,9 @@
         privateState.GoalTargetTimer = secondsBeforeTryingGoalTarget + RandomHelper.Next(10);
 
       bool attackGoal = (privateState.GoalTargetTimer > secondsBeforeTryingGoalTarget - secondsToAttackGoalTarget)
-                        && privateState.GoalTargetStructure is not null && 
-                        (!privateState.FirstRunOnGoalDone 
-                        || (privateState.GoalTargetStructure.ProtoStaticWorldObject is not ProtoObjectLandClaim && !privateState.GoalTargetStructure.IsDestroyed) 
+                        && privateState.GoalTargetStructure is not null &&
+                        (!privateState.FirstRunOnGoalDone
+                        || (privateState.GoalTargetStructure.ProtoStaticWorldObject is not ProtoObjectLandClaim && !privateState.GoalTargetStructure.IsDestroyed)
                         || !IsLandClaimToBeDestroyed(privateState.GoalTargetStructure));
       if (attackGoal)
       {

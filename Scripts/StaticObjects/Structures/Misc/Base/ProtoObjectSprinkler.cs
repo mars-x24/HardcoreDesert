@@ -1,32 +1,32 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc
-{
-  using AtomicTorch.CBND.CoreMod.CraftRecipes.Sprinkler;
-  using AtomicTorch.CBND.CoreMod.ItemContainers;
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Vegetation.Plants;
-  using AtomicTorch.CBND.CoreMod.Systems.Construction;
-  using AtomicTorch.CBND.CoreMod.Systems.Crafting;
-  using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
-  using AtomicTorch.CBND.CoreMod.Systems.Notifications;
-  using AtomicTorch.CBND.CoreMod.Systems.PowerGridSystem;
-  using AtomicTorch.CBND.CoreMod.Systems.Watering;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Data;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.Scripting.Network;
-  using AtomicTorch.GameEngine.Common.Extensions;
-  using AtomicTorch.GameEngine.Common.Helpers;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
-  using System.Collections.Generic;
-  using System.Windows.Media;
-  using System.Windows.Shapes;
+﻿using AtomicTorch.CBND.CoreMod.CraftRecipes.Sprinkler;
+using AtomicTorch.CBND.CoreMod.ItemContainers;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Vegetation.Plants;
+using AtomicTorch.CBND.CoreMod.Systems.Construction;
+using AtomicTorch.CBND.CoreMod.Systems.Crafting;
+using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
+using AtomicTorch.CBND.CoreMod.Systems.Notifications;
+using AtomicTorch.CBND.CoreMod.Systems.PowerGridSystem;
+using AtomicTorch.CBND.CoreMod.Systems.Watering;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Data;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.Scripting.Network;
+using AtomicTorch.GameEngine.Common.Extensions;
+using AtomicTorch.GameEngine.Common.Helpers;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+using System.Collections.Generic;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc
+{
   public abstract class ProtoObjectSprinkler
         : ProtoObjectStructure
           <ProtoObjectSprinkler.PrivateState,

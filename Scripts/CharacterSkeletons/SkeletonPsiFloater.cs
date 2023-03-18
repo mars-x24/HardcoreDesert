@@ -1,14 +1,14 @@
-﻿namespace AtomicTorch.CBND.CoreMod.CharacterSkeletons
-{
-  using AtomicTorch.CBND.CoreMod.Helpers.Primitives;
-  using AtomicTorch.CBND.CoreMod.Systems.Physics;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Physics;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.ServicesClient.Components;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System.Windows.Media;
+﻿using AtomicTorch.CBND.CoreMod.Helpers.Primitives;
+using AtomicTorch.CBND.CoreMod.Systems.Physics;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Physics;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.ServicesClient.Components;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System.Windows.Media;
 
+namespace AtomicTorch.CBND.CoreMod.CharacterSkeletons
+{
   public class SkeletonPsiFloater : ProtoCharacterSkeletonAnimal
   {
     public override double DefaultMoveSpeed => 1.5;

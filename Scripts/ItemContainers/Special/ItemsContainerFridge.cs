@@ -1,12 +1,12 @@
-﻿namespace AtomicTorch.CBND.CoreMod.ItemContainers
-{
-  using AtomicTorch.CBND.CoreMod.Items.Devices;
-  using AtomicTorch.CBND.CoreMod.Items.Storage;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Fridges;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.TradingStations;
-  using AtomicTorch.CBND.GameApi.Data;
-  using AtomicTorch.CBND.GameApi.Data.Items;
+﻿using AtomicTorch.CBND.CoreMod.Items.Devices;
+using AtomicTorch.CBND.CoreMod.Items.Storage;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Fridges;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.TradingStations;
+using AtomicTorch.CBND.GameApi.Data;
+using AtomicTorch.CBND.GameApi.Data.Items;
 
+namespace AtomicTorch.CBND.CoreMod.ItemContainers
+{
   public class ItemsContainerFridge : ItemsContainerDefault, IProtoItemsContainerFridge
   {
     public override bool CanAddItem(CanAddItemContext context)

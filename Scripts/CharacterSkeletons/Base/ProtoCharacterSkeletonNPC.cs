@@ -1,7 +1,7 @@
-﻿namespace AtomicTorch.CBND.CoreMod.CharacterSkeletons
-{
-  using AtomicTorch.CBND.GameApi.ServicesClient.Components;
+﻿using AtomicTorch.CBND.GameApi.ServicesClient.Components;
 
+namespace AtomicTorch.CBND.CoreMod.CharacterSkeletons
+{
   public abstract class ProtoCharacterSkeletonNPC : ProtoCharacterSkeletonAnimalNPC
   {
 

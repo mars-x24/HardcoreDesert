@@ -1,10 +1,10 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Quests.Book
-{
-  using AtomicTorch.CBND.CoreMod.Characters.Mobs;
-  using AtomicTorch.CBND.CoreMod.PlayerTasks;
-  using AtomicTorch.CBND.CoreMod.Quests.Tutorial;
-  using HardcoreDesert.Scripts.Quests.Base;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Mobs;
+using AtomicTorch.CBND.CoreMod.PlayerTasks;
+using AtomicTorch.CBND.CoreMod.Quests.Tutorial;
+using HardcoreDesert.Scripts.Quests.Base;
 
+namespace AtomicTorch.CBND.CoreMod.Quests.Book
+{
   public class QuestKillEnragedMobs : ProtoQuest
   {
     public override string Description => "Protect your base against enraged mutants.";

@@ -1,36 +1,36 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Characters.Mobs
-{
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
-  using AtomicTorch.CBND.CoreMod.Events;
-  using AtomicTorch.CBND.CoreMod.Items.Ammo;
-  using AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons;
-  using AtomicTorch.CBND.CoreMod.Rates;
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Minerals;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Misc;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Props.Alien;
-  using AtomicTorch.CBND.CoreMod.Stats;
-  using AtomicTorch.CBND.CoreMod.Systems.BossLootSystem;
-  using AtomicTorch.CBND.CoreMod.Systems.Droplists;
-  using AtomicTorch.CBND.CoreMod.Systems.NewbieProtection;
-  using AtomicTorch.CBND.CoreMod.Systems.Physics;
-  using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
-  using AtomicTorch.CBND.CoreMod.Systems.Weapons;
-  using AtomicTorch.CBND.CoreMod.Systems.WorldDiscovery;
-  using AtomicTorch.CBND.CoreMod.Zones;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.GameEngine.Common.Helpers;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
-  using System.Collections.Generic;
-  using System.Linq;
-  using static AtomicTorch.CBND.CoreMod.Systems.BossLootSystem.ServerBossLootSystem;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
+using AtomicTorch.CBND.CoreMod.Events;
+using AtomicTorch.CBND.CoreMod.Items.Ammo;
+using AtomicTorch.CBND.CoreMod.Items.Weapons.MobWeapons;
+using AtomicTorch.CBND.CoreMod.Rates;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Minerals;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Misc;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Props.Alien;
+using AtomicTorch.CBND.CoreMod.Stats;
+using AtomicTorch.CBND.CoreMod.Systems.BossLootSystem;
+using AtomicTorch.CBND.CoreMod.Systems.Droplists;
+using AtomicTorch.CBND.CoreMod.Systems.NewbieProtection;
+using AtomicTorch.CBND.CoreMod.Systems.Physics;
+using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
+using AtomicTorch.CBND.CoreMod.Systems.Weapons;
+using AtomicTorch.CBND.CoreMod.Systems.WorldDiscovery;
+using AtomicTorch.CBND.CoreMod.Zones;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.GameEngine.Common.Helpers;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using static AtomicTorch.CBND.CoreMod.Systems.BossLootSystem.ServerBossLootSystem;
 
+namespace AtomicTorch.CBND.CoreMod.Characters.Mobs
+{
   public class MobBossPragmiumKing
       : ProtoCharacterMob
         <MobBossPragmiumKing.PrivateState,
@@ -193,7 +193,11 @@
 
                     this.SpawnSalt(bossPosition.ToVector2Ushort(), 150.0);
 
-                    SpawnTeleport(winners);
+                    var characters = new List<ICharacter>();
+                    if (winners != null)
+                      characters.AddRange(winners.Select(w => w.Character));
+
+                    SpawnTeleport(characters);
                   }
                 });
 
@@ -254,30 +258,32 @@
       }
     }
 
-    public static int SpawnTeleport(List<WinnerEntry> winners)
+    public static int SpawnTeleport(List<ICharacter> characters)
     {
       int nb = 0;
 
       var teleports = Server.World.GetStaticWorldObjectsOfProto<ObjectPropAlienTeleportPragmiumKing>();
       foreach (var teleport in teleports)
       {
-        var tilePosition = teleport.TilePosition;
-        Server.World.DestroyObject(teleport);
-        var newTeleport = Server.World.CreateStaticWorldObject<ObjectAlienTeleport>(tilePosition);
-
-        nb++;
-
-        if (newTeleport is null)
-          continue;
-
-        if (winners is null)
-          continue;
-
-        foreach (var winner in winners)
+        try
         {
-          WorldDiscoverySystem.Instance.ServerDiscoverWorldChunks(
-            winner.Character,
-            newTeleport.OccupiedTilePositions.ToList());
+          if (characters != null)
+          {
+            foreach (var character in characters)
+            {
+              WorldDiscoverySystem.Instance.ServerDiscoverWorldChunks(
+                character,
+                teleport.OccupiedTilePositions.ToList());
+            }
+          }
+        }
+        finally
+        {
+          var tilePosition = teleport.TilePosition;
+          Server.World.DestroyObject(teleport);
+          var newTeleport = Server.World.CreateStaticWorldObject<ObjectAlienTeleport>(tilePosition);
+
+          nb++;
         }
       }
 

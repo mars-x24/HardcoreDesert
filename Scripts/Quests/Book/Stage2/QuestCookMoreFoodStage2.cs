@@ -1,12 +1,12 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Quests.Book
-{
-  using AtomicTorch.CBND.CoreMod.Items.Food;
-  using AtomicTorch.CBND.CoreMod.PlayerTasks;
-  using AtomicTorch.CBND.CoreMod.Quests.Tutorial;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using HardcoreDesert.Scripts.Quests.Base;
-  using System.Collections.Generic;
+﻿using AtomicTorch.CBND.CoreMod.Items.Food;
+using AtomicTorch.CBND.CoreMod.PlayerTasks;
+using AtomicTorch.CBND.CoreMod.Quests.Tutorial;
+using AtomicTorch.CBND.GameApi.Scripting;
+using HardcoreDesert.Scripts.Quests.Base;
+using System.Collections.Generic;
 
+namespace AtomicTorch.CBND.CoreMod.Quests.Book
+{
   public class QuestCookMoreFoodStage2 : ProtoQuest
   {
     public override string Description =>
@@ -21,7 +21,7 @@
     protected override void PrepareQuest(QuestsList prerequisites, TasksList tasks, HintsList hints)
     {
       var task = new TaskManufactureItem(GetList(), count: 100, description: this.Name);
-      
+
       tasks
           .Add(task);
 

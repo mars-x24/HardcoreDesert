@@ -1,9 +1,9 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Fishing
-{
-  using AtomicTorch.CBND.CoreMod.Items.Fishing.Base;
-  using AtomicTorch.CBND.CoreMod.Items.Generic;
-  using System;
+﻿using AtomicTorch.CBND.CoreMod.Items.Fishing.Base;
+using AtomicTorch.CBND.CoreMod.Items.Generic;
+using System;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Fishing
+{
   public class ItemFishingPragmiumBaitMix : ProtoItemFishingBait, IProtoItemOrganic
   {
     public override string Description =>

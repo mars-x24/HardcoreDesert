@@ -1,17 +1,17 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Systems.LandClaim
-{
-  using AtomicTorch.CBND.CoreMod.ClientComponents.Input;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
-  using AtomicTorch.CBND.CoreMod.Systems.Construction;
-  using AtomicTorch.CBND.GameApi.Data.Logic;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.ServicesClient;
-  using AtomicTorch.CBND.GameApi.ServicesClient.Components;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
-  using System.Collections.Generic;
+﻿using AtomicTorch.CBND.CoreMod.ClientComponents.Input;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
+using AtomicTorch.CBND.CoreMod.Systems.Construction;
+using AtomicTorch.CBND.GameApi.Data.Logic;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.ServicesClient;
+using AtomicTorch.CBND.GameApi.ServicesClient.Components;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+using System.Collections.Generic;
 
+namespace AtomicTorch.CBND.CoreMod.Systems.LandClaim
+{
   public static class ClientLandClaimAreaManager
   {
     private static readonly ClientLandClaimGroupsRendererManager RendererManagerGraceAreas;
@@ -125,8 +125,8 @@
           o => o.LandClaimAreasGroup,
           _ =>
           {
-                  //Api.Logger.Dev($"Received LandClaimAreasGroup changed: {newValue} for {area}");
-                  OnAreaModified(area);
+            //Api.Logger.Dev($"Received LandClaimAreasGroup changed: {newValue} for {area}");
+            OnAreaModified(area);
           },
           stateSubscriptionStorage);
 

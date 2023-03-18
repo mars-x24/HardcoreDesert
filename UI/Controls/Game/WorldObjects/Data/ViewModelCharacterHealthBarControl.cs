@@ -1,10 +1,10 @@
-﻿namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Data
-{
-  using AtomicTorch.CBND.CoreMod.Characters;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.HUD.Data;
-  using AtomicTorch.CBND.GameApi.Data.State;
+﻿using AtomicTorch.CBND.CoreMod.Characters;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.HUD.Data;
+using AtomicTorch.CBND.GameApi.Data.State;
 
+namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Data
+{
   public class ViewModelCharacterHealthBarControl : BaseViewModel
   {
     public string LevelString => "Level " + this.Level.ToString();// + " H:" + this.characterCurrentStats.HealthCurrent.ToString();

@@ -1,10 +1,10 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Fishing.Base
-{
-  using AtomicTorch.CBND.CoreMod.Items.Generic;
-  using AtomicTorch.CBND.CoreMod.Systems.Droplists;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.GameEngine.Common.Primitives;
+﻿using AtomicTorch.CBND.CoreMod.Items.Generic;
+using AtomicTorch.CBND.CoreMod.Systems.Droplists;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.GameEngine.Common.Primitives;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Fishing.Base
+{
   public interface IProtoItemFish : IProtoItemUsableFromContainer
   {
     FishingBaitWeightReadOnlyList BaitWeightList { get; }

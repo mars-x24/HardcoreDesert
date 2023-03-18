@@ -1,11 +1,11 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Quests.Book
-{
-  using AtomicTorch.CBND.CoreMod.Items.Food;
-  using AtomicTorch.CBND.CoreMod.PlayerTasks;
-  using AtomicTorch.CBND.CoreMod.Quests.Tutorial;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Vegetation.SmallGatherables;
-  using HardcoreDesert.Scripts.Quests.Base;
+﻿using AtomicTorch.CBND.CoreMod.Items.Food;
+using AtomicTorch.CBND.CoreMod.PlayerTasks;
+using AtomicTorch.CBND.CoreMod.Quests.Tutorial;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Vegetation.SmallGatherables;
+using HardcoreDesert.Scripts.Quests.Base;
 
+namespace AtomicTorch.CBND.CoreMod.Quests.Book
+{
   public class QuestCookMoreMushrooms : ProtoQuest
   {
     public override string Description =>

@@ -1,79 +1,85 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Tiles
+﻿using AtomicTorch.CBND.CoreMod.ClientComponents.Rendering.Lighting;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.Scripting;
+using System.Windows.Media;
+
+namespace AtomicTorch.CBND.CoreMod.Tiles
 {
-    using System.Windows.Media;
-    using AtomicTorch.CBND.CoreMod.ClientComponents.Rendering.Lighting;
-    using AtomicTorch.CBND.CoreMod.SoundPresets;
-    using AtomicTorch.CBND.GameApi.Data.World;
-    using AtomicTorch.CBND.GameApi.Resources;
-    using AtomicTorch.CBND.GameApi.Scripting;
+  public class TileIce : ProtoTileWater
+  {
+    public override byte BlendOrder => 210;
 
-    public class TileIce : ProtoTileWater
-    {
-        public override byte BlendOrder => byte.MaxValue;
+    public override IProtoTileWater BridgeProtoTile => null;
 
-        public override IProtoTileWater BridgeProtoTile => null;
+    public override bool CanCollect => false;
 
-        public override bool CanCollect => false;
+    public override GroundSoundMaterial GroundSoundMaterial => GroundSoundMaterial.Mud;
 
-        public override GroundSoundMaterial GroundSoundMaterial => GroundSoundMaterial.Mud;
+    public override bool IsFishingAllowed => false;
 
-        public override bool IsFishingAllowed => false;
+    public override string Name => "Ice";
 
-        public override string Name => "Ice";
+    // used for blending only (if ice on the same height level which is not intended)
+    public override TextureResource UnderwaterGroundTextureAtlas { get; }
+        = new("Terrain/Ice/TileIce1.jpg",
+              isTransparent: false);
 
-        // used for blending only (if ice on the same height level which is not intended)
-        public override TextureResource UnderwaterGroundTextureAtlas { get; }
-            = new("Terrain/Snow/TileSnow1.jpg",
-                  isTransparent: false);
+    public override TextureAtlasResource CliffAtlas { get; }
+    = new("Terrain/Cliffs/TerrainCliffsSnow.png",
+        columns: 6,
+        rows: 4,
+        isTransparent: true);
 
-        public override string WorldMapTexturePath
+    public override string WorldMapTexturePath
             => "Map/Ice.png";
 
-        protected override ITextureResource TextureWaterWorldPlaceholder { get; }
-            = new TextureResource("Terrain/Ice/TileIcePlaceholder",
-                                  isTransparent: false);
+    protected override ITextureResource TextureWaterWorldPlaceholder { get; }
+        = new TextureResource("Terrain/Ice/TileIcePlaceholder",
+                              isTransparent: false);
 
-        protected override float WaterAmplitude => 0.02f;
+    protected override float WaterAmplitude => 0.02f;
 
-        protected override Color WaterColor => Color.FromArgb(255, 255, 255, 255);
+    protected override Color WaterColor => Color.FromArgb(255, 255, 255, 255);
 
-        protected override float WaterColorMix => 0;
+    protected override float WaterColorMix => 0;
 
-        protected override float WaterDiffractionFrequency => 4.0f;
+    protected override float WaterDiffractionFrequency => 4.0f;
 
-        protected override float WaterDiffractionSpeed => 0.22f;
+    protected override float WaterDiffractionSpeed => 0.22f;
 
-        protected override float WaterSpeed => 0.3f;
+    protected override float WaterSpeed => 0.3f;
 
-        protected override TextureResource WaterSufraceTexture { get; }
-            = new("Terrain/Ice/TileIce1.jpg");
+    protected override TextureResource WaterSufraceTexture { get; }
+        = new("Terrain/Ice/TileIce1.jpg");
 
-        protected override ITextureResource ClientSetupTileRendering(Tile tile, IClientSceneObject sceneObject)
-        {
-            var position = tile.Position;
-            if (position.X % 2 == 0
-                && position.Y % 2 == 0)
-            {
-                // add light source
-                ClientLighting.CreateLightSourceSpot(
-                    sceneObject,
-                    color: LightColors.Ice,
-                    size: (12, 12 * 1.5),
-                    positionOffset: (0.5, 0.5));
-            }
+    protected override ITextureResource ClientSetupTileRendering(Tile tile, IClientSceneObject sceneObject)
+    {
+      var position = tile.Position;
+      if (position.X % 2 == 0
+          && position.Y % 2 == 0)
+      {
+        // add light source
+        ClientLighting.CreateLightSourceSpot(
+            sceneObject,
+            color: LightColors.Ice,
+            size: (12, 12 * 1.5),
+            positionOffset: (0.5, 0.5));
+      }
 
-            return base.ClientSetupTileRendering(tile, sceneObject);
-        }
-
-        protected override void PrepareProtoTile(Settings settings)
-        {
-            base.PrepareProtoTile(settings);
-
-            settings.AmbientSoundProvider = new TileAmbientSoundProvider(
-                new AmbientSoundPreset(new SoundResource("Ambient/wind"),
-                                       suppressionCoef: 1,
-                                       isSupressingMusic: true,
-                                       isUsingAmbientVolume: false));
-        }
+      return base.ClientSetupTileRendering(tile, sceneObject);
     }
+
+    protected override void PrepareProtoTile(Settings settings)
+    {
+      base.PrepareProtoTile(settings);
+
+      settings.AmbientSoundProvider = new TileAmbientSoundProvider(
+          new AmbientSoundPreset(new SoundResource("Ambient/wind"),
+                                 suppressionCoef: 1,
+                                 isSupressingMusic: true,
+                                 isUsingAmbientVolume: false));
+    }
+  }
 }

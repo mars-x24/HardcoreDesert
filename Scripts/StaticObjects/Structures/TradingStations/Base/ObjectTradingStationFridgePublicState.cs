@@ -1,8 +1,8 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.TradingStations
-{
-  using AtomicTorch.CBND.CoreMod.Systems.PowerGridSystem;
-  using AtomicTorch.CBND.GameApi.Data.State;
+﻿using AtomicTorch.CBND.CoreMod.Systems.PowerGridSystem;
+using AtomicTorch.CBND.GameApi.Data.State;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.TradingStations
+{
   public class ObjectTradingStationFridgePublicState : ObjectTradingStationPublicState, IObjectElectricityConsumerPublicState
   {
     [SyncToClient]

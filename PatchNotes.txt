@@ -14,9 +14,21 @@ WreckedHoverboardChance: A chance to get wrecked hoverboard in garbage pile (1 /
 VehicleBackupWeaponEnabled : You can deactivate backup weapon on mech
 RateGasolineCanisterTradePrice : Price for gasoline in ObjectTradingStationLargeGasoline
 RateSeedTradePrice : Price for seeds in ObjectTradingStationLargeSeed
+RateMobLevelsProbability : Each time a mob spawn, a random index is taken from this list : 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,3,3,3,3,4,4,5
+RateBlockWaterTileNumber : The number of tile blocked around the world, make sure to set it before the first server start.
+RateGrandTheftAuto : Set to 1 to take any vehicle.
+RateHoverWaterEnabled : Set to 0 if you don't want the hovercraft vehicle over the water.
+
 
 Changes
 -------
+
+1.70.0
+
+Added server settings : RateMobLevelsProbability, RateBlockWaterTileNumber, RateGrandTheftAuto, RateHoverWaterEnabled
+New end game vehicle : Hovercraft Mk1
+Lost crate on water
+Changes to King's death teleport spawn function
 
 1.69.0
 Using v.1.33.1.15 map

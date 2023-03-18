@@ -1,14 +1,12 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Props.Misc
-{
-  using AtomicTorch.CBND.CoreMod.ClientComponents.Rendering;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.CoreMod.Systems.Physics;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.ServicesClient.Components;
-  using System;
-  using System.Linq;
+﻿using AtomicTorch.CBND.CoreMod.ClientComponents.Rendering;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.ServicesClient.Components;
+using System;
+using System.Linq;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Props.Misc
+{
   public class ObjectPropWaterfall : ProtoObjectProp
   {
     private static readonly SoundResource SoundResourceActive
@@ -20,14 +18,14 @@
     {
       layout.Setup("####",
                    "####",
-				   "####");
+           "####");
     }
 
     protected override void SharedCreatePhysics(CreatePhysicsData data)
     {
-        data.PhysicsBody
-            .AddShapeRectangle(size: (2.0, 3.0),
-                               offset: (1, 0));
+      data.PhysicsBody
+          .AddShapeRectangle(size: (2.0, 3.0),
+                             offset: (1, 0));
     }
 
     public override StaticObjectKind Kind => StaticObjectKind.Platform;

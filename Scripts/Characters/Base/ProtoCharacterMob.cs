@@ -1,34 +1,34 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Characters
-{
-  using AtomicTorch.CBND.CoreMod.Characters.Input;
-  using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
-  using AtomicTorch.CBND.CoreMod.Helpers.Client;
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Loot;
-  using AtomicTorch.CBND.CoreMod.Stats;
-  using AtomicTorch.CBND.CoreMod.Systems.Droplists;
-  using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
-  using AtomicTorch.CBND.CoreMod.Systems.TeleportsSystem;
-  using AtomicTorch.CBND.CoreMod.Systems.Weapons;
-  using AtomicTorch.CBND.CoreMod.Tiles;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Character;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.SoundCue;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Extensions;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.Scripting.Network;
-  using AtomicTorch.CBND.GameApi.ServicesServer;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using JetBrains.Annotations;
-  using System;
-  using System.Collections.Generic;
-  using System.Diagnostics.CodeAnalysis;
-  using System.Runtime.CompilerServices;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Input;
+using AtomicTorch.CBND.CoreMod.CharacterSkeletons;
+using AtomicTorch.CBND.CoreMod.Helpers.Client;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Loot;
+using AtomicTorch.CBND.CoreMod.Stats;
+using AtomicTorch.CBND.CoreMod.Systems.Droplists;
+using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
+using AtomicTorch.CBND.CoreMod.Systems.TeleportsSystem;
+using AtomicTorch.CBND.CoreMod.Systems.Weapons;
+using AtomicTorch.CBND.CoreMod.Tiles;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Character;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.SoundCue;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Extensions;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.Scripting.Network;
+using AtomicTorch.CBND.GameApi.ServicesServer;
+using AtomicTorch.GameEngine.Common.Primitives;
+using JetBrains.Annotations;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
+namespace AtomicTorch.CBND.CoreMod.Characters
+{
   public abstract class ProtoCharacterMob
       <TPrivateState,
        TPublicState,
@@ -518,6 +518,7 @@
 
       this.ServerRebuildFinalCacheIfNeeded(privateState, publicState);
 
+      ServerUpdateRetreatState(privateState, data.DeltaTime);
       ServerUpdateAggroState(privateState, data.DeltaTime);
       this.ServerUpdateMob(data);
       this.ServerUpdateMobDespawn(character, privateState, data.DeltaTime);
@@ -643,6 +644,23 @@
       scale = this.protoSkeletonScale;
     }
 
+    private static void ServerUpdateRetreatState(TPrivateState privateState, double deltaTime)
+    {
+      if (privateState.RetreatingTimeRemains <= 0)
+      {
+        return;
+      }
+
+      var newRetreat= privateState.RetreatingTimeRemains - deltaTime;
+      if (newRetreat <= 0)
+      {
+        // reset 
+        newRetreat = 0;
+      }
+
+      privateState.RetreatingTimeRemains = newRetreat;
+    }
+
     private static void ServerUpdateAggroState(TPrivateState privateState, double deltaTime)
     {
       if (privateState.CurrentAggroTimeRemains <= 0)
@@ -716,7 +734,7 @@
       this.ServerForceBuildFinalStatsCache(privateState, publicState);
     }
 
-    
+
 
     private void ServerUpdateMobDespawnWithParent(ICharacter characterMob, TPrivateState privateState)
     {

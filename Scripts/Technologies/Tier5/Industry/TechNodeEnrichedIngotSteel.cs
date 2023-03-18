@@ -1,7 +1,7 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Technologies.Tier5.Industry
-{
-  using AtomicTorch.CBND.CoreMod.CraftRecipes;
+﻿using AtomicTorch.CBND.CoreMod.CraftRecipes;
 
+namespace AtomicTorch.CBND.CoreMod.Technologies.Tier5.Industry
+{
   public class TechNodeEnrichedIngotSteel : TechNode<TechGroupIndustryT5>
   {
     protected override void PrepareTechNode(Config config)

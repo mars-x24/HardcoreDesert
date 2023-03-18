@@ -1,20 +1,20 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Robots
-{
-  using AtomicTorch.CBND.CoreMod.Robots;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Crates;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
-  using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.Logic;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.ServicesClient.Components;
-  using System.Threading.Tasks;
-  using System.Windows.Media;
+﻿using AtomicTorch.CBND.CoreMod.Robots;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Crates;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
+using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.Logic;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.ServicesClient.Components;
+using System.Threading.Tasks;
+using System.Windows.Media;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Robots
+{
   public class ItemRobotReservedSlot
         : ProtoItem
             <ItemPrivateState,

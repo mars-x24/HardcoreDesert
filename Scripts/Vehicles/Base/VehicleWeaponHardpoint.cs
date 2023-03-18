@@ -1,7 +1,7 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Vehicles
-{
-  using System.ComponentModel;
+﻿using System.ComponentModel;
 
+namespace AtomicTorch.CBND.CoreMod.Vehicles
+{
   public enum VehicleWeaponHardpoint : byte
   {
     [Description("Normal")]
@@ -15,5 +15,5 @@
 
     [Description("Exotic")]
     Exotic
-    }
+  }
 }

@@ -1,19 +1,19 @@
-﻿namespace HardcoreDesert.UI.Controls.Game.WorldObjects.Robot.Data
-{
-  using AtomicTorch.CBND.CoreMod.Items.Robots;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Barrels;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Manufacturers;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Controls.Tooltips.Data;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using HardcoreDesert.Scripts.Systems.Robot;
-  using System.Collections.Generic;
-  using System.Collections.ObjectModel;
+﻿using AtomicTorch.CBND.CoreMod.Items.Robots;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Barrels;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Manufacturers;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Controls.Tooltips.Data;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Scripting;
+using HardcoreDesert.Scripts.Systems.Robot;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
+namespace HardcoreDesert.UI.Controls.Game.WorldObjects.Robot.Data
+{
   public class ViewModelWindowItemRobot : BaseViewModel
   {
     private readonly IItem itemRobot;

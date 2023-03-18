@@ -1,8 +1,8 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Zones
-{
-  using AtomicTorch.CBND.CoreMod.Systems.PvE;
-  using AtomicTorch.CBND.GameApi;
+﻿using AtomicTorch.CBND.CoreMod.Systems.PvE;
+using AtomicTorch.CBND.GameApi;
 
+namespace AtomicTorch.CBND.CoreMod.Zones
+{
   public class ZoneBorealForest : ProtoZoneDefault
   {
     [NotLocalizable]

@@ -1,11 +1,11 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Weapons.Vehicle
-{
-  using AtomicTorch.CBND.CoreMod.Skills;
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.CoreMod.Vehicles;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Weapons;
+﻿using AtomicTorch.CBND.CoreMod.Skills;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.CoreMod.Vehicles;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Weapons;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Weapons.Vehicle
+{
   public class ItemVehicleCustomCannonEnergy : ProtoItemVehicleEnergyWeapon
   {
     public override double CharacterAnimationAimingRecoilDuration => 0.45;

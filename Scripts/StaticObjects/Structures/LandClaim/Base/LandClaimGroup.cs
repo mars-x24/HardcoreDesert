@@ -1,18 +1,18 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim
-{
-  using AtomicTorch.CBND.CoreMod.ItemContainers;
-  using AtomicTorch.CBND.GameApi;
-  using AtomicTorch.CBND.GameApi.Data;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Logic;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using System;
-  using System.Linq;
-  using System.Collections.Generic;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
+﻿using AtomicTorch.CBND.CoreMod.ItemContainers;
+using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
+using AtomicTorch.CBND.GameApi;
+using AtomicTorch.CBND.GameApi.Data;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Logic;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Scripting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim
+{
   [PrepareOrder(typeof(LandClaimArea))]
   public class LandClaimGroup
         : ProtoGameObject<ILogicObject,
@@ -80,7 +80,7 @@
           if (areaGroups is null)
             continue;
 
-          if(areaGroups.Contains(areasGroupFrom))
+          if (areaGroups.Contains(areasGroupFrom))
           {
             areaGroups.Remove(areasGroupFrom);
             foreach (var newAreaGroup in newAreaGroups)
@@ -119,13 +119,13 @@
         if (groupPrivateState is null || groupPrivateState.ServerLandClaimAreasGroups is null)
           continue;
 
-        if(!string.IsNullOrEmpty(factionClanTag) && groupPrivateState.FactionClanTag == factionClanTag)
+        if (!string.IsNullOrEmpty(factionClanTag) && groupPrivateState.FactionClanTag == factionClanTag)
         {
           groupFound = group;
           break;
         }
 
-        if(groupPrivateState.owners is not null && groupPrivateState.owners.Intersect(owners).Any())
+        if (groupPrivateState.owners is not null && groupPrivateState.owners.Intersect(owners).Any())
         {
           groupFound = group;
           break;
@@ -158,7 +158,7 @@
 
       if (groupFound is null)
       {
-        groupFound = Api.Server.World.CreateLogicObject<LandClaimGroup>();  
+        groupFound = Api.Server.World.CreateLogicObject<LandClaimGroup>();
       }
 
       var groupFoundPrivateState = LandClaimGroup.GetPrivateState(groupFound);

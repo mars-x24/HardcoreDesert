@@ -1,7 +1,7 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Zones
-{
-  using AtomicTorch.CBND.GameApi;
+﻿using AtomicTorch.CBND.GameApi;
 
+namespace AtomicTorch.CBND.CoreMod.Zones
+{
   public class ZoneSnowMountain : ProtoZoneDefault
   {
     [NotLocalizable]

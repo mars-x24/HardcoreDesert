@@ -1,7 +1,7 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Technologies.Tier3.Vehicles
-{
-  using AtomicTorch.CBND.CoreMod.CraftRecipes;
+﻿using AtomicTorch.CBND.CoreMod.CraftRecipes;
 
+namespace AtomicTorch.CBND.CoreMod.Technologies.Tier3.Vehicles
+{
   public class TechNodeVehicleRemoteControl : TechNode<TechGroupVehiclesT3>
   {
     protected override void PrepareTechNode(Config config)

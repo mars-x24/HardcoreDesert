@@ -1,12 +1,10 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Food
-{
-  using AtomicTorch.CBND.CoreMod.Characters;
-  using AtomicTorch.CBND.CoreMod.CharacterStatusEffects;
-  using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Buffs;
-  using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Debuffs;
-  using AtomicTorch.CBND.CoreMod.Stats;
-  using System;
+﻿using AtomicTorch.CBND.CoreMod.CharacterStatusEffects;
+using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Buffs;
+using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Debuffs;
+using System;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Food
+{
   public class ItemMeatRawEnraged : ProtoItemFood
   {
     public override string Description =>

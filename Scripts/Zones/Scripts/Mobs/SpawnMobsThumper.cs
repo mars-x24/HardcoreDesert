@@ -1,9 +1,9 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Zones
-{
-  using AtomicTorch.CBND.CoreMod.Characters.Mobs;
-  using AtomicTorch.CBND.CoreMod.Triggers;
-  using System;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Mobs;
+using AtomicTorch.CBND.CoreMod.Triggers;
+using System;
 
+namespace AtomicTorch.CBND.CoreMod.Zones
+{
   /// <summary>
   /// Very rare spawn of Thumper in Barren biome.
   /// (They appear mostly during an event - see EventMigrationThumper)

@@ -1,20 +1,20 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Events
-{
-  using AtomicTorch.CBND.CoreMod.Rates;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events;
-  using AtomicTorch.CBND.CoreMod.Systems.PvE;
-  using AtomicTorch.CBND.CoreMod.Triggers;
-  using AtomicTorch.CBND.CoreMod.Zones;
-  using AtomicTorch.CBND.GameApi.Data.Logic;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Data.Zones;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.GameEngine.Common.Helpers;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
-  using System.Collections.Generic;
-  using System.Linq;
+﻿using AtomicTorch.CBND.CoreMod.Rates;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events;
+using AtomicTorch.CBND.CoreMod.Systems.PvE;
+using AtomicTorch.CBND.CoreMod.Triggers;
+using AtomicTorch.CBND.CoreMod.Zones;
+using AtomicTorch.CBND.GameApi.Data.Logic;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Data.Zones;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.GameEngine.Common.Helpers;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
+namespace AtomicTorch.CBND.CoreMod.Events
+{
   public class EventSpaceDrop : ProtoEventDrop
   {
     private static Lazy<IReadOnlyList<(IServerZone Zone, uint Weight)>> serverSpawnZones;
@@ -154,7 +154,7 @@
     }
 
     protected override void ServerPrepareDropEvent(
-        Triggers triggers,
+        Zones.Triggers triggers,
         List<IProtoWorldObject> spawnPreset)
     {
       var intervalHours = RateWorldEventIntervalSpaceDrop.SharedValueIntervalHours;

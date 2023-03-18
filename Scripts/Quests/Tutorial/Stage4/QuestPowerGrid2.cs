@@ -1,11 +1,10 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Quests.Tutorial
-{
-  using AtomicTorch.CBND.CoreMod.PlayerTasks;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Generators;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Manufacturers;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.PowerStorage;
+﻿using AtomicTorch.CBND.CoreMod.PlayerTasks;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Manufacturers;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.PowerStorage;
 
+namespace AtomicTorch.CBND.CoreMod.Quests.Tutorial
+{
   public class QuestPowerGrid2 : ProtoQuest
   {
     public const string HintGridExpansion =

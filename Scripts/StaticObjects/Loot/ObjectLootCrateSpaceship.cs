@@ -1,21 +1,21 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Loot
-{
-  using AtomicTorch.CBND.CoreMod.Items.Ammo;
-  using AtomicTorch.CBND.CoreMod.Items.Equipment;
-  using AtomicTorch.CBND.CoreMod.Items.Food;
-  using AtomicTorch.CBND.CoreMod.Items.Generic;
-  using AtomicTorch.CBND.CoreMod.Items.Medical;
-  using AtomicTorch.CBND.CoreMod.Items.Special;
-  using AtomicTorch.CBND.CoreMod.Items.Weapons.Melee;
-  using AtomicTorch.CBND.CoreMod.Items.Weapons.Ranged;
-  using AtomicTorch.CBND.CoreMod.Rates;
-  using AtomicTorch.CBND.CoreMod.Skills;
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.CoreMod.Systems.Droplists;
-  using AtomicTorch.CBND.CoreMod.Systems.Physics;
-  using AtomicTorch.CBND.CoreMod.Technologies;
-  using AtomicTorch.CBND.GameApi.ServicesClient.Components;
+﻿using AtomicTorch.CBND.CoreMod.Items.Ammo;
+using AtomicTorch.CBND.CoreMod.Items.Equipment;
+using AtomicTorch.CBND.CoreMod.Items.Food;
+using AtomicTorch.CBND.CoreMod.Items.Generic;
+using AtomicTorch.CBND.CoreMod.Items.Medical;
+using AtomicTorch.CBND.CoreMod.Items.Special;
+using AtomicTorch.CBND.CoreMod.Items.Weapons.Melee;
+using AtomicTorch.CBND.CoreMod.Items.Weapons.Ranged;
+using AtomicTorch.CBND.CoreMod.Rates;
+using AtomicTorch.CBND.CoreMod.Skills;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.CoreMod.Systems.Droplists;
+using AtomicTorch.CBND.CoreMod.Systems.Physics;
+using AtomicTorch.CBND.CoreMod.Technologies;
+using AtomicTorch.CBND.GameApi.ServicesClient.Components;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Loot
+{
   public class ObjectLootCrateSpaceship : ProtoObjectLootContainer
   {
     public override string Name => "Spaceship crate";

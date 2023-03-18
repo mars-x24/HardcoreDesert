@@ -1,23 +1,23 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Lights
-{
-  using AtomicTorch.CBND.CoreMod.ClientComponents.Rendering.Lighting;
-  using AtomicTorch.CBND.CoreMod.Helpers.Client;
-  using AtomicTorch.CBND.CoreMod.Items.Generic;
-  using AtomicTorch.CBND.CoreMod.SoundPresets;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Walls;
-  using AtomicTorch.CBND.CoreMod.Systems.Construction;
-  using AtomicTorch.CBND.CoreMod.Systems.Deconstruction;
-  using AtomicTorch.CBND.CoreMod.Systems.Physics;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.ServicesClient.Components;
-  using AtomicTorch.CBND.GameApi.ServicesClient.Rendering;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
-  using System.Linq;
-  using System.Windows.Media;
+﻿using AtomicTorch.CBND.CoreMod.ClientComponents.Rendering.Lighting;
+using AtomicTorch.CBND.CoreMod.Helpers.Client;
+using AtomicTorch.CBND.CoreMod.Items.Generic;
+using AtomicTorch.CBND.CoreMod.SoundPresets;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Walls;
+using AtomicTorch.CBND.CoreMod.Systems.Construction;
+using AtomicTorch.CBND.CoreMod.Systems.Deconstruction;
+using AtomicTorch.CBND.CoreMod.Systems.Physics;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.ServicesClient.Components;
+using AtomicTorch.CBND.GameApi.ServicesClient.Rendering;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+using System.Linq;
+using System.Windows.Media;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Lights
+{
   public class ObjectLightProjectorWall
         : ProtoObjectLightElectrical
             <ObjectLightWithElectricityPrivateState,
@@ -98,7 +98,7 @@
       foreach (var staticObject in fromPositionTile.StaticObjects.ToList())
       {
         if (staticObject.ProtoGameObject is ObjectLightProjectorWall)
-           Server.World.SetPosition(staticObject, toPositionTile.Position);
+          Server.World.SetPosition(staticObject, toPositionTile.Position);
       }
     }
 

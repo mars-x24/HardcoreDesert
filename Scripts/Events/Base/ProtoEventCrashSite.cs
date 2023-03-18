@@ -1,30 +1,29 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Events
-{
-  using AtomicTorch.CBND.CoreMod.Characters;
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.ClientComponents.FX;
-  using AtomicTorch.CBND.CoreMod.Helpers;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Minerals;
-  using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
-  using AtomicTorch.CBND.CoreMod.Systems.Resources;
-  using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
-  using AtomicTorch.CBND.CoreMod.Zones;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Logic;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Extensions;
-  using AtomicTorch.CBND.GameApi.Resources;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.Scripting.Network;
-  using AtomicTorch.GameEngine.Common.Helpers;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
-  using System.Collections.Generic;
-  using System.Diagnostics;
-  using System.Linq;
-  using System.Threading.Tasks;
+﻿using AtomicTorch.CBND.CoreMod.Characters;
+using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.ClientComponents.FX;
+using AtomicTorch.CBND.CoreMod.Helpers;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Minerals;
+using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
+using AtomicTorch.CBND.CoreMod.Systems.Resources;
+using AtomicTorch.CBND.CoreMod.Systems.ServerTimers;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Logic;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Extensions;
+using AtomicTorch.CBND.GameApi.Resources;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.Scripting.Network;
+using AtomicTorch.GameEngine.Common.Helpers;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 
+namespace AtomicTorch.CBND.CoreMod.Events
+{
   public abstract class ProtoEventCrashSite
         : ProtoEventWithArea<
             EventCrashSitePrivateState,
@@ -101,7 +100,7 @@
         return false;
       }
 
-      
+
       if (!ServerCheckCanSpawn(this.SpawnCrashPresets[0], tilePosition))
         return false;
 
@@ -279,9 +278,9 @@
     }
 
 
-    protected abstract void ServerPrepareCrashSiteEvent(Triggers triggers, List<IProtoWorldObject> listSpawnPreset, List<IProtoWorldObject> spawnCrashPreset, out IProtoWorldObject spawnCrashPreset2);
+    protected abstract void ServerPrepareCrashSiteEvent(AtomicTorch.CBND.CoreMod.Zones.Triggers triggers, List<IProtoWorldObject> listSpawnPreset, List<IProtoWorldObject> spawnCrashPreset, out IProtoWorldObject spawnCrashPreset2);
 
-    protected sealed override void ServerPrepareEvent(Triggers triggers)
+    protected sealed override void ServerPrepareEvent(AtomicTorch.CBND.CoreMod.Zones.Triggers triggers)
     {
       var listSpawnPreset = new List<IProtoWorldObject>();
       var listSpawnCrashPreset = new List<IProtoWorldObject>();

@@ -1,7 +1,7 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Technologies.Tier3.Fishing
-{
-  using AtomicTorch.CBND.CoreMod.Technologies.Tier2.Fishing;
+﻿using AtomicTorch.CBND.CoreMod.Technologies.Tier2.Fishing;
 
+namespace AtomicTorch.CBND.CoreMod.Technologies.Tier3.Fishing
+{
   public class TechGroupFishingT3 : TechGroup
   {
     public override string Description => TechGroupsLocalization.FishingDescription;

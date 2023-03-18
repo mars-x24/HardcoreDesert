@@ -1,14 +1,14 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim
-{
-  using AtomicTorch.CBND.CoreMod.Systems.Faction;
-  using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
-  using AtomicTorch.CBND.GameApi.Data.Logic;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.State.NetSync;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using JetBrains.Annotations;
-  using System.Collections.Generic;
+﻿using AtomicTorch.CBND.CoreMod.Systems.Faction;
+using AtomicTorch.CBND.CoreMod.Systems.LandClaim;
+using AtomicTorch.CBND.GameApi.Data.Logic;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.State.NetSync;
+using AtomicTorch.CBND.GameApi.Data.World;
+using JetBrains.Annotations;
+using System.Collections.Generic;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim
+{
   public class LandClaimAreaPrivateState : BasePrivateState
   {
     [SyncToClient]

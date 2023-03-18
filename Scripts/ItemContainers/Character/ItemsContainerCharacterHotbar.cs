@@ -1,8 +1,8 @@
-﻿namespace AtomicTorch.CBND.CoreMod.ItemContainers
-{
-  using AtomicTorch.CBND.CoreMod.Items.Storage;
-  using AtomicTorch.CBND.GameApi.Data.Items;
+﻿using AtomicTorch.CBND.CoreMod.Items.Storage;
+using AtomicTorch.CBND.GameApi.Data.Items;
 
+namespace AtomicTorch.CBND.CoreMod.ItemContainers
+{
   public class ItemsContainerCharacterHotbar : ProtoItemsContainer
   {
     ///// <summary>

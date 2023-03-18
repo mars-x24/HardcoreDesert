@@ -7,7 +7,6 @@ using AtomicTorch.CBND.CoreMod.Systems.Physics;
 using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
 using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects;
 using AtomicTorch.CBND.GameApi.Data.World;
-using AtomicTorch.CBND.GameApi.Scripting;
 using AtomicTorch.CBND.GameApi.ServicesClient.Components;
 
 namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Crates
@@ -42,7 +41,7 @@ namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Crates
     protected override BaseUserControlWithWindow ClientOpenUI(IStaticWorldObject worldObject, ObjectCratePrivateState privateState)
     {
       var publicState = worldObject.GetPublicState<ObjectGlobalChestPublicState>();
-      if(publicState.LandClaimGroup is null || privateState.ItemsContainer is null)
+      if (publicState.LandClaimGroup is null || privateState.ItemsContainer is null)
       {
         NotificationSystem.ClientShowNotification("Ender crate", "Land claim needed to update locations.", NotificationColor.Bad);
         return null;

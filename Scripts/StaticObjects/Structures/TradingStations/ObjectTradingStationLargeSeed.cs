@@ -1,20 +1,16 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.TradingStations
-{
-  using AtomicTorch.CBND.CoreMod.Items;
-  using AtomicTorch.CBND.CoreMod.Items.Generic;
-  using AtomicTorch.CBND.CoreMod.Items.Seeds;
-  using AtomicTorch.CBND.CoreMod.Rates;
-  using AtomicTorch.CBND.CoreMod.Systems.TradingStations;
-  using AtomicTorch.CBND.CoreMod.Systems.Weapons;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.GameEngine.Common.Helpers;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using JetBrains.Annotations;
-  using System;
-  using System.Linq;
+﻿using AtomicTorch.CBND.CoreMod.Items.Seeds;
+using AtomicTorch.CBND.CoreMod.Rates;
+using AtomicTorch.CBND.CoreMod.Systems.Weapons;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.GameEngine.Common.Helpers;
+using JetBrains.Annotations;
+using System;
+using System.Linq;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.TradingStations
+{
   public class ObjectTradingStationLargeSeed : ObjectTradingStationLargeFridge
   {
     public override string Name => "Seeds for sale!";
@@ -29,7 +25,7 @@
     {
       base.ServerInitialize(data);
 
-      if(data.PrivateState.Owners.Count == 0)
+      if (data.PrivateState.Owners.Count == 0)
         data.PrivateState.Owners.Add("");
 
       this.CreateRandomLots(data.GameObject, data.PublicState, data.PrivateState);
@@ -71,7 +67,7 @@
       var price = Convert.ToUInt16(RateSeedTradePrice.SharedValue);
 
       var seeds = Api.FindProtoEntities<IProtoItemSeed>().Where(s => s is not IProtoItemSapling).ToList();
-      
+
       if (seeds.Count == 0)
         return;
 
@@ -92,12 +88,12 @@
           lot = new TradingStationLot();
           publicState.Lots.Add(lot);
         }
-        
+
         lot.ProtoItem = randomSeed;
         lot.SetLotQuantity(1);
         lot.SetPrices(price, 0);
         lot.State = TradingStationLotState.Available;
-        
+
         Server.Items.CreateItem(randomSeed, privateState.StockItemsContainer, count: 5);
       }
     }
@@ -114,7 +110,7 @@
 
     protected override void ServerOnStaticObjectDamageApplied(WeaponFinalCache weaponCache, IStaticWorldObject targetObject, float previousStructurePoints, float currentStructurePoints)
     {
-     
+
     }
 
     public override bool SharedOnDamage(WeaponFinalCache weaponCache, IStaticWorldObject targetObject, double damagePreMultiplier, out double obstacleBlockDamageCoef, out double damageApplied)
@@ -126,7 +122,7 @@
 
     protected override void ServerOnStaticObjectZeroStructurePoints([CanBeNull] WeaponFinalCache weaponCache, [CanBeNull] ICharacter byCharacter, [NotNull] IWorldObject targetObject)
     {
-      
+
     }
 
     public override void ServerOnDestroy(IStaticWorldObject gameObject)

@@ -1,18 +1,18 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Events
-{
-  using AtomicTorch.CBND.CoreMod.Rates;
-  using AtomicTorch.CBND.CoreMod.Triggers;
-  using AtomicTorch.CBND.CoreMod.Zones;
-  using AtomicTorch.CBND.GameApi;
-  using AtomicTorch.CBND.GameApi.Data.Logic;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Data.Zones;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using System;
-  using System.Collections.Generic;
-  using System.Linq;
+﻿using AtomicTorch.CBND.CoreMod.Rates;
+using AtomicTorch.CBND.CoreMod.Triggers;
+using AtomicTorch.CBND.CoreMod.Zones;
+using AtomicTorch.CBND.GameApi;
+using AtomicTorch.CBND.GameApi.Data.Logic;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Data.Zones;
+using AtomicTorch.CBND.GameApi.Scripting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
+namespace AtomicTorch.CBND.CoreMod.Events
+{
   public class EventMutantCrawlersInfestation
         : ProtoEvent<
             EventMutantCrawlersInfestation.PrivateState,
@@ -90,7 +90,7 @@
                               GetPrivateState(activeEvent).SpawnedWorldObjects);
     }
 
-    protected override void ServerPrepareEvent(Triggers triggers)
+    protected override void ServerPrepareEvent(Zones.Triggers triggers)
     {
       var intervalHours = RateWorldEventIntervalMutantCrawlersInfestation.SharedValueIntervalHours;
       triggers.Add(GetTrigger<TriggerTimeInterval>()

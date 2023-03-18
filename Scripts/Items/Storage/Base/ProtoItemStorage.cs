@@ -1,21 +1,21 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Storage
-{
-  using AtomicTorch.CBND.CoreMod.ItemContainers.Items;
-  using AtomicTorch.CBND.CoreMod.StaticObjects;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Loot;
-  using AtomicTorch.CBND.CoreMod.Systems.WorldObjectClaim;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Controls.SlotOverlays;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Storage;
-  using AtomicTorch.CBND.GameApi.Data;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.Scripting.Network;
-  using System;
-  using System.Collections.Generic;
-  using System.Windows.Controls;
+﻿using AtomicTorch.CBND.CoreMod.ItemContainers.Items;
+using AtomicTorch.CBND.CoreMod.StaticObjects;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Loot;
+using AtomicTorch.CBND.CoreMod.Systems.WorldObjectClaim;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Controls.SlotOverlays;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Storage;
+using AtomicTorch.CBND.GameApi.Data;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.Scripting.Network;
+using System;
+using System.Collections.Generic;
+using System.Windows.Controls;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Storage
+{
   public abstract class ProtoItemStorage
         <TPrivateState,
          TPublicState,

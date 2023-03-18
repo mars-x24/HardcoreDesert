@@ -1,9 +1,9 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Events
-{
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using System.Collections.Generic;
+﻿using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.World;
+using System.Collections.Generic;
 
+namespace AtomicTorch.CBND.CoreMod.Events
+{
   public class EventWaveAttackPrivateState : BasePrivateState
   {
     public List<IWorldObject> SpawnedWorldObjects { get; }

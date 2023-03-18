@@ -1,23 +1,22 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Events
-{
-  using AtomicTorch.CBND.CoreMod.Helpers;
-  using AtomicTorch.CBND.CoreMod.Rates;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Loot;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events;
-  using AtomicTorch.CBND.CoreMod.Systems.PvE;
-  using AtomicTorch.CBND.CoreMod.Triggers;
-  using AtomicTorch.CBND.CoreMod.Zones;
-  using AtomicTorch.CBND.GameApi;
-  using AtomicTorch.CBND.GameApi.Data.Logic;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Data.Zones;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.GameEngine.Common.Helpers;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
-  using System.Collections.Generic;
-  using System.Linq;
+﻿using AtomicTorch.CBND.CoreMod.Rates;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Loot;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events;
+using AtomicTorch.CBND.CoreMod.Systems.PvE;
+using AtomicTorch.CBND.CoreMod.Triggers;
+using AtomicTorch.CBND.CoreMod.Zones;
+using AtomicTorch.CBND.GameApi;
+using AtomicTorch.CBND.GameApi.Data.Logic;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Data.Zones;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.GameEngine.Common.Helpers;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
+namespace AtomicTorch.CBND.CoreMod.Events
+{
   public class EventCrashSiteSpaceship : ProtoEventCrashSite
   {
     private static Lazy<IReadOnlyList<(IServerZone Zone, uint Weight)>> serverSpawnZones;
@@ -153,7 +152,7 @@
                   this.AreaRadius * (1 + 3 * (attempts / (double)maxAttempts)),
                   tempAllActiveEvents.AsList()))
           {
-            if(this.CanCrashInCircle(result, activeEvent))
+            if (this.CanCrashInCircle(result, activeEvent))
               return result;
           }
         }
@@ -163,10 +162,10 @@
       throw new Exception("Unable to pick an event position");
     }
 
-    
+
 
     protected override void ServerPrepareCrashSiteEvent(
-        Triggers triggers,
+        Zones.Triggers triggers,
         List<IProtoWorldObject> spawnPreset, List<IProtoWorldObject> spawnPresetCrash, out IProtoWorldObject spawnPresetCrash2)
     {
       var intervalHours = RateWorldEventIntervalCrashSite.SharedValueIntervalHours;

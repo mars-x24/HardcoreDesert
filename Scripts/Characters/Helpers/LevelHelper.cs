@@ -3,7 +3,6 @@ using AtomicTorch.CBND.CoreMod.Systems.Physics;
 using AtomicTorch.CBND.CoreMod.Systems.Weapons;
 using AtomicTorch.CBND.CoreMod.Zones;
 using AtomicTorch.CBND.GameApi.Data.Characters;
-using AtomicTorch.CBND.GameApi.Data.Zones;
 using AtomicTorch.CBND.GameApi.Scripting;
 using AtomicTorch.GameEngine.Common.Helpers;
 using AtomicTorch.GameEngine.Common.Primitives;
@@ -85,7 +84,9 @@ namespace AtomicTorch.CBND.CoreMod.Characters
       if (character.IsBoss && Api.IsServer && (SharedLocalServerHelper.IsLocalServer || Api.IsEditor))
         return 1;
 
-      return RandomLevels[RandomHelper.Next(0, RandomLevels.Count)];
+      var RandomLevels = Rates.RateMobLevelsProbability.SharedValues;
+
+      return RandomLevels[RandomHelper.Next(0, RandomLevels.Length)];
     }
 
     public static float GetLevelIncreaseHealthPourcent(int level)
@@ -100,13 +101,6 @@ namespace AtomicTorch.CBND.CoreMod.Characters
 
       return level - 1;
     }
-
-    private static List<int> RandomLevels = new List<int>() {
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-      2, 2, 2, 2, 2, 2, 2,
-      3, 3, 3, 3,
-      4, 4,
-      5};
 
     public static float GetLevelIncreaseDamagePourcent(bool isBoss, int level)
     {

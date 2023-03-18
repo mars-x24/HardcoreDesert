@@ -1,10 +1,10 @@
-﻿namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Character.Data
-{
-  using AtomicTorch.CBND.CoreMod.Characters;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
-  using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Data;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
+﻿using AtomicTorch.CBND.CoreMod.Characters;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Core;
+using AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Data;
+using AtomicTorch.CBND.GameApi.Data.Characters;
 
+namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Character.Data
+{
   public class ViewModelCharacterBossHealthbarControl : BaseViewModel
   {
     private readonly ICharacter character;

@@ -1,26 +1,25 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Systems.VehicleSystem
-{
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.Items.Tools.Special;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc;
-  using AtomicTorch.CBND.CoreMod.Systems.CharacterEnergySystem;
-  using AtomicTorch.CBND.CoreMod.Systems.ItemDurability;
-  using AtomicTorch.CBND.CoreMod.Systems.TeleportsSystem;
-  using AtomicTorch.CBND.CoreMod.Systems.VehicleGarageSystem;
-  using AtomicTorch.CBND.CoreMod.Systems.WorldObjectOwners;
-  using AtomicTorch.CBND.CoreMod.Vehicles;
-  using AtomicTorch.CBND.GameApi.Data;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Items;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.Scripting.Network;
-  using AtomicTorch.GameEngine.Common.Extensions;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System.Collections.Generic;
-  using System.Linq;
-  using System.Threading.Tasks;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.Items.Tools.Special;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc;
+using AtomicTorch.CBND.CoreMod.Systems.ItemDurability;
+using AtomicTorch.CBND.CoreMod.Systems.TeleportsSystem;
+using AtomicTorch.CBND.CoreMod.Systems.VehicleGarageSystem;
+using AtomicTorch.CBND.CoreMod.Systems.WorldObjectOwners;
+using AtomicTorch.CBND.CoreMod.Vehicles;
+using AtomicTorch.CBND.GameApi.Data;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Items;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.Scripting.Network;
+using AtomicTorch.GameEngine.Common.Extensions;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
+namespace AtomicTorch.CBND.CoreMod.Systems.VehicleSystem
+{
   public class VehicleRemoteSystem
         : ProtoActionSystem<
             VehicleRemoteSystem,
@@ -58,10 +57,10 @@
       if (!(itemVehicleRemote.ProtoItem is IProtoItemVehicleRemoteControl protoRemote))
         return;
 
-      if (!CharacterEnergySystem.SharedHasEnergyCharge(character, protoRemote.EngeryUse))
+      if (!CharacterEnergySystem.CharacterEnergySystem.SharedHasEnergyCharge(character, protoRemote.EngeryUse))
         return;
 
-      List<GarageVehicleEntry> list = VehicleGarageSystem.ServerGetCharacterVehicles(character, false);
+      List<GarageVehicleEntry> list = VehicleGarageSystem.VehicleGarageSystem.ServerGetCharacterVehicles(character, false);
 
       TakeVehicleResult result = TakeVehicleResult.Unknown;
 
@@ -73,7 +72,7 @@
 
       if (result == TakeVehicleResult.Success)
       {
-        CharacterEnergySystem.ServerDeductEnergyCharge(character, protoRemote.EngeryUse);
+        CharacterEnergySystem.CharacterEnergySystem.ServerDeductEnergyCharge(character, protoRemote.EngeryUse);
 
         ItemDurabilitySystem.ServerModifyDurability(itemVehicleRemote, delta: -1);
       }
@@ -160,7 +159,7 @@
     {
       ClientComponentTeleportationEffect.CreateEffect(vehicle, 0.5, 0.0, false);
 
-      Client.Audio.PlayOneShot(VehicleGarageSystem.SoundResourceTakeVehicle, position);
+      Client.Audio.PlayOneShot(VehicleGarageSystem.VehicleGarageSystem.SoundResourceTakeVehicle, position);
     }
 
 

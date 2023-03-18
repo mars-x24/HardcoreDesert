@@ -1,10 +1,10 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Medical
-{
-  using System;
-  using AtomicTorch.CBND.CoreMod.CharacterStatusEffects;
-  using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Buffs;
-  using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Debuffs;
+﻿using AtomicTorch.CBND.CoreMod.CharacterStatusEffects;
+using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Buffs;
+using AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Debuffs;
+using System;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Medical
+{
   public class ItemMedicineHerbal : ProtoItemMedical
   {
     public override double CooldownDuration => MedicineCooldownDuration.Medium;

@@ -1,22 +1,20 @@
+using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.Items;
+using AtomicTorch.CBND.CoreMod.Items.Generic;
+using AtomicTorch.CBND.CoreMod.Rates;
+using AtomicTorch.CBND.CoreMod.Systems;
+using AtomicTorch.CBND.CoreMod.Systems.VehicleSystem;
+using AtomicTorch.CBND.CoreMod.Vehicles;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.Scripting.Network;
+using AtomicTorch.GameEngine.Common.Helpers;
+using AtomicTorch.GameEngine.Common.Primitives;
+using System;
+
 namespace AtomicTorch.CBND.CoreMod.Helpers.Server
 {
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.Items;
-  using AtomicTorch.CBND.CoreMod.Items.Generic;
-  using AtomicTorch.CBND.CoreMod.Rates;
-  using AtomicTorch.CBND.CoreMod.Systems;
-  using AtomicTorch.CBND.CoreMod.Systems.InteractionChecker;
-  using AtomicTorch.CBND.CoreMod.Systems.VehicleSystem;
-  using AtomicTorch.CBND.CoreMod.Vehicles;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.Scripting.Network;
-  using AtomicTorch.GameEngine.Common.Helpers;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using System;
-  using System.Linq;
-
   public class VehicleWreckedSystem : ProtoSystem<VehicleWreckedSystem>
   {
     public static void SpawnWreckedHoverboard(IStaticWorldObject gameObject)
@@ -42,7 +40,7 @@ namespace AtomicTorch.CBND.CoreMod.Helpers.Server
                 position: tilePosition.ToVector2D());
 
       var privateState = vehicle.GetPrivateState<VehiclePrivateState>();
-      if(ServerPlayerCharacterCurrentActionStateContext.CurrentCharacter is not null)
+      if (ServerPlayerCharacterCurrentActionStateContext.CurrentCharacter is not null)
         privateState.Owners.Add(ServerPlayerCharacterCurrentActionStateContext.CurrentCharacter.Name);
 
       var result = Api.Server.Items.CreateItem<ItemFuelCellGasoline>(privateState.FuelItemsContainer);

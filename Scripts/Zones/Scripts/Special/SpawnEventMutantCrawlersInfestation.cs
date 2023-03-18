@@ -1,7 +1,7 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Zones
-{
-  using AtomicTorch.CBND.CoreMod.Characters.Mobs;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Mobs;
 
+namespace AtomicTorch.CBND.CoreMod.Zones
+{
   public class SpawnEventMutantCrawlersInfestation : ProtoZoneSpawnScript
   {
     protected override void PrepareZoneSpawnScript(Triggers triggers, SpawnList spawnList)

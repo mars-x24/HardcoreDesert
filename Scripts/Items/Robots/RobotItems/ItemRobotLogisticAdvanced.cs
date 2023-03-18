@@ -1,7 +1,7 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Items.Robots
-{
-  using AtomicTorch.CBND.CoreMod.Robots;
+﻿using AtomicTorch.CBND.CoreMod.Robots;
 
+namespace AtomicTorch.CBND.CoreMod.Items.Robots
+{
   public class ItemRobotLogisticAdvanced : ProtoItemRobot<RobotLogisticAdvanced>
   {
     public override string Description =>

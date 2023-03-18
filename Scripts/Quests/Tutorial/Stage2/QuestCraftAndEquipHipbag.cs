@@ -1,11 +1,11 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Quests.Tutorial
-{
-  using AtomicTorch.CBND.CoreMod.Items.Devices;
-  using AtomicTorch.CBND.CoreMod.PlayerTasks;
-  using AtomicTorch.CBND.CoreMod.Technologies.Tier1.Defense;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using System.Collections.Generic;
+﻿using AtomicTorch.CBND.CoreMod.Items.Devices;
+using AtomicTorch.CBND.CoreMod.PlayerTasks;
+using AtomicTorch.CBND.CoreMod.Technologies.Tier1.Defense;
+using AtomicTorch.CBND.GameApi.Scripting;
+using System.Collections.Generic;
 
+namespace AtomicTorch.CBND.CoreMod.Quests.Tutorial
+{
   public class QuestCraftAndEquipHipbag : ProtoQuest
   {
     public override string Description =>

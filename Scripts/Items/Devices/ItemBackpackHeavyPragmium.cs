@@ -3,7 +3,7 @@
 namespace AtomicTorch.CBND.CoreMod.Items.Devices
 {
   public class ItemBackpackHeavyPragmium : ProtoItemBackpack
-  { 
+  {
     public override byte SlotsCount => 40;
 
     public override string Name => "Pragmium backpack";

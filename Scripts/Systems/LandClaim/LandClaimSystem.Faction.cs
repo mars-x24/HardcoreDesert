@@ -1,24 +1,24 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Systems.LandClaim
-{
-  using AtomicTorch.CBND.CoreMod.Characters.Player;
-  using AtomicTorch.CBND.CoreMod.StaticObjects;
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
-  using AtomicTorch.CBND.CoreMod.Systems.Faction;
-  using AtomicTorch.CBND.CoreMod.Systems.InteractionChecker;
-  using AtomicTorch.CBND.CoreMod.Systems.Notifications;
-  using AtomicTorch.CBND.CoreMod.UI;
-  using AtomicTorch.CBND.GameApi.Data.Characters;
-  using AtomicTorch.CBND.GameApi.Data.Logic;
-  using AtomicTorch.CBND.GameApi.Data.State;
-  using AtomicTorch.CBND.GameApi.Data.World;
-  using AtomicTorch.CBND.GameApi.Scripting;
-  using AtomicTorch.CBND.GameApi.Scripting.Network;
-  using AtomicTorch.GameEngine.Common.Primitives;
-  using JetBrains.Annotations;
-  using System;
-  using System.Collections.Generic;
-  using System.Linq;
+﻿using AtomicTorch.CBND.CoreMod.Characters.Player;
+using AtomicTorch.CBND.CoreMod.StaticObjects;
+using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim;
+using AtomicTorch.CBND.CoreMod.Systems.Faction;
+using AtomicTorch.CBND.CoreMod.Systems.InteractionChecker;
+using AtomicTorch.CBND.CoreMod.Systems.Notifications;
+using AtomicTorch.CBND.CoreMod.UI;
+using AtomicTorch.CBND.GameApi.Data.Characters;
+using AtomicTorch.CBND.GameApi.Data.Logic;
+using AtomicTorch.CBND.GameApi.Data.State;
+using AtomicTorch.CBND.GameApi.Data.World;
+using AtomicTorch.CBND.GameApi.Scripting;
+using AtomicTorch.CBND.GameApi.Scripting.Network;
+using AtomicTorch.GameEngine.Common.Primitives;
+using JetBrains.Annotations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
+namespace AtomicTorch.CBND.CoreMod.Systems.LandClaim
+{
   public partial class LandClaimSystem
   {
     public static IEnumerable<ILogicObject> ClientEnumerateAllCurrentFactionAreas()
@@ -30,7 +30,7 @@
     {
       var factionOwnedAreas = SharedEnumerateAllFactionAreas(FactionSystem.ClientCurrentFactionClanTag);
       var claimLimitRemains = FactionConstants.SharedGetFactionLandClaimsLimit(
-                                  Faction.GetPublicState(FactionSystem.ClientCurrentFaction).Level)
+                                  Faction.Faction.GetPublicState(FactionSystem.ClientCurrentFaction).Level)
                               - factionOwnedAreas.Count();
 
       claimLimitRemains -= ClientGetKnownAreasForGroup(SharedGetLandClaimAreasGroup(area)).Count();
@@ -174,7 +174,7 @@
 
       var factionOwnedAreas = SharedEnumerateAllFactionAreas(FactionSystem.SharedGetClanTag(faction));
       var claimLimitRemains = FactionConstants.SharedGetFactionLandClaimsLimit(
-                                  Faction.GetPublicState(faction).Level)
+                                Faction.Faction.GetPublicState(faction).Level)
                               - factionOwnedAreas.Count();
 
       claimLimitRemains -= LandClaimAreasGroup.GetPrivateState(areasGroup).ServerLandClaimsAreas.Count;

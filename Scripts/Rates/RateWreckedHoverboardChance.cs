@@ -1,7 +1,7 @@
-﻿namespace AtomicTorch.CBND.CoreMod.Rates
-{
-  using AtomicTorch.CBND.GameApi;
+﻿using AtomicTorch.CBND.GameApi;
 
+namespace AtomicTorch.CBND.CoreMod.Rates
+{
   public class RateWreckedHoverboardChance
       : BaseRateByte<RateWreckedHoverboardChance>
   {

@@ -1,8 +1,8 @@
-﻿namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.TradingStations
-{
-  using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Fridges;
-  using AtomicTorch.CBND.GameApi.Data.World;
+﻿using AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Fridges;
+using AtomicTorch.CBND.GameApi.Data.World;
 
+namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.TradingStations
+{
   public abstract class ProtoObjectTradingStationFridge
         <TPrivateState,
          TPublicState,
