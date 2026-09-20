@@ -24,23 +24,26 @@
     <Reference Include="AtomicTorch.GameEngine.Common.Primitives" HintPath="$(GameApiRoot)AtomicTorch.GameEngine.Common.Primitives.dll" />
   </ItemGroup>
 
-  <!-- Select the mod file whenever the same relative path exists in both roots. -->
+  <!-- Select mod files first, then Core files not overridden by the mod.
+       Declare Compile/Page directly: copying private (_...) item types carries
+       their item definitions into Visual Studio's cache, which cannot restore
+       those private definitions when the solution is reopened. -->
   <ItemGroup>
-    <_ModSource Include="$(ModRoot)**\*.cs" Exclude="$(ModRoot).*\**;$(ModRoot)bin\**;$(ModRoot)obj\**">
+    <Compile Include="$(ModRoot)**\*.cs" Exclude="$(ModRoot).*\**;$(ModRoot)bin\**;$(ModRoot)obj\**">
       <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
-    </_ModSource>
-    <_ModPage Include="$(ModRoot)**\*.xaml" Exclude="$(ModRoot).*\**;$(ModRoot)bin\**;$(ModRoot)obj\**">
+    </Compile>
+    <Page Include="$(ModRoot)**\*.xaml" Exclude="$(ModRoot).*\**;$(ModRoot)bin\**;$(ModRoot)obj\**">
       <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
-    </_ModPage>
-    <_CoreSource Include="$(CoreRoot)**\*.cs" Exclude="$(CoreRoot).*\**;$(CoreRoot)bin\**;$(CoreRoot)obj\**;@(_ModSource->'$(CoreRoot)%(Link)')">
+    </Page>
+    <Compile Include="$(CoreRoot)**\*.cs" Exclude="$(CoreRoot).*\**;$(CoreRoot)bin\**;$(CoreRoot)obj\**;@(Compile->'$(CoreRoot)%(Link)')">
       <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
-    </_CoreSource>
-    <_CorePage Include="$(CoreRoot)**\*.xaml" Exclude="$(CoreRoot).*\**;$(CoreRoot)bin\**;$(CoreRoot)obj\**;@(_ModPage->'$(CoreRoot)%(Link)')">
+    </Compile>
+    <Page Include="$(CoreRoot)**\*.xaml" Exclude="$(CoreRoot).*\**;$(CoreRoot)bin\**;$(CoreRoot)obj\**;@(Page->'$(CoreRoot)%(Link)')">
       <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
-    </_CorePage>
-    <Compile Include="@(_CoreSource);@(_ModSource)" />
-    <Page Include="@(_CorePage);@(_ModPage)" />
-    <None Include="Test-SourceSelection.ps1;Validation.Xaml.targets" />
+    </Page>
+    <Content Include="Mod-Core-Review.html" />
+    <None Include="Compare-Mod-Core.ps1" />
+    <None Include="Validation.Xaml.targets" />
   </ItemGroup>
 
   <Target Name="CheckValidationInputs" BeforeTargets="PrepareForBuild">
