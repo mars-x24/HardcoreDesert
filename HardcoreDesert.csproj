@@ -16,6 +16,11 @@
   </PropertyGroup>    
   
   <Import Project="$(CryoFallSdk)Sdk.props" />    
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.37" />
+    <PackageReference Update="Noesis.GUI.Extensions" Version="3.0.21" />
+  </ItemGroup>
   
   <ItemGroup>
     <Compile Remove="Localization\**" />

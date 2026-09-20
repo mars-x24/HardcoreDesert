@@ -1,0 +1,62 @@
+<Project>
+  <!-- In the game these classes share a compiled source set. WPF treats
+       ';assembly=Core' as an external assembly, so normalize only temporary
+       XAML copies for this validation build, never the original files. -->
+  <UsingTask TaskName="PrepareValidationXaml"
+             TaskFactory="RoslynCodeTaskFactory"
+             AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <Pages ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+      <OutputDirectory ParameterType="System.String" Required="true" />
+      <PreparedPages ParameterType="Microsoft.Build.Framework.ITaskItem[]" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Collections.Generic" />
+      <Using Namespace="System.Text.RegularExpressions" />
+      <Code Type="Fragment" Language="cs"><![CDATA[
+        var results = new List<Microsoft.Build.Framework.ITaskItem>();
+        var root = Path.GetFullPath(OutputDirectory).TrimEnd(Path.DirectorySeparatorChar)
+                   + Path.DirectorySeparatorChar;
+        foreach (var page in Pages)
+        {
+            var source = page.GetMetadata("FullPath");
+            var original = File.ReadAllText(source);
+            var rewritten = Regex.Replace(original,
+                @"(xmlns(?::[\w.-]+)?\s*=\s*[""']clr-namespace:[^""']*);assembly=Core(?=[""'])", "$1");
+            if (rewritten == original)
+            {
+                results.Add(page);
+                continue;
+            }
+            var destination = Path.GetFullPath(Path.Combine(root, page.GetMetadata("Link")));
+            if (!destination.StartsWith(root, StringComparison.OrdinalIgnoreCase))
+            {
+                Log.LogError("Invalid XAML link: " + page.GetMetadata("Link"));
+                return false;
+            }
+            Directory.CreateDirectory(Path.GetDirectoryName(destination));
+            if (!File.Exists(destination) || File.ReadAllText(destination) != rewritten)
+                File.WriteAllText(destination, rewritten);
+            var prepared = new Microsoft.Build.Utilities.TaskItem(page);
+            prepared.ItemSpec = destination;
+            prepared.SetMetadata("OriginalSource", source);
+            prepared.SetMetadata("Visible", "false");
+            results.Add(prepared);
+        }
+        PreparedPages = results.ToArray();
+      ]]></Code>
+    </Task>
+  </UsingTask>
+
+  <Target Name="NormalizeValidationXaml" BeforeTargets="MarkupCompilePass1;AssignTargetPaths">
+    <PrepareValidationXaml Pages="@(Page)"
+                           OutputDirectory="$(MSBuildProjectDirectory)\$(IntermediateOutputPath)ValidationXaml">
+      <Output TaskParameter="PreparedPages" ItemName="_PreparedValidationPage" />
+    </PrepareValidationXaml>
+    <ItemGroup>
+      <Page Remove="@(Page)" />
+      <Page Include="@(_PreparedValidationPage)" />
+    </ItemGroup>
+  </Target>
+</Project>

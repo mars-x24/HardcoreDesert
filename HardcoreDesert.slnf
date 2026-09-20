@@ -1,0 +1,10 @@
+{
+  "solution": {
+    "path": "HardcoreDesert.sln",
+    "projects": [
+      ".validation\\HardcoreDesert.Validation.csproj",
+      "..\\Core.cpk\\AtomicTorch.CBND.CoreMod.csproj",
+      "..\\Editor.mpk\\AtomicTorch.CBND.CoreMod.Editor.csproj"
+    ]
+  }
+}

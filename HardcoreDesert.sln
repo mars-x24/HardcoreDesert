@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30011.22
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37710.0 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HardcoreDesert", "HardcoreDesert.csproj", "{495E0459-E71B-4FC1-8027-B6E2DFCF2C2A}"
 EndProject
@@ -8,30 +8,30 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AtomicTorch.CBND.CoreMod", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AtomicTorch.CBND.CoreMod.Editor", "..\Editor.mpk\AtomicTorch.CBND.CoreMod.Editor.csproj", "{D7F28DA5-E4D2-407A-AD12-8DC4658FCB29}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NinekornPathFind", "..\NinekornPathFind\NinekornPathFind.csproj", "{38F5FCFC-64C1-4FEA-8A75-DDC9519BB0F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HardcoreDesert.Validation", ".validation\HardcoreDesert.Validation.csproj", "{8D4806F3-C92F-4720-9AFC-7B798233011F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug_LibsAsProjects|Any CPU = Debug_LibsAsProjects|Any CPU
 		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{495E0459-E71B-4FC1-8027-B6E2DFCF2C2A}.Debug_LibsAsProjects|Any CPU.ActiveCfg = Debug_LibsAsProjects|Any CPU
-		{495E0459-E71B-4FC1-8027-B6E2DFCF2C2A}.Debug_LibsAsProjects|Any CPU.Build.0 = Debug_LibsAsProjects|Any CPU
 		{495E0459-E71B-4FC1-8027-B6E2DFCF2C2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{495E0459-E71B-4FC1-8027-B6E2DFCF2C2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{495E0459-E71B-4FC1-8027-B6E2DFCF2C2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93E3D838-4839-4F1D-BC9E-A2E5F7CD9FA7}.Debug_LibsAsProjects|Any CPU.ActiveCfg = Debug_LibsAsProjects|Any CPU
-		{93E3D838-4839-4F1D-BC9E-A2E5F7CD9FA7}.Debug_LibsAsProjects|Any CPU.Build.0 = Debug_LibsAsProjects|Any CPU
 		{93E3D838-4839-4F1D-BC9E-A2E5F7CD9FA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93E3D838-4839-4F1D-BC9E-A2E5F7CD9FA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93E3D838-4839-4F1D-BC9E-A2E5F7CD9FA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7F28DA5-E4D2-407A-AD12-8DC4658FCB29}.Debug_LibsAsProjects|Any CPU.ActiveCfg = Debug_LibsAsProjects|Any CPU
-		{D7F28DA5-E4D2-407A-AD12-8DC4658FCB29}.Debug_LibsAsProjects|Any CPU.Build.0 = Debug_LibsAsProjects|Any CPU
 		{D7F28DA5-E4D2-407A-AD12-8DC4658FCB29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D7F28DA5-E4D2-407A-AD12-8DC4658FCB29}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{38F5FCFC-64C1-4FEA-8A75-DDC9519BB0F2}.Debug_LibsAsProjects|Any CPU.ActiveCfg = Debug_LibsAsProjects|Any CPU
-		{38F5FCFC-64C1-4FEA-8A75-DDC9519BB0F2}.Debug_LibsAsProjects|Any CPU.Build.0 = Debug_LibsAsProjects|Any CPU
-		{38F5FCFC-64C1-4FEA-8A75-DDC9519BB0F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{38F5FCFC-64C1-4FEA-8A75-DDC9519BB0F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7F28DA5-E4D2-407A-AD12-8DC4658FCB29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D4806F3-C92F-4720-9AFC-7B798233011F}.Debug_LibsAsProjects|Any CPU.ActiveCfg = Debug_LibsAsProjects|Any CPU
+		{8D4806F3-C92F-4720-9AFC-7B798233011F}.Debug_LibsAsProjects|Any CPU.Build.0 = Debug_LibsAsProjects|Any CPU
+		{8D4806F3-C92F-4720-9AFC-7B798233011F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D4806F3-C92F-4720-9AFC-7B798233011F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D4806F3-C92F-4720-9AFC-7B798233011F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D4806F3-C92F-4720-9AFC-7B798233011F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

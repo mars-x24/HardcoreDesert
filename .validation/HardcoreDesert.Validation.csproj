@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <LangVersion>9.0</LangVersion>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <AssemblyName>HardcoreDesert.Validation</AssemblyName>
+    <RootNamespace>AtomicTorch.CBND.CoreMod</RootNamespace>
+    <ModRoot>$(MSBuildThisFileDirectory)..\</ModRoot>
+    <CoreRoot>$(MSBuildThisFileDirectory)..\..\Core.cpk\</CoreRoot>
+    <GameApiRoot>$(MSBuildThisFileDirectory)..\..\CryoFall.Mod.Sdk\LibsGameApi\</GameApiRoot>
+    <Configurations>Debug;Release;Debug_LibsAsProjects</Configurations>
+    <Platforms>AnyCPU</Platforms>
+  </PropertyGroup>
+
+  <!-- This project validates sources only. Its DLL is not a deployable CryoFall mod. -->
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.3" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.37" />
+    <PackageReference Include="Noesis.GUI.Extensions" Version="3.0.21" />
+    <Reference Include="AtomicTorch.CBND.GameApi.WPF" HintPath="$(GameApiRoot)AtomicTorch.CBND.GameApi.WPF.dll" />
+    <Reference Include="AtomicTorch.CBND.GameApi.WPF.Stubs" HintPath="$(GameApiRoot)AtomicTorch.CBND.GameApi.WPF.Stubs.dll" />
+    <Reference Include="AtomicTorch.GameEngine.Common.Primitives" HintPath="$(GameApiRoot)AtomicTorch.GameEngine.Common.Primitives.dll" />
+  </ItemGroup>
+
+  <!-- Select the mod file whenever the same relative path exists in both roots. -->
+  <ItemGroup>
+    <_ModSource Include="$(ModRoot)**\*.cs" Exclude="$(ModRoot).*\**;$(ModRoot)bin\**;$(ModRoot)obj\**">
+      <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </_ModSource>
+    <_ModPage Include="$(ModRoot)**\*.xaml" Exclude="$(ModRoot).*\**;$(ModRoot)bin\**;$(ModRoot)obj\**">
+      <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </_ModPage>
+    <_CoreSource Include="$(CoreRoot)**\*.cs" Exclude="$(CoreRoot).*\**;$(CoreRoot)bin\**;$(CoreRoot)obj\**;@(_ModSource->'$(CoreRoot)%(Link)')">
+      <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </_CoreSource>
+    <_CorePage Include="$(CoreRoot)**\*.xaml" Exclude="$(CoreRoot).*\**;$(CoreRoot)bin\**;$(CoreRoot)obj\**;@(_ModPage->'$(CoreRoot)%(Link)')">
+      <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </_CorePage>
+    <Compile Include="@(_CoreSource);@(_ModSource)" />
+    <Page Include="@(_CorePage);@(_ModPage)" />
+    <None Include="Test-SourceSelection.ps1;Validation.Xaml.targets" />
+  </ItemGroup>
+
+  <Target Name="CheckValidationInputs" BeforeTargets="PrepareForBuild">
+    <Error Condition="!Exists('$(CoreRoot)AtomicTorch.CBND.CoreMod.csproj')" Text="Core.cpk must be installed beside HardcoreDesert." />
+    <Error Condition="!Exists('$(GameApiRoot)AtomicTorch.CBND.GameApi.WPF.dll')" Text="CryoFall.Mod.Sdk/LibsGameApi must be installed beside HardcoreDesert." />
+  </Target>
+
+  <Import Project="Validation.Xaml.targets" />
+</Project>
