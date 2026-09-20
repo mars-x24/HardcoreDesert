@@ -1,14 +1,11 @@
 ﻿<!doctype html><meta charset="utf-8"><title>Core vs HardcoreDesert</title><style>body{font-family:Segoe UI,Arial;margin:24px;background:#f5f5f5}section{background:#fff;margin:16px 0;padding:12px;border:1px solid #ccc}h2{font-size:15px}pre{font:13px Consolas,monospace;white-space:pre-wrap}.add{background:#dff6dd}.del{background:#ffdede}.hdr{color:#555;font-weight:bold}</style><h1>Core vs HardcoreDesert</h1><p>PASS: 5389 sources uniques, liens valides, priorite au mod confirmee, aucune reference directe au Core.</p><p>Vert&nbsp;: ajout&eacute; au mod. Rouge&nbsp;: supprim&eacute; du Core. Espaces, tabulations et lignes vides ignor&eacute;s.</p>
 <section><h2>Content\Maps\CryoFall.map</h2><pre>
-<span class="">index a840abe..bc0270c 100644</span>
-<span class="">Binary files a/C:/Users/Martin/Documents/AtomicTorchStudio/CryoFall Editor/Mods/Core.cpk/Content/Maps/CryoFall.map and b/C:/Users/Martin/Documents/AtomicTorchStudio/CryoFall Editor/Mods/HardcoreDesert/Content/Maps/CryoFall.map differ</span>
+<span class="">Binary files differ</span>
 </pre></section>
 <section><h2>Content\Textures\StatusEffects\Cold.png</h2><pre>
-<span class="">index 6dd6daa..3cba89d 100644</span>
-<span class="">Binary files a/C:/Users/Martin/Documents/AtomicTorchStudio/CryoFall Editor/Mods/Core.cpk/Content/Textures/StatusEffects/Cold.png and b/C:/Users/Martin/Documents/AtomicTorchStudio/CryoFall Editor/Mods/HardcoreDesert/Content/Textures/StatusEffects/Cold.png differ</span>
+<span class="">Binary files differ</span>
 </pre></section>
 <section><h2>Scripts\Base\Stats\StatName.cs</h2><pre>
-<span class="">index a55ee20..7ab2e9d 100644</span>
 <span class="hdr">@@ -279,6 +279,14 @@ namespace AtomicTorch.CBND.CoreMod.Stats</span>
 <span class="">     [StatDebuff]</span>
 <span class="">     HeatEffectMultiplier,</span>
@@ -26,7 +23,6 @@
 <span class="">     PainIncreaseRateMultiplier,</span>
 </pre></section>
 <section><h2>Scripts\Bootstrappers\BootstrapperServerWorld.cs</h2><pre>
-<span class="">index b9e2664..af1f0e3 100644</span>
 <span class="hdr">@@ -7,7 +7,7 @@ namespace AtomicTorch.CBND.CoreMod.Bootstrappers</span>
 <span class="">   [SuppressMessage(&quot;ReSharper&quot;, &quot;CanExtractXamlLocalizableStringCSharp&quot;)]</span>
 <span class="">   public class BootstrapperServerWorld : BaseBootstrapper</span>
@@ -50,7 +46,6 @@
 <span class=""> </span>
 </pre></section>
 <section><h2>Scripts\Characters\Base\ProtoCharacterMob.cs</h2><pre>
-<span class="">index 44f21c1..3cf570e 100644</span>
 <span class="hdr">@@ -40,6 +40,8 @@ namespace AtomicTorch.CBND.CoreMod.Characters</span>
 <span class=""> </span>
 <span class="">     public virtual double AggroStateDuration =&gt; 30; // 30 seconds</span>
@@ -237,7 +232,6 @@
 <span class="">   public abstract class ProtoCharacterMob</span>
 </pre></section>
 <section><h2>Scripts\Characters\Helpers\ServerCharacterAiHelper.cs</h2><pre>
-<span class="">index 0a31da0..352492b 100644</span>
 <span class="hdr">@@ -51,11 +51,30 @@ namespace AtomicTorch.CBND.CoreMod.Characters</span>
 <span class="">         out double distanceToEnemy,</span>
 <span class="">         out Vector2F directionToEnemyPosition,</span>
@@ -468,7 +462,6 @@
 <span class="">       }</span>
 </pre></section>
 <section><h2>Scripts\Characters\Helpers\ServerRangedAiHelper.cs</h2><pre>
-<span class="">index a2403b2..11dd207 100644</span>
 <span class="hdr">@@ -56,7 +56,10 @@ namespace AtomicTorch.CBND.CoreMod.Characters</span>
 <span class="">                                                                    isRangedWeapon: true,</span>
 <span class="">                                                                    out _,</span>
@@ -483,7 +476,6 @@
 <span class=""> </span>
 </pre></section>
 <section><h2>Scripts\Characters\Mobs\MobBossPragmiumQueen.cs</h2><pre>
-<span class="">index 81f3d10..10c4009 100644</span>
 <span class="hdr">@@ -135,6 +135,7 @@ namespace AtomicTorch.CBND.CoreMod.Characters.Mobs</span>
 <span class="">                     ServerBossLootSystem.ServerCreateBossLoot(</span>
 <span class="">                                     bossPosition: bossPosition.ToVector2Ushort(),</span>
@@ -494,7 +486,6 @@
 <span class="">                                     lootObjectProto: ProtoLootObjectLazy.Value,</span>
 </pre></section>
 <section><h2>Scripts\Characters\Mobs\MobBossSandTyrant.cs</h2><pre>
-<span class="">index c6dc378..bc5c353 100644</span>
 <span class="hdr">@@ -140,6 +140,7 @@ namespace AtomicTorch.CBND.CoreMod.Characters.Mobs</span>
 <span class="">                 ServerBossLootSystem.ServerCreateBossLoot(</span>
 <span class="">                           bossPosition: bossPosition.ToVector2Ushort(),</span>
@@ -505,7 +496,6 @@
 <span class="">                           lootObjectProto: ProtoLootObjectLazy.Value,</span>
 </pre></section>
 <section><h2>Scripts\Characters\Mobs\MobFloater.cs</h2><pre>
-<span class="">index 726546d..42d96c2 100644</span>
 <span class="hdr">@@ -57,7 +57,7 @@ namespace AtomicTorch.CBND.CoreMod.Characters.Mobs</span>
 <span class="">       // extra loot</span>
 <span class="">       lootDroplist.Add(condition: SkillHunting.ServerRollExtraLoot,</span>
@@ -517,7 +507,6 @@
 <span class="">                                    .Add&lt;ItemSalt&gt;(count: 2));</span>
 </pre></section>
 <section><h2>Scripts\Characters\Mobs\MobPsiGrove.cs</h2><pre>
-<span class="">index fcc727d..2165f76 100644</span>
 <span class="hdr">@@ -55,7 +56,7 @@ namespace AtomicTorch.CBND.CoreMod.Characters.Mobs</span>
 <span class="">           .Add&lt;ItemSlime&gt;(count: 2, countRandom: 1)</span>
 <span class="">           .Add&lt;ItemTwigs&gt;(count: 4, countRandom: 2)</span>
@@ -529,7 +518,6 @@
 <span class="">       lootDroplist.Add(condition: SkillHunting.ServerRollExtraLoot,</span>
 </pre></section>
 <section><h2>Scripts\Characters\Mobs\MobThumper.cs</h2><pre>
-<span class="">index 138c361..84d07b4 100644</span>
 <span class="hdr">@@ -225,9 +225,12 @@ namespace AtomicTorch.CBND.CoreMod.Characters.Mobs</span>
 <span class="">           targetCharacter,</span>
 <span class="">           isRangedWeapon:</span>
@@ -555,7 +543,6 @@
 <span class="">                                   ? Vector2F.Zero // too close or too far</span>
 </pre></section>
 <section><h2>Scripts\Characters\Player\PlayerCharacter.cs</h2><pre>
-<span class="">index 18ee674..1b84f32 100644</span>
 <span class="hdr">@@ -508,6 +509,25 @@ namespace AtomicTorch.CBND.CoreMod.Characters.Player</span>
 <span class=""> </span>
 <span class="">       publicState.IsOnline = character.ServerIsOnline;</span>
@@ -734,7 +721,6 @@
 <section><h2>Scripts\Characters\Player\PlayerCharacter.Input.cs</h2><pre>
 </pre></section>
 <section><h2>Scripts\Characters\Player\PlayerCharacterItemsExtensions.cs</h2><pre>
-<span class="">index ea43936..c8a4345 100644</span>
 <span class="hdr">@@ -67,7 +67,13 @@ namespace AtomicTorch.CBND.CoreMod.Characters.Player</span>
 <span class="">     /// &lt;/summary&gt;</span>
 <span class="">     public static IItem SharedGetPlayerSelectedHotbarItem(this ICharacter character)</span>
@@ -752,7 +738,6 @@
 <span class="">     /// &lt;summary&gt;</span>
 </pre></section>
 <section><h2>Scripts\Characters\State\CharacterMobPrivateState.cs</h2><pre>
-<span class="">index cd3664f..d1a179c 100644</span>
 <span class="hdr">@@ -15,13 +15,18 @@ namespace AtomicTorch.CBND.CoreMod.Characters</span>
 <span class="">     [TempOnly]</span>
 <span class="">     public ICharacter CurrentTargetCharacter { get; set; }</span>
@@ -813,7 +798,6 @@
 <span class=""> }</span>
 </pre></section>
 <section><h2>Scripts\Characters\State\CharacterMobPublicState.cs</h2><pre>
-<span class="">index 34ea57c..8c682e3 100644</span>
 <span class="hdr">@@ -15,10 +15,27 @@ namespace AtomicTorch.CBND.CoreMod.Characters</span>
 <span class="">     [TempOnly] // mobs stats (currently only the health points) are not saved as HP is regenerated anyway</span>
 <span class="">     public CharacterCurrentStats CurrentStats { get; set; }</span>
@@ -844,7 +828,6 @@
 <span class="">     public IItem SelectedItem { get; private set; }</span>
 </pre></section>
 <section><h2>Scripts\Characters\State\PlayerCharacterPrivateState.cs</h2><pre>
-<span class="">index 07b7583..64b600e 100644</span>
 <span class="hdr">@@ -146,9 +146,10 @@ namespace AtomicTorch.CBND.CoreMod.Characters</span>
 <span class="">       }</span>
 <span class="">       else if (this.ContainerInventory.SlotsCount != PlayerConstants.InventorySlotsCount)</span>
@@ -861,7 +844,6 @@
 <span class="">       this.ContainerHotbar ??= serverItemsService.CreateContainer&lt;ItemsContainerCharacterHotbar&gt;(</span>
 </pre></section>
 <section><h2>Scripts\Characters\State\SharedCharacterStatsHelper.cs</h2><pre>
-<span class="">index 5e4d745..d6b0ef8 100644</span>
 <span class="hdr">@@ -34,6 +34,18 @@ namespace AtomicTorch.CBND.CoreMod.Characters</span>
 <span class="">         // merge character prototype effects</span>
 <span class="">         tempStatsCache.Merge(protoEffects);</span>
@@ -883,7 +865,6 @@
 <span class="">           // merge origin effects</span>
 </pre></section>
 <section><h2>Scripts\Characters\Turrets\Base\ServerTurretAiHelper.cs</h2><pre>
-<span class="">index 03516ec..06f9a21 100644</span>
 <span class="hdr">@@ -21,7 +21,7 @@ namespace AtomicTorch.CBND.CoreMod.Characters.Turrets</span>
 <span class="">         var charactersInView = TempListCharactersInView;</span>
 <span class="">         ServerWorldService.GetCharactersInView(characterTurret,</span>
@@ -1001,7 +982,6 @@
 <span class="">     }</span>
 </pre></section>
 <section><h2>Scripts\CharacterStatusEffects\Debuffs\StatusEffectCold.cs</h2><pre>
-<span class="">index ea42353..9a858b8 100644</span>
 <span class="hdr">@@ -85,10 +85,13 @@ namespace AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Debuffs</span>
 <span class="">       if (data.Intensity &gt;= 1.0)</span>
 <span class="">       {</span>
@@ -1031,7 +1011,6 @@
 <span class="">       {</span>
 </pre></section>
 <section><h2>Scripts\CharacterStatusEffects\Debuffs\StatusEffectFrostbite.cs</h2><pre>
-<span class="">index 318ffc4..acbcd96 100644</span>
 <span class="hdr">@@ -51,6 +51,10 @@ namespace AtomicTorch.CBND.CoreMod.CharacterStatusEffects.Debuffs</span>
 <span class="">                    * Math.Pow(data.Intensity, 1.5)</span>
 <span class="">                    * data.DeltaTime;</span>
@@ -1045,7 +1024,6 @@
 <span class="">   }</span>
 </pre></section>
 <section><h2>Scripts\ClientComponents\Rendering\Lighting\LightColors.cs</h2><pre>
-<span class="">index 42ed918..763c4b5 100644</span>
 <span class="hdr">@@ -19,7 +19,9 @@ namespace AtomicTorch.CBND.CoreMod.ClientComponents.Rendering.Lighting</span>
 <span class=""> </span>
 <span class="">     public static readonly Color Lava = Color.FromRgb(0xFF, 0x88, 0x33);</span>
@@ -1059,7 +1037,6 @@
 <span class=""> </span>
 </pre></section>
 <section><h2>Scripts\ClientComponents\StaticObjects\ClientComponentObjectInteractionHelper.cs</h2><pre>
-<span class="">index b3d22ac..aaf7dbd 100644</span>
 <span class="hdr">@@ -234,10 +234,17 @@ namespace AtomicTorch.CBND.CoreMod.ClientComponents.StaticObjects</span>
 <span class="">             isObserving: true);</span>
 <span class="">       }</span>
@@ -1097,7 +1074,6 @@
 <span class="">       }</span>
 </pre></section>
 <section><h2>Scripts\Events\Base\EventWithAreaPublicState.cs</h2><pre>
-<span class="">index 37facb4..6dbbe4a 100644</span>
 <span class="hdr">@@ -9,6 +9,9 @@ namespace AtomicTorch.CBND.CoreMod.Events</span>
 <span class="">     [SyncToClient]</span>
 <span class="">     public ushort AreaCircleRadius { get; set; }</span>
@@ -1110,7 +1086,6 @@
 <span class=""> }</span>
 </pre></section>
 <section><h2>Scripts\Events\EventMeteoriteDrop.cs</h2><pre>
-<span class="">index 1223429..798aab4 100644</span>
 <span class="hdr">@@ -61,6 +61,9 @@ namespace AtomicTorch.CBND.CoreMod.Events</span>
 <span class="">           publicState.AreaCirclePosition,</span>
 <span class="">           publicState.AreaCircleRadius * 1.2,</span>
@@ -1165,7 +1140,6 @@
 <span class="">         var instance = zone.ServerZoneInstance;</span>
 </pre></section>
 <section><h2>Scripts\Events\EventSpaceDrop.cs</h2><pre>
-<span class="">index 98b50e9..cbf5048 100644</span>
 <span class="hdr">@@ -140,7 +140,7 @@ namespace AtomicTorch.CBND.CoreMod.Events</span>
 <span class="">     }</span>
 <span class=""> </span>
@@ -1210,7 +1184,6 @@
 <span class="">         var instance = zone.ServerZoneInstance;</span>
 </pre></section>
 <section><h2>Scripts\Helpers\Client\Physics\ClientComponentPhysicsSpaceVisualizer.cs</h2><pre>
-<span class="">index 01b1c3c..495f280 100644</span>
 <span class="hdr">@@ -25,6 +25,11 @@ namespace AtomicTorch.CBND.CoreMod.Helpers.Client.Physics</span>
 <span class=""> </span>
 <span class="">     public static readonly Brush BrushStaticCollider = new SolidColorBrush(Color.FromArgb(0xCC, 0xFF, 0xFF, 0xFF));</span>
@@ -1263,7 +1236,6 @@
 <span class="">     }</span>
 </pre></section>
 <section><h2>Scripts\Helpers\Server\ServerMobSpawnHelper.cs</h2><pre>
-<span class="">index 30f2d80..bc98344 100644</span>
 <span class="hdr">@@ -80,6 +80,13 @@ namespace AtomicTorch.CBND.CoreMod.Helpers.Server</span>
 <span class="">           return null;</span>
 <span class="">         }</span>
@@ -1505,7 +1477,6 @@
 <span class=""> }</span>
 </pre></section>
 <section><h2>Scripts\ItemContainers\Character\ItemsContainerCharacterEquipment.cs</h2><pre>
-<span class="">index 3ec80a6..d1a1070 100644</span>
 <span class="hdr">@@ -46,6 +46,10 @@ namespace AtomicTorch.CBND.CoreMod.ItemContainers</span>
 <span class="">       var slotIdValue = (EquipmentType)context.SlotId.Value;</span>
 <span class="">       var itemEquipmentType = protoItemEquipment.EquipmentType;</span>
@@ -1546,7 +1517,6 @@
 <span class="">         // implant item</span>
 </pre></section>
 <section><h2>Scripts\ItemContainers\Character\ItemsContainerCharacterHotbar.cs</h2><pre>
-<span class="">index e859c3b..37d7310 100644</span>
 <span class="hdr">@@ -10,6 +10,10 @@ namespace AtomicTorch.CBND.CoreMod.ItemContainers</span>
 <span class=""> </span>
 <span class="">     public override bool CanAddItem(CanAddItemContext context)</span>
@@ -1560,7 +1530,6 @@
 <span class="">     }</span>
 </pre></section>
 <section><h2>Scripts\ItemContainers\Character\ItemsContainerCharacterInventory.cs</h2><pre>
-<span class="">index 5855ecb..000fd7a 100644</span>
 <span class="hdr">@@ -5,6 +5,10 @@ namespace AtomicTorch.CBND.CoreMod.ItemContainers</span>
 <span class="">   {</span>
 <span class="">     public override bool CanAddItem(CanAddItemContext context)</span>
@@ -1574,7 +1543,6 @@
 <span class="">     }</span>
 </pre></section>
 <section><h2>Scripts\ItemContainers\Special\ItemsContainerFridge.cs</h2><pre>
-<span class="">index d6d88f4..d67c125 100644</span>
 <span class="hdr">@@ -1,8 +1,30 @@</span>
 <span class="add">+</span>
 <span class=""> namespace AtomicTorch.CBND.CoreMod.ItemContainers</span>
@@ -1611,7 +1579,6 @@
 <section><h2>Scripts\ItemContainers\Special\ItemsContainerLandClaimSafeStorage.cs</h2><pre>
 </pre></section>
 <section><h2>Scripts\Items\Drones\Base\ProtoItemDroneControl.cs</h2><pre>
-<span class="">index 2c5cbcd..02859fd 100644</span>
 <span class="hdr">@@ -68,10 +68,21 @@ namespace AtomicTorch.CBND.CoreMod.Items.Drones</span>
 <span class="">         ICharacter character,</span>
 <span class="">         bool isSelected)</span>
@@ -1638,7 +1605,6 @@
 <span class="">     protected override bool ClientItemUseFinish(ClientItemData data)</span>
 </pre></section>
 <section><h2>Scripts\Items\Equipment\Base\ProtoItemEquipmentDevice.cs</h2><pre>
-<span class="">index afee9f0..33bad38 100644</span>
 <span class="hdr">@@ -49,7 +49,7 @@ namespace AtomicTorch.CBND.CoreMod.Items.Equipment</span>
 <span class="">       return item == firstEquippedDevice;</span>
 <span class="">     }</span>
@@ -1659,7 +1625,6 @@
 <span class=""> </span>
 </pre></section>
 <section><h2>Scripts\Items\Fishing\Base\IProtoItemFish.cs</h2><pre>
-<span class="">index 8a22dcb..747488d 100644</span>
 <span class="hdr">@@ -9,6 +9,8 @@ namespace AtomicTorch.CBND.CoreMod.Items.Fishing.Base</span>
 <span class=""> </span>
 <span class="">     bool IsSaltwaterFish { get; }</span>
@@ -1671,7 +1636,6 @@
 <span class="">     float MaxWeight { get; }</span>
 </pre></section>
 <section><h2>Scripts\Items\Fishing\Base\ProtoItemFish.cs</h2><pre>
-<span class="">index ccdde0d..b588e43 100644</span>
 <span class="hdr">@@ -9,6 +9,8 @@ namespace AtomicTorch.CBND.CoreMod.Items.Fishing.Base</span>
 <span class=""> </span>
 <span class="">     public abstract bool IsSaltwaterFish { get; }</span>
@@ -1683,7 +1647,6 @@
 <span class="">     public abstract float MaxLength { get; }</span>
 </pre></section>
 <section><h2>Scripts\Items\Fishing\Base\ProtoItemFishingRod.cs</h2><pre>
-<span class="">index 60461f3..92893f2 100644</span>
 <span class="hdr">@@ -27,12 +27,23 @@ namespace AtomicTorch.CBND.CoreMod.Items.Fishing.Base</span>
 <span class="">           isProvidesMagentaPixelPosition: true);</span>
 <span class="">     }</span>
@@ -1710,7 +1673,6 @@
 <span class="">       return new HotbarItemFishingRodOverlayControl(item);</span>
 </pre></section>
 <section><h2>Scripts\Items\Food\ItemBeer.cs</h2><pre>
-<span class="">index df8b9fd..b82a43a 100644</span>
 <span class="hdr">@@ -21,7 +21,8 @@ namespace AtomicTorch.CBND.CoreMod.Items.Food</span>
 <span class="">     protected override void PrepareEffects(EffectActionsList effects)</span>
 <span class="">     {</span>
@@ -1723,7 +1685,6 @@
 <span class="">     protected override ReadOnlySoundPreset&lt;ItemSound&gt; PrepareSoundPresetItem()</span>
 </pre></section>
 <section><h2>Scripts\Items\Food\ItemCactusDrink.cs</h2><pre>
-<span class="">index 5e536f8..f8edf01 100644</span>
 <span class="hdr">@@ -21,7 +21,8 @@ namespace AtomicTorch.CBND.CoreMod.Items.Food</span>
 <span class="">     protected override void PrepareEffects(EffectActionsList effects)</span>
 <span class="">     {</span>
@@ -1736,7 +1697,6 @@
 <span class="">     protected override ReadOnlySoundPreset&lt;ItemSound&gt; PrepareSoundPresetItem()</span>
 </pre></section>
 <section><h2>Scripts\Items\Food\ItemLiquor.cs</h2><pre>
-<span class="">index b016f0f..4ff1b7c 100644</span>
 <span class="hdr">@@ -22,7 +22,8 @@ namespace AtomicTorch.CBND.CoreMod.Items.Food</span>
 <span class="">     {</span>
 <span class="">       effects</span>
@@ -1749,7 +1709,6 @@
 <span class="">     protected override ReadOnlySoundPreset&lt;ItemSound&gt; PrepareSoundPresetItem()</span>
 </pre></section>
 <section><h2>Scripts\Items\Food\ItemTequila.cs</h2><pre>
-<span class="">index 379e293..3cba2a7 100644</span>
 <span class="hdr">@@ -21,7 +21,8 @@ namespace AtomicTorch.CBND.CoreMod.Items.Food</span>
 <span class="">     protected override void PrepareEffects(EffectActionsList effects)</span>
 <span class="">     {</span>
@@ -1762,7 +1721,6 @@
 <span class="">     protected override ReadOnlySoundPreset&lt;ItemSound&gt; PrepareSoundPresetItem()</span>
 </pre></section>
 <section><h2>Scripts\Items\Food\ItemTincture.cs</h2><pre>
-<span class="">index 9666b6c..ed082fd 100644</span>
 <span class="hdr">@@ -24,7 +24,8 @@ namespace AtomicTorch.CBND.CoreMod.Items.Food</span>
 <span class="">           .WillAddEffect&lt;StatusEffectDrunk&gt;(intensity: 0.20)</span>
 <span class="">           .WillAddEffect&lt;StatusEffectHealingSlow&gt;(intensity: 0.20)</span>
@@ -1775,7 +1733,6 @@
 <span class="">     protected override ReadOnlySoundPreset&lt;ItemSound&gt; PrepareSoundPresetItem()</span>
 </pre></section>
 <section><h2>Scripts\Items\Food\ItemVodka.cs</h2><pre>
-<span class="">index 4934836..90f0dd5 100644</span>
 <span class="hdr">@@ -23,7 +23,8 @@ namespace AtomicTorch.CBND.CoreMod.Items.Food</span>
 <span class="">     {</span>
 <span class="">       // 4.5 minutes (so 2 vodka bottles will be almost 10 minutes, so after the third bottle you will be vomiting)</span>
@@ -1788,7 +1745,6 @@
 <span class="">     protected override ReadOnlySoundPreset&lt;ItemSound&gt; PrepareSoundPresetItem()</span>
 </pre></section>
 <section><h2>Scripts\Items\Food\ItemWine.cs</h2><pre>
-<span class="">index 4c77755..5f32dd5 100644</span>
 <span class="hdr">@@ -21,7 +21,8 @@ namespace AtomicTorch.CBND.CoreMod.Items.Food</span>
 <span class="">     protected override void PrepareEffects(EffectActionsList effects)</span>
 <span class="">     {</span>
@@ -1801,7 +1757,6 @@
 <span class="">     protected override ReadOnlySoundPreset&lt;ItemSound&gt; PrepareSoundPresetItem()</span>
 </pre></section>
 <section><h2>Scripts\Items\Medical\Base\MedicineCooldownDuration.cs</h2><pre>
-<span class="">index 4b75818..3c64e61 100644</span>
 <span class="hdr">@@ -1,11 +1,16 @@</span>
 <span class="add">+</span>
 <span class=""> namespace AtomicTorch.CBND.CoreMod.Items.Medical</span>
@@ -1834,7 +1789,6 @@
 <span class=""> }</span>
 </pre></section>
 <section><h2>Scripts\Items\Tools\Special\Base\ProtoItemPragmiumSensor.cs</h2><pre>
-<span class="">index 35eb6c3..969e075 100644</span>
 <span class="hdr">@@ -22,6 +22,9 @@ namespace AtomicTorch.CBND.CoreMod.Items.Tools.Special</span>
 <span class="">     private static readonly Lazy&lt;ObjectMineralPragmiumSource&gt; LazyPragmiumSource</span>
 <span class="">         = new(Api.GetProtoEntity&lt;ObjectMineralPragmiumSource&gt;);</span>
@@ -1865,7 +1819,6 @@
 <span class="">       {</span>
 </pre></section>
 <section><h2>Scripts\Items\Weapons\Base\IProtoItemWeapon.cs</h2><pre>
-<span class="">index ff2abed..3a6497e 100644</span>
 <span class="hdr">@@ -17,6 +17,8 @@ namespace AtomicTorch.CBND.CoreMod.Items.Weapons</span>
 <span class=""> </span>
 <span class="">     bool CanDamageStructures { get; }</span>
@@ -1877,7 +1830,6 @@
 <span class="">     CollisionGroup CollisionGroup { get; }</span>
 </pre></section>
 <section><h2>Scripts\Items\Weapons\Base\ProtoItemWeapon.cs</h2><pre>
-<span class="">index be61f7e..b87ebda 100644</span>
 <span class="hdr">@@ -35,6 +35,8 @@ namespace AtomicTorch.CBND.CoreMod.Items.Weapons</span>
 <span class=""> </span>
 <span class="">     public virtual bool CanDamageStructures =&gt; true;</span>
@@ -1909,7 +1861,6 @@
 <span class="">       protoCharacterSkeleton.ClientSetupItemInHand(</span>
 </pre></section>
 <section><h2>Scripts\Items\Weapons\Base\WeaponFireTracePresets.cs</h2><pre>
-<span class="">index 50c0446..b57aac0 100644</span>
 <span class="hdr">@@ -165,5 +165,15 @@ namespace AtomicTorch.CBND.CoreMod.Items.Weapons</span>
 <span class="">               traceStartOffsetPixels: -10,</span>
 <span class="">               useScreenBlending: true,</span>
@@ -1928,7 +1879,6 @@
 <span class=""> }</span>
 </pre></section>
 <section><h2>Scripts\Items\Weapons\Melee\Base\ProtoItemRapierLaser.cs</h2><pre>
-<span class="">index 1e48239..b199642 100644</span>
 <span class="hdr">@@ -1,7 +1,7 @@</span>
 <span class=""> namespace AtomicTorch.CBND.CoreMod.Items.Weapons.Melee</span>
 <span class=""> {</span>
@@ -1961,7 +1911,6 @@
 <span class="">     protected override ReadOnlySoundPreset&lt;ObjectMaterial&gt; PrepareSoundPresetHit()</span>
 </pre></section>
 <section><h2>Scripts\Items\Weapons\Turret\ItemWeaponTurretEnergy.cs</h2><pre>
-<span class="">index ac0f44e..207ed8b 100644</span>
 <span class="hdr">@@ -58,5 +58,12 @@ namespace AtomicTorch.CBND.CoreMod.Items.Weapons.Turret</span>
 <span class="">     {</span>
 <span class="">       ServerWeaponSpecialEffectsHelper.OnPlasmaHit(damagedCharacter, damage);</span>
@@ -1977,7 +1926,6 @@
 <span class=""> }</span>
 </pre></section>
 <section><h2>Scripts\Items\Weapons\Turret\ItemWeaponTurretHeavy.cs</h2><pre>
-<span class="">index 69d9d21..b5920d7 100644</span>
 <span class="hdr">@@ -43,5 +43,12 @@ namespace AtomicTorch.CBND.CoreMod.Items.Weapons.Turret</span>
 <span class="">     {</span>
 <span class="">       ServerWeaponSpecialEffectsHelper.OnFirearmHit(damagedCharacter, damage);</span>
@@ -1993,7 +1941,6 @@
 <span class=""> }</span>
 </pre></section>
 <section><h2>Scripts\Items\Weapons\Turret\ItemWeaponTurretLight.cs</h2><pre>
-<span class="">index 39c4d6b..df7804b 100644</span>
 <span class="hdr">@@ -44,5 +44,12 @@ namespace AtomicTorch.CBND.CoreMod.Items.Weapons.Turret</span>
 <span class="">     {</span>
 <span class="">       ServerWeaponSpecialEffectsHelper.OnFirearmHit(damagedCharacter, damage);</span>
@@ -2009,7 +1956,6 @@
 <span class=""> }</span>
 </pre></section>
 <section><h2>Scripts\Quests\Tutorial\Stage4\QuestPowerGrid2.cs</h2><pre>
-<span class="">index 3c231c4..1150ab3 100644</span>
 <span class="hdr">@@ -16,7 +16,7 @@ namespace AtomicTorch.CBND.CoreMod.Quests.Tutorial</span>
 <span class="">     protected override void PrepareQuest(QuestsList prerequisites, TasksList tasks, HintsList hints)</span>
 <span class="">     {</span>
@@ -2021,7 +1967,6 @@
 <span class="">           .Add(TaskBuildStructure.Require&lt;ObjectRechargingStation&gt;());</span>
 </pre></section>
 <section><h2>Scripts\Rates\RatePvPSafeStorageCapacity.cs</h2><pre>
-<span class="">index d99a6af..9e39ba2 100644</span>
 <span class="hdr">@@ -6,12 +6,11 @@ namespace AtomicTorch.CBND.CoreMod.Rates</span>
 <span class="">   {</span>
 <span class="">     [NotLocalizable]</span>
@@ -2054,7 +1999,6 @@
 <span class="">     }</span>
 </pre></section>
 <section><h2>Scripts\Rates\RatePvPShieldProtectionActivationDuration.cs</h2><pre>
-<span class="">index f8079cd..c3a9b18 100644</span>
 <span class="hdr">@@ -10,7 +10,7 @@ namespace AtomicTorch.CBND.CoreMod.Rates</span>
 <span class=""> </span>
 <span class="">     public override string Id =&gt; &quot;PvP.ShieldProtection.ActivationDuration&quot;;</span>
@@ -2066,7 +2010,6 @@
 <span class="">         =&gt; this.GetRate&lt;RatePvPShieldProtectionEnabled&gt;();</span>
 </pre></section>
 <section><h2>Scripts\Rates\RatePvPShieldProtectionCooldownDuration.cs</h2><pre>
-<span class="">index 93b29e5..03e618b 100644</span>
 <span class="hdr">@@ -10,7 +10,7 @@ namespace AtomicTorch.CBND.CoreMod.Rates</span>
 <span class=""> </span>
 <span class="">     public override string Id =&gt; &quot;PvP.ShieldProtection.CooldownDuration&quot;;</span>
@@ -2078,7 +2021,6 @@
 <span class="">         =&gt; this.GetRate&lt;RatePvPShieldProtectionActivationDuration&gt;();</span>
 </pre></section>
 <section><h2>Scripts\Rates\RatePvPShieldProtectionDuration.cs</h2><pre>
-<span class="">index 7f141a8..48eef68 100644</span>
 <span class="hdr">@@ -10,12 +10,9 @@ namespace AtomicTorch.CBND.CoreMod.Rates</span>
 <span class=""> </span>
 <span class="">     public override string Id =&gt; &quot;PvP.ShieldProtection.Duration&quot;;</span>
@@ -2096,7 +2038,6 @@
 <span class=""> </span>
 </pre></section>
 <section><h2>Scripts\Rates\RatePvPShieldProtectionEnabled.cs</h2><pre>
-<span class="">index 5b4a4fa..879c4e8 100644</span>
 <span class="hdr">@@ -10,7 +10,7 @@ namespace AtomicTorch.CBND.CoreMod.Rates</span>
 <span class=""> </span>
 <span class="">     public override string Id =&gt; &quot;PvP.ShieldProtection.Enabled&quot;;</span>
@@ -2127,7 +2068,6 @@
 <span class="">     }</span>
 </pre></section>
 <section><h2>Scripts\SoundPresets\WeaponsSoundPresets.cs</h2><pre>
-<span class="">index ed8d8ce..116143e 100644</span>
 <span class="hdr">@@ -121,5 +121,18 @@ namespace AtomicTorch.CBND.CoreMod.SoundPresets</span>
 <span class="">     public static readonly ReadOnlySoundPreset&lt;WeaponSound&gt; WeaponVehicleEnergyCannon</span>
 <span class="">         = WeaponRanged.Clone()</span>
@@ -2149,7 +2089,6 @@
 <span class=""> }</span>
 </pre></section>
 <section><h2>Scripts\StaticObjects\Loot\Base\LootContainerPrivateState.cs</h2><pre>
-<span class="">index a0e51a4..f2ead17 100644</span>
 <span class="hdr">@@ -4,5 +4,7 @@ namespace AtomicTorch.CBND.CoreMod.StaticObjects.Loot</span>
 <span class="">   public class LootContainerPrivateState : ObjectCratePrivateState</span>
 <span class="">   {</span>
@@ -2160,7 +2099,6 @@
 <span class=""> }</span>
 </pre></section>
 <section><h2>Scripts\StaticObjects\Loot\Base\ProtoObjectLootContainer.cs</h2><pre>
-<span class="">index 5921ac0..071fd7b 100644</span>
 <span class="hdr">@@ -15,6 +15,22 @@ namespace AtomicTorch.CBND.CoreMod.StaticObjects.Loot</span>
 <span class="">         where TPublicState : StaticObjectPublicState, new()</span>
 <span class="">         where TClientState : StaticObjectClientState, new()</span>
@@ -2211,7 +2149,6 @@
 <span class="">     protected override void ServerUpdate(ServerUpdateData data)</span>
 </pre></section>
 <section><h2>Scripts\StaticObjects\Loot\ObjectCorpse.cs</h2><pre>
-<span class="">index 2cd1ba5..ec247b3 100644</span>
 <span class="hdr">@@ -31,12 +31,14 @@ namespace AtomicTorch.CBND.CoreMod.StaticObjects.Loot</span>
 <span class=""> </span>
 <span class="">     public override float StructurePointsMax =&gt; 0; // non-damageable</span>
@@ -2317,7 +2254,6 @@
 <span class=""> }</span>
 </pre></section>
 <section><h2>Scripts\StaticObjects\Loot\ObjectLootPileGarbage1.cs</h2><pre>
-<span class="">index 6f92a14..fd9d6ff 100644</span>
 <span class="hdr">@@ -33,6 +33,14 @@ namespace AtomicTorch.CBND.CoreMod.StaticObjects.Loot</span>
 <span class="">       renderer.DrawOrderOffsetY = 0.5;</span>
 <span class="">     }</span>
@@ -2335,7 +2271,6 @@
 <span class="">       // common loot</span>
 </pre></section>
 <section><h2>Scripts\StaticObjects\Loot\ObjectLootPileGarbage2.cs</h2><pre>
-<span class="">index c12bfc3..5e21c25 100644</span>
 <span class="hdr">@@ -33,6 +33,14 @@ namespace AtomicTorch.CBND.CoreMod.StaticObjects.Loot</span>
 <span class="">       renderer.DrawOrderOffsetY = 0.5;</span>
 <span class="">     }</span>
@@ -2353,7 +2288,6 @@
 <span class="">       // common loot</span>
 </pre></section>
 <section><h2>Scripts\StaticObjects\Misc\Events\Base\ProtoObjectHackableContainer.cs</h2><pre>
-<span class="">index 357144a..15eb6fe 100644</span>
 <span class="hdr">@@ -1,13 +1,31 @@</span>
 <span class="add">+</span>
 <span class=""> namespace AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events</span>
@@ -2418,7 +2352,6 @@
 <span class="">       base.ClientInitialize(data);</span>
 </pre></section>
 <section><h2>Scripts\StaticObjects\Misc\Events\Base\ProtoObjectMineralMeteorite.cs</h2><pre>
-<span class="">index d32a9b3..e2d4246 100644</span>
 <span class="hdr">@@ -1,13 +1,32 @@</span>
 <span class="add">+</span>
 <span class=""> namespace AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events</span>
@@ -2518,7 +2451,6 @@
 <span class="">       {</span>
 </pre></section>
 <section><h2>Scripts\StaticObjects\Misc\Events\ObjectMeteorite.cs</h2><pre>
-<span class="">index a7049fc..37d2564 100644</span>
 <span class="hdr">@@ -97,6 +97,10 @@ namespace AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events</span>
 <span class=""> </span>
 <span class="">     protected override void ServerOnMineralStageMined(ICharacter character, IStaticWorldObject mineralObject)</span>
@@ -2532,7 +2464,6 @@
 <span class="">                      .ServerOnParticipatedInEvent(Api.GetProtoEntity&lt;EventMeteoriteDrop&gt;());</span>
 </pre></section>
 <section><h2>Scripts\StaticObjects\Misc\Events\ObjectSpaceDebris.cs</h2><pre>
-<span class="">index b41e70b..e9c1165 100644</span>
 <span class="hdr">@@ -138,13 +138,10 @@ namespace AtomicTorch.CBND.CoreMod.StaticObjects.Misc.Events</span>
 <span class="">               new DropItemsList(outputs: 1)</span>
 <span class="">                   // components</span>
@@ -2647,7 +2578,6 @@
 <span class="">                   .Add&lt;ItemMilitaryArmor&gt;(count: 1, condition: T3Only)</span>
 </pre></section>
 <section><h2>Scripts\StaticObjects\Structures\Generators\ObjectGeneratorBio.cs</h2><pre>
-<span class="">index d115c96..351e229 100644</span>
 <span class="hdr">@@ -19,7 +19,7 @@ namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Generators</span>
 <span class=""> </span>
 <span class="">     public override double ObstacleBlockDamageCoef =&gt; 1;</span>
@@ -2678,7 +2608,6 @@
 <span class="">     protected override void SharedCreatePhysics(CreatePhysicsData data)</span>
 </pre></section>
 <section><h2>Scripts\StaticObjects\Structures\LandClaim\Base\LandClaimAreaPrivateState.cs</h2><pre>
-<span class="">index 39bc5df..32f25ad 100644</span>
 <span class="hdr">@@ -16,6 +16,21 @@ namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim</span>
 <span class="">     [CanBeNull]</span>
 <span class="">     public string LandClaimFounder { get; set; }</span>
@@ -2703,7 +2632,6 @@
 <span class="">     public IEnumerable&lt;string&gt; ServerGetLandOwners()</span>
 </pre></section>
 <section><h2>Scripts\StaticObjects\Structures\LandClaim\Base\ProtoObjectLandClaim.cs</h2><pre>
-<span class="">index 3a3b7b7..09e3941 100644</span>
 <span class="hdr">@@ -420,7 +420,7 @@ namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim</span>
 <span class=""> </span>
 <span class="">       if (IsServer</span>
@@ -2728,7 +2656,6 @@
 <span class=""> </span>
 </pre></section>
 <section><h2>Scripts\StaticObjects\Structures\LandClaim\ObjectLandClaimT1.cs</h2><pre>
-<span class="">index 9b1467d..2d9de82 100644</span>
 <span class="hdr">@@ -22,10 +22,9 @@ namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim</span>
 <span class=""> </span>
 <span class="">     public override double ObstacleBlockDamageCoef =&gt; 1;</span>
@@ -2744,7 +2671,6 @@
 <span class=""> </span>
 </pre></section>
 <section><h2>Scripts\StaticObjects\Structures\LandClaim\ObjectLandClaimT2.cs</h2><pre>
-<span class="">index ee45758..8c956ae 100644</span>
 <span class="hdr">@@ -22,8 +22,7 @@ namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim</span>
 <span class=""> </span>
 <span class="">     public override double ObstacleBlockDamageCoef =&gt; 1;</span>
@@ -2757,7 +2683,6 @@
 <span class=""> </span>
 </pre></section>
 <section><h2>Scripts\StaticObjects\Structures\LandClaim\ObjectLandClaimT3.cs</h2><pre>
-<span class="">index 1825143..594b901 100644</span>
 <span class="hdr">@@ -21,10 +21,9 @@ namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim</span>
 <span class=""> </span>
 <span class="">     public override double ObstacleBlockDamageCoef =&gt; 1;</span>
@@ -2773,7 +2698,6 @@
 <span class=""> </span>
 </pre></section>
 <section><h2>Scripts\StaticObjects\Structures\LandClaim\ObjectLandClaimT4.cs</h2><pre>
-<span class="">index 5beec6e..5a38173 100644</span>
 <span class="hdr">@@ -21,10 +21,9 @@ namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim</span>
 <span class=""> </span>
 <span class="">     public override double ObstacleBlockDamageCoef =&gt; 1;</span>
@@ -2789,7 +2713,6 @@
 <span class=""> </span>
 </pre></section>
 <section><h2>Scripts\StaticObjects\Structures\LandClaim\ObjectLandClaimT5.cs</h2><pre>
-<span class="">index 0315f22..7f6dc7b 100644</span>
 <span class="hdr">@@ -21,10 +21,9 @@ namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.LandClaim</span>
 <span class=""> </span>
 <span class="">     public override double ObstacleBlockDamageCoef =&gt; 1;</span>
@@ -2805,7 +2728,6 @@
 <span class=""> </span>
 </pre></section>
 <section><h2>Scripts\StaticObjects\Structures\Manufacturers\Base\ProtoObjectLithiumOreExtractor.cs</h2><pre>
-<span class="">index 7e2a815..2d65a52 100644</span>
 <span class="hdr">@@ -8,21 +8,20 @@ namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Manufacturers</span>
 <span class=""> </span>
 <span class="">     private static readonly ConstructionTileRequirements.Validator ValidatorGroundTypeOrGeothermalSpring</span>
@@ -2856,7 +2778,6 @@
 <span class="">               var objectsInBounds = SharedFindObjectsNearby&lt;IProtoObjectStructure&gt;(startPosition);</span>
 </pre></section>
 <section><h2>Scripts\StaticObjects\Structures\Manufacturers\Base\ProtoObjectOilPump.cs</h2><pre>
-<span class="">index 9638324..a2043b1 100644</span>
 <span class="hdr">@@ -8,19 +8,18 @@ namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Manufacturers</span>
 <span class=""> </span>
 <span class="">     private static readonly ConstructionTileRequirements.Validator ValidatorGroundTypeOrOilSeep</span>
@@ -2917,7 +2838,6 @@
 <span class="">               var objectsInBounds = SharedFindObjectsNearby&lt;IProtoObjectStructure&gt;(startPosition);</span>
 </pre></section>
 <section><h2>Scripts\StaticObjects\Structures\Misc\Base\ProtoObjectSprinkler.cs</h2><pre>
-<span class="">index 9e806a0..1e8f8d3 100644</span>
 <span class="hdr">@@ -23,6 +23,10 @@ namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc</span>
 <span class="">     /// This object is not actually a manufacturer but it&#39;s more convenient to use the manufacturing mechanic</span>
 <span class="">     /// as it provides containers for input and output, and a custom recipe could handle the water filling.</span>
@@ -2931,7 +2851,6 @@
 <span class="">     private ITextureAtlasResource textureAtlas;</span>
 </pre></section>
 <section><h2>Scripts\StaticObjects\Structures\Misc\ObjectLaunchpadStage4.cs</h2><pre>
-<span class="">index 04eaca8..c8c61eb 100644</span>
 <span class="hdr">@@ -7,6 +7,8 @@ namespace AtomicTorch.CBND.CoreMod.StaticObjects.Structures.Misc</span>
 <span class=""> </span>
 <span class="">     public const string TaskPrepareSupplies = &quot;Prepare supplies&quot;;</span>
@@ -2961,7 +2880,6 @@
 <span class=""> }</span>
 </pre></section>
 <section><h2>Scripts\Systems\Achievements\AchievementsSystem.cs</h2><pre>
-<span class="">index 67602d6..7d1a0df 100644</span>
 <span class="hdr">@@ -18,9 +18,10 @@ namespace AtomicTorch.CBND.CoreMod.Systems.Achievements</span>
 <span class="">         }</span>
 <span class=""> </span>
@@ -2976,7 +2894,6 @@
 <span class="">         {</span>
 </pre></section>
 <section><h2>Scripts\Systems\BossLootSystem\ServerBossLootSystem.cs</h2><pre>
-<span class="">index 8f0da76..5c9902c 100644</span>
 <span class="hdr">@@ -17,9 +17,10 @@ namespace AtomicTorch.CBND.CoreMod.Systems.BossLootSystem</span>
 <span class="">     public static event BossDefeatedDelegate BossDefeated;</span>
 <span class=""> </span>
@@ -3010,7 +2927,6 @@
 <span class="">         var result = Math.Ceiling(approximatedTotalLootCountToSpawn * score);</span>
 </pre></section>
 <section><h2>Scripts\Systems\Droplists\CharacterAndGroundContainersProvider.cs</h2><pre>
-<span class="">index 4a23ea7..5a91e39 100644</span>
 <span class="hdr">@@ -18,7 +18,16 @@ namespace AtomicTorch.CBND.CoreMod.Systems.Droplists</span>
 <span class="">         if (!this.Character.IsNpc)</span>
 <span class="">         {</span>
@@ -3045,7 +2961,6 @@
 <span class="">       }</span>
 </pre></section>
 <section><h2>Scripts\Systems\FishingSystem\ComponentFishingVisualizer.cs</h2><pre>
-<span class="">index 26a1c3f..b6474c7 100644</span>
 <span class="hdr">@@ -18,17 +18,6 @@ namespace AtomicTorch.CBND.CoreMod.Systems.FishingSystem</span>
 <span class=""> </span>
 <span class="">     private static readonly Vector2D FloatLineConnectionOffsetUp = (0.0285, 0.097);</span>
@@ -3124,7 +3039,6 @@
 <span class="">       return boneWorldPosition;</span>
 </pre></section>
 <section><h2>Scripts\Systems\FishingSystem\FishingActionPublicActionState.cs</h2><pre>
-<span class="">index 49d7c50..6bdb76f 100644</span>
 <span class="hdr">@@ -51,7 +51,9 @@ namespace AtomicTorch.CBND.CoreMod.Systems.FishingSystem</span>
 <span class="">       this.clientFishingVisualizer = this.Character.ClientSceneObject</span>
 <span class="">                                          .AddComponent&lt;ComponentFishingVisualizer&gt;();</span>
@@ -3138,7 +3052,6 @@
 <span class="">       {</span>
 </pre></section>
 <section><h2>Scripts\Systems\FishingSystem\FishingActionState.cs</h2><pre>
-<span class="">index 9ad19ee..b49bb53 100644</span>
 <span class="hdr">@@ -23,7 +23,16 @@ namespace AtomicTorch.CBND.CoreMod.Systems.FishingSystem</span>
 <span class="">       if (Api.IsServer)</span>
 <span class="">       {</span>
@@ -3252,7 +3165,6 @@
 <span class="">     public override void SharedUpdate(double deltaTime)</span>
 </pre></section>
 <section><h2>Scripts\Systems\FishingSystem\FishingSystem.cs</h2><pre>
-<span class="">index b4e6f36..d4fc22a 100644</span>
 <span class="hdr">@@ -8,7 +8,7 @@ namespace AtomicTorch.CBND.CoreMod.Systems.FishingSystem</span>
 <span class="">                 FishingActionState,</span>
 <span class="">                 FishingActionPublicActionState&gt;</span>
@@ -3376,7 +3288,6 @@
 <span class="">         state.ServerSetCompleted();</span>
 </pre></section>
 <section><h2>Scripts\Systems\LandClaim\ClientLandClaimAreaManager.cs</h2><pre>
-<span class="">index 3a6988e..6ba7a8f 100644</span>
 <span class="hdr">@@ -35,12 +35,14 @@ namespace AtomicTorch.CBND.CoreMod.Systems.LandClaim</span>
 <span class="">                         .HandleAll(</span>
 <span class="">                             () =&gt;</span>
@@ -3396,7 +3307,6 @@
 <span class="">                               {</span>
 </pre></section>
 <section><h2>Scripts\Systems\LandClaim\LandClaimSystem.cs</h2><pre>
-<span class="">index c19c72c..1ae802d 100644</span>
 <span class="hdr">@@ -104,11 +104,11 @@ namespace AtomicTorch.CBND.CoreMod.Systems.LandClaim</span>
 <span class="">             context =&gt;</span>
 <span class="">             {</span>
@@ -3445,7 +3355,6 @@
 <span class="">         return;</span>
 </pre></section>
 <section><h2>Scripts\Systems\LandClaim\LandClaimSystem.Faction.cs</h2><pre>
-<span class="">index 7d9d0e2..23d9ff3 100644</span>
 <span class="hdr">@@ -12,7 +12,7 @@ namespace AtomicTorch.CBND.CoreMod.Systems.LandClaim</span>
 <span class="">     {</span>
 <span class="">       var factionOwnedAreas = SharedEnumerateAllFactionAreas(FactionSystem.ClientCurrentFactionClanTag);</span>
@@ -3475,7 +3384,6 @@
 <span class="">         {</span>
 </pre></section>
 <section><h2>Scripts\Systems\Physics\CollisionGroupId.cs</h2><pre>
-<span class="">index 80c2fa3..f9fe7c0 100644</span>
 <span class="hdr">@@ -12,6 +12,10 @@ namespace AtomicTorch.CBND.CoreMod.Systems.Physics</span>
 <span class=""> </span>
 <span class="">     ClickArea = 3,</span>
@@ -3490,7 +3398,6 @@
 <span class=""> }</span>
 </pre></section>
 <section><h2>Scripts\Systems\Physics\CollisionGroups.cs</h2><pre>
-<span class="">index 89a9ba3..da9a737 100644</span>
 <span class="hdr">@@ -16,6 +16,10 @@ namespace AtomicTorch.CBND.CoreMod.Systems.Physics</span>
 <span class=""> </span>
 <span class="">     private static CollisionGroup hitboxRanged;</span>
@@ -3573,7 +3480,6 @@
 <span class="">     [MethodImpl(MethodImplOptions.AggressiveInlining)]</span>
 </pre></section>
 <section><h2>Scripts\Systems\PowerGridSystem\PowerGridSystem.cs</h2><pre>
-<span class="">index 6a15b5e..2f4c977 100644</span>
 <span class="hdr">@@ -96,6 +96,7 @@ namespace AtomicTorch.CBND.CoreMod.Systems.PowerGridSystem</span>
 <span class="">       }</span>
 <span class=""> </span>
@@ -3584,7 +3490,6 @@
 <span class=""> </span>
 </pre></section>
 <section><h2>Scripts\Systems\TimeOfDaySystem\ClientTimeOfDayVisualComponent.cs</h2><pre>
-<span class="">index b8a4434..c89d716 100644</span>
 <span class="hdr">@@ -83,6 +83,28 @@ namespace AtomicTorch.CBND.CoreMod.Systems.TimeOfDaySystem</span>
 <span class="">       //        + $&quot;{Environment.NewLine}Night: {nightFraction:F2}&quot;);</span>
 <span class="">       //}</span>
@@ -3640,7 +3545,6 @@
 <span class=""> }</span>
 </pre></section>
 <section><h2>Scripts\Systems\TradingStations\TradingStationsSystem.cs</h2><pre>
-<span class="">index cc83a30..a0d2746 100644</span>
 <span class="hdr">@@ -169,9 +169,20 @@ namespace AtomicTorch.CBND.CoreMod.Systems.TradingStations</span>
 <span class=""> </span>
 <span class="">       if (privateState.StockItemsContainer is null)</span>
@@ -3685,7 +3589,6 @@
 <span class="">         ObjectTradingStationPublicState publicState)</span>
 </pre></section>
 <section><h2>Scripts\Systems\VehicleGarageSystem\VehicleGarageSystem.cs</h2><pre>
-<span class="">index 56f47c1..f80b9dc 100644</span>
 <span class="hdr">@@ -136,9 +136,32 @@ namespace AtomicTorch.CBND.CoreMod.Systems.VehicleGarageSystem</span>
 <span class=""> </span>
 <span class="">     public static void ServerPutIntoGarage(IDynamicWorldObject vehicle)</span>
@@ -3741,7 +3644,6 @@
 <span class="">       Logger.Important(&quot;Vehicle put into the garage: &quot; + vehicle,</span>
 </pre></section>
 <section><h2>Scripts\Systems\VehicleNamesSystem\VehicleNamesSystem.cs</h2><pre>
-<span class="">index 28f4b1b..ddc8a5a 100644</span>
 <span class="hdr">@@ -174,7 +174,7 @@ namespace AtomicTorch.CBND.CoreMod.Systems.VehicleNamesSystem</span>
 <span class="">     private (uint, string)[] ServerGetVehicleNamesKnownForCharacter(</span>
 <span class="">         ICharacter character)</span>
@@ -3769,7 +3671,6 @@
 <span class="">       if (!this.sharedVehicleNames.TryGetValue(vehicle.Id, out var vehicleName))</span>
 </pre></section>
 <section><h2>Scripts\Systems\VehicleSystem\VehicleSystem.cs</h2><pre>
-<span class="">index 13edc23..2d628c1 100644</span>
 <span class="hdr">@@ -389,6 +389,8 @@ namespace AtomicTorch.CBND.CoreMod.Systems.VehicleSystem</span>
 <span class=""> </span>
 <span class="">       Logger.Important(&quot;Player entered vehicle: &quot; + vehicle, character);</span>
@@ -3818,7 +3719,6 @@
 <span class="">       var character = ServerRemoteContext.Character;</span>
 </pre></section>
 <section><h2>Scripts\Systems\Weapons\Data\WeaponFinalCache.cs</h2><pre>
-<span class="">index 4a1199d..0b1a617 100644</span>
 <span class="hdr">@@ -126,7 +126,7 @@ namespace AtomicTorch.CBND.CoreMod.Systems.Weapons</span>
 <span class="">       }</span>
 <span class="">     }</span>
@@ -3830,7 +3730,6 @@
 <span class=""> </span>
 </pre></section>
 <section><h2>Scripts\Systems\Weapons\WeaponDamageSystem.cs</h2><pre>
-<span class="">index a775969..5396436 100644</span>
 <span class="hdr">@@ -14,6 +14,13 @@ namespace AtomicTorch.CBND.CoreMod.Systems.Weapons</span>
 <span class="">         FinalStatsCache targetFinalStatsCache,</span>
 <span class="">         double damagePreMultiplier,</span>
@@ -3892,7 +3791,6 @@
 <span class="">         }</span>
 </pre></section>
 <section><h2>Scripts\Systems\Weapons\WeaponSystem.cs</h2><pre>
-<span class="">index 529744b..a48035a 100644</span>
 <span class="hdr">@@ -1054,6 +1055,18 @@ namespace AtomicTorch.CBND.CoreMod.Systems.Weapons</span>
 <span class="">         protoWeapon.ServerOnShot(character, weaponItem, protoWeapon, allHitObjects.AsList());</span>
 <span class="">       }</span>
@@ -3926,7 +3824,6 @@
 <span class="">               isDamageRayStopped = true;</span>
 </pre></section>
 <section><h2>Scripts\Technologies\Tier2\Electricity\TechNodeGeneratorBio.cs</h2><pre>
-<span class="">index 734a780..230c2ec 100644</span>
 <span class="hdr">@@ -1,14 +1,14 @@</span>
 <span class="add">+</span>
 <span class=""> namespace AtomicTorch.CBND.CoreMod.Technologies.Tier2.Electricity</span>
@@ -3947,7 +3844,6 @@
 <span class=""> }</span>
 </pre></section>
 <section><h2>Scripts\Technologies\Tier3\Construction\TechNodeTurretLight.cs</h2><pre>
-<span class="">index 8041a68..9f9fe4b 100644</span>
 <span class="hdr">@@ -1,9 +1,9 @@</span>
 <span class="add">+</span>
 <span class=""> namespace AtomicTorch.CBND.CoreMod.Technologies.Tier3.Construction</span>
@@ -3962,7 +3858,6 @@
 <span class="">     {</span>
 </pre></section>
 <section><h2>Scripts\Technologies\Tier4\Construction\TechNodeTurretHeavy.cs</h2><pre>
-<span class="">index b3d258e..07efdd9 100644</span>
 <span class="hdr">@@ -1,9 +1,9 @@</span>
 <span class="add">+</span>
 <span class=""> namespace AtomicTorch.CBND.CoreMod.Technologies.Tier4.Construction</span>
@@ -3977,7 +3872,6 @@
 <span class="">     {</span>
 </pre></section>
 <section><h2>Scripts\Technologies\Tier5\Construction\TechNodeTurretEnergy.cs</h2><pre>
-<span class="">index d7a88d9..dc0948e 100644</span>
 <span class="hdr">@@ -1,9 +1,9 @@</span>
 <span class="add">+</span>
 <span class=""> namespace AtomicTorch.CBND.CoreMod.Technologies.Tier5.Construction</span>
@@ -3992,7 +3886,6 @@
 <span class="">     {</span>
 </pre></section>
 <section><h2>Scripts\Tiles\Base\ProtoTile.cs</h2><pre>
-<span class="">index f3ea5fd..16cf1da 100644</span>
 <span class="hdr">@@ -104,7 +104,7 @@ namespace AtomicTorch.CBND.CoreMod.Tiles</span>
 <span class="">       foreach (var staticWorldObject in tile.StaticObjects)</span>
 <span class="">       {</span>
@@ -4089,7 +3982,6 @@
 <span class="">       var isNeighborsFixRequired = false;</span>
 </pre></section>
 <section><h2>Scripts\Tiles\Base\ProtoTileWater.cs</h2><pre>
-<span class="">index 951c403..810562b 100644</span>
 <span class="hdr">@@ -41,6 +41,8 @@ namespace AtomicTorch.CBND.CoreMod.Tiles</span>
 <span class=""> </span>
 <span class="">     public abstract TextureResource UnderwaterGroundTextureAtlas { get; }</span>
@@ -4111,7 +4003,6 @@
 <span class="">     protected override ITextureResource GetEditorIconTexture()</span>
 </pre></section>
 <section><h2>Scripts\Tiles\Helpers\ClientTileBlendHelper.cs</h2><pre>
-<span class="">index a95c54a..31407ab 100644</span>
 <span class="hdr">@@ -310,9 +310,11 @@ namespace AtomicTorch.CBND.CoreMod.Tiles</span>
 <span class="">         // create renderer for layer with mask</span>
 <span class="">         CreateTileBlendRenderer(sceneObject, renderingService, blendWith.Texture, blendRenderingMaterial);</span>
@@ -4137,7 +4028,6 @@
 <span class="">         BlendLayer blendLayer,</span>
 </pre></section>
 <section><h2>Scripts\Tiles\TileLava.cs</h2><pre>
-<span class="">index 6c0c29c..84a3063 100644</span>
 <span class="hdr">@@ -11,7 +11,7 @@ namespace AtomicTorch.CBND.CoreMod.Tiles</span>
 <span class=""> </span>
 <span class="">     public override GroundSoundMaterial GroundSoundMaterial =&gt; GroundSoundMaterial.Mud;</span>
@@ -4149,7 +4039,6 @@
 <span class=""> </span>
 </pre></section>
 <section><h2>Scripts\Vehicles\Base\ComponentHoverboardVisualManager.cs</h2><pre>
-<span class="">index ec3b7ca..f54ed4d 100644</span>
 <span class="hdr">@@ -7,6 +7,8 @@ namespace AtomicTorch.CBND.CoreMod.Vehicles</span>
 <span class=""> </span>
 <span class="">     private const double HoverboardBaseOffset = -0.14;</span>
@@ -4238,7 +4127,6 @@
 <span class="">       var vehiclePublicState = vehicle.GetPublicState&lt;VehiclePublicState&gt;();</span>
 </pre></section>
 <section><h2>Scripts\Vehicles\Base\IProtoVehicle.cs</h2><pre>
-<span class="">index 0cd3ebb..0de320c 100644</span>
 <span class="hdr">@@ -91,6 +91,10 @@ namespace AtomicTorch.CBND.CoreMod.Vehicles</span>
 <span class=""> </span>
 <span class="">     IItemsContainer SharedGetHotbarItemsContainer(IDynamicWorldObject vehicle);</span>
@@ -4252,7 +4140,6 @@
 <span class="">     void SharedGetSkeletonProto(</span>
 </pre></section>
 <section><h2>Scripts\Vehicles\Base\ProtoVehicle.cs</h2><pre>
-<span class="">index bda783a..0bb127a 100644</span>
 <span class="hdr">@@ -411,6 +411,9 @@ namespace AtomicTorch.CBND.CoreMod.Vehicles</span>
 <span class="">       var privateState = GetPrivateState((IDynamicWorldObject)worldObject);</span>
 <span class="">       privateState.ServerTimeSinceLastUse = 0;</span>
@@ -4340,7 +4227,6 @@
 <span class="">       return 1.0;</span>
 </pre></section>
 <section><h2>Scripts\Vehicles\Base\ProtoVehicleHoverboard.cs</h2><pre>
-<span class="">index d64bc66..941502a 100644</span>
 <span class="hdr">@@ -46,19 +46,26 @@ namespace AtomicTorch.CBND.CoreMod.Vehicles</span>
 <span class=""> </span>
 <span class="">     public abstract TextureResource TextureResourceHoverboard { get; }</span>
@@ -4380,7 +4266,6 @@
 <span class=""> </span>
 </pre></section>
 <section><h2>Scripts\Vehicles\Base\ProtoVehicleMech.cs</h2><pre>
-<span class="">index b00ac8b..4c1079a 100644</span>
 <span class="hdr">@@ -79,6 +79,12 @@ namespace AtomicTorch.CBND.CoreMod.Vehicles</span>
 <span class="">           privateState.EquipmentItemsContainer,</span>
 <span class="">           DestroyedCargoDroppedItemsDestructionTimeout.TotalSeconds);</span>
@@ -4522,7 +4407,6 @@
 <span class="">     protected override void ServerUpdateVehicle(ServerUpdateData data)</span>
 </pre></section>
 <section><h2>Scripts\Vehicles\Base\VehicleMechPrivateState.cs</h2><pre>
-<span class="">index 79507b6..413ba4a 100644</span>
 <span class="hdr">@@ -5,5 +5,10 @@ namespace AtomicTorch.CBND.CoreMod.Vehicles</span>
 <span class="">   {</span>
 <span class="">     [SyncToClient]</span>
@@ -4536,7 +4420,6 @@
 <span class=""> }</span>
 </pre></section>
 <section><h2>Scripts\Vehicles\Base\VehicleWeaponHardpoint.cs</h2><pre>
-<span class="">index 3a24d21..8541e35 100644</span>
 <span class="hdr">@@ -9,6 +9,9 @@ namespace AtomicTorch.CBND.CoreMod.Vehicles</span>
 <span class="">     [Description(&quot;Large&quot;)]</span>
 <span class="">     Large,</span>
@@ -4549,7 +4432,6 @@
 <span class="">   }</span>
 </pre></section>
 <section><h2>Scripts\Zones\Scripts\Mobs\SpawnMobsThumper.cs</h2><pre>
-<span class="">index 7697ca8..0f42450 100644</span>
 <span class="hdr">@@ -13,9 +13,9 @@ namespace AtomicTorch.CBND.CoreMod.Zones</span>
 <span class="">           .Add(GetTrigger&lt;TriggerWorldInit&gt;())</span>
 <span class="">           .Add(GetTrigger&lt;TriggerTimeInterval&gt;().ConfigureForSpawn(TimeSpan.FromMinutes(30)));</span>
@@ -4564,7 +4446,6 @@
 <span class=""> }</span>
 </pre></section>
 <section><h2>Scripts\Zones\Scripts\Mobs\SpawnMobsVolcanic.cs</h2><pre>
-<span class="">index a44abdb..299bb37 100644</span>
 <span class="hdr">@@ -23,6 +23,12 @@ namespace AtomicTorch.CBND.CoreMod.Zones</span>
 <span class="">                                  .SetCustomPaddingWith(crawler, 15)</span>
 <span class="">                                  .SetCustomPaddingWith(fireLizard, 15)</span>
@@ -4580,7 +4461,6 @@
 <span class=""> }</span>
 </pre></section>
 <section><h2>Scripts\Zones\Zones\Boreal\ZoneBorealForest.cs</h2><pre>
-<span class="">index 3fd0945..633b15f 100644</span>
 <span class="hdr">@@ -45,6 +45,7 @@ namespace AtomicTorch.CBND.CoreMod.Zones</span>
 <span class="">           .Add(GetScript&lt;SpawnMobsWildBoar&gt;())</span>
 <span class="">           .Add(GetScript&lt;SpawnMobsSnakeBlue&gt;())</span>
@@ -4593,7 +4473,6 @@
 <section><h2>Scripts\Zones\Zones\Generic\ZoneGenericVolcanic.cs</h2><pre>
 </pre></section>
 <section><h2>Scripts\Zones\Zones\Temperate\ZoneTemperateBarren.cs</h2><pre>
-<span class="">index 9944e5c..0f76f75 100644</span>
 <span class="hdr">@@ -33,13 +33,14 @@ namespace AtomicTorch.CBND.CoreMod.Zones</span>
 <span class="">       // mobs</span>
 <span class="">       scripts</span>
@@ -4615,7 +4494,6 @@
 <span class=""> }</span>
 </pre></section>
 <section><h2>Scripts\Zones\Zones\Temperate\ZoneTemperateForest.cs</h2><pre>
-<span class="">index b3220d9..b087f01 100644</span>
 <span class="hdr">@@ -31,7 +31,8 @@ namespace AtomicTorch.CBND.CoreMod.Zones</span>
 <span class="">       scripts</span>
 <span class="">           .Add(GetScript&lt;SpawnBushesForestTemperate&gt;().Configure(densityMultiplier: 0.5))</span>
@@ -4628,7 +4506,6 @@
 <span class="">       scripts</span>
 </pre></section>
 <section><h2>Scripts\Zones\Zones\Temperate\ZoneTemperateMeadow.cs</h2><pre>
-<span class="">index c0233c9..c0a9d14 100644</span>
 <span class="hdr">@@ -13,7 +13,8 @@ namespace AtomicTorch.CBND.CoreMod.Zones</span>
 <span class="">           .Add(GetScript&lt;SpawnBushesForestTemperate&gt;())</span>
 <span class="">           .Add(GetScript&lt;SpawnMushroomsTemperate&gt;())</span>
@@ -4641,7 +4518,6 @@
 <span class="">       scripts</span>
 </pre></section>
 <section><h2>Scripts\Zones\Zones\Temperate\ZoneTemperateSwamp.cs</h2><pre>
-<span class="">index 8ae0fe6..409f1c4 100644</span>
 <span class="hdr">@@ -30,7 +30,8 @@ namespace AtomicTorch.CBND.CoreMod.Zones</span>
 <span class="">           .Add(GetScript&lt;SpawnBushesForestTemperate&gt;().Configure(densityMultiplier: 0.25))</span>
 <span class="">           .Add(GetScript&lt;SpawnMushroomsTemperate&gt;().Configure(densityMultiplier: 0.25))</span>
@@ -4654,7 +4530,6 @@
 <span class="">       scripts</span>
 </pre></section>
 <section><h2>Scripts\Zones\Zones\Tropical\ZoneTropicalForest.cs</h2><pre>
-<span class="">index 9afd91c..cb8a901 100644</span>
 <span class="hdr">@@ -17,7 +17,8 @@ namespace AtomicTorch.CBND.CoreMod.Zones</span>
 <span class="">       scripts</span>
 <span class="">           .Add(GetScript&lt;SpawnBushesForestTropical&gt;().Configure(densityMultiplier: 0.5))</span>
@@ -4667,7 +4542,6 @@
 <span class="">       scripts</span>
 </pre></section>
 <section><h2>UI\Controls\Game\Faction\FactionRoleAccessRightsEditor.xaml.cs</h2><pre>
-<span class="">index 8087bab..2375a5c 100644</span>
 <span class="hdr">@@ -34,7 +34,8 @@ namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.Faction</span>
 <span class="">       if (PveSystem.ClientIsPve(true))</span>
 <span class="">       {</span>
@@ -4680,20 +4554,18 @@
 <span class=""> </span>
 </pre></section>
 <section><h2>UI\Controls\Game\Faction\FactionRoleAccessRightsEditor.xaml</h2><pre>
-<span class="">index 87d3659..877908c 100644</span>
 <span class="hdr">@@ -1,8 +1,8 @@</span>
 <span class=""> &lt;base:BaseUserControl x:Class=&quot;AtomicTorch.CBND.CoreMod.UI.Controls.Game.Faction.FactionRoleAccessRightsEditor&quot;</span>
-<span class="">                       xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;</span>
-<span class="add">+                      xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;</span>
-<span class="">                       xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;</span>
-<span class="">                       xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;</span>
-<span class="del">-                      xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;</span>
+<span class="">                       xmlns=&quot;httPath&quot;</span>
+<span class="add">+                      xmlns:d=&quot;httPath&quot;</span>
+<span class="">                       xmlns:x=&quot;httPath&quot;</span>
+<span class="">                       xmlns:mc=&quot;httPath&quot;</span>
+<span class="del">-                      xmlns:d=&quot;httPath&quot;</span>
 <span class="">                       xmlns:base=&quot;clr-namespace:AtomicTorch.GameEngine.Common.Client.MonoGame.UI;assembly=AtomicTorch.CBND.GameApi.WPF.Stubs&quot;</span>
 <span class="">                       mc:Ignorable=&quot;d&quot;</span>
 <span class="">                       d:DesignHeight=&quot;300&quot; d:DesignWidth=&quot;300&quot;&gt;</span>
 </pre></section>
 <section><h2>UI\Controls\Game\Map\ClientWorldMapEventVisualizer.cs</h2><pre>
-<span class="">index 7a2d146..d65acb3 100644</span>
 <span class="hdr">@@ -64,6 +64,26 @@ namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.Map</span>
 <span class="">       }</span>
 <span class="">     }</span>
@@ -4767,15 +4639,14 @@
 <section><h2>UI\Controls\Game\WorldObjects\Character\CharacterOverlayControl.xaml.cs</h2><pre>
 </pre></section>
 <section><h2>UI\Controls\Game\WorldObjects\Character\CharacterOverlayControl.xaml</h2><pre>
-<span class="">index 774844d..a689a45 100644</span>
 <span class="hdr">@@ -1,13 +1,13 @@</span>
 <span class=""> &lt;base:BaseUserControl</span>
 <span class="">     x:Class=&quot;AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Character.CharacterOverlayControl&quot;</span>
-<span class="">     xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;</span>
-<span class="add">+    xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;</span>
-<span class="">     xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;</span>
-<span class="">     xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;</span>
-<span class="del">-    xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;</span>
+<span class="">     xmlns=&quot;httPath&quot;</span>
+<span class="add">+    xmlns:d=&quot;httPath&quot;</span>
+<span class="">     xmlns:x=&quot;httPath&quot;</span>
+<span class="">     xmlns:mc=&quot;httPath&quot;</span>
+<span class="del">-    xmlns:d=&quot;httPath&quot;</span>
 <span class="del">-    xmlns:base=&quot;clr-namespace:AtomicTorch.GameEngine.Common.Client.MonoGame.UI;assembly=AtomicTorch.CBND.GameApi.WPF.Stubs&quot;</span>
 <span class="del">-    xmlns:character=&quot;clr-namespace:AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Character&quot;</span>
 <span class="add">+    xmlns:bars=&quot;clr-namespace:AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Bars;assembly=Core&quot;</span>
@@ -4890,7 +4761,6 @@
 <span class="">                 &lt;VisualStateGroup.Transitions&gt;</span>
 </pre></section>
 <section><h2>UI\Controls\Game\WorldObjects\Character\Data\ViewModelCharacterBossHealthbarControl.cs</h2><pre>
-<span class="">index ffa564a..1a2daee 100644</span>
 <span class="hdr">@@ -19,13 +19,15 @@ namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Character.Data</span>
 <span class=""> </span>
 <span class="">       this.ViewModelCharacterHealthBarControl = new ViewModelCharacterHealthBarControl</span>
@@ -4911,7 +4781,6 @@
 <span class=""> </span>
 </pre></section>
 <section><h2>UI\Controls\Game\WorldObjects\Character\Data\ViewModelCharacterOverlayControl.cs</h2><pre>
-<span class="">index c02c502..164db8d 100644</span>
 <span class="hdr">@@ -26,6 +26,7 @@ namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Character.Data</span>
 <span class=""> </span>
 <span class="">       this.ViewModelCharacterHealthBarControl = new ViewModelCharacterHealthBarControl();</span>
@@ -4922,7 +4791,6 @@
 <span class="">           this.publicState.CurrentPublicStatusEffects);</span>
 </pre></section>
 <section><h2>UI\Controls\Game\WorldObjects\Data\ViewModelBrokenObjectLandClaimTooltip.cs</h2><pre>
-<span class="">index 2895bba..fd8b73e 100644</span>
 <span class="hdr">@@ -97,8 +97,13 @@ namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Data</span>
 <span class=""> </span>
 <span class="">       var totalDuration = this.protoObjectLandClaim.DestructionTimeout.TotalSeconds;</span>
@@ -4940,7 +4808,6 @@
 <span class="">   }</span>
 </pre></section>
 <section><h2>UI\Controls\Game\WorldObjects\Data\ViewModelCharacterHealthBarControl.cs</h2><pre>
-<span class="">index e0345c7..f3cacae 100644</span>
 <span class="hdr">@@ -1,8 +1,16 @@</span>
 <span class="add">+</span>
 <span class=""> namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Data</span>
@@ -4961,7 +4828,6 @@
 <span class="">     public CharacterCurrentStats CharacterCurrentStats</span>
 </pre></section>
 <section><h2>UI\Controls\Game\WorldObjects\LandClaims\Data\ViewModelWindowLandClaim.cs</h2><pre>
-<span class="">index 6304c69..6d5aaeb 100644</span>
 <span class="hdr">@@ -84,6 +84,15 @@ namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.LandClaims.Data</span>
 <span class=""> </span>
 <span class="">       this.RefreshSafeStorageAndPowerGrid();</span>
@@ -5019,16 +4885,15 @@
 <span class="">       // setup safe storage</span>
 </pre></section>
 <section><h2>UI\Controls\Game\WorldObjects\LandClaims\WindowLandClaim.xaml</h2><pre>
-<span class="">index c149d4d..c8ba134 100644</span>
 <span class="hdr">@@ -1,20 +1,21 @@</span>
 <span class=""> &lt;landClaims:WindowLandClaimBase</span>
 <span class="">     x:Class=&quot;AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.LandClaims.WindowLandClaim&quot;</span>
-<span class="">     xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;</span>
-<span class="add">+    xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;</span>
-<span class="">     xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;</span>
-<span class="add">+    xmlns:i=&quot;http://schemas.microsoft.com/xaml/behaviors&quot;</span>
-<span class="">     xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;</span>
-<span class="del">-    xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;</span>
+<span class="">     xmlns=&quot;httPath&quot;</span>
+<span class="add">+    xmlns:d=&quot;httPath&quot;</span>
+<span class="">     xmlns:x=&quot;httPath&quot;</span>
+<span class="add">+    xmlns:i=&quot;httPath&quot;</span>
+<span class="">     xmlns:mc=&quot;httPath&quot;</span>
+<span class="del">-    xmlns:d=&quot;httPath&quot;</span>
 <span class="del">-    xmlns:core=&quot;clr-namespace:AtomicTorch.CBND.CoreMod.UI.Controls.Core&quot;</span>
 <span class="add">+    xmlns:core=&quot;clr-namespace:AtomicTorch.CBND.CoreMod.UI.Controls.Core;assembly=Core&quot;</span>
 <span class="add">+    xmlns:controls=&quot;clr-namespace:AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Controls;assembly=Core&quot;</span>
@@ -5047,7 +4912,7 @@
 <span class="add">+    xmlns:loc=&quot;clr-namespace:AtomicTorch.CBND.CoreMod.UI;assembly=Core&quot;</span>
 <span class="add">+    xmlns:base=&quot;clr-namespace:AtomicTorch.GameEngine.Common.Client.MonoGame.UI;assembly=AtomicTorch.CBND.GameApi.WPF.Stubs&quot;</span>
 <span class="">     xmlns:noesis=&quot;clr-namespace:NoesisGUIExtensions;assembly=Noesis.GUI.Extensions&quot;</span>
-<span class="del">-    xmlns:i=&quot;http://schemas.microsoft.com/xaml/behaviors&quot;</span>
+<span class="del">-    xmlns:i=&quot;httPath&quot;</span>
 <span class="">     mc:Ignorable=&quot;d&quot;</span>
 <span class="">     d:DesignHeight=&quot;300&quot; d:DesignWidth=&quot;300&quot;</span>
 <span class="">     d:DataContext=&quot;{d:DesignInstance data:ViewModelWindowLandClaim, IsDesignTimeCreatable=True}&quot;&gt;</span>
@@ -5065,7 +4930,6 @@
 <span class="">                     &lt;ScrollViewer VerticalScrollBarVisibility=&quot;Auto&quot;</span>
 </pre></section>
 <section><h2>UI\Controls\Game\WorldObjects\PowerGrid\PowerSwitchControl.xaml.cs</h2><pre>
-<span class="">index 858f757..f91e864 100644</span>
 <span class="hdr">@@ -13,6 +13,15 @@ namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.PowerGrid</span>
 <span class=""> </span>
 <span class="">     public static PowerSwitchControl Create(IStaticWorldObject worldObject)</span>
@@ -5084,15 +4948,14 @@
 <span class=""> </span>
 </pre></section>
 <section><h2>UI\Controls\Game\WorldObjects\PowerGrid\PowerSwitchControl.xaml</h2><pre>
-<span class="">index 7497c86..adc68e8 100644</span>
 <span class="hdr">@@ -1,12 +1,14 @@</span>
 <span class=""> &lt;base:BaseUserControl</span>
 <span class="">     x:Class=&quot;AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.PowerGrid.PowerSwitchControl&quot;</span>
-<span class="">     xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;</span>
-<span class="add">+    xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;</span>
-<span class="">     xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;</span>
-<span class="">     xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;</span>
-<span class="del">-    xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;</span>
+<span class="">     xmlns=&quot;httPath&quot;</span>
+<span class="add">+    xmlns:d=&quot;httPath&quot;</span>
+<span class="">     xmlns:x=&quot;httPath&quot;</span>
+<span class="">     xmlns:mc=&quot;httPath&quot;</span>
+<span class="del">-    xmlns:d=&quot;httPath&quot;</span>
 <span class="add">+    xmlns:core=&quot;clr-namespace:AtomicTorch.CBND.CoreMod.UI.Controls.Core;assembly=Core&quot;</span>
 <span class="add">+    xmlns:data=&quot;clr-namespace:AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.PowerGrid.Data;assembly=Core&quot;</span>
 <span class="add">+    xmlns:loc=&quot;clr-namespace:AtomicTorch.CBND.CoreMod.UI;assembly=Core&quot;</span>
@@ -5116,15 +4979,14 @@
 <section><h2>UI\Controls\Game\WorldObjects\Vehicle\ControlMechEquipment.xaml.cs</h2><pre>
 </pre></section>
 <section><h2>UI\Controls\Game\WorldObjects\Vehicle\ControlMechEquipment.xaml</h2><pre>
-<span class="">index 840ab19..f9c5617 100644</span>
 <span class="hdr">@@ -1,16 +1,16 @@</span>
 <span class=""> &lt;base:BaseUserControl</span>
 <span class="">     x:Class=&quot;AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Vehicle.ControlMechEquipment&quot;</span>
-<span class="">     xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;</span>
-<span class="add">+    xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;</span>
-<span class="">     xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;</span>
-<span class="">     xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;</span>
-<span class="del">-    xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;</span>
+<span class="">     xmlns=&quot;httPath&quot;</span>
+<span class="add">+    xmlns:d=&quot;httPath&quot;</span>
+<span class="">     xmlns:x=&quot;httPath&quot;</span>
+<span class="">     xmlns:mc=&quot;httPath&quot;</span>
+<span class="del">-    xmlns:d=&quot;httPath&quot;</span>
 <span class="del">-    xmlns:base=&quot;clr-namespace:AtomicTorch.GameEngine.Common.Client.MonoGame.UI;assembly=AtomicTorch.CBND.GameApi.WPF.Stubs&quot;</span>
 <span class="add">+    xmlns:controls=&quot;clr-namespace:AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Controls;assembly=Core&quot;</span>
 <span class="">     xmlns:data=&quot;clr-namespace:AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Vehicle.Data&quot;</span>
@@ -5292,7 +5154,6 @@
 <span class=""> &lt;/base:BaseUserControl&gt;</span>
 </pre></section>
 <section><h2>UI\Controls\Game\WorldObjects\Vehicle\Data\ViewModelControlMechEquipment.cs</h2><pre>
-<span class="">index 675c0af..b0ed654 100644</span>
 <span class="hdr">@@ -8,9 +8,15 @@ namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Vehicle.Data</span>
 <span class="">     public ViewModelControlMechEquipment(VehicleMechPrivateState mechPrivateState)</span>
 <span class="">     {</span>
@@ -5339,7 +5200,6 @@
 <span class="">                              .GetDescription());</span>
 </pre></section>
 <section><h2>UI\Controls\Game\WorldObjects\Vehicle\Data\ViewModelHUDMechHotbarControl.cs</h2><pre>
-<span class="">index c9fd552..a8b5cd8 100644</span>
 <span class="hdr">@@ -15,12 +15,20 @@ namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Vehicle.Data</span>
 <span class=""> </span>
 <span class="">       this.ViewModelVehicleEnergy = new ViewModelVehicleEnergy(vehicle);</span>
@@ -5365,7 +5225,6 @@
 <span class="">                .WeaponSlotsCount</span>
 </pre></section>
 <section><h2>UI\Controls\Game\WorldObjects\Vehicle\HUDMechHotbarControl.xaml.cs</h2><pre>
-<span class="">index 7c8ac0e..99e240d 100644</span>
 <span class="hdr">@@ -19,8 +20,12 @@ namespace AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Vehicle</span>
 <span class="">     protected override void OnLoaded()</span>
 <span class="">     {</span>
@@ -5381,15 +5240,14 @@
 <span class="">     protected override void OnUnloaded()</span>
 </pre></section>
 <section><h2>UI\Controls\Game\WorldObjects\Vehicle\HUDMechHotbarControl.xaml</h2><pre>
-<span class="">index ff55638..9341bcd 100644</span>
 <span class="hdr">@@ -1,14 +1,15 @@</span>
 <span class=""> &lt;base:BaseUserControl</span>
 <span class="">     x:Class=&quot;AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Vehicle.HUDMechHotbarControl&quot;</span>
-<span class="">     xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;</span>
-<span class="add">+    xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;</span>
-<span class="">     xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;</span>
-<span class="">     xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;</span>
-<span class="del">-    xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;</span>
+<span class="">     xmlns=&quot;httPath&quot;</span>
+<span class="add">+    xmlns:d=&quot;httPath&quot;</span>
+<span class="">     xmlns:x=&quot;httPath&quot;</span>
+<span class="">     xmlns:mc=&quot;httPath&quot;</span>
+<span class="del">-    xmlns:d=&quot;httPath&quot;</span>
 <span class="add">+    xmlns:core=&quot;clr-namespace:AtomicTorch.CBND.CoreMod.UI.Controls.Core;assembly=Core&quot;</span>
 <span class="add">+    xmlns:controls=&quot;clr-namespace:AtomicTorch.CBND.CoreMod.UI.Controls.Game.Items.Controls;assembly=Core&quot;</span>
 <span class="add">+    xmlns:data=&quot;clr-namespace:AtomicTorch.CBND.CoreMod.UI.Controls.Game.WorldObjects.Vehicle.Data;assembly=Core&quot;</span>

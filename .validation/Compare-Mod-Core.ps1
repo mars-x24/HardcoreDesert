@@ -47,11 +47,13 @@ foreach($file in (Get-ChildItem $OutputPath -Filter '*.diff' | Sort-Object Name)
   $displayName=($file.BaseName -replace '__','\')
   [void]$html.AppendLine('<section><h2>'+[Net.WebUtility]::HtmlEncode($displayName)+'</h2><pre>')
   foreach($line in (Get-Content $file.FullName)) {
-    if ($line.StartsWith('diff --git ') -or $line.StartsWith('--- ') -or $line.StartsWith('+++ ')) { continue }
+    if ($line.StartsWith('diff --git ') -or $line.StartsWith('--- ') -or $line.StartsWith('+++ ') -or $line.StartsWith('index ')) { continue }
+    if ($line -match '^Binary files .* differ$') { $line='Binary files differ' }
     $line=$line.Replace($core,'Core').Replace($mod,'HardcoreDesert')
     $line=$line.Replace($core.Replace('\','\\'),'Core').Replace($mod.Replace('\','\\'),'HardcoreDesert')
     $line=$line -replace '(?i)[A-Z]:[\\/]+.*?HardcoreDesertDiff-[^\\/]+[\\/]','Temp/'
     $line=$line -replace '(?i)[A-Z]:\\\\.*?HardcoreDesertDiff-[^\\\\]+\\\\','Temp/'
+    $line=$line -replace '(?i)[A-Z]:[\\/][^""<>\r\n]*','Path'
     $class=''; if($line.StartsWith('+') -and !$line.StartsWith('+++')){$class='add'} elseif($line.StartsWith('-') -and !$line.StartsWith('---')){$class='del'} elseif($line.StartsWith('@@') -or $line.StartsWith('diff ')){$class='hdr'}
     [void]$html.AppendLine('<span class="'+$class+'">'+[Net.WebUtility]::HtmlEncode($line)+'</span>')
   }
