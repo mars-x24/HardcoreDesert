@@ -119,14 +119,15 @@ namespace AtomicTorch.CBND.CoreMod.Characters
 
       if (isFinished)
       {
-        WeaponAmmoSystem.Instance.CallClient(scopedBy.AsList(),
-                            _ => _.ClientRemote_OnOtherCharacterReloaded(character, weaponState.ProtoWeapon));
+        HardcoreDesertWeaponAudioSystem.Instance.CallClient(scopedBy.AsList(),
+                            _ => _.ClientRemote_OnNpcReloaded(character, weaponState.ProtoWeapon));
       }
       else
       {
-        WeaponAmmoSystem.Instance.CallClient(scopedBy.AsList(),
-                            _ => _.ClientRemote_OnOtherCharacterReloading(character, weaponState.ProtoWeapon));
+        HardcoreDesertWeaponAudioSystem.Instance.CallClient(scopedBy.AsList(),
+                            _ => _.ClientRemote_OnNpcReloading(character, weaponState.ProtoWeapon));
       }
     }
+
   }
 }
